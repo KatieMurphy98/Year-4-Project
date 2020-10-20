@@ -1,0 +1,1 @@
+A folder to hold JavaScript code and related HTML and CSS files
