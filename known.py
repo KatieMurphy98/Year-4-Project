@@ -1,3 +1,1 @@
-words = set(
-    ("Visualissation",)
-)
+words = set()
