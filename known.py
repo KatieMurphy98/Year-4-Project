@@ -1,8 +1,8 @@
 words = set(
-    "Plotly",
+    ("Plotly",
     "Reproducibility",
     "ggplot",
     "ie",
     "plotly",
-    "powerpoint"
+    "powerpoint")
 )
