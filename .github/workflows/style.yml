@@ -39,4 +39,4 @@ jobs:
         sudo apt-get install texlive-science
     - name: Check that document compiles
       run: |
-        pdflatex tex/main.tex
+        cd tex; pdflatex main.tex
