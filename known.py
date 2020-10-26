@@ -4,5 +4,7 @@ words = set(
     "ggplot",
     "ie",
     "plotly",
-    "powerpoint")
+    "powerpoint", 
+    "vis", 
+    "Visualizations")
 )
