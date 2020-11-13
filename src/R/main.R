@@ -13,27 +13,32 @@ scale_fill_viridis(option='inferno') + theme_bw()
 ##### Read in and format data #####
 
 NinjaWarrior <- read.csv("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Data/American Ninja Warrior Obstacle History.csv")
-obst <- data.frame()
 
-j=1
+obstacles <- function(ObstacleNumbers){
+  obst <- data.frame()
+  j=1
 
-for (i in unique(NinjaWarrior$Obstacle.Name)){
-  dat <- NinjaWarrior %>% filter(Obstacle.Name == i)
-  obst[j, 1] <- i
-  obst[j, 2] <- dim(dat)[1]
-  j <- j+1
+  for (i in unique(NinjaWarrior$Obstacle.Name)){
+    dat <- NinjaWarrior %>% filter(Obstacle.Name == i)
+    obst[j, 1] <- i
+    obst[j, 2] <- dim(dat)[1]
+    j <- j+1
+  }
+  
+  obst <- arrange(obst, desc(V2))
+  obst <- obst[ObstacleNumbers, ]
 }
 
-obst <- arrange(obst, desc(V2))
-obst <- obst[2:6,]
+obst <- obstacles(8:15)
 names(obst) <- c('Obstacle.Name', 'Times.Used')
 
 ##### Barplot in default colour map #####
 
-ggplot(data=obst)+
-geom_col(aes(x=Obstacle.Name, y=Times.Used, fill=Obstacle.Name))+
+ggplot(data=obst) +
+geom_col(aes(x=Obstacle.Name, y=Times.Used, fill=Obstacle.Name)) +
+scale_x_discrete(labels=NULL) +
 xlab('Obstacle') + 
-ylab('Times Used')+
+ylab('Times Used') +
 labs(fill = 'Obstacle') +
 theme_classic()
 
@@ -41,6 +46,7 @@ theme_classic()
 
 ggplot(data=obst)+
 geom_col(aes(x=Obstacle.Name, y=Times.Used, fill=Obstacle.Name))+
+scale_x_discrete(labels=NULL) +
 scale_fill_viridis(discrete = T)+
 xlab('Obstacle') + 
 ylab('Times Used')+
@@ -51,6 +57,7 @@ theme_classic()
 
 ggplot(data=obst)+
 geom_jitter(aes(x=Obstacle.Name, y=Times.Used, col=Obstacle.Name), size=5)+
+scale_x_discrete(labels=NULL) +
 xlab('Obstacle') + 
 ylab('Times Used')+
 labs(fill = 'Obstacle') +
@@ -60,6 +67,7 @@ theme_classic()
 
 ggplot(data=obst)+
 geom_jitter(aes(x=Obstacle.Name, y=Times.Used, col=Obstacle.Name), size=5)+
+scale_x_discrete(labels=NULL) +
 scale_color_viridis(discrete = T)+
 xlab('Obstacle') + 
 ylab('Times Used')+
