@@ -7,6 +7,9 @@
 %TODO 3 cite: https://books.google.co.uk/books?hl=en&lr=&id=ctow8zWdyFgC&oi=fnd&pg=PR15&dq=survey+methodology&ots=fgcIbBXkS9&sig=LvdOfWOBGrtHFrcVbdfi1ahV970#v=onepage&q=survey%20methodology&f=true
 %TODO 4 cite: https://en.wikipedia.org/wiki/Census
 %TODO 5 cite: https://www.understandingsociety.ac.uk/
+%TODO 6 cite: https://ora.ox.ac.uk/objects/uuid:526114c2-8266-4dee-b663-351119249fd5
+%TODO 7 cite: 
+
 
 
 As described in [CITE 3 HERE], a survey is a means of obtaining quantitative information regarding opinions and 
@@ -58,16 +61,46 @@ select answers from a list, and open-ended questions, in which the participants 
 
 
 \section{Specific goals of survey tool for this study}
-In this study, we aim to explore the best ways in which to represent various types of data. Two types of survey will be written;
-one type containing questions on basic visualisations to gather information regarding various features, such as how changing various
-aesthetic features can impact visual interpretation of the given data, and the other containing some more complex visualisations
-along with snippets from the code used to create them. The first type will consist of three separate surveys, where each uses 
-similar visualisations, but created in a different language. Particularly, one will contain visualisations made in R's ggplot2, 
-one made with matplotlib from Python, and one with the JavaScript library D3. These surveys will be distributed to the general 
-public by sharing links on social media platforms such as Facebook. The second type will be a single survey comparing the 
-implementation of the different languages and will be distributed to a group of visual analytics specialists. This second survey 
-aims to explore opinions on the coding languages themselves, in terms of features such as readability, reproducibility and 
-ease of implementation.
+This study will explore how best to represent various data types visually. One way in which this will be investigated is to create 
+a series of online questionaires in order to determine how visualisations can impact the viewer's perception of the plotted data. 
+While visualisations can be a very useful tool in understanding data, they also have the potential to mislead the observer, which 
+could be either done accidentally or on purpose. As discussed by Gatto in [CITE 6 HERE], altering properties such as the range of 
+the axes, size of bars on a bar plot, and colouring of the plot can all influence what is inferred about the data when observing 
+a visualisation. Furthering Dr. Gatto's argument, she goes on to reference a 2014 blog post [CITE 7 HERE] entitled 'How to Lie with 
+Data Visualisation'. This post gives a series of examples depicting how the afformentioned properties affect interpretation. The first 
+example shows how truncating the y-axis of a bar plot can overexaggerate differences in the height of bars, perhaps leading incorrect 
+observations about the data. For example, if the data consists of values, such as profits, at different time points, then truncating 
+the y-axis can at first make the profit increase each year seem much greater than it actually is. Only when one reads the scale on the 
+axis will it be observed that there may only be a very marginal, and potentially almost negligible, difference. Of course if someone 
+were to read the y-axis scaling they would determine that the change was in fact small, but the human brain thrives on visual and 
+pictorial feedback, and thus it is likely that a person would look at this plot and simply draw conclusions based on the plot itself
+without reference to the truncated axis. Therefore, a first hypothesis that will be tested in this survey is whether truncating the y-axis
+does indeed impact how the data is interpreted.
+
+
+
+Two types of questionaire will be written for this study. The first type will present a series of fairly basic visualisations accompanied
+by questions created to guage whether each presented visualisation has an impact on how the data is interpreted by the survey participant.
+
+
+The set will consist of three separate surveys, which will be identical up to the visualisation package used. Particularly, one will contain 
+visualisations made with R's ggplot2, the next with matplotlib from Python, and the last with the JavaScript library D3. These surveys will 
+be distributed to the general public by sharing links on social media platforms such as Facebook. The reasoning behind creating three separate 
+surveys in a variety of languages is to ascertain whether 
+
+
+
+
+
+
+%TODO explain the second type of survey further
+The second type will be a single survey comparing the 
+implementation of the different languages and will be distributed to a group specialising in visual analytics for pharmaceutical 
+research. This second survey aims to explore opinions on the coding languages themselves, in terms of features such as 
+readability, reproducibility and ease of implementation.
+
+%TODO explain that I'm using questionaires and why
+
 
 In the set of three surveys we aim to answer questions such as: 
 
@@ -79,20 +112,15 @@ In the set of three surveys we aim to answer questions such as:
 \end{itemize}
 
 
+% Idea: Since I have had to extract things from ninja warrior data (lots of data), could show data and then a plot to show how
+%       visualisations are useful to find things you can't immediately see in the data itself.
+% Idea: Axes in time series plots - Use short and tall axes and ask which varies most? (Maybe use HR data from http://ecg.mit.edu/time-series/)
+% Idea: Distance between bars in barplot - further apart harder to interpret?
+% Idea: Does uning a logarithmic scale impact interpretation?
 
 \section{The survey}
 
 Potentially will use google sheets and post all three, and ask people to complete one of them.
-
-
-
-\textbf{Cohorts}
-\begin{itemize}
-    \item Students
-    \item People who work in data visualisation and/or statistical programming
-    \item General population
-\end{itemize}
-
 %TODO Specify further
 
 
@@ -120,13 +148,10 @@ Potentially will use google sheets and post all three, and ask people to complet
     (checkbox and open answer box: No, Yes (please specify))
 \end{itemize}
 
-
-
 %Note: Deliberately design 'bad' as well as good plots?
 
+Potential Questions
 
-
-- Axes in time series plots - Used short and tall axes and ask which varies most? (Maybe use HR data from http://ecg.mit.edu/time-series/)
 
 
 
