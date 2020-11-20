@@ -81,7 +81,7 @@ theme_classic()
 # From https://data.world/len/dog-canine-breed-size-akc
 
 format_data <- function(entries){
-  Dogs <- read.csv("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Data/AKC Breed Info.csv")
+  Dogs <- read.csv("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/AKC Dog Breeds/main.csv")
 
 # Filter out breeds with 'na' and 'not found' values
 Dogs <- Dogs %>%
@@ -90,20 +90,16 @@ filter(Breed != "Coton de Tulear" & Breed != "Alaskan Malamute")
 # Change class of variables from character to numeric
 Dogs$weight_low_lbs <- as.numeric(Dogs$weight_low_lbs)
 
-# Arrange in descending order by weight_low_lbs
-Dogs <- arrange(Dogs, desc(weight_low_lbs)) 
-
 # Take only certain breeds
 Dogs <- Dogs[entries, ]
 }
 
-Dogs <- format_data(10:15)
+Dogs <- format_data(1:5)
 
 
 # Create standard barplot in default colours
 ggplot(data=Dogs) +
-geom_col(aes(x=Breed, y=weight_low_lbs, fill=Breed)) +
-scale_x_discrete(labels=NULL) +
+geom_col(aes(x=Breed, y=weight_low_lbs), fill="#69b3a2") +
 xlab('Breed') + 
 ylab('Weight') +
 labs(fill = 'Breed') +
@@ -111,13 +107,32 @@ theme_classic()
 
 # Create barplot with stretched y-axis
 ggplot(data=Dogs) +
-geom_col(aes(x=Breed, y=weight_low_lbs, fill=Breed)) +
-scale_x_discrete(labels=NULL) +
-scale_y_continuous(limits = c(0, 300)) +
+geom_col(aes(x=Breed, y=weight_low_lbs), fill="#69b3a2") +
+scale_y_continuous(limits = c(0, 175)) +
 xlab('Breed') + 
 ylab('Weight') +
 labs(fill = 'Breed') +
 theme_classic()
 
+# Create barplot with logarithmic y-axis
+ggplot(data=Dogs)+
+geom_col(aes(x=Breed, y=weight_low_lbs), fill="#69b3a2")+
+scale_y_log10()+
+xlab('Breed') + 
+ylab('Weight') +
+labs(fill = 'Breed') +
+theme_classic()
+
+# Barplot with log scale but bars in descending order
+Dogs <- arrange(Dogs, desc(weight_low_lbs))
+Dogs_reorder <- Dogs
+Dogs_reorder$Breed <- c("A", "B", "C", "D", "E")
+
+ggplot(data=Dogs_reorder)+
+geom_col(aes(x=Breed, y=weight_low_lbs), fill="#69b3a2")+
+scale_y_log10()+
+scale_x_discrete(name="Breed", labels=Dogs$Breed)+
+ylab('Weight') +
+theme_classic()
 
 ##### 
