@@ -75,9 +75,52 @@ axis will it be observed that there may only be a very marginal, and potentially
 were to read the y-axis scaling they would determine that the change was in fact small, but the human brain thrives on visual and 
 pictorial feedback, and thus it is likely that a person would look at this plot and simply draw conclusions based on the plot itself
 without reference to the truncated axis. Therefore, a first hypothesis that will be tested in this survey is whether truncating the y-axis
-does indeed impact how the data is interpreted.
+does indeed impact how the data is interpreted. Additionally, the use of a logarithmic scale will be investigated, and it will
+be hypothesised that this will also impact interpretation.
 
+%%%%% TODO:
 
+% Perform meta-analysis of different sources to find optimal number of survey questions?
+% "20 minute rule" -> Don't go beyond 20 mins
+% Work out how long each question will take... Guessing 1-2 mins per question => ~10-20 questions?
+% Long surveys can increase measurement error
+% 
+
+%%%%% Potential sources about survey length %%%%%
+% https://journals.sagepub.com/doi/pdf/10.2501/IJMR-2017-039 -> Study about ideal length of survey in terms of time
+% https://ojs.ub.uni-konstanz.de/srm/article/view/7145 -> Study about reducing measurement error due to survey length
+% https://corescholar.libraries.wright.edu/etd_all/1918/ -> About 'careless responding' and 'insufficient effort responding'
+% https://journals.sagepub.com/doi/abs/10.1177/089443930101900202 
+ 
+%%%%% Potential questions: %%%%%
+
+% Would you say there is a large difference between the weights of these dogs? (Maybe too subjective)
+% -> Show plot with logarithmic and then normal scale (ie in a "and how about now?" format)
+ 
+% Which other breed has the same weight as the [BREED]?
+% -> Show with truncated y-axis
+% -> Show with truncated y-axis but in order
+ 
+% Which other breed has the same height as the [BREED]?
+% -> Show with truncated y-axis
+% -> Show with normal y-axis
+
+% Which obstacle was used the least?
+% -> Pie vs Bar vs Scatter
+
+% Which variable varies most over time?/Which shows the most dramatic change over time?
+% -> Two time-series line plots, one with both variables on same plot, one on different plots.
+% -> Use data with very different scalings
+
+% Not sure on exqct question yet, but take lots of data points (ie 20 obstacles) and use large legend and lots of colour ("bad" plot)
+% Then show same plot but with labels on points and no legend ("Good" plot)
+% -> Hypothesise that plot with labels will be more accurately interpreted.
+% -> Source: https://towardsdatascience.com/color-in-data-visualization-less-how-more-why-348514a3c4d8
+
+% Which obstacles were used [AMOUNT] times?
+% -> used in conujunction with differently scales plots/barplots?
+
+%%%%%
 
 Two types of questionaire will be written for this study. The first type will present a series of fairly basic visualisations accompanied
 by questions created to guage whether each presented visualisation has an impact on how the data is interpreted by the survey participant.
