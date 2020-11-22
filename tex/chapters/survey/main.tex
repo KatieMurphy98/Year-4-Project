@@ -57,7 +57,9 @@ accurate to their true line of thought.
 A second way of presenting survey questions, and the way that will be used to present them for this study, is a written questionaire.
 A questionaire may either consist of physical paper forms mailed or handed out to people within the target population or may
 exist in an online format. A questionaire is composed of two types of questions; closed-ended questions, where participants 
-select answers from a list, and open-ended questions, in which the participants are able to write their own answers. 
+select answers from a list, and open-ended questions, in which the participants are able to write their own answers. This method of surveying
+is also often anonymous, which can mitigate the errors caused by participants fearing being judged on their responses as they will be more likely
+to provide honest answers. Although the content of the surveys for this study is not likely to be controversial or highly personal, 
 
 
 \section{Specific goals of survey tool for this study}
@@ -91,36 +93,6 @@ be hypothesised that this will also impact interpretation.
 % https://ojs.ub.uni-konstanz.de/srm/article/view/7145 -> Study about reducing measurement error due to survey length
 % https://corescholar.libraries.wright.edu/etd_all/1918/ -> About 'careless responding' and 'insufficient effort responding'
 % https://journals.sagepub.com/doi/abs/10.1177/089443930101900202 
- 
-%%%%% Potential questions: %%%%%
-
-% Would you say there is a large difference between the weights of these dogs? (Maybe too subjective)
-% -> Show plot with logarithmic and then normal scale (ie in a "and how about now?" format)
- 
-% Which other breed has the same weight as the [BREED]?
-% -> Show with truncated y-axis
-% -> Show with truncated y-axis but in order
- 
-% Which other breed has the same height as the [BREED]?
-% -> Show with truncated y-axis
-% -> Show with normal y-axis
-
-% Which obstacle was used the least?
-% -> Pie vs Bar vs Scatter
-
-% Which variable varies most over time?/Which shows the most dramatic change over time?
-% -> Two time-series line plots, one with both variables on same plot, one on different plots.
-% -> Use data with very different scalings
-
-% Not sure on exqct question yet, but take lots of data points (ie 20 obstacles) and use large legend and lots of colour ("bad" plot)
-% Then show same plot but with labels on points and no legend ("Good" plot)
-% -> Hypothesise that plot with labels will be more accurately interpreted.
-% -> Source: https://towardsdatascience.com/color-in-data-visualization-less-how-more-why-348514a3c4d8
-
-% Which obstacles were used [AMOUNT] times?
-% -> used in conujunction with differently scales plots/barplots?
-
-%%%%%
 
 Two types of questionaire will be written for this study. The first type will present a series of fairly basic visualisations accompanied
 by questions created to guage whether each presented visualisation has an impact on how the data is interpreted by the survey participant.
@@ -129,18 +101,15 @@ by questions created to guage whether each presented visualisation has an impact
 The set will consist of three separate surveys, which will be identical up to the visualisation package used. Particularly, one will contain 
 visualisations made with R's ggplot2, the next with matplotlib from Python, and the last with the JavaScript library D3. These surveys will 
 be distributed to the general public by sharing links on social media platforms such as Facebook. The reasoning behind creating three separate 
-surveys in a variety of languages is to ascertain whether 
-
-
+surveys in a variety of languages is to ascertain whether the language used influences the interpretation. 
 
 
 
 
 %TODO explain the second type of survey further
-The second type will be a single survey comparing the 
-implementation of the different languages and will be distributed to a group specialising in visual analytics for pharmaceutical 
-research. This second survey aims to explore opinions on the coding languages themselves, in terms of features such as 
-readability, reproducibility and ease of implementation.
+The second type will be a single survey comparing the implementation of the different languages and will be distributed to a group specialising 
+in visual analytics for pharmaceutical research. This second survey aims to explore opinions on the coding languages themselves, in terms of 
+features such as readability, reproducibility and ease of implementation.
 
 %TODO explain that I'm using questionaires and why
 
@@ -193,7 +162,36 @@ Potentially will use google sheets and post all three, and ask people to complet
 
 %Note: Deliberately design 'bad' as well as good plots?
 
-Potential Questions
+%%%%% Potential questions: %%%%%
+ 
+% Which other breed has the same weight as [BREED]?
+% -> Show with logarithmic y-axis
+% -> Show with logarithmic y-axis but in order
+ 
+% Which other breed has the same height as [BREED]?
+% -> Show with logarithmic y-axis
+% -> Show with normal y-axis
+
+% How many times was [OBSTACLE] used?
+% -> Show scatter plot
+% -> Show bar plot
+
+% Which obstacle was used the least?
+% -> Pie vs Bar
+
+% Which variable varies most over time?/Which shows the most dramatic change over time?
+% -> Two time-series line plots, one with both variables on same plot, one on different plots.
+% -> Use data with very different scalings
+
+% Not sure on exqct question yet, but take lots of data points (ie 20 obstacles) and use large legend and lots of colour ("bad" plot)
+% Then show same plot but with labels on points and no legend ("Good" plot)
+% -> Hypothesise that plot with labels will be more accurately interpreted.
+% -> Source: https://towardsdatascience.com/color-in-data-visualization-less-how-more-why-348514a3c4d8
+
+% Which obstacles were used [AMOUNT] times?
+% -> used in conujunction with differently scales plots/barplots?
+
+%%%%%
 
 
 
