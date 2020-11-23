@@ -1,2 +1,2 @@
 invoke
-black=="20.8b1"
+black==20.8b1
