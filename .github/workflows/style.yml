@@ -40,3 +40,7 @@ jobs:
     - name: Check that document compiles
       run: |
         cd tex; pdflatex main.tex
+    - name: Run black check on Python files
+      run: |
+        python -m black . --check
+
