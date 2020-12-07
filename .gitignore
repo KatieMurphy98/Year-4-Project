@@ -5,3 +5,4 @@
 *.log
 *.synctex.gz
 src/.vscode/settings.json
+.vscode/settings.json
