@@ -4,6 +4,9 @@ library(dplyr)
 library(DAAG) #datasets
 library(viridis) #colourmaps
 
+library("httr")
+library("readxl")
+
 ##### visualising colourmaps #####
 
 ggplot(data.frame(x = rnorm(10000), y = rnorm(10000)), aes(x = x, y = y)) +
@@ -13,30 +16,47 @@ scale_fill_viridis(option='inferno') + theme_bw()
 ##### Ninja Warrior data #####
 #Data from: https://data.world/ninja/anw-obstacle-history
 
-NinjaWarrior <- read.csv("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Data/American Ninja Warrior Obstacle History.csv")
+GET("https://query.data.world/s/ttkvg64pqsrncsfpopxl3kbxnmioyq", write_disk(tf <- tempfile(fileext = ".xlsx")))
+NinjaWarrior <- as.data.frame(read_excel(tf))
+names(NinjaWarrior) <- c("season", "location", "stage", "name", "order")
 
 obstacles <- function(ObstacleNumbers){
   obst <- data.frame()
   j=1
 
-  for (i in unique(NinjaWarrior$Obstacle.Name)){
-    dat <- NinjaWarrior %>% filter(Obstacle.Name == i)
+  for (i in unique(NinjaWarrior$name)){
+    dat <- filter(NinjaWarrior, name == i)
     obst[j, 1] <- i
     obst[j, 2] <- dim(dat)[1]
-    j <- j+1
+    j = j+1
   }
   
+  #print(obst)
   obst <- arrange(obst, desc(V2))
   obst <- obst[ObstacleNumbers, ]
 }
 
-obst <- obstacles(8:15)
-names(obst) <- c('Obstacle.Name', 'Times.Used')
+obst <- obstacles(ObstacleNumbers = 8:15)
+names(obst) <- c('name', 'ntimes')
+
+obstnames <- obstacles(5:10)[,1]
+rounds <- unique(NinjaWarrior$'stage')
+
+num <- matrix(0, 5, 8)
+for(i in 1:5){
+  for(j in 1:8){
+    a <- dim(NinjaWarrior %>% filter(name == obstnames[i] & stage == rounds[j]))[1]
+    num[i, j] <- a
+  }
+}
+num
+
+
 
 # Barplot in default colour map 
 
 ggplot(data=obst) +
-geom_col(aes(x=Obstacle.Name, y=Times.Used, fill=Obstacle.Name)) +
+geom_col(aes(x=name, y=ntimes, fill=name)) +
 scale_x_discrete(labels=NULL) +
 xlab('Obstacle') + 
 ylab('Times Used') +
@@ -46,7 +66,7 @@ theme_classic()
 # Barplot in viridis
 
 ggplot(data=obst)+
-geom_col(aes(x=Obstacle.Name, y=Times.Used, fill=Obstacle.Name))+
+geom_col(aes(x=name, y=ntimes, fill=name))+
 scale_x_discrete(labels=NULL) +
 scale_fill_viridis(discrete = T)+
 xlab('Obstacle') + 
@@ -57,7 +77,7 @@ theme_classic()
 #jitter in default
 
 ggplot(data=obst)+
-geom_jitter(aes(x=Obstacle.Name, y=Times.Used, col=Obstacle.Name), size=5)+
+geom_jitter(aes(x=name, y=ntimes, fill=name), size=5)+
 scale_x_discrete(labels=NULL) +
 xlab('Obstacle') + 
 ylab('Times Used')+
@@ -67,7 +87,7 @@ theme_classic()
 # jitter in viridis
 
 ggplot(data=obst)+
-geom_jitter(aes(x=Obstacle.Name, y=Times.Used, col=Obstacle.Name), size=5)+
+geom_jitter(aes(x=name, y=ntimes, fill=name), size=5)+
 scale_x_discrete(labels=NULL) +
 scale_color_viridis(discrete = T)+
 xlab('Obstacle') + 
@@ -135,4 +155,8 @@ scale_x_discrete(name="Breed", labels=Dogs$Breed)+
 ylab('Weight') +
 theme_classic()
 
-##### 
+##### Movie ratings #####
+
+movie <- read.csv("https://query.data.world/s/mj72g7pmvyyt6dlm7eck7yp4drqf6e", header=TRUE, stringsAsFactors=FALSE)
+
+mario <- read.csv("https://query.data.world/s/kzmm4brdm34vwjspewouvdmzdgry4e", header=TRUE, stringsAsFactors=FALSE)
