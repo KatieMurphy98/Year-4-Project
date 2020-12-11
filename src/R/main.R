@@ -3,7 +3,8 @@ library(ggplot2)
 library(dplyr)
 library(DAAG) #datasets
 library(viridis) #colourmaps
-
+library(pubr)
+library(cowplot)
 library("httr")
 library("readxl")
 
@@ -36,8 +37,6 @@ obstacles <- function(ObstacleNumbers){
   obst <- obst[ObstacleNumbers, ]
 }
 
-obst <- obstacles(ObstacleNumbers = 8:15)
-names(obst) <- c('name', 'ntimes')
 
 obstnames <- obstacles(5:10)[,1]
 rounds <- unique(NinjaWarrior$'stage')
@@ -52,111 +51,227 @@ for(i in 1:5){
 num
 
 
+ninja_plots1 <- function(n.obst){
 
-# Barplot in default colour map 
+  obst <- obstacles(ObstacleNumbers = n.obst)
+  names(obst) <- c('name', 'ntimes')
 
-ggplot(data=obst) +
-geom_col(aes(x=name, y=ntimes, fill=name)) +
-scale_x_discrete(labels=NULL) +
-xlab('Obstacle') + 
-ylab('Times Used') +
-labs(fill = 'Obstacle') +
-theme_classic()
+  obstcount <- c()
+  for(i in 1:dim(obst)[1]){
+    obstcount <- append(obstcount, rep(obst[i, 1], obst[i, 2]))
+  }
+  
+  print(obst)
 
-# Barplot in viridis
-
-ggplot(data=obst)+
-geom_col(aes(x=name, y=ntimes, fill=name))+
-scale_x_discrete(labels=NULL) +
-scale_fill_viridis(discrete = T)+
-xlab('Obstacle') + 
-ylab('Times Used')+
-labs(fill = 'Obstacle') +
-theme_classic()
-
-#jitter in default
-
-ggplot(data=obst)+
-geom_jitter(aes(x=name, y=ntimes, fill=name), size=5)+
-scale_x_discrete(labels=NULL) +
-xlab('Obstacle') + 
-ylab('Times Used')+
-labs(fill = 'Obstacle') +
-theme_classic()
-
-# jitter in viridis
-
-ggplot(data=obst)+
-geom_jitter(aes(x=name, y=ntimes, fill=name), size=5)+
-scale_x_discrete(labels=NULL) +
-scale_color_viridis(discrete = T)+
-xlab('Obstacle') + 
-ylab('Times Used')+
-labs(fill = 'Obstacle') +
-theme_classic()
+  bardat <- as.data.frame(obstcount) 
 
 
+  # default scale
+  dflt <- ggplot(data=bardat) +
+  geom_bar(aes(x=obstcount), fill="#69b3a2") +
+  scale_x_discrete() +
+  scale_y_continuous() +
+  xlab('Obstacle') + 
+  ylab('Times Used') +
+  labs(fill = 'Obstacle') +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+  # log scale
+  lg <- ggplot(data=bardat) +
+  geom_bar(aes(x=obstcount), fill="#69b3a2") +
+  xlab('Obstacle') + 
+  ylab('Times Used') +
+  labs(fill = 'Obstacle') +
+  scale_x_discrete() +
+  scale_y_log10()+
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+  # truncated y
+  obst <- obstacles(ObstacleNumbers = n.obst)
+  names(obst) <- c('name', 'ntimes')
+
+  obstcount <- c()
+  for(i in 1:dim(obst)[1]){
+    obstcount <- append(
+      obstcount, rep(obst[i, 1], ((obst[i, 2]-(min(obst[ ,2]))+1))))
+  }
+  
+  bardat <- as.data.frame(obstcount) 
+
+  trnc <- ggplot(data=bardat) +
+  geom_bar(aes(x=obstcount), fill="#69b3a2") +
+  xlab('Obstacle') + 
+  ylab('Times Used') +
+  labs(fill = 'Obstacle') +
+  scale_x_discrete() +
+  scale_y_continuous(breaks = c(0, 10, 20), labels = c(20, 30, 40))+
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+  plot_grid(lg, dflt, trnc, 
+            labels = c("A", "B", "C"),
+            ncol = 2, nrow = 2)
+
+  trnc
+
+}
+ninja_plots1(2:5)
+
+
+ninja_plots2 <- function(n.obst){
+
+  obst <- obstacles(ObstacleNumbers = n.obst)
+  names(obst) <- c('name', 'ntimes')
+
+  obstcount <- c()
+  for(i in 1:dim(obst)[1]){
+    obstcount <- append(obstcount, rep(obst[i, 1], obst[i, 2]))
+  }
+  
+  print(obst)
+
+  bardat <- as.data.frame(obstcount) 
+
+
+  # default
+  dflt <- ggplot(data=bardat) +
+  geom_bar(aes(x=obstcount), fill="#69b3a2") +
+  scale_x_discrete() +
+  scale_y_continuous() +
+  xlab('Obstacle') + 
+  ylab('Times Used') +
+  labs(fill = 'Obstacle') +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+  # narrow bars
+  narrow <- ggplot(data=bardat) +
+  geom_bar(aes(x=obstcount), fill="#69b3a2", width = 0.1) +
+  scale_x_discrete() +
+  scale_y_continuous() +
+  xlab('Obstacle') + 
+  ylab('Times Used') +
+  labs(fill = 'Obstacle') +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+  # reversed axis
+
+  rev <- ggplot(data=bardat) +
+  geom_bar(aes(x=obstcount), fill="#69b3a2") +
+  scale_x_discrete() +
+  scale_y_continuous() +
+  coord_flip() +
+  xlab('Obstacle') + 
+  ylab('Times Used') +
+  labs(fill = 'Obstacle') +
+  theme_classic()
+
+  # ordered
+
+  obst$name <- c("A", "B", "C", "D", "E", "F", "G")
+
+  obstcount <- c()
+  for(i in 1:dim(obst)[1]){
+    obstcount <- append(obstcount, rep(obst[i, 1], obst[i, 2]))
+  }
+
+  bardat <- as.data.frame(obstcount) 
+
+  ord <- ggplot(data=bardat) +
+  geom_bar(aes(x=obstcount), fill="#69b3a2") +
+  scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip","Jump Hang","Quad Steps","Jumping Spider")) +
+  scale_y_continuous() +
+  xlab('Obstacle') + 
+  ylab('Times Used') +
+  labs(fill = 'Obstacle') +
+  theme_classic()+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+  plot_grid(narrow, dflt, ord,
+            labels = c("A", "B", "C"),
+            ncol = 2, nrow = 2)
+}
+ninja_plots2(2:8)
 
 ##### Dog Breed data #####
 # From https://data.world/len/dog-canine-breed-size-akc
 
-format_data <- function(entries){
-  Dogs <- read.csv("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/AKC Dog Breeds/main.csv")
+format_dogs <- function(){
+  dogs <- read.csv("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/AKC Dog Breeds/main.csv")
 
-# Filter out breeds with 'na' and 'not found' values
-Dogs <- Dogs %>%
-filter(Breed != "Coton de Tulear" & Breed != "Alaskan Malamute")
+  # Filter out breeds with 'na' and 'not found' values, and with incorrect unit.
+  dogs <- dogs %>%
+  filter(Breed != "Coton de Tulear" & Breed != "Alaskan Malamute" & Breed != "Vizsla")
 
-# Change class of variables from character to numeric
-Dogs$weight_low_lbs <- as.numeric(Dogs$weight_low_lbs)
 
-# Take only certain breeds
-Dogs <- Dogs[entries, ]
+  
+  # Change class of variables from character to numeric
+  dogs$weight_low_lbs <- as.numeric(dogs$weight_low_lbs)
+  dogs$weight_high_lbs <- as.numeric(dogs$weight_high_lbs)
+  dogs$height_low_inches <- as.numeric(dogs$height_low_inches)
+  dogs$height_high_inches <- as.numeric(dogs$height_high_inches)
+
+  dogs$height_av <- (dogs$height_low_inches + dogs$height_high_inches)/2
+  dogs$weight_av <- (dogs$weight_low_lbs + dogs$weight_high_lbs)/2
+
+  dogs <- as.data.frame(dogs)
 }
+dogs <- format_dogs()
 
-Dogs <- format_data(1:5)
+plots <- function(){
+   d1 <- ggplot(data = dogs, aes(x=weight_av, y=height_av, label = Breed))+
+   geom_point(col="#69b3a2")+
+   xlab("Average Weight (lbs)")+
+   ylab("Average Height (in)")+
+   theme_classic()
+
+   xlog <- ggplot(data = dogs, aes(x=weight_av, y=height_av, label = Breed))+
+      geom_point(col="#69b3a2")+
+      scale_x_log10()+
+      xlab("Average Weight (lbs)")+
+      ylab("Average Height (in)")+
+      theme_classic()   
+   
+   ylog <- ggplot(data = dogs, aes(x=weight_av, y=height_av, label = Breed))+
+      geom_point(col="#69b3a2")+
+      scale_y_log10()+
+      xlab("Average Weight (lbs)")+
+      ylab("Average Height (in)")+
+      theme_classic()   
+   
+   loglog <- ggplot(data = dogs, aes(x=weight_av, y=height_av, label = Breed))+
+      geom_point(col="#69b3a2")+
+      scale_y_log10()+
+      scale_x_log10()+
+      xlab("Average Weight (lbs)")+
+      ylab("Average Height (in)")+
+      theme_classic()   
+
+  trunc <- ggplot(data = dogs, aes(x=weight_av, y=height_av, label = Breed))+
+      geom_point(col="#69b3a2")+
+      scale_y_log10()+
+      scale_x_log10()+
+      xlab("Average Weight (lbs)")+
+      ylab("Average Height (in)")+
+      theme_classic()   
+   
+   plot_grid(d1, xlog, ylog, loglog,  
+               labels = c("A", "B", "C", "D"),
+               ncol = 2, nrow = 2)
+   
+}
+plots()
 
 
-# Create standard barplot in default colours
-ggplot(data=Dogs) +
-geom_col(aes(x=Breed, y=weight_low_lbs), fill="#69b3a2") +
-xlab('Breed') + 
-ylab('Weight') +
-labs(fill = 'Breed') +
-theme_classic()
+##### chickweight #####
+ data(ChickWeight)
+ chick <- ChickWeight
+ chick <- chick[c(1:12, 221:232, 341:352, 461:472 ), ]
 
-# Create barplot with stretched y-axis
-ggplot(data=Dogs) +
-geom_col(aes(x=Breed, y=weight_low_lbs), fill="#69b3a2") +
-scale_y_continuous(limits = c(0, 175)) +
-xlab('Breed') + 
-ylab('Weight') +
-labs(fill = 'Breed') +
-theme_classic()
-
-# Create barplot with logarithmic y-axis
-ggplot(data=Dogs)+
-geom_col(aes(x=Breed, y=weight_low_lbs), fill="#69b3a2")+
-scale_y_log10()+
-xlab('Breed') + 
-ylab('Weight') +
-labs(fill = 'Breed') +
-theme_classic()
-
-# Barplot with log scale but bars in descending order
-Dogs <- arrange(Dogs, desc(weight_low_lbs))
-Dogs_reorder <- Dogs
-Dogs_reorder$Breed <- c("A", "B", "C", "D", "E")
-
-ggplot(data=Dogs_reorder)+
-geom_col(aes(x=Breed, y=weight_low_lbs), fill="#69b3a2")+
-scale_y_log10()+
-scale_x_discrete(name="Breed", labels=Dogs$Breed)+
-ylab('Weight') +
-theme_classic()
-
-##### Movie ratings #####
-
-movie <- read.csv("https://query.data.world/s/mj72g7pmvyyt6dlm7eck7yp4drqf6e", header=TRUE, stringsAsFactors=FALSE)
-
-mario <- read.csv("https://query.data.world/s/kzmm4brdm34vwjspewouvdmzdgry4e", header=TRUE, stringsAsFactors=FALSE)
+ggplot(data = chick, aes(x=Time, y=weight, col=Diet)) +
+   geom_point()+
+   geom_line()+
+   theme_classic()
