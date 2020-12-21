@@ -1,3 +1,4 @@
+
 \chapter{Data collection}
 
 \section{Background on survey design}
@@ -63,22 +64,67 @@ to provide honest answers. Although the content of the surveys for this study is
 
 
 \section{Specific goals of survey tool for this study}
-This study will explore how best to represent various data types visually. One way in which this will be investigated is to create 
-a series of online questionaires in order to determine how visualisations can impact the viewer's perception of the plotted data. 
-While visualisations can be a very useful tool in understanding data, they also have the potential to mislead the observer, which 
-could be either done accidentally or on purpose. As discussed by Gatto in [CITE 6 HERE], altering properties such as the range of 
-the axes, size of bars on a bar plot, and colouring of the plot can all influence what is inferred about the data when observing 
-a visualisation. Furthering Dr. Gatto's argument, she goes on to reference a 2014 blog post [CITE 7 HERE] entitled 'How to Lie with 
-Data Visualisation'. This post gives a series of examples depicting how the afformentioned properties affect interpretation. The first 
-example shows how truncating the y-axis of a bar plot can overexaggerate differences in the height of bars, perhaps leading incorrect 
-observations about the data. For example, if the data consists of values, such as profits, at different time points, then truncating 
+While visualisations can be a very useful tool for understanding data, they also have the potential to be highly misleading. This section of the 
+study will explore how modifying certain aesthetic features of visualisations can impact perception and interpretation of data, and how these 
+modifications can be exploited in order to mislead the observer. Misleading visualisations may be created in an effort to deliberately influence the 
+viewers' perceptions, or accidentally as a result of poor practice and knowledge surrounding data visualisation. In either case, visualisations have the
+ability to communicate different messages and stories depending on how they present the data to the observer. There is a large amount of research and 
+literature surrounding this topic, both in terms of providing frameworks for good visualisation practice as well as looking into how various techniques 
+are used to decieve viewers. Results from some of these papers will be replicated, as well as used to form hypotheses which this survey will investigate.\newline
+
+One feature that will be tested is scaling of axes. This is widely regarded in literature to be a 
+
+ 
+
+
+
+
+
+A large amount of the literature exploring misleading tactics in data visualisation focusses mainly on bar plots and line plots for categorical and 
+time series data, and so this is what the survey will also focus on. There is also a large amount of literature surrounding the use of three dimensional 
+viualisations and pie charts, which will not be explored here however will be discussed in later sections. 
+
+
+In particular, the results formulated in [CITE: https://dl.acm.org/doi/pdf/10.1145/3380851.3416762] will
+be explored. Similarly to our study, the paper uses a survey to explore how deceptive visualisation techniques can be employed as well as their impact 
+on perception of the data. The survey discussed in this paper presents the participant with four plots; a bar plot, a line plot, a pie chart and a 
+bubble plot, 
+
+
+
+
+
+
+
+
+
+The first example shows how truncating the y-axis of a bar plot can overexaggerate differences in the heights of the bars, perhaps leading to incorrect 
+observations regarding comparisons of values within the data. A first hypothesis that will be tested in this survey is that truncating the y-axis
+does indeed impact how the data is interpreted.
+
+For example, if the data consists of values, such as profits, at different time points, then truncating 
 the y-axis can at first make the profit increase each year seem much greater than it actually is. Only when one reads the scale on the 
 axis will it be observed that there may only be a very marginal, and potentially almost negligible, difference. Of course if someone 
 were to read the y-axis scaling they would determine that the change was in fact small, but the human brain thrives on visual and 
 pictorial feedback, and thus it is likely that a person would look at this plot and simply draw conclusions based on the plot itself
-without reference to the truncated axis. Therefore, a first hypothesis that will be tested in this survey is whether truncating the y-axis
-does indeed impact how the data is interpreted. Additionally, the use of a logarithmic scale will be investigated, and it will
+without reference to the truncated axis.  Additionally, the use of a logarithmic scale will be investigated, and it will
 be hypothesised that this will also impact interpretation.
+
+
+
+\section{Survey Design}
+
+The publication [CITE: https://dl.acm.org/doi/pdf/10.1145/3380851.3416762] was used as inspiration for survey design.
+
+The decision to focus on the two plot types was made in part to follow the existing literature, but also to ensure the survey is not too long. 
+As discussed in [CITE: https://ojs.ub.uni-konstanz.de/srm/article/view/7145], too long a survey can result in higher measurement error due to factors 
+such as waning interest or mental fatigue of respondents, resulting in careless responding and non-response. This is also further explored in 
+[CITE: https://corescholar.libraries.wright.edu/cgi/viewcontent.cgi?article=3059&context=etd_all]. While 
+[CITE: https://ojs.ub.uni-konstanz.de/srm/article/view/7145] does conclude that a 'split survey' design, where each respondent is only asked to 
+answer a selection of questions from the whole set, is effective in reducing error while gathering large amount of information, this will not be employed
+here. The reasoning for this is that there will already be a large set of different surveys being sent, and creating further splits could potentially lead
+to small sample sizes and thus inconclusive results. Additionally to this, the paper investigates how placement of questions in the survey can affect
+responses, concluding that questions asked later in the survey are more susceptible to bias. 
 
 %%%%% TODO:
 
@@ -135,30 +181,44 @@ In the set of three surveys we aim to answer questions such as:
 Potentially will use google sheets and post all three, and ask people to complete one of them.
 %TODO Specify further
 
+\section{\textbf{Demographic Questions}}
 
-\textbf{Information about participants}
-
-%These questions are pretty much finalised
+The questions below are used to 
 
 \begin{itemize}
     \item Please enter your age
     
-    \item (maybe drop down box: Science, Technology, Engineering, Mathematics, Arts, Social Sciences, Humanities, Business, Other (please specify), N/A)
+    \item If you are a university student or past university graduate please specify your area of study. (Drop down box: Science, Technology, Engineering, Maths, Arts, Social Sciences, Humanities, Business, N/A, Other (please specify))
 
-    \item How strongly do you agree with each of the following statements?
+    \item How strongly do you agree with each of the following statements? (Linear scale with 1 - 5, 1=strongly disagree, 5=strongly agree)
 
-    \item I have good spatial awareness skills (Scale/slider)
+    \item\item I have good spatial awareness skills 
     
-    \item I have good observational skills (Scale/slider)
+    \item\item I have good observational skills 
     
-    \item I have good numerical skills (Scale/slider)
+    \item\item I have good numerical skills 
     
-    \item Are you colourblind? (Binary checkbox: Y/N)
+    \item Are you colourblind? (Checkbox: Yes, No, Prefer not to answer)
     
     \item Do you have any disorders that may affect visual processing? (this could be a general visual processing disorder 
     or dyslexia, dyscalculia etc)
-    (checkbox and open answer box: No, Yes (please specify))
+    ((Checkbox: Yes, No, Prefer not to answer))
 \end{itemize}
+
+
+\section{\textbf{Bar Plot Questions}}
+
+American Ninja Warrior\newline
+
+The following bar charts present information regarding how many times 4 obstacles were used over the course of 10 seasons of the TV show 'American Ninja Warrior'. Please note that the answers to this section are entirely subjective, and that there are no 'correct' answers.\newline
+
+
+The first three questions refer to this bar chart, bar chart A.
+
+\textbf{Figure}
+
+
+
 
 %Note: Deliberately design 'bad' as well as good plots?
 
