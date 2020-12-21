@@ -10,26 +10,30 @@ library("httr")
 library("readxl")
 
 ##### Ninja Warrior data #####
- #Data from: https://data.world/ninja/anw-obstacle-history
 
-GET("https://query.data.world/s/ttkvg64pqsrncsfpopxl3kbxnmioyq", write_disk(tf <- tempfile(fileext = ".xlsx")))
-NinjaWarrior <- as.data.frame(read_excel(tf))
-names(NinjaWarrior) <- c("season", "location", "stage", "name", "order")
+### Load and manipulate data ###
+   #Data from: https://data.world/ninja/anw-obstacle-history
+  
+   GET("https://query.data.world/s/ttkvg64pqsrncsfpopxl3kbxnmioyq", write_disk(tf <- tempfile(fileext = ".xlsx")))
+   NinjaWarrior <- as.data.frame(read_excel(tf))
+   names(NinjaWarrior) <- c("season", "location", "stage", "name", "order")
+  
+   obstacles <- function(ObstacleNumbers){
+     obst <- data.frame()
+     j=1
+   
+     for (i in unique(NinjaWarrior$name)){
+       dat <- filter(NinjaWarrior, name == i)
+       obst[j, 1] <- i
+       obst[j, 2] <- dim(dat)[1]
+       j = j+1
+     }
+   
+     obst <- arrange(obst, desc(V2))
+     obst <- obst[ObstacleNumbers, ]
+   }
+#####
 
-obstacles <- function(ObstacleNumbers){
-  obst <- data.frame()
-  j=1
-
-  for (i in unique(NinjaWarrior$name)){
-    dat <- filter(NinjaWarrior, name == i)
-    obst[j, 1] <- i
-    obst[j, 2] <- dim(dat)[1]
-    j = j+1
-  }
-
-  obst <- arrange(obst, desc(V2))
-  obst <- obst[ObstacleNumbers, ]
-}
 
 
 ninja_plots1 <- function(n.obst){
@@ -109,43 +113,31 @@ ninja_plots2 <- function(n.obst){
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
   # narrow bars
-<<<<<<< HEAD
 
   narrow <- ggplot(data=obst) +
   geom_bar(aes(x=name, y=ntimes), fill="#69b3a2", stat="identity") +
-=======
-  narrow <- ggplot(data=obst) +
-  geom_bar(aes(x=name, y=ntimes), fill="#69b3a2", stat="identity", width=0.6) +
->>>>>>> eb700c626cd7cb437fce189514ff0df4a556f4fb
   scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip","Jump Hang","Quad Steps","Jumping Spider")) +
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
   labs(fill = 'Obstacle') +
   theme_classic() +
-<<<<<<< HEAD
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  theme(aspect.ratio = 1.8/1)
-=======
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
   theme(aspect.ratio = 2/1)
->>>>>>> eb700c626cd7cb437fce189514ff0df4a556f4fb
 
   # wide bars
   wide <- ggplot(data=obst) +
-  geom_bar(aes(x=name, y=ntimes), fill="#69b3a2", stat="identity", width=1) +
+  geom_bar(aes(x=name, y=ntimes), fill="#69b3a2", stat="identity") +
   scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip","Jump Hang","Quad Steps","Jumping Spider")) +
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
   labs(fill = 'Obstacle') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  theme(aspect.ratio = 0.3/1)
 
-<<<<<<< HEAD
 
-=======
->>>>>>> eb700c626cd7cb437fce189514ff0df4a556f4fb
   # dots
   dot <- ggplot(data=obst) +
   geom_point(aes(x=name, y=ntimes), col="#69b3a2") +
@@ -161,7 +153,6 @@ ninja_plots2 <- function(n.obst){
             labels = c("A", "B", "C", "D"),
             ncol = 2, nrow = 2)
 
-          
 }
 ninja_plots2(2:8)
 
@@ -214,10 +205,6 @@ ninja_plots3 <- function(n.obst){
   # grey
   grey <- ggplot(data=stage.count) +
   geom_bar(aes(x=obstcount, fill=stages)) +
-<<<<<<< HEAD
-  scale_y_continuous() +
-  scale_fill_grey()+
-=======
   scale_y_continuous() +
   scale_fill_grey()+
   xlab('Obstacle') + 
@@ -225,18 +212,6 @@ ninja_plots3 <- function(n.obst){
   labs(fill = 'Obstacle') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-
-  # fil
-  fil <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages)) +
-  scale_y_continuous() +
->>>>>>> eb700c626cd7cb437fce189514ff0df4a556f4fb
-  xlab('Obstacle') + 
-  ylab('Times Used') +
-  labs(fill = 'Obstacle') +
-  theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-<<<<<<< HEAD
 
   # fil
   fil <- ggplot(data=stage.count) +
@@ -256,17 +231,6 @@ ninja_plots3 <- function(n.obst){
 ninja_plots3(2:5)
 
 
-=======
-
-  a <- plot_grid(vir, fil, grey, vir2,
-            labels = c("A", "B", "C", "D"),
-            ncol = 2, nrow = 2)
-
-}
-ninja_plots3(2:5)
-
-
->>>>>>> eb700c626cd7cb437fce189514ff0df4a556f4fb
 ninja_plots4 <- function(n.obst){
 
   obst <- obstacles(ObstacleNumbers = n.obst)
@@ -303,8 +267,6 @@ ninja_plots4 <- function(n.obst){
   # vir2
   vir2 <- ggplot(data=stage.count) +
   geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
-<<<<<<< HEAD
-=======
   scale_y_continuous() +
   scale_fill_viridis(discrete = TRUE, option = "A")+
   xlab('Obstacle') + 
@@ -328,31 +290,6 @@ ninja_plots4 <- function(n.obst){
   # fil
   fil <- ggplot(data=stage.count) +
   geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
->>>>>>> eb700c626cd7cb437fce189514ff0df4a556f4fb
-  scale_y_continuous() +
-  scale_fill_viridis(discrete = TRUE, option = "A")+
-  xlab('Obstacle') + 
-  ylab('Times Used') +
-  labs(fill = 'Obstacle') +
-  theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-
-<<<<<<< HEAD
-
-  # grey
-  grey <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
-  scale_y_continuous() +
-  scale_fill_grey()+
-  xlab('Obstacle') + 
-  ylab('Times Used') +
-  labs(fill = 'Obstacle') +
-  theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-
-  # fil
-  fil <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
@@ -360,8 +297,6 @@ ninja_plots4 <- function(n.obst){
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
-=======
->>>>>>> eb700c626cd7cb437fce189514ff0df4a556f4fb
   plot_grid(vir, fil, grey, vir2,
             labels = c("A", "B", "C", "D"),
             ncol = 2, nrow = 2)
@@ -445,7 +380,6 @@ plots()
  data(ChickWeight)
  chick <- ChickWeight
  chick <- chick[c(6:12, 226:232, 346:352, 466:472 ), ]
-<<<<<<< HEAD
 
 def <- ggplot(data = chick, aes(x=Time, y=weight, col=Diet)) +
    geom_point()+
@@ -459,21 +393,6 @@ trunc <- ggplot(data = chick, aes(x=Time, y=weight, col=Diet)) +
    scale_y_log10()+
    theme_classic()
 
-=======
-
-def <- ggplot(data = chick, aes(x=Time, y=weight, col=Diet)) +
-   geom_point()+
-   geom_line()+
-   scale_y_continuous(limits=c(0, 340))+
-   theme_classic()
-
-trunc <- ggplot(data = chick, aes(x=Time, y=weight, col=Diet)) +
-   geom_point()+
-   geom_line()+
-   scale_y_log10()+
-   theme_classic()
-
->>>>>>> eb700c626cd7cb437fce189514ff0df4a556f4fb
   plot_grid(def, trunc,  
                labels = c("A", "B"),
                ncol = 2, nrow = 1)
