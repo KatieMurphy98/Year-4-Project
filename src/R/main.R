@@ -49,7 +49,7 @@ ninja_plots1 <- function(n.obst){
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -58,7 +58,7 @@ ninja_plots1 <- function(n.obst){
   geom_bar(aes(x=name, y=ntimes), fill="#69b3a2", stat="identity") +
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip")) +
   scale_y_log10()+
   theme_classic() +
@@ -82,7 +82,7 @@ ninja_plots1 <- function(n.obst){
   geom_bar(aes(x=obstcount), fill="#69b3a2") +
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip")) +
   scale_y_continuous(breaks = c(0, 10, 20), labels = c(20, 30, 40))+
   theme_classic() +
@@ -108,7 +108,7 @@ ninja_plots2 <- function(n.obst){
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -120,7 +120,7 @@ ninja_plots2 <- function(n.obst){
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   theme(aspect.ratio = 2/1)
@@ -132,7 +132,7 @@ ninja_plots2 <- function(n.obst){
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
   theme(aspect.ratio = 0.3/1)
@@ -145,14 +145,29 @@ ninja_plots2 <- function(n.obst){
   scale_y_continuous(limits = c(0, 41), breaks=seq(0, 40, 10), labels=seq(0, 40, 10)) +
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
-  plot_grid(narrow, dflt, wide, dot,
-            labels = c("A", "B", "C", "D"),
-            ncol = 2, nrow = 2)
+  top <- plot_grid(narrow, dflt,
+            labels = c("A", "B"),
+            ncol = 2, nrow = 1)
 
+  plot_grid(top, wide,
+            labels = c(" ", "C"),
+            ncol = 1, nrow = 2
+            )
+
+  ggsave("Plots/Ninja_Data/bars/all.jpeg")
+
+  print(wide)
+  ggsave("Plots/Ninja_Data/bars/wide.jpeg") 
+
+  print(narrow)
+  ggsave("Plots/Ninja_Data/bars/narrow.jpeg") 
+
+  print(dflt)
+  ggsave("Plots/Ninja_Data/bars/control.jpeg") 
 }
 ninja_plots2(2:8)
 
@@ -186,7 +201,7 @@ ninja_plots3 <- function(n.obst){
   scale_fill_viridis(discrete = TRUE, option = "D")+
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -197,7 +212,7 @@ ninja_plots3 <- function(n.obst){
   scale_fill_viridis(discrete = TRUE, option = "A")+
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -209,7 +224,7 @@ ninja_plots3 <- function(n.obst){
   scale_fill_grey()+
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -219,13 +234,52 @@ ninja_plots3 <- function(n.obst){
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
-  a <- plot_grid(vir, fil, grey, vir2,
-            labels = c("A", "B", "C", "D"),
-            ncol = 2, nrow = 2)
+  print(vir)
+  ggsave("Plots/Ninja_Data/colours/viridis.jpeg")
+
+  print(vir2)
+  ggsave("Plots/Ninja_Data/colours/viridis2.jpeg")
+
+  print(grey)
+  ggsave("Plots/Ninja_Data/colours/grey.jpeg")
+
+  print(fil)
+  ggsave("Plots/Ninja_Data/colours/default.jpeg")
+
+
+  plot_grid(vir, fil, 
+            labels = c("A", "B"),
+            ncol = 1, nrow = 2)
+  ggsave("Plots/Ninja_Data/colours/col_set_a.jpeg")
+
+  plot_grid(fil, vir, 
+            labels = c("A", "B"),
+            ncol = 1, nrow = 2)
+  ggsave("Plots/Ninja_Data/colours/col_set_b.jpeg")
+
+  plot_grid(fil, grey,
+            labels = c("A", "B"),
+            ncol = 1, nrow = 2)
+  ggsave("Plots/Ninja_Data/colours/col_set_c.jpeg")
+
+  plot_grid(grey, fil,
+            labels = c("A", "B"),
+            ncol = 1, nrow = 2)
+  ggsave("Plots/Ninja_Data/colours/col_set_d.jpeg")
+
+  plot_grid(vir, grey,
+            labels = c("A", "B"),
+            ncol = 1, nrow = 2)
+  ggsave("Plots/Ninja_Data/colours/col_set_e.jpeg")
+  
+  plot_grid(grey, vir,
+            labels = c("A", "B"),
+            ncol = 1, nrow = 2) 
+  ggsave("Plots/Ninja_Data/colours/col_set_f.jpeg")   
 
 }
 ninja_plots3(2:5)
@@ -260,7 +314,7 @@ ninja_plots4 <- function(n.obst){
   scale_fill_viridis(discrete = TRUE, option = "D")+
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -271,7 +325,7 @@ ninja_plots4 <- function(n.obst){
   scale_fill_viridis(discrete = TRUE, option = "A")+
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -283,7 +337,7 @@ ninja_plots4 <- function(n.obst){
   scale_fill_grey()+
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -293,15 +347,25 @@ ninja_plots4 <- function(n.obst){
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
-  labs(fill = 'Obstacle') +
+  labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
-  plot_grid(vir, fil, grey, vir2,
-            labels = c("A", "B", "C", "D"),
-            ncol = 2, nrow = 2)
+  print(vir)
+  ggsave("Plots/Ninja_Data/colours/viridis.jpeg")
 
- 
+  print(vir2)
+  ggsave("Plots/Ninja_Data/colours/viridis2.jpeg")
+
+  print(grey)
+  ggsave("Plots/Ninja_Data/colours/grey.jpeg")
+
+  print(fil)
+  ggsave("Plots/Ninja_Data/colours/default.jpeg")  
+
+  plot_grid(vir, vir_dodge,
+            labels = c("A", "B"),
+            ncol = 1, nrow = 2)   
 
 }
 ninja_plots4(2:5)
