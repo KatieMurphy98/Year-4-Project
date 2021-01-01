@@ -18,7 +18,7 @@ library("readxl")
    NinjaWarrior <- as.data.frame(read_excel(tf))
    names(NinjaWarrior) <- c("season", "location", "stage", "name", "order")
   
-   obstacles <- function(ObstacleNumbers){
+  obstacles <- function(ObstacleNumbers){
      obst <- data.frame()
      j=1
    
@@ -370,102 +370,34 @@ ninja_plots4 <- function(n.obst){
 }
 ninja_plots4(2:5)
 
-##### Dog Breed data #####
-# From https://data.world/len/dog-canine-breed-size-akc
 
-format_dogs <- function(){
-  dogs <- read.csv("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/AKC Dog Breeds/main.csv")
+##### Time-series #####
 
-  # Filter out breeds with 'na' and 'not found' values, and with incorrect unit.
-  dogs <- dogs %>%
-  filter(Breed != "Coton de Tulear" & Breed != "Alaskan Malamute" & Breed != "Vizsla")
+data <- sort(c(BJsales)) 
 
-
-  
-  # Change class of variables from character to numeric
-  dogs$weight_low_lbs <- as.numeric(dogs$weight_low_lbs)
-  dogs$weight_high_lbs <- as.numeric(dogs$weight_high_lbs)
-  dogs$height_low_inches <- as.numeric(dogs$height_low_inches)
-  dogs$height_high_inches <- as.numeric(dogs$height_high_inches)
-
-  dogs$height_av <- (dogs$height_low_inches + dogs$height_high_inches)/2
-  dogs$weight_av <- (dogs$weight_low_lbs + dogs$weight_high_lbs)/2
-
-  dogs <- as.data.frame(dogs)
+sim_data1 <- function(npoints){
+  set.seed(40)
+  vals <- sample(data, size=npoints, replace=F)
+  time <- as.factor(seq(2006, 2006+npoints-1, 1))
+  group <- rep(1, length(time))
+  sales <- data.frame(time=time, vals=vals, grp=group)
+  return(sales)
 }
-dogs <- format_dogs()
 
-plots <- function(){
-   d1 <- ggplot(data = dogs, aes(x=weight_av, y=height_av, label = Breed))+
-   geom_point(col="#69b3a2")+
-   xlab("Average Weight (lbs)")+
-   ylab("Average Height (in)")+
-   theme_classic()
-
-   xlog <- ggplot(data = dogs, aes(x=weight_av, y=height_av, label = Breed))+
-      geom_point(col="#69b3a2")+
-      scale_x_log10()+
-      xlab("Average Weight (lbs)")+
-      ylab("Average Height (in)")+
-      theme_classic()   
-   
-   ylog <- ggplot(data = dogs, aes(x=weight_av, y=height_av, label = Breed))+
-      geom_point(col="#69b3a2")+
-      scale_y_log10()+
-      xlab("Average Weight (lbs)")+
-      ylab("Average Height (in)")+
-      theme_classic()   
-   
-   loglog <- ggplot(data = dogs, aes(x=weight_av, y=height_av, label = Breed))+
-      geom_point(col="#69b3a2")+
-      scale_y_log10()+
-      scale_x_log10()+
-      xlab("Average Weight (lbs)")+
-      ylab("Average Height (in)")+
-      theme_classic()   
-
-  trunc <- ggplot(data = dogs, aes(x=weight_av, y=height_av, label = Breed))+
-      geom_point(col="#69b3a2")+
-      scale_y_log10()+
-      scale_x_log10()+
-      xlab("Average Weight (lbs)")+
-      ylab("Average Height (in)")+
-      theme_classic()   
-   
-   plot_grid(d1, xlog, ylog, loglog,  
-               labels = c("A", "B", "C", "D"),
-               ncol = 2, nrow = 2)
-   
+sim_data2 <- function(npoints){
+  set.seed(500)
+  vals <- sample(data, size=npoints, replace=F)
+  time <- as.factor(seq(2006, 2006+npoints-1, 1))
+  group <- rep(2, length(time))
+  sales <- data.frame(time=time, vals=vals, grp=group)
+  return(sales)
 }
-plots()
 
+sales <- rbind(sim_data1(npoints=2), sim_data2(npoints=2))
 
-##### chickweight #####
- data(ChickWeight)
- chick <- ChickWeight
- chick <- chick[c(6:12, 226:232, 346:352, 466:472 ), ]
-
-def <- ggplot(data = chick, aes(x=Time, y=weight, col=Diet)) +
+ggplot(data=sales, aes(x=time, y=vals, group = grp, col=grp))+
    geom_point()+
    geom_line()+
-   scale_y_continuous(limits=c(0, 340))+
    theme_classic()
 
-trunc <- ggplot(data = chick, aes(x=Time, y=weight, col=Diet)) +
-   geom_point()+
-   geom_line()+
-   scale_y_log10()+
-   theme_classic()
-
-  plot_grid(def, trunc,  
-               labels = c("A", "B"),
-               ncol = 2, nrow = 1)
-
-
-
-
-
-
-
-############
 
