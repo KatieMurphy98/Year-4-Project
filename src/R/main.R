@@ -8,6 +8,7 @@ library(cowplot)
 library(gridExtra)
 library("httr")
 library("readxl")
+library('Cairo')
 
 ##### Ninja Warrior data #####
 
@@ -51,7 +52,7 @@ ninja_plots1 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   # log scale
   lg <- ggplot(data=obst) +
@@ -62,7 +63,7 @@ ninja_plots1 <- function(n.obst){
   scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip")) +
   scale_y_log10()+
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   # truncated y
   obst <- obstacles(ObstacleNumbers = n.obst)
@@ -86,11 +87,48 @@ ninja_plots1 <- function(n.obst){
   scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip")) +
   scale_y_continuous(breaks = c(0, 10, 20), labels = c(20, 30, 40))+
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
-  plot_grid(lg, dflt, trnc, 
-            labels = c("A", "B", "C"),
-            ncol = 2, nrow = 2)
+  all <- plot_grid(lg, dflt, trnc, 
+         labels = c("A", "B", "C"),
+         ncol = 2, nrow = 2)
+
+  png(filename="Plots/Ninja_Data/y-scaling/control.png",
+    type="cairo",
+    units="in", 
+    width=7, 
+    height=7, 
+    res=300)
+  print(dflt)
+  dev.off()
+
+  png(filename="Plots/Ninja_Data/y-scaling/log10.png",
+    type="cairo",
+    units="in", 
+    width=7, 
+    height=7, 
+    res=300)
+  print(lg)
+  dev.off()
+
+  png(filename="Plots/Ninja_Data/y-scaling/truncated.png",
+    type="cairo",
+    units="in", 
+    width=7, 
+    height=7, 
+    res=300)
+  print(trnc)
+  dev.off()
+
+  png(filename="Plots/Ninja_Data/y-scaling/all.png",
+    type="cairo",
+    units="in", 
+    width=7, 
+    height=7, 
+    res=300)
+  print(all)
+  dev.off()
+
 }
 ninja_plots1(2:5)
 
@@ -110,7 +148,7 @@ ninja_plots2 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   # narrow bars
 
@@ -122,7 +160,7 @@ ninja_plots2 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14)) +
   theme(aspect.ratio = 2/1)
 
   # wide bars
@@ -134,7 +172,7 @@ ninja_plots2 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))+
   theme(aspect.ratio = 0.3/1)
 
 
@@ -147,13 +185,13 @@ ninja_plots2 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   top <- plot_grid(narrow, dflt,
             labels = c("A", "B"),
             ncol = 2, nrow = 1)
 
-  plot_grid(top, wide,
+  all <- plot_grid(top, wide,
             labels = c(" ", "C"),
             ncol = 1, nrow = 2
             )
@@ -168,6 +206,43 @@ ninja_plots2 <- function(n.obst){
 
   print(dflt)
   ggsave("Plots/Ninja_Data/bars/control.jpeg") 
+
+  png(filename="Plots/Ninja_Data/y-scaling/wide.png",
+    type="cairo",
+    units="in", 
+    width=7, 
+    height=7, 
+    res=300)
+  print(wide)
+  dev.off()
+
+  png(filename="Plots/Ninja_Data/y-scaling/narrow.png",
+    type="cairo",
+    units="in", 
+    width=7, 
+    height=7, 
+    res=300)
+  print(narrow)
+  dev.off()
+
+  png(filename="Plots/Ninja_Data/y-scaling/control.png",
+    type="cairo",
+    units="in", 
+    width=7, 
+    height=7, 
+    res=300)
+  print(dflt)
+  dev.off()
+
+  png(filename="Plots/Ninja_Data/y-scaling/all.png",
+    type="cairo",
+    units="in", 
+    width=7, 
+    height=7, 
+    res=300)
+  print(all)
+  dev.off()
+
 }
 ninja_plots2(2:8)
 
@@ -203,7 +278,7 @@ ninja_plots3 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   # vir2
   vir2 <- ggplot(data=stage.count) +
@@ -214,7 +289,7 @@ ninja_plots3 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
 
   # grey
@@ -226,7 +301,7 @@ ninja_plots3 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   # fil
   fil <- ggplot(data=stage.count) +
@@ -236,7 +311,7 @@ ninja_plots3 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   print(vir)
   ggsave("Plots/Ninja_Data/colours/viridis.jpeg")
@@ -316,7 +391,7 @@ ninja_plots4 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   # vir2
   vir2 <- ggplot(data=stage.count) +
@@ -327,7 +402,7 @@ ninja_plots4 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
 
   # grey
@@ -339,7 +414,7 @@ ninja_plots4 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   # fil
   fil <- ggplot(data=stage.count) +
@@ -349,7 +424,7 @@ ninja_plots4 <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   print(vir)
   ggsave("Plots/Ninja_Data/colours/viridis.jpeg")
@@ -373,31 +448,43 @@ ninja_plots4(2:5)
 
 ##### Time-series #####
 
-data <- sort(c(BJsales)) 
+data <- c(BJsales)
 
 sim_data1 <- function(npoints){
-  set.seed(40)
-  vals <- sample(data, size=npoints, replace=F)
+  set.seed(15)
+  start <- sample(1:150, 1)
+  vals <- data[start:(start+npoints-1)]
   time <- as.factor(seq(2006, 2006+npoints-1, 1))
-  group <- rep(1, length(time))
+  group <- as.factor(rep(1, length(time)))
   sales <- data.frame(time=time, vals=vals, grp=group)
   return(sales)
 }
 
 sim_data2 <- function(npoints){
-  set.seed(500)
-  vals <- sample(data, size=npoints, replace=F)
+  set.seed(8)
+  start <- sample(1:150, 1)
+  vals <- data[start:(start+npoints-1)]
   time <- as.factor(seq(2006, 2006+npoints-1, 1))
-  group <- rep(2, length(time))
+  group <- as.factor(rep(2, length(time)))
   sales <- data.frame(time=time, vals=vals, grp=group)
   return(sales)
 }
 
-sales <- rbind(sim_data1(npoints=2), sim_data2(npoints=2))
+sales <- rbind(sim_data1(npoints=10))
+sales <- rbind(sim_data1(npoints=10), sim_data2(npoints=10))
 
-ggplot(data=sales, aes(x=time, y=vals, group = grp, col=grp))+
-   geom_point()+
-   geom_line()+
-   theme_classic()
+p <- ggplot(data=sales, aes(x=time, y=vals, group=grp, col=grp))+
+        geom_line(size=1)+
+        scale_color_manual(values = c("#453781FF", "#55C667FF"))+
+        theme_classic()+ 
+        theme(text = element_text(size = 14))
 
 
+png(filename="epi_test_plain_looking.png",
+    type="cairo",
+    units="in", 
+    width=7, 
+    height=7, 
+    res=350)
+print(p)
+dev.off()
