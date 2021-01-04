@@ -1,14 +1,15 @@
 ##### Load libraries #####
-library(ggplot2)
-library(dplyr)
-library(DAAG) #datasets
-library(viridis) #colourmaps
-library(pubr)
-library(cowplot)
-library(gridExtra)
-library("httr")
-library("readxl")
-library('Cairo')
+ library(ggplot2)
+ library(dplyr)
+ library(DAAG) #datasets
+ library(viridis) #colourmaps
+ library(pubr)
+ library(cowplot)
+ library(gridExtra)
+ library("httr")
+ library("readxl")
+ library('Cairo')
+###
 
 ##### Ninja Warrior data #####
 
@@ -37,7 +38,7 @@ library('Cairo')
 
 
 
-ninja_plots1 <- function(n.obst){
+barplots_yscaling <- function(n.obst){
 
   obst <- obstacles(ObstacleNumbers = n.obst)
   names(obst) <- c('name', 'ntimes')
@@ -130,10 +131,10 @@ ninja_plots1 <- function(n.obst){
   dev.off()
 
 }
-ninja_plots1(2:5)
+barplots_yscaling(2:5)
 
 
-ninja_plots2 <- function(n.obst){
+barplots_barwidth <- function(n.obst){
 
   obst <- obstacles(ObstacleNumbers = n.obst)
   names(obst) <- c('name', 'ntimes')
@@ -244,10 +245,10 @@ ninja_plots2 <- function(n.obst){
   dev.off()
 
 }
-ninja_plots2(2:8)
+barplots_barwidth(2:8)
 
 
-ninja_plots3 <- function(n.obst){
+barplots_stackedcols <- function(n.obst){
 
   obst <- obstacles(ObstacleNumbers = n.obst)
   names(obst) <- c('name', 'ntimes')
@@ -357,10 +358,10 @@ ninja_plots3 <- function(n.obst){
   ggsave("Plots/Ninja_Data/colours/col_set_f.jpeg")   
 
 }
-ninja_plots3(2:5)
+barplots_stackedcols(2:5)
 
 
-ninja_plots4 <- function(n.obst){
+barplots_stackedcols_dodge <- function(n.obst){
 
   obst <- obstacles(ObstacleNumbers = n.obst)
   names(obst) <- c('name', 'ntimes')
@@ -443,48 +444,163 @@ ninja_plots4 <- function(n.obst){
             ncol = 1, nrow = 2)   
 
 }
-ninja_plots4(2:5)
+barplots_stackedcols_dodge(2:5)
 
 
 ##### Time-series #####
 
-data <- c(BJsales)
 
-sim_data1 <- function(npoints){
-  set.seed(15)
-  start <- sample(1:150, 1)
-  vals <- data[start:(start+npoints-1)]
-  time <- as.factor(seq(2006, 2006+npoints-1, 1))
-  group <- as.factor(rep(1, length(time)))
-  sales <- data.frame(time=time, vals=vals, grp=group)
-  return(sales)
+sales_line_plots <- function(npoints){
+   dat <- c(BJsales)
+   
+   months_list <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+   months <- as.factor(1:npoints)
+
+   set.seed(seeds[1])
+   start <- sample(138, 1)
+   vals <- dat[start:(start+npoints-1)]
+   group <- rep("Company A", length(months))
+   salesA <- data.frame(Month=months, Sales=vals, Company=group)
+
+   set.seed(seeds[2])
+   start <- sample(138, 1)
+   vals <- dat[start:(start+npoints-1)]
+   group <- rep("Company B", length(months))
+   salesB <- data.frame(Month=months, Sales=vals, Company=group)
+
+   set.seed(seeds[3])
+   start <- sample(138, 1)
+   vals <- dat[start:(start+npoints-1)]
+   group <- rep("Company C", length(months))
+   salesC <- data.frame(Month=months, Sales=vals, Company=group)
+
+   set.seed(seeds[4])
+   start <- sample(138, 1)
+   vals <- dat[start:(start+npoints-1)]
+   group <- rep("Company D", length(months))
+   salesD <- data.frame(Month=months, Sales=vals, Company=group)
+
+   sales <- rbind(salesA, salesB)
+   sales2 <- rbind(salesC, salesD)
+   #print(sales)
+
+   # CONTROLS #
+   dflt_oneline_1 <- ggplot(data=salesA, aes(x=Month, y=Sales, group = Company, col = Company))+
+                        geom_line(size=1)+
+                        scale_color_manual(values = c("#453781FF"))+
+                        theme_classic()+ 
+                        scale_x_discrete(labels = months_list[1:npoints])+
+                        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
+   ggsave("Plots/Sales/one_line_control_1.jpeg")
+   
+   dflt_oneline_2 <- ggplot(data=salesB, aes(x=Month, y=Sales, group = Company, col = Company))+
+                        geom_line(size=1)+
+                        scale_color_manual(values = c("#55C667FF"))+
+                        theme_classic()+ 
+                        scale_x_discrete(labels = months_list[1:npoints])+
+                        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
+   ggsave("Plots/Sales/one_line_control_2.jpeg")
+   
+
+   dflt_twolines <- ggplot(data=sales, aes(x=Month, y=Sales, group = Company, col = Company))+
+           geom_line(size=1)+
+           scale_color_manual(values = c("#453781FF", "#55C667FF"))+
+           theme_classic()+ 
+           scale_x_discrete(labels = months_list[1:npoints])+
+           theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
+   ggsave("Plots/Sales/two_lines_control.jpeg")
+
+
+   # SECOND CONTROLS #
+   dflt_oneline_magma <- ggplot(data=salesC, aes(x=Month, y=Sales, group = Company, col = Company))+
+                        geom_line(size=1)+
+                        scale_color_manual(values = c("#a72497"))+
+                        theme_classic()+ 
+                        scale_x_discrete(labels = months_list[1:npoints])+
+                        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
+   ggsave("Plots/Sales/one_line_inferno1.jpeg")
+   
+   dflt_oneline_magma <- ggplot(data=salesD, aes(x=Month, y=Sales, group = Company, col = Company))+
+                        geom_line(size=1)+
+                        scale_color_manual(values = c("#f07f4f"))+
+                        theme_classic()+ 
+                        scale_x_discrete(labels = months_list[1:npoints])+
+                        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
+   ggsave("Plots/Sales/one_line_inferno2.jpeg")
+   
+
+   zeroed_twoline_inferno <- ggplot(data=sales2, aes(x=Month, y=Sales, group = Company, col = Company))+
+           geom_line(size=1)+
+           scale_color_manual(values = c("#a72497", "#f07f4f"))+
+           theme_classic()+ 
+           scale_x_discrete(labels = months_list[1:npoints])+
+           scale_y_continuous(limits=c(0, max(sales2$Sales)))+
+           theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
+   ggsave("Plots/Sales/zeroed_twoline_inferno.jpeg")
+   
+   # ZEROED #
+   zeroed_oneline_1 <- ggplot(data=salesA, aes(x=Month, y=Sales, group = Company, col = Company))+
+           geom_line(size=1)+
+           scale_color_manual(values = c("#453781FF"))+
+           theme_classic()+ 
+           scale_x_discrete(labels = months_list[1:npoints])+
+           scale_y_continuous(limits=c(0, max(sales[1:npoints,]$Sales)))+
+           theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
+   ggsave("Plots/Sales/zeroed_oneline_1.jpeg")
+   
+   zeroed_oneline_2 <- ggplot(data=salesB, aes(x=Month, y=Sales, group = Company, col = Company))+
+           geom_line(size=1)+
+           scale_color_manual(values = c("#55C667FF"))+
+           theme_classic()+ 
+           scale_x_discrete(labels = months_list[1:npoints])+
+           scale_y_continuous(limits=c(0, max(sales[npoints+1:2*npoints,]$Sales)))+
+           theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
+   ggsave("Plots/Sales/zeroed_oneline_2.jpeg")
+   
+   zeroed_twolines <- ggplot(data=sales, aes(x=Month, y=Sales, group = Company, col = Company))+
+           geom_line(size=1)+
+           scale_color_manual(values = c("#453781FF", "#55C667FF"))+
+           theme_classic()+ 
+           scale_x_discrete(labels = months_list[1:npoints])+
+           scale_y_continuous(limits=c(0, max(sales$Sales)))+
+           theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
+   ggsave("Plots/Sales/zeroed_twolines.jpeg")
+
+
+   # ASPECT RATIO #
+
+   large <- ggplot(data=salesA, aes(x=Month, y=Sales, group = Company, col = Company))+
+                        geom_line(size=1)+
+                        scale_color_manual(values = c("#453781FF"))+
+                        theme_classic()+ 
+                        scale_x_discrete(labels = months_list[1:npoints])+
+                        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))+
+                        theme(aspect.ratio = 2/1)
+   ggsave("Plots/Sales/large.jpeg")
+   
+   small <- ggplot(data=salesA, aes(x=Month, y=Sales, group = Company, col = Company))+
+                        geom_line(size=1)+
+                        scale_color_manual(values = c("#453781FF"))+
+                        theme_classic()+ 
+                        scale_x_discrete(labels = months_list[1:npoints])+
+                        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))+
+                        theme(aspect.ratio = 0.3/1)
+   ggsave("Plots/Sales/small.jpeg")
+
 }
 
-sim_data2 <- function(npoints){
-  set.seed(8)
-  start <- sample(1:150, 1)
-  vals <- data[start:(start+npoints-1)]
-  time <- as.factor(seq(2006, 2006+npoints-1, 1))
-  group <- as.factor(rep(2, length(time)))
-  sales <- data.frame(time=time, vals=vals, grp=group)
-  return(sales)
-}
-
-sales <- rbind(sim_data1(npoints=10))
-sales <- rbind(sim_data1(npoints=10), sim_data2(npoints=10))
-
-p <- ggplot(data=sales, aes(x=time, y=vals, group=grp, col=grp))+
-        geom_line(size=1)+
-        scale_color_manual(values = c("#453781FF", "#55C667FF"))+
-        theme_classic()+ 
-        theme(text = element_text(size = 14))
+seeds <- c(62, 905, 238, 355)
+#seeds <- c(62, 905)
+sales_line_plots(npoints=12)
+seeds
 
 
-png(filename="epi_test_plain_looking.png",
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=7, 
-    res=350)
-print(p)
-dev.off()
+# 62 905
+# 195 181
+# 511 579
+
+
+# Consider - percentages, cumulative etc
+
+
+viridis(15, option = "D")
