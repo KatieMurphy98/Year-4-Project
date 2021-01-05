@@ -9,6 +9,7 @@
  library("httr")
  library("readxl")
  library('Cairo')
+ library(knitr)
 ###
 
 ##### Ninja Warrior data #####
@@ -33,6 +34,7 @@
    
      obst <- arrange(obst, desc(V2))
      obst <- obst[ObstacleNumbers, ]
+     print(obst)
    }
 #####
 
@@ -94,41 +96,18 @@ barplots_yscaling <- function(n.obst){
          labels = c("A", "B", "C"),
          ncol = 2, nrow = 2)
 
-  png(filename="Plots/Ninja_Data/y-scaling/control.png",
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=7, 
-    res=300)
+  ggsave("Plots/Ninja_Data/y-scaling/all.jpeg")
+
   print(dflt)
-  dev.off()
+  ggsave("Plots/Ninja_Data/y-scaling/control.jpeg") 
 
-  png(filename="Plots/Ninja_Data/y-scaling/log10.png",
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=7, 
-    res=300)
   print(lg)
-  dev.off()
+  ggsave("Plots/Ninja_Data/y-scaling/log10.jpeg") 
 
-  png(filename="Plots/Ninja_Data/y-scaling/truncated.png",
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=7, 
-    res=300)
   print(trnc)
-  dev.off()
+  ggsave("Plots/Ninja_Data/y-scaling/truncated.jpeg") 
 
-  png(filename="Plots/Ninja_Data/y-scaling/all.png",
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=7, 
-    res=300)
-  print(all)
-  dev.off()
+  
 
 }
 barplots_yscaling(2:5)
@@ -207,43 +186,6 @@ barplots_barwidth <- function(n.obst){
 
   print(dflt)
   ggsave("Plots/Ninja_Data/bars/control.jpeg") 
-
-  png(filename="Plots/Ninja_Data/y-scaling/wide.png",
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=7, 
-    res=300)
-  print(wide)
-  dev.off()
-
-  png(filename="Plots/Ninja_Data/y-scaling/narrow.png",
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=7, 
-    res=300)
-  print(narrow)
-  dev.off()
-
-  png(filename="Plots/Ninja_Data/y-scaling/control.png",
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=7, 
-    res=300)
-  print(dflt)
-  dev.off()
-
-  png(filename="Plots/Ninja_Data/y-scaling/all.png",
-    type="cairo",
-    units="in", 
-    width=7, 
-    height=7, 
-    res=300)
-  print(all)
-  dev.off()
-
 }
 barplots_barwidth(2:8)
 
@@ -316,9 +258,6 @@ barplots_stackedcols <- function(n.obst){
 
   print(vir)
   ggsave("Plots/Ninja_Data/colours/viridis.jpeg")
-
-  print(vir2)
-  ggsave("Plots/Ninja_Data/colours/viridis2.jpeg")
 
   print(grey)
   ggsave("Plots/Ninja_Data/colours/grey.jpeg")
@@ -428,16 +367,13 @@ barplots_stackedcols_dodge <- function(n.obst){
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   print(vir)
-  ggsave("Plots/Ninja_Data/colours/viridis.jpeg")
-
-  print(vir2)
-  ggsave("Plots/Ninja_Data/colours/viridis2.jpeg")
+  ggsave("Plots/Ninja_Data/colours/viridis_d.jpeg")
 
   print(grey)
-  ggsave("Plots/Ninja_Data/colours/grey.jpeg")
+  ggsave("Plots/Ninja_Data/colours/grey_d.jpeg")
 
   print(fil)
-  ggsave("Plots/Ninja_Data/colours/default.jpeg")  
+  ggsave("Plots/Ninja_Data/colours/default_d.jpeg")  
 
   plot_grid(vir, vir_dodge,
             labels = c("A", "B"),
@@ -512,7 +448,7 @@ sales_line_plots <- function(npoints){
 
 
    # SECOND CONTROLS #
-   dflt_oneline_magma <- ggplot(data=salesC, aes(x=Month, y=Sales, group = Company, col = Company))+
+   dflt_oneline_inferno <- ggplot(data=salesC, aes(x=Month, y=Sales, group = Company, col = Company))+
                         geom_line(size=1)+
                         scale_color_manual(values = c("#a72497"))+
                         theme_classic()+ 
@@ -520,7 +456,7 @@ sales_line_plots <- function(npoints){
                         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
    ggsave("Plots/Sales/one_line_inferno1.jpeg")
    
-   dflt_oneline_magma <- ggplot(data=salesD, aes(x=Month, y=Sales, group = Company, col = Company))+
+   dflt_oneline_inferno <- ggplot(data=salesD, aes(x=Month, y=Sales, group = Company, col = Company))+
                         geom_line(size=1)+
                         scale_color_manual(values = c("#f07f4f"))+
                         theme_classic()+ 
@@ -528,6 +464,13 @@ sales_line_plots <- function(npoints){
                         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
    ggsave("Plots/Sales/one_line_inferno2.jpeg")
    
+  twoline_inferno <- ggplot(data=sales2, aes(x=Month, y=Sales, group = Company, col = Company))+
+           geom_line(size=1)+
+           scale_color_manual(values = c("#a72497", "#f07f4f"))+
+           theme_classic()+ 
+           scale_x_discrete(labels = months_list[1:npoints])+
+           theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
+   ggsave("Plots/Sales/twoline_inferno.jpeg")
 
    zeroed_twoline_inferno <- ggplot(data=sales2, aes(x=Month, y=Sales, group = Company, col = Company))+
            geom_line(size=1)+
@@ -589,18 +532,16 @@ sales_line_plots <- function(npoints){
 
 }
 
-seeds <- c(62, 905, 238, 355)
-#seeds <- c(62, 905)
+seeds <- sample(1000, 4)
+#seeds <- c(62, 905, 511, 579)
 sales_line_plots(npoints=12)
 seeds
 
 
-# 62 905
-# 195 181
+# 62, 905, 511, 579 - Set 1
+# 958, 36, 224, 483 - Set 2
 # 511 579
 
 
 # Consider - percentages, cumulative etc
 
-
-viridis(15, option = "D")
