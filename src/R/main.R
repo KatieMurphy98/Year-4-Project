@@ -88,7 +88,7 @@ barplots_yscaling <- function(n.obst){
   ylab('Times Used') +
   labs(fill = 'Stage') +
   scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip")) +
-  scale_y_continuous(breaks = c(0, 10, 20), labels = c(20, 30, 40))+
+  scale_y_continuous(limits = c(0, 21), breaks = c(0, 10, 20), labels = c(20, 30, 40))+
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
@@ -96,16 +96,16 @@ barplots_yscaling <- function(n.obst){
          labels = c("A", "B", "C"),
          ncol = 2, nrow = 2)
 
-  ggsave("Plots/Ninja_Data/y-scaling/all.jpeg")
+  ggsave("Plots/R/Ninja_Data/y-scaling/all.jpeg")
 
   print(dflt)
-  ggsave("Plots/Ninja_Data/y-scaling/control.jpeg") 
+  ggsave("Plots/R/Ninja_Data/y-scaling/control.jpeg") 
 
   print(lg)
-  ggsave("Plots/Ninja_Data/y-scaling/log10.jpeg") 
+  ggsave("Plots/R/Ninja_Data/y-scaling/log10.jpeg") 
 
   print(trnc)
-  ggsave("Plots/Ninja_Data/y-scaling/truncated.jpeg") 
+  ggsave("Plots/R/Ninja_Data/y-scaling/truncated.jpeg") 
 
   
 
@@ -176,16 +176,16 @@ barplots_barwidth <- function(n.obst){
             ncol = 1, nrow = 2
             )
 
-  ggsave("Plots/Ninja_Data/bars/all.jpeg")
+  ggsave("Plots/R/Ninja_Data/bars/all.jpeg")
 
   print(wide)
-  ggsave("Plots/Ninja_Data/bars/wide.jpeg") 
+  ggsave("Plots/R/Ninja_Data/bars/wide.jpeg") 
 
   print(narrow)
-  ggsave("Plots/Ninja_Data/bars/narrow.jpeg") 
+  ggsave("Plots/R/Ninja_Data/bars/narrow.jpeg") 
 
   print(dflt)
-  ggsave("Plots/Ninja_Data/bars/control.jpeg") 
+  ggsave("Plots/R/Ninja_Data/bars/control.jpeg") 
 }
 barplots_barwidth(2:8)
 
@@ -257,44 +257,44 @@ barplots_stackedcols <- function(n.obst){
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   print(vir)
-  ggsave("Plots/Ninja_Data/colours/viridis.jpeg")
+  ggsave("Plots/R/Ninja_Data/colours/viridis.jpeg")
 
   print(grey)
-  ggsave("Plots/Ninja_Data/colours/grey.jpeg")
+  ggsave("Plots/R/Ninja_Data/colours/grey.jpeg")
 
   print(fil)
-  ggsave("Plots/Ninja_Data/colours/default.jpeg")
+  ggsave("Plots/R/Ninja_Data/colours/default.jpeg")
 
 
   plot_grid(vir, fil, 
             labels = c("A", "B"),
             ncol = 1, nrow = 2)
-  ggsave("Plots/Ninja_Data/colours/col_set_a.jpeg")
+  ggsave("Plots/R/Ninja_Data/colours/col_set_a.jpeg")
 
   plot_grid(fil, vir, 
             labels = c("A", "B"),
             ncol = 1, nrow = 2)
-  ggsave("Plots/Ninja_Data/colours/col_set_b.jpeg")
+  ggsave("Plots/R/Ninja_Data/colours/col_set_b.jpeg")
 
   plot_grid(fil, grey,
             labels = c("A", "B"),
             ncol = 1, nrow = 2)
-  ggsave("Plots/Ninja_Data/colours/col_set_c.jpeg")
+  ggsave("Plots/R/Ninja_Data/colours/col_set_c.jpeg")
 
   plot_grid(grey, fil,
             labels = c("A", "B"),
             ncol = 1, nrow = 2)
-  ggsave("Plots/Ninja_Data/colours/col_set_d.jpeg")
+  ggsave("Plots/R/Ninja_Data/colours/col_set_d.jpeg")
 
   plot_grid(vir, grey,
             labels = c("A", "B"),
             ncol = 1, nrow = 2)
-  ggsave("Plots/Ninja_Data/colours/col_set_e.jpeg")
+  ggsave("Plots/R/Ninja_Data/colours/col_set_e.jpeg")
   
   plot_grid(grey, vir,
             labels = c("A", "B"),
             ncol = 1, nrow = 2) 
-  ggsave("Plots/Ninja_Data/colours/col_set_f.jpeg")   
+  ggsave("Plots/R/Ninja_Data/colours/col_set_f.jpeg")   
 
 }
 barplots_stackedcols(2:5)
@@ -367,13 +367,13 @@ barplots_stackedcols_dodge <- function(n.obst){
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   print(vir)
-  ggsave("Plots/Ninja_Data/colours/viridis_d.jpeg")
+  ggsave("Plots/R/Ninja_Data/colours/viridis_d.jpeg")
 
   print(grey)
-  ggsave("Plots/Ninja_Data/colours/grey_d.jpeg")
+  ggsave("Plots/R/Ninja_Data/colours/grey_d.jpeg")
 
   print(fil)
-  ggsave("Plots/Ninja_Data/colours/default_d.jpeg")  
+  ggsave("Plots/R/Ninja_Data/colours/default_d.jpeg")  
 
   plot_grid(vir, vir_dodge,
             labels = c("A", "B"),
@@ -427,7 +427,7 @@ sales_line_plots <- function(npoints){
                         theme_classic()+ 
                         scale_x_discrete(labels = months_list[1:npoints])+
                         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
-   ggsave("Plots/Sales/one_line_control_1.jpeg")
+   ggsave("Plots/R/Sales/one_line_control_1.jpeg")
    
    dflt_oneline_2 <- ggplot(data=salesB, aes(x=Month, y=Sales, group = Company, col = Company))+
                         geom_line(size=1)+
@@ -435,7 +435,7 @@ sales_line_plots <- function(npoints){
                         theme_classic()+ 
                         scale_x_discrete(labels = months_list[1:npoints])+
                         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
-   ggsave("Plots/Sales/one_line_control_2.jpeg")
+   ggsave("Plots/R/Sales/one_line_control_2.jpeg")
    
 
    dflt_twolines <- ggplot(data=sales, aes(x=Month, y=Sales, group = Company, col = Company))+
@@ -444,7 +444,7 @@ sales_line_plots <- function(npoints){
            theme_classic()+ 
            scale_x_discrete(labels = months_list[1:npoints])+
            theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
-   ggsave("Plots/Sales/two_lines_control.jpeg")
+   ggsave("Plots/R/Sales/two_lines_control.jpeg")
 
 
    # SECOND CONTROLS #
@@ -454,7 +454,7 @@ sales_line_plots <- function(npoints){
                         theme_classic()+ 
                         scale_x_discrete(labels = months_list[1:npoints])+
                         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
-   ggsave("Plots/Sales/one_line_inferno1.jpeg")
+   ggsave("Plots/R/Sales/one_line_inferno1.jpeg")
    
    dflt_oneline_inferno <- ggplot(data=salesD, aes(x=Month, y=Sales, group = Company, col = Company))+
                         geom_line(size=1)+
@@ -462,7 +462,7 @@ sales_line_plots <- function(npoints){
                         theme_classic()+ 
                         scale_x_discrete(labels = months_list[1:npoints])+
                         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
-   ggsave("Plots/Sales/one_line_inferno2.jpeg")
+   ggsave("Plots/R/Sales/one_line_inferno2.jpeg")
    
   twoline_inferno <- ggplot(data=sales2, aes(x=Month, y=Sales, group = Company, col = Company))+
            geom_line(size=1)+
@@ -470,7 +470,7 @@ sales_line_plots <- function(npoints){
            theme_classic()+ 
            scale_x_discrete(labels = months_list[1:npoints])+
            theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
-   ggsave("Plots/Sales/twoline_inferno.jpeg")
+   ggsave("Plots/R/Sales/twoline_inferno.jpeg")
 
    zeroed_twoline_inferno <- ggplot(data=sales2, aes(x=Month, y=Sales, group = Company, col = Company))+
            geom_line(size=1)+
@@ -479,7 +479,7 @@ sales_line_plots <- function(npoints){
            scale_x_discrete(labels = months_list[1:npoints])+
            scale_y_continuous(limits=c(0, max(sales2$Sales)))+
            theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
-   ggsave("Plots/Sales/zeroed_twoline_inferno.jpeg")
+   ggsave("Plots/R/Sales/zeroed_twoline_inferno.jpeg")
    
    # ZEROED #
    zeroed_oneline_1 <- ggplot(data=salesA, aes(x=Month, y=Sales, group = Company, col = Company))+
@@ -489,7 +489,7 @@ sales_line_plots <- function(npoints){
            scale_x_discrete(labels = months_list[1:npoints])+
            scale_y_continuous(limits=c(0, max(sales[1:npoints,]$Sales)))+
            theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
-   ggsave("Plots/Sales/zeroed_oneline_1.jpeg")
+   ggsave("Plots/R/Sales/zeroed_oneline_1.jpeg")
    
    zeroed_oneline_2 <- ggplot(data=salesB, aes(x=Month, y=Sales, group = Company, col = Company))+
            geom_line(size=1)+
@@ -498,7 +498,7 @@ sales_line_plots <- function(npoints){
            scale_x_discrete(labels = months_list[1:npoints])+
            scale_y_continuous(limits=c(0, max(sales[npoints+1:2*npoints,]$Sales)))+
            theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
-   ggsave("Plots/Sales/zeroed_oneline_2.jpeg")
+   ggsave("Plots/R/Sales/zeroed_oneline_2.jpeg")
    
    zeroed_twolines <- ggplot(data=sales, aes(x=Month, y=Sales, group = Company, col = Company))+
            geom_line(size=1)+
@@ -507,7 +507,7 @@ sales_line_plots <- function(npoints){
            scale_x_discrete(labels = months_list[1:npoints])+
            scale_y_continuous(limits=c(0, max(sales$Sales)))+
            theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
-   ggsave("Plots/Sales/zeroed_twolines.jpeg")
+   ggsave("Plots/R/Sales/zeroed_twolines.jpeg")
 
 
    # ASPECT RATIO #
@@ -519,7 +519,7 @@ sales_line_plots <- function(npoints){
                         scale_x_discrete(labels = months_list[1:npoints])+
                         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))+
                         theme(aspect.ratio = 2/1)
-   ggsave("Plots/Sales/large.jpeg")
+   ggsave("Plots/R/Sales/large.jpeg")
    
    small <- ggplot(data=salesA, aes(x=Month, y=Sales, group = Company, col = Company))+
                         geom_line(size=1)+
@@ -528,7 +528,7 @@ sales_line_plots <- function(npoints){
                         scale_x_discrete(labels = months_list[1:npoints])+
                         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))+
                         theme(aspect.ratio = 0.3/1)
-   ggsave("Plots/Sales/small.jpeg")
+   ggsave("Plots/R/Sales/small.jpeg")
 
 }
 
