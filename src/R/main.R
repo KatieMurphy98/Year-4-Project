@@ -34,22 +34,56 @@
    
      obst <- arrange(obst, desc(V2))
      obst <- obst[ObstacleNumbers, ]
-     print(obst)
-   }
-#####
+     names(obst) <- c('name', 'ntimes')
+     return(obst)
+  }
 
+
+  stack_data <- function(ObstacleNumbers){
+   obst <- obstacles(ObstacleNumbers)
+
+    ##List obstacles the number of times they are used##
+    obstcount <- c()
+    for(i in 1:dim(obst)[1]){
+      obstcount <- append(obstcount, rep(obst[i, 1], obst[i, 2]))
+    }
+     
+    bardat <- as.data.frame(obstcount) #Change to dataframe
+
+    stage.count <- data.frame()
+    for(i in 1:(length(ObstacleNumbers))){
+      filter_ninja <- filter(NinjaWarrior, name==obst[i,1]) #Filters data for relevant obstacles
+      
+      freq_stages <- as.data.frame(table(filter_ninja$stage)) #Count how many times obstacle i is used in each stage
+      print(freq_stages)
+
+      stages <- rep(freq_stages$Var1, freq_stages$Freq) #Lists each stage the number of times it occurs
+      
+      obs <- filter(bardat, obstcount == obst[i,1]) #Filter for obstacle i
+
+      stages_obs <- cbind(obs, stages)
+
+      stage.count <- rbind(stage.count, stages_obs) #Iterate to get whole set of data
+    }
+    return(stage.count)
+}
+
+  
+  
+#####
+letters <- c("A", "B", "C", "D", "E", "F", "G")
+obst_list <- c("Salmon Ladder","Quintuple Steps","Floating Steps","Log Grip","Jump Hang","Quad Steps","Jumping Spider")
 
 
 barplots_yscaling <- function(n.obst){
 
-  obst <- obstacles(ObstacleNumbers = n.obst)
-  names(obst) <- c('name', 'ntimes')
-  obst$name <- c("A", "B", "C", "D")
-
+  obst <- obstacles(n.obst)
+  obst$name <- letters[1:length(n.obst)]
+  
   # default scale
   dflt <- ggplot(data=obst) +
   geom_bar(aes(x=name, y=ntimes), fill="#69b3a2", stat="identity") +
-  scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip")) +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
@@ -63,7 +97,7 @@ barplots_yscaling <- function(n.obst){
   xlab('Obstacle') + 
   ylab('Times Used') +
   labs(fill = 'Stage') +
-  scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip")) +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_y_log10()+
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
@@ -87,7 +121,7 @@ barplots_yscaling <- function(n.obst){
   xlab('Obstacle') + 
   ylab('Times Used') +
   labs(fill = 'Stage') +
-  scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip")) +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_y_continuous(limits = c(0, 21), breaks = c(0, 10, 20), labels = c(20, 30, 40))+
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
@@ -115,14 +149,13 @@ barplots_yscaling(2:5)
 
 barplots_barwidth <- function(n.obst){
 
-  obst <- obstacles(ObstacleNumbers = n.obst)
-  names(obst) <- c('name', 'ntimes')
-  obst$name <- c("A", "B", "C", "D", "E", "F", "G")
+  obst <- obstacles(n.obst)
+  obst$name <- letters[1:length(n.obst)]
 
   # default
   dflt <- ggplot(data=obst) +
   geom_bar(aes(x=name, y=ntimes), fill="#69b3a2", stat="identity") +
-  scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip","Jump Hang","Quad Steps","Jumping Spider")) +
+  scale_x_discrete(labels=) +
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
@@ -133,7 +166,7 @@ barplots_barwidth <- function(n.obst){
   # narrow bars
   narrow <- ggplot(data=obst) +
   geom_bar(aes(x=name, y=ntimes), fill="#69b3a2", stat="identity") +
-  scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip","Jump Hang","Quad Steps","Jumping Spider")) +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
@@ -145,7 +178,7 @@ barplots_barwidth <- function(n.obst){
   # wide bars
   wide <- ggplot(data=obst) +
   geom_bar(aes(x=name, y=ntimes), fill="#69b3a2", stat="identity") +
-  scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip","Jump Hang","Quad Steps","Jumping Spider")) +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_y_continuous() +
   xlab('Obstacle') + 
   ylab('Times Used') +
@@ -158,7 +191,7 @@ barplots_barwidth <- function(n.obst){
   # dots
   dot <- ggplot(data=obst) +
   geom_point(aes(x=name, y=ntimes), col="#69b3a2") +
-  scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip","Jump Hang","Quad Steps","Jumping Spider")) +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_y_continuous(limits = c(0, 41), breaks=seq(0, 40, 10), labels=seq(0, 40, 10)) +
   xlab('Obstacle') + 
   ylab('Times Used') +
@@ -186,35 +219,18 @@ barplots_barwidth <- function(n.obst){
   print(dflt)
   ggsave("Plots/R/Ninja_Data/bars/control.jpeg") 
 }
-barplots_barwidth(2:8)
+barplots_barwidth(2:5)
 
 barplots_stackedcols <- function(n.obst){
 
-  obst <- obstacles(ObstacleNumbers = n.obst)
-  names(obst) <- c('name', 'ntimes')
-
-  obstcount <- c()
-  for(i in 1:dim(obst)[1]){
-    obstcount <- append(obstcount, rep(obst[i, 1], obst[i, 2]))
-  }
-  
-  bardat <- as.data.frame(obstcount)
-  
-  stage.count <- data.frame()
-  for(i in 1:(length(n.obst))){
-    ninja <- filter(NinjaWarrior, name==obst[i,1])
-    freqtab <- as.data.frame(table(ninja$stage))
-    stages <- rep(freqtab$Var1, freqtab$Freq)
-    ob <- filter(bardat, obstcount == obst[i,1])
-    stages_ob <- cbind(ob, stages)
-    stage.count <- rbind(stage.count, stages_ob)
-  }
+  stage.count <- stack_data(n.obst)
 
   # vir
   vir <- ggplot(data=stage.count) +
   geom_bar(aes(x=obstcount, fill=stages)) +
   scale_y_continuous() +
   scale_fill_viridis(discrete = TRUE, option = "D")+
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   xlab('Obstacle') + 
   ylab('Times Used') +
   labs(fill = 'Stage') +
@@ -226,6 +242,7 @@ barplots_stackedcols <- function(n.obst){
   geom_bar(aes(x=obstcount, fill=stages)) +
   scale_y_continuous() +
   scale_fill_viridis(discrete = TRUE, option = "A")+
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   xlab('Obstacle') + 
   ylab('Times Used') +
   labs(fill = 'Stage') +
@@ -238,6 +255,7 @@ barplots_stackedcols <- function(n.obst){
   geom_bar(aes(x=obstcount, fill=stages)) +
   scale_y_continuous() +
   scale_fill_grey()+
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   xlab('Obstacle') + 
   ylab('Times Used') +
   labs(fill = 'Stage') +
@@ -248,6 +266,7 @@ barplots_stackedcols <- function(n.obst){
   fil <- ggplot(data=stage.count) +
   geom_bar(aes(x=obstcount, fill=stages)) +
   scale_y_continuous() +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   xlab('Obstacle') + 
   ylab('Times Used') +
   labs(fill = 'Stage') +
@@ -300,30 +319,17 @@ barplots_stackedcols(2:5)
 
 barplots_stackedcols_dodge <- function(n.obst){
 
-  obst <- obstacles(ObstacleNumbers = n.obst)
+  obst <- obstacles(n.obst)
   names(obst) <- c('name', 'ntimes')
+  obst$name <- letters[1:length(n.obst)]
 
-  obstcount <- c()
-  for(i in 1:dim(obst)[1]){
-    obstcount <- append(obstcount, rep(obst[i, 1], obst[i, 2]))
-  }
-  
-  bardat <- as.data.frame(obstcount)
-  
-  stage.count <- data.frame()
-  for(i in 1:(length(n.obst))){
-    ninja <- filter(NinjaWarrior, name==obst[i,1])
-    freqtab <- as.data.frame(table(ninja$stage))
-    stages <- rep(freqtab$Var1, freqtab$Freq)
-    ob <- filter(bardat, obstcount == obst[i,1])
-    stages_ob <- cbind(ob, stages)
-    stage.count <- rbind(stage.count, stages_ob)
-  }
+  stage.count <- stages(n.obst)
 
   # vir
   vir <- ggplot(data=stage.count) +
   geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
   scale_y_continuous() +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_fill_viridis(discrete = TRUE, option = "D")+
   xlab('Obstacle') + 
   ylab('Times Used') +
@@ -335,6 +341,7 @@ barplots_stackedcols_dodge <- function(n.obst){
   vir2 <- ggplot(data=stage.count) +
   geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
   scale_y_continuous() +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_fill_viridis(discrete = TRUE, option = "A")+
   xlab('Obstacle') + 
   ylab('Times Used') +
@@ -347,6 +354,7 @@ barplots_stackedcols_dodge <- function(n.obst){
   grey <- ggplot(data=stage.count) +
   geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
   scale_y_continuous() +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_fill_grey()+
   xlab('Obstacle') + 
   ylab('Times Used') +
@@ -358,6 +366,7 @@ barplots_stackedcols_dodge <- function(n.obst){
   fil <- ggplot(data=stage.count) +
   geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
   scale_y_continuous() +
+  scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   xlab('Obstacle') + 
   ylab('Times Used') +
   labs(fill = 'Stage') +
@@ -542,4 +551,3 @@ seeds
 
 
 # Consider - percentages, cumulative etc
-
