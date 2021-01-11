@@ -15,14 +15,9 @@ var svg = d3
 
 // Parse the Data
 d3.csv(
-  (data = "https://query.data.world/s/zpnkldn7zzml32gqcbyzxb5s3erfxc"),
+  (data = "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/obstacles.csv"),
   function (data) {
-    data = data.filter(function (d) {
-      return d.Breed != "Alaskan Malamute" && d.Breed != "Coton de Tulear";
-    });
-    data = data.filter(function (d, i) {
-      return i < 5;
-    });
+    
     console.log(data);
 
     // X axis
@@ -31,7 +26,7 @@ d3.csv(
       .range([0, width]) // Range - accepted outputs
       .domain(
         data.map(function (d) {
-          return d.Breed;
+          return d.name;
         })
       ) // Domain - accepted inputs
       .padding(0.2);
@@ -45,7 +40,7 @@ d3.csv(
       .style("text-anchor", "end");
 
     // Add Y axis
-    var y = d3.scaleLinear().domain([0, 175]).range([height, 0]);
+    var y = d3.scaleLinear().domain([0, 42]).range([height, 0]);
 
     svg.append("g").call(d3.axisLeft(y));
 
@@ -56,14 +51,14 @@ d3.csv(
       .enter()
       .append("rect")
       .attr("x", function (d) {
-        return x(d.Breed);
+        return x(d.name);
       })
       .attr("y", function (d) {
-        return y(d.weight_low_lbs);
+        return y(d.ntimes);
       })
       .attr("width", x.bandwidth())
       .attr("height", function (d) {
-        return height - y(d.weight_low_lbs);
+        return height - y(d.ntimes);
       })
       .attr("fill", "#69b3a2");
   }

@@ -131,7 +131,6 @@ barplots_barwidth <- function(n.obst){
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))
 
   # narrow bars
-
   narrow <- ggplot(data=obst) +
   geom_bar(aes(x=name, y=ntimes), fill="#69b3a2", stat="identity") +
   scale_x_discrete(labels=c("Salmon Ladder",   "Quintuple Steps",    "Floating Steps ",   "Log Grip","Jump Hang","Quad Steps","Jumping Spider")) +
@@ -153,7 +152,7 @@ barplots_barwidth <- function(n.obst){
   labs(fill = 'Stage') +
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), text = element_text(size = 14))+
-  theme(aspect.ratio = 0.3/1)
+  theme(aspect.ratio = 0.5/1)
 
 
   # dots
@@ -188,7 +187,6 @@ barplots_barwidth <- function(n.obst){
   ggsave("Plots/R/Ninja_Data/bars/control.jpeg") 
 }
 barplots_barwidth(2:8)
-
 
 barplots_stackedcols <- function(n.obst){
 
