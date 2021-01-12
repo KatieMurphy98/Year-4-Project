@@ -3,32 +3,52 @@
 #pip install pandas
 #pip install openpyxl
 
+import matplotlib as mat
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import openpyxl as xl
 import math
+from matplotlib import cm
+
+import os
+os.chdir("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Plots/Py")
+
+
+NinjaWarrior = pd.read_excel('https://query.data.world/s/tjkd2yop2xh2x4o2j5fhatxdidcvty')
+NinjaWarrior = NinjaWarrior.rename(columns={"Season":"season", "Location":"location", "Round/Stage":"stage", "Obstacle Name":"name", "Obstacle Order":"order"})
 
 name = ['Salmon Ladder', 'Quintuple Steps', 'Floating Steps', 'Log Grip', 'Jump Hang', 'Quad Steps', 'Jumping Spider']
 ntimes = [41, 32, 28, 21, 18, 16, 14]
+
+FinalsRegionalCity     = np.array([38, 15, 11, 9])
+NationalFinalsStage2   = np.array([1,  0,  0,  0])
+SemiFinals             = np.array([2,  1,  0,  1])
+Qualifying             = np.array([0,  1,  0,  1])  
+QualifyingRegionalCity = np.array([0,  15, 17, 9])
+NationalFinalsStage1   = np.array([0,  0,  0,  1])
+
+rounds = np.array(['Finals (Regional/City)', 'National Finals-Stage 2', 'Semi-Finals', 'Qualifying', 'Qualifying (Regional/City)', 'National Finals - Stage 1'])
+
 obst = pd.DataFrame(data={'name':name, 'ntimes':ntimes})
+
  
 def barplots_yscaling():
     ##### CONTROL #####
-    plt.bar(name[0:4], ntimes[0:4], color="#69b3a2")
+    plt.bar(name[0:nobst], ntimes[0:4], color="#69b3a2")
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(rotation=90)
 
     ##### LOG10 #####
-    plt.bar(name[0:4], ntimes[0:4], color="#69b3a2")
+    plt.bar(name[0:nobst], ntimes[0:4], color="#69b3a2")
     plt.yscale('symlog')
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(rotation=90)
 
     ##### TRUNCATED #####
-    plt.bar(name[0:4], ntimes[0:4], color="#69b3a2")
+    plt.bar(name[0:nobst], ntimes[0:4], color="#69b3a2")
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(rotation=90)
@@ -58,5 +78,289 @@ def barplots_axisratio():
     plt.xticks(rotation=90)
     plt.gca().set_aspect('0.05')
     plt.show()
-    
 barplots_axisratio()
+
+def barplots_stacked(nobst):
+
+    ##### CONTROL #####
+    def default(title):
+        plt.bar(name[0:nobst], 
+                FinalsRegionalCity, 
+                bottom=(NationalFinalsStage2+SemiFinals+Qualifying+QualifyingRegionalCity+NationalFinalsStage1))
+        
+        plt.bar(name[0:nobst],
+                NationalFinalsStage2,
+                bottom=(SemiFinals+Qualifying+QualifyingRegionalCity+NationalFinalsStage1))
+        
+        plt.bar(name[0:nobst], 
+                SemiFinals, 
+                bottom=(Qualifying+QualifyingRegionalCity+NationalFinalsStage1))
+        
+        plt.bar(name[0:nobst], 
+                Qualifying, 
+                bottom=(QualifyingRegionalCity+NationalFinalsStage1))
+        
+        plt.bar(name[0:nobst], 
+                QualifyingRegionalCity, 
+                bottom=(NationalFinalsStage1))
+        
+        plt.bar(name[0:nobst], 
+                NationalFinalsStage1)
+        
+        plt.xlabel('Obstacle')
+        plt.ylabel('Times Used')
+        plt.xticks(rotation=90)
+        plt.title(title) 
+        plt.legend(rounds, loc=0, title='Round', bbox_to_anchor=(1, 1))
+
+    ##### VIRIDIS #####
+    def viridis(title):
+        viridis = cm.get_cmap('viridis', 6)
+    
+        plt.bar(name[0:nobst], 
+                FinalsRegionalCity, 
+                color=viridis.colors[0],  
+                bottom=(NationalFinalsStage2+SemiFinals+Qualifying+QualifyingRegionalCity+NationalFinalsStage1))
+    
+        plt.bar(name[0:nobst], 
+                NationalFinalsStage2, 
+                color=viridis.colors[1], 
+                bottom=(SemiFinals+Qualifying+QualifyingRegionalCity+NationalFinalsStage1))
+    
+        plt.bar(name[0:nobst],
+                SemiFinals, 
+                color=viridis.colors[2], 
+                bottom=(Qualifying+QualifyingRegionalCity+NationalFinalsStage1))
+    
+        plt.bar(name[0:nobst], 
+                Qualifying, 
+                color=viridis.colors[3], 
+                bottom=(QualifyingRegionalCity+NationalFinalsStage1))
+    
+        plt.bar(name[0:nobst], 
+                QualifyingRegionalCity, 
+                color=viridis.colors[4], 
+                bottom=(NationalFinalsStage1))
+    
+        plt.bar(name[0:nobst], 
+                NationalFinalsStage1, 
+                color=viridis.colors[5])
+    
+        plt.xlabel('Obstacle')
+        plt.ylabel('Times Used')
+        plt.xticks(rotation=90)
+        plt.title(title) 
+        plt.legend(rounds, loc=0, title='Round', bbox_to_anchor=(1, 1))
+    
+    ##### GREY #####
+    def grey(title):
+        cmap = mat.cm.get_cmap('Greys')
+    
+        plt.bar(name[0:nobst], 
+                FinalsRegionalCity, 
+                color=cmap(0.8),  
+                bottom=(NationalFinalsStage2+SemiFinals+Qualifying+QualifyingRegionalCity+NationalFinalsStage1))
+    
+        plt.bar(name[0:nobst], 
+                NationalFinalsStage2, 
+                color=cmap(0.7), 
+                bottom=(SemiFinals+Qualifying+QualifyingRegionalCity+NationalFinalsStage1))
+    
+        plt.bar(name[0:nobst],
+                SemiFinals, 
+                color=cmap(0.6), 
+                bottom=(Qualifying+QualifyingRegionalCity+NationalFinalsStage1))
+    
+        plt.bar(name[0:nobst], 
+                Qualifying, 
+                color=cmap(0.5), 
+                bottom=(QualifyingRegionalCity+NationalFinalsStage1))
+    
+        plt.bar(name[0:nobst], 
+                QualifyingRegionalCity, 
+                color=cmap(0.4), 
+                bottom=(NationalFinalsStage1))
+    
+        plt.bar(name[0:nobst], 
+                NationalFinalsStage1, 
+                color=cmap(0.3))
+        
+        plt.xlabel('Obstacle')
+        plt.ylabel('Times Used')
+        plt.xticks(rotation=90)
+        plt.title(title) 
+        plt.legend(rounds, loc=0, title='Round', bbox_to_anchor=(1, 1)) 
+
+     
+
+    fig=plt.figure(figsize = (7,7))
+    fig.subplots_adjust(hspace=1)
+    plt.subplot(211)
+    viridis("A")
+    plt.subplot(212)
+    default("B")
+    plt.savefig('Ninja_Data/colours/stacked/set_a.jpg',bbox_inches='tight', dpi=150)
+
+    fig=plt.figure(figsize = (7,7))
+    fig.subplots_adjust(hspace=1)
+    plt.subplot(211)
+    default("A")
+    plt.subplot(212)
+    viridis("B")
+    plt.savefig('Ninja_Data/colours/stacked/set_b.jpg',bbox_inches='tight', dpi=150)
+
+
+    fig=plt.figure(figsize = (7,7))
+    fig.subplots_adjust(hspace=1)
+    plt.subplot(211)
+    default("A")
+    plt.subplot(212)
+    grey("B")
+    plt.savefig('Ninja_Data/colours/stacked/set_c.jpg',bbox_inches='tight', dpi=150)
+
+
+    fig=plt.figure(figsize = (7,7))
+    fig.subplots_adjust(hspace=1)
+    plt.subplot(211)
+    grey("A")
+    plt.subplot(212)
+    default("B")
+    plt.savefig('Ninja_Data/colours/stacked/set_d.jpg',bbox_inches='tight', dpi=150)
+
+
+    fig=plt.figure(figsize = (7,7))
+    fig.subplots_adjust(hspace=1)
+    plt.subplot(211)
+    viridis("A")
+    plt.subplot(212)
+    grey("B")
+    plt.savefig('Ninja_Data/colours/stacked/set_e.jpg',bbox_inches='tight', dpi=150)
+
+
+    fig=plt.figure(figsize = (7,7))
+    fig.subplots_adjust(hspace=1)
+    plt.subplot(211)
+    grey("A")
+    plt.subplot(212)
+    viridis("B")
+    plt.savefig('Ninja_Data/colours/stacked/set_f.jpg',bbox_inches='tight', dpi=150)
+
+    
+barplots_stacked(4)
+
+def barplots_sidebyside(nobst):
+    
+    pos = np.arange(len(name[0:nobst]))
+    barwidth = np.array([0.8/3, 0.8/4, 0.8/2, 0.8/4])
+
+
+    ##### CONTROL #####
+    plt.bar(pos, 
+            FinalsRegionalCity,
+            barwidth)
+
+    plt.bar(pos+np.array([0.8/3, 0, 0, 0]),
+            NationalFinalsStage2,
+            barwidth)
+
+    plt.bar(pos+np.array([1.6/3, 0.8/4, 0, 0.8/4]), 
+            SemiFinals, 
+            barwidth)
+
+    plt.bar(pos+np.array([2.4/3, 1.6/4, 0.8/4, 1.6/4]), 
+            Qualifying,
+            barwidth)
+
+    plt.bar(pos+np.array([1.6/3, 2.4/4, 1.6/4, 2.4/4]), 
+            QualifyingRegionalCity,
+            barwidth)
+
+    plt.bar(pos+np.array([1.6/3, 2.4/4, 1.6/4, 3.2/4]),
+            NationalFinalsStage1,
+            barwidth)
+
+    plt.xlabel('Obstacle')
+    plt.ylabel('Times Used')
+    plt.xticks(ticks=np.arange(0, 4, step=1), labels=name[0:nobst], rotation=90)
+    plt.legend(rounds, loc=0, title='Round', bbox_to_anchor=(1, 1))
+    plt.show()
+
+    ##### VIRIDIS #####
+
+    viridis = cm.get_cmap('viridis', 6)
+
+    plt.bar(pos, 
+            FinalsRegionalCity,
+            barwidth,
+            color=viridis.colors[0])
+
+    plt.bar(pos+np.array([0.8/3, 0, 0, 0]),
+            NationalFinalsStage2,
+            barwidth,
+            color=viridis.colors[1])
+
+    plt.bar(pos+np.array([1.6/3, 0.8/4, 0, 0.8/4]), 
+            SemiFinals,
+            barwidth,
+            color=viridis.colors[2])
+
+    plt.bar(pos+np.array([2.4/3, 1.6/4, 0.8/4, 1.6/4]), 
+            Qualifying,
+            barwidth,
+            color=viridis.colors[3])
+
+    plt.bar(pos+np.array([1.6/3, 2.4/4, 1.6/4, 2.4/4]), 
+            QualifyingRegionalCity,
+            barwidth,
+            color=viridis.colors[4])
+
+    plt.bar(pos+np.array([1.6/3, 2.4/4, 1.6/4, 3.2/4]),
+            NationalFinalsStage1,
+            barwidth,
+            color=viridis.colors[5])
+
+    plt.xlabel('Obstacle')
+    plt.ylabel('Times Used')
+    plt.xticks(ticks=np.arange(0, 4, step=1), labels=name[0:nobst], rotation=90)
+    plt.legend(rounds, loc=0, title='Round', bbox_to_anchor=(1, 1))
+    plt.show()
+
+     ##### GREY #####
+    cmap = mat.cm.get_cmap('Greys')
+
+    plt.bar(pos, 
+            FinalsRegionalCity,
+            barwidth,
+            color=cmap(0.8))
+
+    plt.bar(pos+np.array([0.8/3, 0, 0, 0]),
+            NationalFinalsStage2,
+            barwidth,
+            color=cmap(0.7))
+
+    plt.bar(pos+np.array([1.6/3, 0.8/4, 0, 0.8/4]), 
+            SemiFinals,
+            barwidth,
+            color=cmap(0.6))
+
+    plt.bar(pos+np.array([2.4/3, 1.6/4, 0.8/4, 1.6/4]), 
+            Qualifying,
+            barwidth,
+            color=cmap(0.5))
+
+    plt.bar(pos+np.array([1.6/3, 2.4/4, 1.6/4, 2.4/4]), 
+            QualifyingRegionalCity,
+            barwidth,
+            color=cmap(0.4))
+
+    plt.bar(pos+np.array([1.6/3, 2.4/4, 1.6/4, 3.2/4]),
+            NationalFinalsStage1,
+            barwidth,
+            color=cmap(0.3))
+
+    plt.xlabel('Obstacle')
+    plt.ylabel('Times Used')
+    plt.xticks(ticks=np.arange(0, 4, step=1), labels=name[0:nobst], rotation=90)
+    plt.legend(rounds, loc=0, title='Round', bbox_to_anchor=(1, 1))
+    plt.show()
+barplots_sidebyside(4)
