@@ -151,7 +151,6 @@ barplots_yscaling <- function(n.obst){
 }
 barplots_yscaling(2:5)
 
-
 barplots_barwidth <- function(n.obst){
 
   obst <- obstacles(n.obst)
@@ -321,18 +320,13 @@ barplots_stackedcols <- function(n.obst){
 }
 barplots_stackedcols(2:5)
 
-
 barplots_stackedcols_dodge <- function(n.obst){
 
-  obst <- obstacles(n.obst)
-  names(obst) <- c('name', 'ntimes')
-  obst$name <- letters[1:length(n.obst)]
-
-  stage.count <- stages(n.obst)
+  stage.count <- stack_data(n.obst)
 
   # vir
   vir <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
+  geom_bar(aes(x=ltrs, fill=stages), position="dodge") +
   scale_y_continuous() +
   scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_fill_viridis(discrete = TRUE, option = "D")+
@@ -344,7 +338,7 @@ barplots_stackedcols_dodge <- function(n.obst){
 
   # vir2
   vir2 <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
+  geom_bar(aes(x=ltrs, fill=stages), position="dodge") +
   scale_y_continuous() +
   scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_fill_viridis(discrete = TRUE, option = "A")+
@@ -357,7 +351,7 @@ barplots_stackedcols_dodge <- function(n.obst){
 
   # grey
   grey <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
+  geom_bar(aes(x=ltrs, fill=stages), position="dodge") +
   scale_y_continuous() +
   scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   scale_fill_grey()+
@@ -369,7 +363,7 @@ barplots_stackedcols_dodge <- function(n.obst){
 
   # fil
   fil <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages), position="dodge") +
+  geom_bar(aes(x=ltrs, fill=stages), position="dodge") +
   scale_y_continuous() +
   scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   xlab('Obstacle') + 
@@ -386,10 +380,6 @@ barplots_stackedcols_dodge <- function(n.obst){
 
   print(fil)
   ggsave("Plots/R/Ninja_Data/colours/default_d.jpeg")  
-
-  plot_grid(vir, vir_dodge,
-            labels = c("A", "B"),
-            ncol = 1, nrow = 2)   
 
 }
 barplots_stackedcols_dodge(2:5)
