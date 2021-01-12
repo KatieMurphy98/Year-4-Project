@@ -243,9 +243,7 @@ def barplots_stacked(nobst):
     grey("A")
     plt.subplot(212)
     viridis("B")
-    plt.savefig('Ninja_Data/colours/stacked/set_f.jpg',bbox_inches='tight', dpi=150)
-
-    
+    plt.savefig('Ninja_Data/colours/stacked/set_f.jpg',bbox_inches='tight', dpi=150)  
 barplots_stacked(4)
 
 def barplots_sidebyside(nobst):
@@ -364,3 +362,51 @@ def barplots_sidebyside(nobst):
     plt.legend(rounds, loc=0, title='Round', bbox_to_anchor=(1, 1))
     plt.show()
 barplots_sidebyside(4)
+
+##### sales #####
+
+   month = list(range(1, 13))
+   
+   salesA = [211.0, 210.7, 210.1, 211.4, 210.0, 209.7, 208.8, 208.8, 208.8, 210.6, 211.9, 212.8]
+   salesB = [201.5, 203.5, 204.9, 207.1, 210.5, 210.5, 209.8, 208.8, 209.5, 213.2, 213.7, 215.1]
+   salesC = [237.1, 240.6, 243.8, 245.3, 246.0, 246.3, 247.7, 247.6, 247.8, 249.4, 249.0, 249.9]
+   salesD = [214.8, 215.3, 217.5, 218.8, 220.7, 222.2, 226.7, 228.4, 233.2, 235.7, 237.1, 240.6]
+   
+   #### A and B ####
+   ###  CONTROL ###
+   plt.plot(month, salesA, color = viridis.colors[0])
+   plt.savefig('Sales/A.jpg',bbox_inches='tight', dpi=150)
+   
+   plt.plot(month, salesB, color = viridis.colors[4])
+   plt.savefig('Sales/B.jpg',bbox_inches='tight', dpi=150)
+   
+   plt.plot(month, salesA, color = viridis.colors[0])
+   plt.plot(month, salesB, color = viridis.colors[4])
+   plt.savefig('Sales/AB.jpg',bbox_inches='tight', dpi=150)
+   
+   ### ZEROED ###
+   plt.plot(month, salesA, color = viridis.colors[0])
+   plt.plot(month, salesB, color = viridis.colors[4])
+   plt.ylim(bottom=0)
+   plt.savefig('Sales/AB_zero.jpg',bbox_inches='tight', dpi=150)
+   
+   
+   #### C and D ####
+   ### CONTROL ###
+   inferno = cm.get_cmap('inferno', 15)
+   
+   plt.plot(month, salesC, color = inferno.colors[7])
+   plt.savefig('Sales/C.jpg',bbox_inches='tight', dpi=150)
+   
+   plt.plot(month, salesD, color = inferno.colors[11])
+   plt.savefig('Sales/D.jpg',bbox_inches='tight', dpi=150)
+   
+   plt.plot(month, salesC, color = inferno.colors[7])
+   plt.plot(month, salesD, color = inferno.colors[11])
+   plt.savefig('Sales/CD.jpg',bbox_inches='tight', dpi=150)
+   
+   ### ZEROED ###
+   plt.plot(month, salesC, color = inferno.colors[7])
+   plt.plot(month, salesD, color = inferno.colors[11])
+   plt.ylim(bottom=0)
+   plt.savefig('Sales/CD_zeroed.jpg',bbox_inches='tight', dpi=150)
