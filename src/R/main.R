@@ -40,35 +40,40 @@
 
 
   stack_data <- function(ObstacleNumbers){
-   obst <- obstacles(ObstacleNumbers)
+    obst <- obstacles(ObstacleNumbers)
 
     ##List obstacles the number of times they are used##
     obstcount <- c()
+    ltrs <- c()
     for(i in 1:dim(obst)[1]){
+      letter = letters[i]
       obstcount <- append(obstcount, rep(obst[i, 1], obst[i, 2]))
+      ltrs <- append(ltrs, rep(letter, obst[i, 2]))
     }
-     
+    print(ltrs)
+
     bardat <- as.data.frame(obstcount) #Change to dataframe
 
     stage.count <- data.frame()
     for(i in 1:(length(ObstacleNumbers))){
+
       filter_ninja <- filter(NinjaWarrior, name==obst[i,1]) #Filters data for relevant obstacles
       
       freq_stages <- as.data.frame(table(filter_ninja$stage)) #Count how many times obstacle i is used in each stage
-      print(freq_stages)
-
+          
       stages <- rep(freq_stages$Var1, freq_stages$Freq) #Lists each stage the number of times it occurs
-      
+
       obs <- filter(bardat, obstcount == obst[i,1]) #Filter for obstacle i
 
       stages_obs <- cbind(obs, stages)
 
       stage.count <- rbind(stage.count, stages_obs) #Iterate to get whole set of data
     }
+    stage.count <- cbind(stage.count, ltrs)
     return(stage.count)
 }
 
-  
+
   
 #####
 letters <- c("A", "B", "C", "D", "E", "F", "G")
@@ -227,7 +232,7 @@ barplots_stackedcols <- function(n.obst){
 
   # vir
   vir <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages)) +
+  geom_bar(aes(x=ltrs, fill=stages)) +
   scale_y_continuous() +
   scale_fill_viridis(discrete = TRUE, option = "D")+
   scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
@@ -239,7 +244,7 @@ barplots_stackedcols <- function(n.obst){
 
   # vir2
   vir2 <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages)) +
+  geom_bar(aes(x=ltrs, fill=stages)) +
   scale_y_continuous() +
   scale_fill_viridis(discrete = TRUE, option = "A")+
   scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
@@ -252,7 +257,7 @@ barplots_stackedcols <- function(n.obst){
 
   # grey
   grey <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages)) +
+  geom_bar(aes(x=ltrs, fill=stages)) +
   scale_y_continuous() +
   scale_fill_grey()+
   scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
@@ -264,7 +269,7 @@ barplots_stackedcols <- function(n.obst){
 
   # fil
   fil <- ggplot(data=stage.count) +
-  geom_bar(aes(x=obstcount, fill=stages)) +
+  geom_bar(aes(x=ltrs, fill=stages)) +
   scale_y_continuous() +
   scale_x_discrete(labels=obst_list[1:length(n.obst)]) +
   xlab('Obstacle') + 
@@ -425,7 +430,6 @@ sales_line_plots <- function(npoints){
 
    sales <- rbind(salesA, salesB)
    sales2 <- rbind(salesC, salesD)
-   #print(sales)
 
    # CONTROLS #
    dflt_oneline_1 <- ggplot(data=salesA, aes(x=Month, y=Sales, group = Company, col = Company))+
@@ -537,10 +541,12 @@ sales_line_plots <- function(npoints){
                         theme(aspect.ratio = 0.3/1)
    ggsave("Plots/R/Sales/small.jpeg")
 
+   return(sales2)
+
 }
 
-seeds <- sample(1000, 4)
-#seeds <- c(62, 905, 511, 579)
+#seeds <- sample(1000, 4)
+seeds <- c(62, 905, 511, 579)
 sales_line_plots(npoints=12)
 seeds
 
