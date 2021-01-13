@@ -372,14 +372,18 @@ barplots_sidebyside(4)
    salesC = [237.1, 240.6, 243.8, 245.3, 246.0, 246.3, 247.7, 247.6, 247.8, 249.4, 249.0, 249.9]
    salesD = [214.8, 215.3, 217.5, 218.8, 220.7, 222.2, 226.7, 228.4, 233.2, 235.7, 237.1, 240.6]
    
+   viridis = cm.get_cmap('viridis', 6)
+
    #### A and B ####
    ###  CONTROL ###
    plt.plot(month, salesA, color = viridis.colors[0])
    plt.savefig('Sales/A.jpg',bbox_inches='tight', dpi=150)
-   
+   plt.show()
+
    plt.plot(month, salesB, color = viridis.colors[4])
    plt.savefig('Sales/B.jpg',bbox_inches='tight', dpi=150)
-   
+   plt.show()
+
    plt.plot(month, salesA, color = viridis.colors[0])
    plt.plot(month, salesB, color = viridis.colors[4])
    plt.savefig('Sales/AB.jpg',bbox_inches='tight', dpi=150)
@@ -397,10 +401,12 @@ barplots_sidebyside(4)
    
    plt.plot(month, salesC, color = inferno.colors[7])
    plt.savefig('Sales/C.jpg',bbox_inches='tight', dpi=150)
-   
+   plt.show()
+
    plt.plot(month, salesD, color = inferno.colors[11])
    plt.savefig('Sales/D.jpg',bbox_inches='tight', dpi=150)
-   
+   plt.show()
+
    plt.plot(month, salesC, color = inferno.colors[7])
    plt.plot(month, salesD, color = inferno.colors[11])
    plt.savefig('Sales/CD.jpg',bbox_inches='tight', dpi=150)
@@ -410,3 +416,4 @@ barplots_sidebyside(4)
    plt.plot(month, salesD, color = inferno.colors[11])
    plt.ylim(bottom=0)
    plt.savefig('Sales/CD_zeroed.jpg',bbox_inches='tight', dpi=150)
+###
