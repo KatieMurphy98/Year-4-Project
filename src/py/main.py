@@ -377,43 +377,55 @@ barplots_sidebyside(4)
    #### A and B ####
    ###  CONTROL ###
    plt.plot(month, salesA, color = viridis.colors[0])
+   plt.legend(['Company A'], loc=0, title='Company', bbox_to_anchor=(1, 1))
    plt.savefig('Sales/A.jpg',bbox_inches='tight', dpi=150)
    plt.show()
 
    plt.plot(month, salesB, color = viridis.colors[4])
+   plt.legend(['Company B'], loc=0, title='Company', bbox_to_anchor=(1, 1))
    plt.savefig('Sales/B.jpg',bbox_inches='tight', dpi=150)
    plt.show()
 
    plt.plot(month, salesA, color = viridis.colors[0])
    plt.plot(month, salesB, color = viridis.colors[4])
+   plt.legend(['Company A', 'Company B'], loc=0, title='Company', bbox_to_anchor=(1, 1))
    plt.savefig('Sales/AB.jpg',bbox_inches='tight', dpi=150)
-   
+   plt.show()
+
    ### ZEROED ###
    plt.plot(month, salesA, color = viridis.colors[0])
    plt.plot(month, salesB, color = viridis.colors[4])
+   plt.legend(['Company A', 'Company B'], loc=0, title='Company', bbox_to_anchor=(1, 1))
    plt.ylim(bottom=0)
    plt.savefig('Sales/AB_zero.jpg',bbox_inches='tight', dpi=150)
-   
+   plt.show()
+
    
    #### C and D ####
    ### CONTROL ###
    inferno = cm.get_cmap('inferno', 15)
    
    plt.plot(month, salesC, color = inferno.colors[7])
+   plt.legend(['Company C'], loc=0, title='Company', bbox_to_anchor=(1, 1))
    plt.savefig('Sales/C.jpg',bbox_inches='tight', dpi=150)
    plt.show()
 
    plt.plot(month, salesD, color = inferno.colors[11])
+   plt.legend(['Company D'], loc=0, title='Company', bbox_to_anchor=(1, 1))
    plt.savefig('Sales/D.jpg',bbox_inches='tight', dpi=150)
    plt.show()
 
    plt.plot(month, salesC, color = inferno.colors[7])
    plt.plot(month, salesD, color = inferno.colors[11])
+   plt.legend(['Company C', 'Company D'], loc=0, title='Company', bbox_to_anchor=(1, 1))
    plt.savefig('Sales/CD.jpg',bbox_inches='tight', dpi=150)
-   
+   plt.show()
+
    ### ZEROED ###
    plt.plot(month, salesC, color = inferno.colors[7])
    plt.plot(month, salesD, color = inferno.colors[11])
    plt.ylim(bottom=0)
+   plt.legend(['Company C', 'Company D'], loc=0, title='Company', bbox_to_anchor=(1, 1))
    plt.savefig('Sales/CD_zeroed.jpg',bbox_inches='tight', dpi=150)
+   plt.show()
 ###
