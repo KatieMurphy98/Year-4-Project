@@ -280,7 +280,7 @@ def barplots_sidebyside(nobst):
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(ticks=np.arange(0, 4, step=1), labels=name[0:nobst], rotation=90)
-    plt.legend(rounds, loc=0, title='Round', bbox_to_anchor=(1, 1))
+    plt.legend(rounds, loc=2, title='Round', bbox_to_anchor=(1, 1))
     plt.show()
 
     ##### VIRIDIS #####
@@ -320,7 +320,7 @@ def barplots_sidebyside(nobst):
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(ticks=np.arange(0, 4, step=1), labels=name[0:nobst], rotation=90)
-    plt.legend(rounds, loc=0, title='Round', bbox_to_anchor=(1, 1))
+    plt.legend(rounds, loc=2, title='Round', bbox_to_anchor=(1, 1))
     plt.show()
 
      ##### GREY #####
@@ -359,7 +359,7 @@ def barplots_sidebyside(nobst):
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(ticks=np.arange(0, 4, step=1), labels=name[0:nobst], rotation=90)
-    plt.legend(rounds, loc=0, title='Round', bbox_to_anchor=(1, 1))
+    plt.legend(rounds, loc=2, title='Round', bbox_to_anchor=(1, 1))
     plt.show()
 barplots_sidebyside(4)
 
