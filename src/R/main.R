@@ -73,10 +73,48 @@
     return(stage.count)
 }
 
+### WRITE CSV FILES ###
+   FinalsRegionalCity = stack_data(2:5) %>% filter(stage=='Finals (Regional/City)')
+   FinalsRegionalCity = as.data.frame(table(FinalsRegionalCity['obstacle']))
+   names(FinalsRegionalCity) = c('name', 'ntimes')
+   FinalsRegionalCity = FinalsRegionalCity[order(-FinalsRegionalCity$ntimes),]
+   write.csv(FinalsRegionalCity, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/FinalsRegionalCity.csv")
+   
+   NationalFinalsStage2 = stack_data(2:5) %>% filter(stage=='National Finals - Stage 2')
+   NationalFinalsStage2 = as.data.frame(table(NationalFinalsStage2['obstacle']))
+   names(NationalFinalsStage2) = c('name', 'ntimes')
+   NationalFinalsStage2 = NationalFinalsStage2[order(-NationalFinalsStage2$ntimes),]
+   write.csv(NationalFinalsStage2, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/NationalFinalsStage2.csv")
+   
+   SemiFinals = stack_data(2:5) %>% filter(stage=='Semi-Finals')    
+   SemiFinals = as.data.frame(table(SemiFinals['obstacle']))
+   names(SemiFinals) = c('name', 'ntimes')
+   SemiFinals = SemiFinals[order(-SemiFinals$ntimes),]      
+   write.csv(SemiFinals, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/SemiFinals.csv")
+   
+   Qualifying = stack_data(2:5) %>% filter(stage=='Qualifying')
+   Qualifying = as.data.frame(table(Qualifying['obstacle']))
+   names(Qualifying) = c('name', 'ntimes')
+   Qualifying = Qualifying[order(-Qualifying$ntimes),]          
+   write.csv(Qualifying, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/Qualifying.csv")
+   
+   QualifyingRegionalCity = stack_data(2:5) %>% filter(stage=='Qualifying (Regional/City)')
+   QualifyingRegionalCity = as.data.frame(table(QualifyingRegionalCity['obstacle']))
+   names(QualifyingRegionalCity) = c('name', 'ntimes')
+   QualifyingRegionalCity = QualifyingRegionalCity[order(-QualifyingRegionalCity$ntimes),]
+   write.csv(QualifyingRegionalCity, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/QualifyingRegionalCity.csv")
+   
+   NationalFinalsStage1 = stack_data(2:5) %>% filter(stage=='National Finals - Stage 1')
+   NationalFinalsStage1 = as.data.frame(table(NationalFinalsStage1['obstacle']))
+   names(NationalFinalsStage1) = c('name', 'ntimes')
+   NationalFinalsStage1 = NationalFinalsStage1[order(-NationalFinalsStage1$ntimes),]
+   write.csv(NationalFinalsStage1, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/NationalFinalsStage1.csv")
+   
+   
+   write.csv(obstacles(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/times_used.csv")
+   write.csv(stack_data(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/stack_data.csv")
+###
 
-write.csv(obstacles(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/times_used.csv")
-write.csv(stack_data(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/stack_data.csv")
-  
 #####
 letters <- c("A", "B", "C", "D", "E", "F", "G")
 obst_list <- c("Salmon Ladder","Quintuple Steps","Floating Steps","Log Grip","Jump Hang","Quad Steps","Jumping Spider")
@@ -84,7 +122,7 @@ obst_list <- c("Salmon Ladder","Quintuple Steps","Floating Steps","Log Grip","Ju
 
 barplots_yscaling <- function(n.obst){
 
-  obst <- obstacles(2:(n.obst+1))
+  obst <- obstacles(n.obst)
   obst$name <- letters[1:length(n.obst)]
   
   # default scale
@@ -151,7 +189,7 @@ barplots_yscaling <- function(n.obst){
   
 
 }
-barplots_yscaling(4)
+barplots_yscaling(2:5)
 
 barplots_barwidth <- function(n.obst){
 
