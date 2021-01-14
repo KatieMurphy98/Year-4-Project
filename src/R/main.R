@@ -111,7 +111,9 @@
    write.csv(NationalFinalsStage1, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/NationalFinalsStage1.csv")
    
    
-   write.csv(obstacles(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/times_used.csv")
+   write.csv(obstacles(2:5), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/times_used4.csv")
+   write.csv(obstacles(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/times_used6.csv")
+   
    write.csv(stack_data(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/stack_data.csv")
 ###
 
