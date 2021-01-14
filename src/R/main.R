@@ -50,7 +50,6 @@
       obstcount <- append(obstcount, rep(obst[i, 1], obst[i, 2]))
       ltrs <- append(ltrs, rep(letter, obst[i, 2]))
     }
-    print(ltrs)
 
     bardat <- as.data.frame(obstcount) #Change to dataframe
 
@@ -70,10 +69,13 @@
       stage.count <- rbind(stage.count, stages_obs) #Iterate to get whole set of data
     }
     stage.count <- cbind(stage.count, ltrs)
+    names(stage.count) <- c('obstacle', 'stage', 'order')
     return(stage.count)
 }
 
 
+write.csv(obstacles(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/times_used.csv")
+write.csv(stack_data(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/stack_data.csv")
   
 #####
 letters <- c("A", "B", "C", "D", "E", "F", "G")
@@ -82,7 +84,7 @@ obst_list <- c("Salmon Ladder","Quintuple Steps","Floating Steps","Log Grip","Ju
 
 barplots_yscaling <- function(n.obst){
 
-  obst <- obstacles(n.obst)
+  obst <- obstacles(2:(n.obst+1))
   obst$name <- letters[1:length(n.obst)]
   
   # default scale
@@ -149,7 +151,7 @@ barplots_yscaling <- function(n.obst){
   
 
 }
-barplots_yscaling(2:5)
+barplots_yscaling(4)
 
 barplots_barwidth <- function(n.obst){
 
