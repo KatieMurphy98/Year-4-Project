@@ -1,14 +1,488 @@
-<html>
-  <head>
-    <script src="https://d3js.org/d3.v4.js"></script>
-    <!--Load d3.js v5-->
-    <link rel="stylesheet" href="main.css" />
+<!DOCTYPE html>
+<meta charset="utf-8">
 
-    <h1>Plots with d3.js</h1>
-    <div id="my_dataviz"></div>
-  </head>
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
 
-  <body>
-    <script src="main.js"></script>
-  </body>
-</html>
+
+<!-- SCALING -->
+<div id="control_scaling"></div>
+<script>
+  // set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 100, left: 60},
+    width = 450 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var control = d3.select("#control_scaling")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv(data="https://raw.githubusercontent.com/KatieMurphy98/Year-4-Project/create-visualisations/Data/Ninja%20Warrior/times_used4.csv", function(data) {
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+  control.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-15, 10)rotate(-90)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 42])
+  .range([ height, 0]);
+  control.append("g")
+  .call(d3.axisLeft(y));
+
+// Bars
+control.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("y", function(d) { return y(d.ntimes); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ntimes); })
+    .attr("fill", "#69b3a2")
+
+})
+
+</script>
+
+<div id="log10_scaling"></div>
+<script>
+  // set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 100, left: 60},
+    width = 450 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var log10 = d3.select("#log10_scaling")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv(data="https://raw.githubusercontent.com/KatieMurphy98/Year-4-Project/create-visualisations/Data/Ninja%20Warrior/times_used4.csv", function(data) {
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+  log10.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-15, 10)rotate(-90)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLog()
+  .domain([1, 42])
+  .range([ height, 1])
+  .nice();
+  log10.append("g")
+  .call(d3.axisLeft(y))
+  
+
+// Bars
+log10.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("y", function(d) { return y(d.ntimes); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ntimes); })
+    .attr("fill", "#69b3a2")
+
+})
+</script>
+
+<div id="truncated"></div>
+<script>
+  // set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 100, left: 60},
+    width = 460 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var truncated = d3.select("#truncated_scaling")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv(data="https://raw.githubusercontent.com/KatieMurphy98/Year-4-Project/create-visualisations/Data/Ninja%20Warrior/times_used4.csv", function(data) {
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+  truncated.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-15, 10)rotate(-90)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 42])
+  .range([ height, 0]);
+  truncated.append("g")
+  .call(d3.axisLeft(y));
+
+// Bars
+truncated.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("y", function(d) { return y(d.ntimes); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ntimes); })
+    .attr("fill", "#69b3a2")
+
+})
+
+</script>
+
+
+<!-- AXIS RATIOS -->
+<div id="control_width"></div>
+<script>
+  // set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 100, left: 60},
+    width = 450 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var control_w = d3.select("#control_width")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv(data="https://raw.githubusercontent.com/KatieMurphy98/Year-4-Project/create-visualisations/Data/Ninja%20Warrior/times_used4.csv", function(data) {
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+  control_w.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-15, 10)rotate(-90)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 42])
+  .range([ height, 0]);
+  control_w.append("g")
+  .call(d3.axisLeft(y));
+
+// Bars
+control_w.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("y", function(d) { return y(d.ntimes); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ntimes); })
+    .attr("fill", "#69b3a2")
+
+})
+
+</script>
+
+<div id="wide_width"></div>
+<script>
+  // set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 100, left: 60},
+    width = 450 - margin.left - margin.right,
+    height = 225 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var wide = d3.select("#wide_width")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv(data="https://raw.githubusercontent.com/KatieMurphy98/Year-4-Project/create-visualisations/Data/Ninja%20Warrior/times_used6.csv", function(data) {
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+  wide.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-15, 10)rotate(-90)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 42])
+  .range([ height, 0]);
+  wide.append("g")
+  .call(d3.axisLeft(y));
+
+// Bars
+wide.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("y", function(d) { return y(d.ntimes); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ntimes); })
+    .attr("fill", "#69b3a2")
+
+})
+
+</script>
+
+<div id="narrow_width"></div>
+<script>
+  // set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 100, left: 60},
+    width = 225 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var narrow = d3.select("#narrow_width")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv(data="https://raw.githubusercontent.com/KatieMurphy98/Year-4-Project/create-visualisations/Data/Ninja%20Warrior/times_used6.csv", function(data) {
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+  narrow.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-15, 10)rotate(-90)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 42])
+  .range([ height, 0]);
+  narrow.append("g")
+  .call(d3.axisLeft(y));
+
+// Bars
+narrow.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("y", function(d) { return y(d.ntimes); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ntimes); })
+    .attr("fill", "#69b3a2")
+
+})
+
+</script>
+
+<!-- STACKED -->
+<div id="default"></div>
+<script>
+  // set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 100, left: 60},
+    width = 450 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var control = d3.select("#control_scaling")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv(data="https://raw.githubusercontent.com/KatieMurphy98/Year-4-Project/create-visualisations/Data/Ninja%20Warrior/times_used4.csv", function(data) {
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+  control.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-15, 10)rotate(-90)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 42])
+  .range([ height, 0]);
+  control.append("g")
+  .call(d3.axisLeft(y));
+
+// Bars
+control.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("y", function(d) { return y(d.ntimes); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ntimes); })
+    .attr("fill", "#69b3a2")
+
+})
+
+</script>
+
+<div id="viridis"></div>
+<script>
+  // set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 100, left: 60},
+    width = 450 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var control = d3.select("#control_scaling")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv(data="https://raw.githubusercontent.com/KatieMurphy98/Year-4-Project/create-visualisations/Data/Ninja%20Warrior/times_used4.csv", function(data) {
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+  control.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-15, 10)rotate(-90)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 42])
+  .range([ height, 0]);
+  control.append("g")
+  .call(d3.axisLeft(y));
+
+// Bars
+control.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("y", function(d) { return y(d.ntimes); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ntimes); })
+    .attr("fill", "#69b3a2")
+
+})
+
+</script>
+
+<div id="grey"></div>
+<script>
+  // set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 100, left: 60},
+    width = 450 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var control = d3.select("#control_scaling")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv(data="https://raw.githubusercontent.com/KatieMurphy98/Year-4-Project/create-visualisations/Data/Ninja%20Warrior/times_used4.csv", function(data) {
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.name; }))
+  .padding(0.2);
+  control.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    .attr("transform", "translate(-15, 10)rotate(-90)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  .domain([0, 42])
+  .range([ height, 0]);
+  control.append("g")
+  .call(d3.axisLeft(y));
+
+// Bars
+control.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.name); })
+    .attr("y", function(d) { return y(d.ntimes); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.ntimes); })
+    .attr("fill", "#69b3a2")
+
+})
+
+</script>
