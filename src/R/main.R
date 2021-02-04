@@ -193,7 +193,7 @@ barplots_yscaling <- function(n.obst){
 }
 barplots_yscaling(2:5)
 
-barplots_barwidth <- function(n.obst){
+barplots_axisratio <- function(n.obst){
 
   obst <- obstacles(n.obst)
   obst$name <- letters[1:length(n.obst)]
@@ -265,9 +265,9 @@ barplots_barwidth <- function(n.obst){
   print(dflt)
   ggsave("Plots/R/Ninja_Data/bars/control.jpeg") 
 }
-barplots_barwidth(2:5)
+barplots_axisratio(2:5)
 
-barplots_stackedcols <- function(n.obst){
+barplots_stacked<- function(n.obst){
 
   stage.count <- stack_data(n.obst)
 
@@ -360,9 +360,9 @@ barplots_stackedcols <- function(n.obst){
   ggsave("Plots/R/Ninja_Data/colours/col_set_f.jpeg")   
 
 }
-barplots_stackedcols(2:5)
+barplots_stacked(2:5)
 
-barplots_stackedcols_dodge <- function(n.obst){
+barplots_sidebyside <- function(n.obst){
 
   stage.count <- stack_data(n.obst)
 
@@ -424,7 +424,7 @@ barplots_stackedcols_dodge <- function(n.obst){
   ggsave("Plots/R/Ninja_Data/colours/default_d.jpeg")  
 
 }
-barplots_stackedcols_dodge(2:5)
+barplots_sidebyside(2:5)
 
 
 ##### Time-series #####
