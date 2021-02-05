@@ -18,6 +18,21 @@ os.chdir("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Plots/Py
 NinjaWarrior = pd.read_excel('https://query.data.world/s/tjkd2yop2xh2x4o2j5fhatxdidcvty')
 NinjaWarrior = NinjaWarrior.rename(columns={"Season":"season", "Location":"location", "Round/Stage":"stage", "Obstacle Name":"name", "Obstacle Order":"order"})
 
+  
+def obstacles(ObstacleNumbers):
+
+    obst = pd.DataFrame(columns={'name', 'ntimes'})
+    
+    for i in np.unique(NinjaWarrior.name):
+        dat = NinjaWarrior[(NinjaWarrior.name == i)]
+        new_row = {'name':i, 'ntimes':len(dat['name'])}
+        obst = obst.append(new_row, ignore_index=True)
+    
+    obst = obst.sort_values(by=['ntimes'], inplace=True, ascending=False)
+    obst = obst.iloc[1:ObstacleNumbers]  
+
+    print(obst)
+
 name = ['Salmon Ladder', 'Quintuple Steps', 'Floating Steps', 'Log Grip', 'Jump Hang', 'Quad Steps', 'Jumping Spider']
 ntimes = [41, 32, 28, 21, 18, 16, 14]
 
@@ -33,38 +48,38 @@ rounds = np.array(['Finals (Regional/City)', 'National Finals-Stage 2', 'Semi-Fi
 obst = pd.DataFrame(data={'name':name, 'ntimes':ntimes})
 
  
-def barplots_yscaling():
+def barplots_yscaling(nobst):
     ##### CONTROL #####
-    plt.bar(name[0:nobst], ntimes[0:4], color="#69b3a2")
+    plt.bar(name[0:nobst], ntimes[0:nobst], color="#69b3a2")
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(rotation=90)
 
     ##### LOG10 #####
-    plt.bar(name[0:nobst], ntimes[0:4], color="#69b3a2")
+    plt.bar(name[0:nobst], ntimes[0:nobst], color="#69b3a2")
     plt.yscale('symlog')
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(rotation=90)
 
     ##### TRUNCATED #####
-    plt.bar(name[0:nobst], ntimes[0:4], color="#69b3a2")
+    plt.bar(name[0:nobst], ntimes[0:nobst], color="#69b3a2")
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(rotation=90)
     plt.ylim([20, 42])
-barplots_yscaling()
+barplots_yscaling(4)
 
 def barplots_axisratio():
     ##### CONTROL #####
-    plt.bar(name[0:7], ntimes[0:7], color="#69b3a2")
+    plt.bar(name[0:nobst], ntimes[0:nobst], color="#69b3a2")
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(rotation=90)
     plt.show()
 
     ##### TALL #####
-    plt.bar(name[0:7], ntimes[0:7], color="#69b3a2")
+    plt.bar(name[0:nobst], ntimes[0:nobst], color="#69b3a2")
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(rotation=90)
@@ -72,13 +87,13 @@ def barplots_axisratio():
     plt.show()
 
     ##### WIDE #####
-    plt.bar(name[0:7], ntimes[0:7], color="#69b3a2")
+    plt.bar(name[0:nobst], ntimes[0:nobst], color="#69b3a2")
     plt.xlabel('Obstacle')
     plt.ylabel('Times Used')
     plt.xticks(rotation=90)
     plt.gca().set_aspect('0.05')
     plt.show()
-barplots_axisratio()
+barplots_axisratio(7)
 
 def barplots_stacked(nobst):
 
