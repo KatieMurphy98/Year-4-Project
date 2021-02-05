@@ -6,6 +6,7 @@ from invoke import task
 
 import known
 
+
 def get_files_to_check():
     for path in pathlib.Path("tex/").glob("*.tex"):
         yield path
