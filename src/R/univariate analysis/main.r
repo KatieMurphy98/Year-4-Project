@@ -1,6 +1,8 @@
 rm(list=ls())
 library(readxl)
 
+
+
 ### ver 1 data ###
   r1 <- as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", "R - v1"))
   py1 <- as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", "Py - v1"))
@@ -180,12 +182,50 @@ ctrl_y_scale <- rbind(ver1[,10:13], ver2[,10:13], ver3[,14:17], ver4[,18:21], ve
 log_y_scale <- rbind(ver1[,14:17], ver2[,18:21], ver3[,10:13], ver4[,10:13], ver5[,18:21], ver6[,14:17])
 trnc_y_scale <- rbind(ver1[,18:21], ver2[,14:17], ver3[,18:21], ver4[,14:17], ver5[,10:13], ver6[,10:13])
 
-# Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was used?
-t.test(ctrl_y_scale[,2], log_y_scale[,2]) # p = 2.222e-10 < 0.05 **
-t.test(ctrl_y_scale[,2], trnc_y_scale[,2]) # p = 0.02725 < 0.05 *
-t.test(log_y_scale[,2], trnc_y_scale[,2]) # p = 1.027e-13 < 0.05 ***
+### Y Scales Q1 ###
+#control
+con_1 <- ctrl_y_scale[,1]
+which(con_1 == '41/42') # entry 26 
 
-# Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?
-t.test(ctrl_y_scale[,3], log_y_scale[,3]) # p = 8.022e-06 < 0.05 **
-t.test(ctrl_y_scale[,3], trnc_y_scale[,3]) # p = 0.001051 < 0.05 *
-t.test(log_y_scale[,3], trnc_y_scale[,3]) # p = 3.79e-12 < 0.05 ***
+con_1[26] <- 41.5 # take midpoint of two values
+#OR
+con_1 <- con_1[-26] # remove value
+
+con_1 <- as.numeric(con_1)
+summary(con_1)
+range(con_1)[2]-range(con_1)[1]
+
+#truncated
+trn_1 <- trnc_y_scale[,1]
+summary(trn_1)
+
+range(trn_1)[2]-range(trn_1)[1]
+
+#log
+log_1 <- log_y_scale[,1]
+
+
+
+range(log_1)[2]-range(log_1)[1]
+
+
+
+con_2 <- ctrl_y_scale[,2]
+summary(con_2)
+
+con_3 <- ctrl_y_scale[,3]
+summary(con_3)
+
+con_4 <- ctrl_y_scale[,4]
+con_4 <- con_4[-which(is.na(ctrl_y_scale[,4]))] # remove NA values
+
+con_4[17] <- 12.5 # change value "12.5 %" to numeric value
+con_4 <- as.numeric(con_4)
+
+for(i in 1:length(con_4)){
+    if(con_4[i] < 1){
+       con_4[i] <- con_4[i]*100
+    }
+}
+
+summary(con_4)
