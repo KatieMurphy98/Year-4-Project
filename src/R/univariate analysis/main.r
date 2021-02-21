@@ -7,6 +7,10 @@ for(i in 1:6){
     assign(paste0("ver",i), rbind(r, py))
 }
 
+ver1 <- ver1[-1,]
+r1 <- r1[-1,]
+py1 <- py1[-1,]
+
 names(ver1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
                  "con_1", "con_2", "con_3", "con_4", 
@@ -446,11 +450,14 @@ names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
 ###
 
 
+##### Y SCALES #####
 ctrl_y_scale <- rbind(ver1[,10:13], ver2[,10:13], ver3[,14:17], ver4[,18:21], ver5[,14:17], ver6[,18:21])
 log_y_scale <- rbind(ver1[,14:17], ver2[,18:21], ver3[,10:13], ver4[,10:13], ver5[,18:21], ver6[,14:17])
 trnc_y_scale <- rbind(ver1[,18:21], ver2[,14:17], ver3[,18:21], ver4[,14:17], ver5[,10:13], ver6[,10:13])
 
 ### Y Scales Q1 ###
+#Approximately many times would you say the 'Salmon Ladder' was used?
+
 #control
 con_1 <- ctrl_y_scale[,1]
 which(con_1 == '41/42') # entry 26 
@@ -488,6 +495,8 @@ summary(log_1)
 
 
 ### Y Scales Q2 ###
+# Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was
+
 con_2 <- ctrl_y_scale[,2]
 summary(con_2)
 
@@ -508,14 +517,8 @@ summary(log_3)
 trnc_3 <- trnc_y_scale[,3]
 summary(trnc_3)
 
-
-
-
-log_4 <- log_y_scale[,4]
-summary(log_4)
-
-
-
+### Y Scales Q4 ###
+# "In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?
 
 con_4 <- ctrl_y_scale[,4]
 con_4 <- con_4[-which(is.na(ctrl_y_scale[,4]))] # remove NA values
@@ -545,7 +548,7 @@ summary(trnc_4)
 
 log_4 <- log_y_scale[,4]
 log_4 <- log_4[-which(is.na(log_y_scale[,4]))] # remove NA values
-log_4[18] <- 3
+log_4[17] <- 3
 log_4 <- as.numeric(log_4)
 
 for(i in 1:length(log_4)){
@@ -555,3 +558,45 @@ for(i in 1:length(log_4)){
 }
 
 summary(log_4)
+
+
+### AXIS RATIO ###
+ctrl_ratio <- rbind(ver1[,22:24], ver2[,22:24], ver3[,25:27], ver4[,28:30], ver5[,25:27], ver6[,28:30])
+wide_ratio <- rbind(ver1[,25:27], ver2[,28:30], ver3[,22:24], ver4[,22:24], ver5[,28:30], ver6[,25:27])
+narrow_ratio <- rbind(ver1[,28:30], ver2[,25:27], ver3[,28:30], ver4[,25:27], ver5[,22:24], ver6[,22:24])
+
+# Axis ratio Q1 #
+#How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?
+def_1 <- ctrl_ratio[,1]
+summary(def_1)
+
+wid_1 <- wide_ratio[,1]
+summary(wid_1)
+
+nar_1 <- narrow_ratio[,1]
+summary(nar_1)
+
+# Axis ratio Q2 #
+#How large would you say the difference between 'Log Grip' and 'Floating Steps' is?
+def_2 <- ctrl_ratio[,2]
+summary(def_2)
+
+wid_2 <- wide_ratio[,2]
+summary(wid_2)
+
+nar_2 <- narrow_ratio[,2]
+summary(nar_2)
+
+# Axis ratio Q3 #
+#How many times would you say 'Floating Steps' were used?
+
+def_3 <- ctrl_ratio[,3]
+summary(def_3)
+
+wid_3 <- wide_ratio[,3]
+summary(wid_3)
+
+nar_3 <- narrow_ratio[,3]
+summary(nar_3)
+
+
