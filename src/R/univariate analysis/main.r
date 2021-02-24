@@ -600,3 +600,86 @@ nar_3 <- narrow_ratio[,3]
 summary(nar_3)
 
 
+all <- rbind(ver1[,31:33], ver2[,31:33], ver3[,31:33], ver4[,31:33], ver5[,31:33], ver6[,31:33])
+
+# Axis ratio Q4 #
+#Which of the three bar charts do you find most aesthetically pleasing?
+v1_aes <- table(ver1[,31:33][,1]) 
+names(v1_aes) <- c("Default", "Narrow", "Wide")
+
+v2_aes <- table(ver2[,31:33][,1])
+names(v2_aes) <- c("Default", "Wide", "Narrow")
+
+v3_aes <- c(table(ver3[,31:33][,1]), 0)
+names(v3_aes) <- c("Narrow", "Default", "Wide")
+
+v4_aes <- table(ver4[,31:33][,1])
+names(v4_aes) <- c("Narrow", "Wide", "Default")
+
+v5_aes <- c(0, table(ver5[,31:33][,1]))
+names(v5_aes) <- c("Wide", "Default", "Narrow")
+
+v6_aes <- table(ver6[,31:33][,1])
+names(v6_aes) <- c("Wide", "Narrow", "Default")
+
+all_aes <- v1_aes + 
+  v2_aes[names(v1_aes)] + 
+  v3_aes[names(v1_aes)] + 
+  v4_aes[names(v1_aes)] + 
+  v5_aes[names(v1_aes)] + 
+  v6_aes[names(v1_aes)]
+
+# Axis ratio Q5 #
+#Which bar chart do you feel is easiest to read and interpret?
+v1_easint <- table(ver1[,31:33][,2]) 
+names(v1_easint) <- c("Default", "Narrow", "Wide")
+
+v2_easint <- table(ver2[,31:33][,2])
+names(v2_easint) <- c("Default", "Wide", "Narrow")
+
+v3_easint <- table(ver3[,31:33][,2])
+names(v3_easint) <- c("Narrow", "Default", "Wide")
+
+v4_easint <- c(table(ver4[,31:33][,2]), 0)
+names(v4_easint) <- c("Narrow", "Default", "Wide")
+
+v5_easint <- table(ver5[,31:33][,2])
+names(v5_easint) <- c("Wide", "Default", "Narrow")
+
+v6_easint <- c(0, table(ver6[,31:33][,2]))
+names(v6_easint) <- c("Wide", "Narrow", "Default")
+
+all_easint <- v1_easint + 
+  v2_easint[names(v1_easint)] + 
+  v3_easint[names(v1_easint)] + 
+  v4_easint[names(v1_easint)] + 
+  v5_easint[names(v1_easint)] + 
+  v6_easint[names(v1_easint)]
+
+
+# Axis ratio Q6 #
+#Which bar chart do you find hardest to read and interpret?
+v1_hrdint <- table(ver1[,31:33][,2]) 
+names(v1_hrdint) <- c("Default", "Narrow", "Wide")
+
+v2_hrdint <- table(ver2[,31:33][,2])
+names(v2_hrdint) <- c("Default", "Wide", "Narrow")
+
+v3_hrdint <- table(ver3[,31:33][,2])
+names(v3_hrdint) <- c("Narrow", "Default", "Wide")
+
+v4_hrdint <- c(table(ver4[,31:33][,2]), 0)
+names(v4_hrdint) <- c("Narrow", "Default", "Wide")
+
+v5_hrdint <- table(ver5[,31:33][,2])
+names(v5_hrdint) <- c("Wide", "Default", "Narrow")
+
+v6_hrdint <- c(0, table(ver6[,31:33][,2]))
+names(v6_hrdint) <- c("Wide", "Narrow", "Default")
+
+all_hrdint <- v1_hrdint + 
+  v2_hrdint[names(v1_hrdint)] + 
+  v3_hrdint[names(v1_hrdint)] + 
+  v4_hrdint[names(v1_hrdint)] + 
+  v5_hrdint[names(v1_hrdint)] + 
+  v6_hrdint[names(v1_hrdint)]
