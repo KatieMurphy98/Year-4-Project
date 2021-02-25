@@ -683,3 +683,107 @@ all_hrdint <- v1_hrdint +
   v4_hrdint[names(v1_hrdint)] + 
   v5_hrdint[names(v1_hrdint)] + 
   v6_hrdint[names(v1_hrdint)]
+
+
+##### STACKED BARS #####
+vir_stack <- rbind(ver1[,34:37], ver5[,38:41])
+def_stack <- rbind(ver2[,34:37], ver3[,38:41])
+gry_stack <- rbind(ver4[,34:37], ver6[,38:41])
+
+names(vir_stack) <- c('stack_1', 'stack_2', 'stack_3', 'stack_4')
+names(def_stack) <- c('stack_1', 'stack_2', 'stack_3', 'stack_4')
+names(gry_stack) <- c('stack_1', 'stack_2', 'stack_3', 'stack_4')
+
+stack <- rbind(vir_stack, def_stack, gry_stack)
+
+# Q1 #
+# How many times would you say 'Floating Steps' were used in the Finals (Regional/City) round?
+summary(stack[,1])
+table(stack[,1])
+
+# Q2 #
+# How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?
+summary(stack[,2])
+table(stack[,2])
+
+# Q3 #
+#Please select the statement you feel applies to the bar chart above.
+stack_3 <- (stack[,3])[-which(is.na(stack[,3]))]
+
+for(i in 1:length(stack_3)){  
+  if(stack_3[i] == "Log Grip' was used LESS in Finals (Regional/City) rounds than in Qualifying (Regional/City) rounds."){
+    stack_3[i] <- 'less'
+  }else if(stack_3[i] == "Log Grip' was used MORE in Finals (Regional/City) rounds than in Qualifying (Regional/City) rounds."){
+    stack_3[i] <- 'more'
+  }else if(stack_3[i] == "Log Grip' was used an EQUAL number of times in Finals (Regional/City) rounds and Qualifying (Regional/City) rounds."){
+    stack_3[i] <- 'equal'
+  }
+}
+
+table(stack_3)
+
+# Q4 #
+#Which obstacle do you think was used MORE in Finals (Regional/City) rounds…?
+stack_4 <- (stack[,4])
+
+for(i in 1:length(stack_4)){  
+  if(stack_4[i] == "They were used the same amount of times"){
+    stack_4[i] <- "same"
+  }
+}
+
+table(stack_4)
+
+
+### DODGED BARS ###
+vir_dodge <- rbind(ver1[,34:37], ver5[,38:41])
+def_dodge <- rbind(ver2[,34:37], ver3[,38:41])
+gry_dodge <- rbind(ver4[,34:37], ver6[,38:41])
+
+names(vir_dodge) <- c('dodge_1', 'dodge_2', 'dodge_3', 'dodge_4')
+names(def_dodge) <- c('dodge_1', 'dodge_2', 'dodge_3', 'dodge_4')
+names(gry_dodge) <- c('dodge_1', 'dodge_2', 'dodge_3', 'dodge_4')
+
+dodge <- rbind(vir_dodge, def_dodge, gry_dodge)
+
+# Q1 #
+# How many times would you say 'Floating Steps' were used in the Finals (Regional/City) round?
+summary(dodge[,1])
+table(dodge[,1])
+
+# Q2 #
+# How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?
+summary(dodge[,2])
+table(dodge[,2])
+
+# Q3 #
+#Please select the statement you feel applies to the bar chart above.
+dodge_3 <- (dodge[,3])[-which(is.na(dodge[,3]))]
+
+for(i in 1:length(dodge_3)){  
+  if(dodge_3[i] == "Log Grip' was used LESS in Finals (Regional/City) than in Qualifying (Regional/City)."){
+    dodge_3[i] <- 'less'
+  }else if(dodge_3[i] == "Log Grip' was used MORE in Finals (Regional/City) than in Qualifying (Regional/City)."){
+    dodge_3[i] <- 'more'
+  }else if(dodge_3[i] == "Log Grip' was used an EQUAL number of times in Finals (Regional/City) and Qualifying (Regional/City)."){
+    dodge_3[i] <- 'equal'
+  }
+}
+
+table(dodge_3)
+
+# Q4 #
+#Which obstacle do you think was used MORE in Finals (Regional/City) rounds…?
+dodge_4 <- (dodge[,4])
+
+for(i in 1:length(dodge_4)){  
+  if(dodge_4[i] == "They were used the same amount of times"){
+    dodge_4[i] <- "same"
+  }
+}
+
+table(dodge_4)
+
+
+rbind(table(stack_3), table(dodge_3))
+rbind(table(stack_4), table(dodge_4))
