@@ -736,9 +736,9 @@ table(stack_4)
 
 
 ### DODGED BARS ###
-vir_dodge <- rbind(ver1[,34:37], ver5[,38:41])
-def_dodge <- rbind(ver2[,34:37], ver3[,38:41])
-gry_dodge <- rbind(ver4[,34:37], ver6[,38:41])
+vir_dodge <- rbind(ver1[,38:41], ver5[,34:37])
+def_dodge <- rbind(ver2[,38:41], ver3[,34:37])
+gry_dodge <- rbind(ver4[,38:41], ver6[,34:37])
 
 names(vir_dodge) <- c('dodge_1', 'dodge_2', 'dodge_3', 'dodge_4')
 names(def_dodge) <- c('dodge_1', 'dodge_2', 'dodge_3', 'dodge_4')
@@ -784,6 +784,49 @@ for(i in 1:length(dodge_4)){
 
 table(dodge_4)
 
-
+# compare stacked and dodged bars #
 rbind(table(stack_3), table(dodge_3))
 rbind(table(stack_4), table(dodge_4))
+
+### STACK/DODGE COMPARISONS ###
+# Q1 #
+#Which bar chart do you feel is easiest to read and interpret?
+sta_dge <- c(ver1[,42], ver2[,42], ver3[,42], ver4[,42], ver5[,42], ver6[,42])
+table(sta_dge)
+
+sta_dge_vir <- c(ver1[,42], ver5[,42])
+sta_dge_def <- c(ver2[,42], ver3[,42])
+sta_dge_gry <- c(ver4[,42], ver6[,42])
+
+rbind(table(sta_dge_vir), table(sta_dge_def), table(sta_dge_gry))
+
+# Q2 #
+# Which colour scheme do you find most aesthetically pleasing?
+
+a_cols <- ver1[,43:44]
+b_cols <- ver2[,43:44]
+c_cols <- ver3[,43:44]
+d_cols <- ver4[,43:44]
+e_cols <- ver5[,43:44]
+f_cols <- ver6[,43:44]
+
+col_set <- c('a', 'b', 'c', 'd', 'e', 'f')
+# a - viridis/default
+# b - default/viridis
+# c - default/grey
+# d - grey/default
+# e - viridis/grey
+# f - grey/viridis
+
+cbind(col_set, (rbind(table(a_cols[,1]), table(b_cols[,1]), table(c_cols[,1]), table(d_cols[,1]), table(e_cols[,1]), table(f_cols[,1]))))
+
+# Q3 #
+# Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.
+table(a_cols[,2])
+table(b_cols[,2])
+table(c_cols[,2])
+table(d_cols[,2])
+table(e_cols[,2])
+table(f_cols[,2])
+
+
