@@ -449,7 +449,7 @@ names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  )
 ###
 
-
+##### NINJA WARRIOR #####
 ##### Y SCALES #####
 ctrl_y_scale <- rbind(ver1[,10:13], ver2[,10:13], ver3[,14:17], ver4[,18:21], ver5[,14:17], ver6[,18:21])
 log_y_scale <- rbind(ver1[,14:17], ver2[,18:21], ver3[,10:13], ver4[,10:13], ver5[,18:21], ver6[,14:17])
@@ -830,3 +830,124 @@ table(e_cols[,2])
 table(f_cols[,2])
 
 
+##### SALES #####
+### A AND B ###
+
+## Separate graphs ##
+AB_sep <- rbind(ver1[,45:47], ver2[,45:47], ver3[,48:50], ver4[,51:53], ver5[,48:50], ver6[,51:53])
+# Q1 #
+# How much would you say sales of each company increased between January and December? [Company A]
+sep_a <- (AB_sep[,1])[-which(is.na(AB_sep[,1]))]
+
+for(i in 1:length(sep_a)){
+  if(sep_a[i] == "1 (A little)"){
+    sep_a[i] <- 1.0
+  }else if(sep_a[i] == "7 (A lot)"){
+    sep_a[i] <- 7.0
+  } else{
+    sep_a[i] <- sep_a[i]
+  }
+}
+
+summary(as.numeric(sep_a))
+
+# Q2 #
+# How much would you say sales of each company increased between January and December? [Company B]
+sep_b <- (AB_sep[,2])[-which(is.na(AB_sep[,2]))]
+
+for(i in 1:length(sep_b)){
+  if(sep_b[i] == "1 (A little)"){
+    sep_b[i] <- 1.0
+  }else if(sep_b[i] == "7 (A lot)"){
+    sep_b[i] <- 7.0
+  } else{
+    sep_b[i] <- sep_b[i]
+  }
+}
+
+summary(as.numeric(sep_b))
+
+# Q3 #
+# How large would you say the drop in sales between April and July of Company A  is?
+summary(AB_sep[,3])
+
+## Truncated ##
+AB_trn <- rbind(ver1[,48:50], ver2[,51:53], ver3[,45:47], ver4[,45:47], ver5[,51:53], ver6[,48:50])
+# Q1 #
+# How much would you say sales of each company increased between January and December? [Company A]
+trn_a <- (AB_trn[,1])
+
+for(i in 1:length(trn_a)){
+  if(trn_a[i] == "1 (A little)"){
+    trn_a[i] <- 1.0
+  }else if(trn_a[i] == "7 (A lot)"){
+    trn_a[i] <- 7.0
+  } else{
+    trn_a[i] <- trn_a[i]
+  }
+}
+
+summary(as.numeric(trn_a))
+
+# Q2 #
+# How much would you say sales of each company increased between January and December? [Company B]
+trn_b <- (AB[,2])[-which(is.na(AB[,2]))]
+
+for(i in 1:length(trn_b)){
+  if(trn_b[i] == "1 (A little)"){
+    trn_b[i] <- 1.0
+  }else if(trn_b[i] == "7 (A lot)"){
+    trn_b[i] <- 7.0
+  } else{
+    trn_b[i] <- trn_b[i]
+  }
+}
+
+summary(as.numeric(trn_b))
+
+# Q3 #
+# How large would you say the drop in sales between April and July of Company A  is?
+summary(AB_trn[,3])
+
+## zeroed ##
+AB_zro <- rbind(ver1[,51:53], ver2[,48:50], ver3[,51:53], ver4[,48:50], ver5[,45:47], ver6[,45:47])
+# Q1 #
+# How much would you say sales of each company increased between January and December? [Company A]
+zro_a <- (AB_trn[,1])
+
+for(i in 1:length(zro_a)){
+  if(zro_a[i] == "1 (A little)"){
+    zro_a[i] <- 1.0
+  }else if(zro_a[i] == "7 (A lot)"){
+    zro_a[i] <- 7.0
+  } else{
+    zro_a[i] <- zro_a[i]
+  }
+}
+
+summary(as.numeric(zro_a))
+
+# Q2 #
+# How much would you say sales of each company increased between January and December? [Company B]
+zro_b <- (AB[,2])[-which(is.na(AB[,2]))]
+
+for(i in 1:length(zro_b)){
+  if(zro_b[i] == "1 (A little)"){
+    zro_b[i] <- 1.0
+  }else if(zro_b[i] == "7 (A lot)"){
+    zro_b[i] <- 7.0
+  } else{
+    zro_b[i] <- zro_b[i]
+  }
+}
+
+summary(as.numeric(zro_b))
+
+# Q3 #
+# How large would you say the drop in sales between April and July of Company A  is?
+summary(AB_zro[,3])
+
+##### CD SALES #####
+CD <- rbind(ver1[,54:55], ver2[,54:55], ver3[,54:55], ver4[,54:55], ver5[,54:55], ver6[,54:55])
+summary(CD[,1])
+summary(CD[,2])
