@@ -1,0 +1,1454 @@
+---
+title: "Univariate Analysis"
+author: "Katie Murphy"
+date: "27/02/2021"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include = FALSE}
+rm(list=ls())
+library(readxl)
+library(dplyr)
+
+for(i in 1:6){
+    r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
+    py <- assign(paste0("py",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("Py - v",i)))))
+    assign(paste0("ver",i), rbind(r, py))
+}
+
+ver1 <- ver1[-1,]
+r1 <- r1[-1,]
+py1 <- py1[-1,]
+
+names(ver1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+  
+                 "def_1", "def_2", "def_3", 
+                 "nar_1", "nar_2", "nar_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "all_1", "all_2", "all_3",
+  
+                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "sta_dge",
+                 "a_cols_1", "a_cols_2", 
+  
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+  
+                 "cd_trn",
+                 "cd_zro"
+                 )
+
+names(r1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+  
+                 "def_1", "def_2", "def_3", 
+                 "nar_1", "nar_2", "nar_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "all_1", "all_2", "all_3",
+  
+                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "sta_dge",
+                 "a_cols_1", "a_cols_2", 
+  
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+  
+                 "cd_trn",
+                 "cd_zro"
+                 )
+
+names(py1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+  
+                 "def_1", "def_2", "def_3", 
+                 "nar_1", "nar_2", "nar_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "all_1", "all_2", "all_3",
+  
+                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "sta_dge",
+                 "a_cols_1", "a_cols_2", 
+  
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+  
+                 "cd_trn",
+                 "cd_zro"
+                 )
+###
+
+names(ver2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "log_1", "log_2", "log_3", "log_4",
+                 
+                 "def_1", "def_2", "def_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "nar_1", "nar_2", "nar_3", 
+                 "all_1", "all_2", "all_3",
+                 
+                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "sta_dge",
+                 "b_cols_1", "b_cols_2", 
+  
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+  
+                 "cd_trn",
+                 "cd_zro"
+                 )
+
+names(r2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "log_1", "log_2", "log_3", "log_4",
+                 
+                 "def_1", "def_2", "def_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "nar_1", "nar_2", "nar_3", 
+                 "all_1", "all_2", "all_3",
+                 
+                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "sta_dge",
+                 "b_cols_1", "b_cols_2", 
+  
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+  
+                 "cd_trn",
+                 "cd_zro"
+                 )
+
+names(py2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "log_1", "log_2", "log_3", "log_4",
+                 
+                 "def_1", "def_2", "def_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "nar_1", "nar_2", "nar_3", 
+                 "all_1", "all_2", "all_3",
+                 
+                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "sta_dge",
+                 "b_cols_1", "b_cols_2", 
+  
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+  
+                 "cd_trn",
+                 "cd_zro"
+                 )
+###
+
+names(ver3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 
+                 "nar_1", "nar_2", "nar_3", 
+                 "def_1", "def_2", "def_3", 
+                 "wid_1", "wid_2", "wid_3",  
+                 "all_1", "all_2", "all_3",
+                 
+                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                 "sta_dge",
+                 "c_cols_1", "c_cols_2", 
+  
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
+  
+                 "cd_zro",
+                 "cd_trn"
+                 )
+
+names(r3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 
+                 "nar_1", "nar_2", "nar_3", 
+                 "def_1", "def_2", "def_3", 
+                 "wid_1", "wid_2", "wid_3",  
+                 "all_1", "all_2", "all_3",
+                 
+                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                 "sta_dge",
+                 "c_cols_1", "c_cols_2", 
+  
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
+  
+                 "cd_zro",
+                 "cd_trn"
+                 )
+
+names(py3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 
+                 "nar_1", "nar_2", "nar_3", 
+                 "def_1", "def_2", "def_3", 
+                 "wid_1", "wid_2", "wid_3",  
+                 "all_1", "all_2", "all_3",
+                 
+                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                 "sta_dge",
+                 "c_cols_1", "c_cols_2", 
+  
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
+  
+                 "cd_zro",
+                 "cd_trn"
+                 )
+###
+
+names(ver4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "con_1", "con_2", "con_3", "con_4", 
+  
+                 "nar_1", "nar_2", "nar_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "def_1", "def_2", "def_3", 
+                 "all_1", "all_2", "all_3",
+  
+                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
+                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",  
+                 "sta_dge",
+                 "d_cols_1", "d_cols_2", 
+  
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "sep_1a", "sep_1b", "sep_2",
+
+                 "cd_trn",
+                 "cd_zro"
+                 )
+
+names(r4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "con_1", "con_2", "con_3", "con_4", 
+  
+                 "nar_1", "nar_2", "nar_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "def_1", "def_2", "def_3", 
+                 "all_1", "all_2", "all_3",
+  
+                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
+                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",  
+                 "sta_dge",
+                 "d_cols_1", "d_cols_2", 
+  
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "sep_1a", "sep_1b", "sep_2",
+
+                 "cd_trn",
+                 "cd_zro"
+                 )
+
+names(py4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "con_1", "con_2", "con_3", "con_4", 
+  
+                 "nar_1", "nar_2", "nar_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "def_1", "def_2", "def_3", 
+                 "all_1", "all_2", "all_3",
+  
+                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
+                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",  
+                 "sta_dge",
+                 "d_cols_1", "d_cols_2", 
+  
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "sep_1a", "sep_1b", "sep_2",
+
+                 "cd_trn",
+                 "cd_zro"
+                 )
+###
+
+names(ver5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "con_1", "con_2", "con_3", "con_4",
+                 "log_1", "log_2", "log_3", "log_4", 
+                 
+                 "wid_1", "wid_2", "wid_3",
+                 "def_1", "def_2", "def_3", 
+                 "nar_1", "nar_2", "nar_3", 
+                 "all_1", "all_2", "all_3",
+  
+                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                 "sta_dge",
+                 "vir_cols_1", "vir_cols_2", 
+  
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 
+                 "cd_zro",
+                 "cd_trn"
+                 )
+
+names(r5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "con_1", "con_2", "con_3", "con_4",
+                 "log_1", "log_2", "log_3", "log_4", 
+                 
+                 "wid_1", "wid_2", "wid_3",
+                 "def_1", "def_2", "def_3", 
+                 "nar_1", "nar_2", "nar_3", 
+                 "all_1", "all_2", "all_3",
+  
+                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                 "sta_dge",
+                 "vir_cols_1", "vir_cols_2", 
+  
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 
+                 "cd_zro",
+                 "cd_trn"
+                 )
+
+names(py5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "con_1", "con_2", "con_3", "con_4",
+                 "log_1", "log_2", "log_3", "log_4", 
+                 
+                 "wid_1", "wid_2", "wid_3",
+                 "def_1", "def_2", "def_3", 
+                 "nar_1", "nar_2", "nar_3", 
+                 "all_1", "all_2", "all_3",
+  
+                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                 "sta_dge",
+                 "vir_cols_1", "vir_cols_2", 
+  
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 
+                 "cd_zro",
+                 "cd_trn"
+                 )
+###
+
+names(ver6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "log_1", "log_2", "log_3", "log_4", 
+                 "con_1", "con_2", "con_3", "con_4",
+                 
+                 "wid_1", "wid_2", "wid_3",
+                 "nar_1", "nar_2", "nar_3", 
+                 "def_1", "def_2", "def_3", 
+                 "all_1", "all_2", "all_3",
+  
+                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",
+                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
+                 "sta_dge",
+                 "f_cols_1", "f_cols_2", 
+  
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "sep_1a", "sep_1b", "sep_2",
+                 
+                 "cd_zro",
+                 "cd_trn"
+                 )
+                 
+names(r6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "log_1", "log_2", "log_3", "log_4", 
+                 "con_1", "con_2", "con_3", "con_4",
+                 
+                 "wid_1", "wid_2", "wid_3",
+                 "nar_1", "nar_2", "nar_3", 
+                 "def_1", "def_2", "def_3", 
+                 "all_1", "all_2", "all_3",
+  
+                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",
+                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
+                 "sta_dge",
+                 "f_cols_1", "f_cols_2", 
+  
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "sep_1a", "sep_1b", "sep_2",
+                 
+                 "cd_zro",
+                 "cd_trn"
+                 )
+
+names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "log_1", "log_2", "log_3", "log_4", 
+                 "con_1", "con_2", "con_3", "con_4",
+                 
+                 "wid_1", "wid_2", "wid_3",
+                 "nar_1", "nar_2", "nar_3", 
+                 "def_1", "def_2", "def_3", 
+                 "all_1", "all_2", "all_3",
+  
+                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",
+                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
+                 "sta_dge",
+                 "f_cols_1", "f_cols_2", 
+  
+                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "sep_1a", "sep_1b", "sep_2",
+                 
+                 "cd_zro",
+                 "cd_trn"
+                 )
+### Y SCALES 
+ctrl_y_scale <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)], ver3[,c(4:7, 14:17)], ver4[,c(4:7, 18:21)], ver5[,c(4:7, 14:17)], ver6[,c(4:7, 18:21)])
+log_y_scale <- rbind(ver1[,c(4:7, 14:17)], ver2[,c(4:7, 18:21)], ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)], ver5[,c(4:7, 18:21)], ver6[,c(4:7, 14:17)])
+trnc_y_scale <- rbind(ver1[,c(4:7, 18:21)], ver2[,c(4:7, 14:17)], ver3[,c(4:7, 18:21)], ver4[,c(4:7, 14:17)], ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
+```
+# Y scales
+
+#### *Q1 - Approximately many times would you say the 'Salmon Ladder' was used?*
+# Both
+#### Both - all
+```{r echo=F}
+con_1_all <- ctrl_y_scale$con_1
+con_1_all[26] <- 41.5 # take midpoint of two values
+con_1_all <- as.numeric(con_1_all)
+
+trn_1_all <- as.numeric(trnc_y_scale$trn_1)
+
+log_1_all <- log_y_scale$log_1
+log_1_all[c(23, 25, 67)] <- NA
+log_1_all[35] <- 1e+15
+log_1_all[54] <- 1e+9
+log_1_all <- as.numeric(log_1_all)
+
+y_scale_1_all <- cbind(con_1_all, trn_1_all, log_1_all)
+summary(y_scale_1_all)
+```
+
+#### Both - degree
+```{r echo=F}
+for(i in unique(ctrl_y_scale$uni)){
+  assign(paste0("deg_",i,"_crtl"), ctrl_y_scale %>% filter(uni == i))
+}
+
+for(i in unique(ctrl_y_scale$uni)){
+  assign(paste0("deg_",i,"_trnc"), ctrl_y_scale %>% filter(uni == i))
+}
+
+for(i in unique(ctrl_y_scale$uni)){
+  assign(paste0("deg_",i,"_log"), ctrl_y_scale %>% filter(uni == i))
+}
+ 
+
+```
+
+#### Both - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(ver1[10], ver1[14], ver1[18])
+summary(CLT)
+```
+#### Both - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(ver2[10], ver2[18], ver2[14])
+CTL[c(10, 12), 2] <- NA
+CTL$log_1 <- as.numeric(CTL$log_1)
+summary(CTL)
+```
+#### Both - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(ver3[14], ver3[10], ver3[18])
+LCT[1, 1] <- 41.5
+LCT[10, 2] <- 1e+15
+
+LCT$con_1 <- as.numeric(LCT$con_1)
+LCT$log_1 <- as.numeric(LCT$log_1)
+
+summary(LCT)
+```
+#### Both - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(ver4[18], ver4[10], ver4[14])
+summary(LTC)
+```
+#### Both - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(ver5[14], ver5[18], ver5[10])
+TCL[8, 2] <- 1e+9
+TCL$log_1 <- as.numeric(TCL$log_1)
+
+summary(TCL)
+```
+#### Both - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(ver6[18], ver6[14], ver6[10])
+summary(TLC)
+```
+
+# R
+#### R - all
+```{r echo=F}
+
+ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17)], r4[,c(4:7, 18:21)], r5[,c(4:7, 14:17)], r6[,c(4:7, 18:21)])
+log_y_scale_r <- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
+trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
+
+con_1_r <- ctrl_y_scale_r$con_2
+con_1_r[15] <- 41.5 # take midpoint of two values
+con_1_r <- as.numeric(con_1_r)
+
+trn_1_r <- as.numeric(trnc_y_scale_r$trn_2)
+
+log_1_r <- log_y_scale_r$log_2
+
+y_scale_r <- cbind(con_1_r, trn_1_r, log_1_r)
+summary(y_scale_r)
+```
+
+#### R - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(r1[10], r1[14], r1[18])
+summary(CLT)
+```
+#### R - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(r2[10], r2[18], r2[14])
+summary(CTL)
+```
+#### R - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(r3[14], r3[10], r3[18])
+LCT[1, 1] <- 41.5
+LCT$con_1 <- as.numeric(LCT$con_1)
+summary(LCT)
+```
+#### R - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(r4[18], r4[10], r4[14])
+summary(LTC)
+```
+#### R - v5  (TCL)
+```{r echo=F}
+TCL <- cbind(r5[14], r5[18], r5[10])
+summary(TCL)
+```
+#### R - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(r6[18], r6[14], r6[10])
+summary(TLC)
+```
+
+# Python
+#### Python - all
+```{r echo=F}
+
+ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
+log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
+trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
+
+con_1_py <- ctrl_y_scale_py[,1]
+
+trn_1_py <- as.numeric(trnc_y_scale_py[,1])
+
+log_1_py <- log_y_scale_py[,1]
+log_1_py[c(8, 10, 28)] <- NA
+log_1_py[15] <- 1e+15
+log_1_py[22] <- 1e+9
+log_1_py <- as.numeric(log_1_py)
+
+y_scale_py <- cbind(con_1_py, trn_1_py, log_1_py)
+summary(y_scale_py)
+```
+#### Py - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(py1[10], py1[14], py1[18])
+summary(CLT)
+```
+#### Py - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(py2[10], py2[18], py2[14])
+CTL[c(4, 6), 2] <- NA
+CTL$log_1 <- as.numeric(CTL$log_1)
+summary(CTL)
+```
+#### Py - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(py3[14], py3[10], py3[18])
+LCT[5, 2] <- 1e+15
+LCT$log_1 <- as.numeric(LCT$log_1)
+summary(LCT)
+```
+#### Py - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(py4[18], py4[10], py4[14])
+summary(LTC)
+```
+#### Py - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(py5[14], py5[18], py5[10])
+TCL[3, 2] <- 1e+9
+TCL$log_1 <- as.numeric(TCL$log_1)
+summary(TCL)
+```
+#### Py - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(py6[18], py6[14], py6[10])
+summary(TLC)
+```
+
+
+#### *Q2 - Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?*
+# Both
+#### Both - all
+```{r echo=F}
+con_2_all <- ctrl_y_scale[,2]
+trn_2_all <- trnc_y_scale[,2]
+log_2_all <- log_y_scale[,2]
+
+y_scale_2_all <- cbind(con_2_all, trn_2_all, log_2_all)
+summary(y_scale_2_all)
+```
+
+#### Both - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(ver1[11], ver1[15], ver1[19])
+summary(CLT)
+```
+#### Both - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(ver2[11], ver2[19], ver2[15])
+summary(CTL)
+```
+#### Both - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(ver3[15], ver3[11], ver3[19])
+summary(LCT)
+```
+#### Both - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(ver4[19], ver4[11], ver4[15])
+summary(LTC)
+```
+#### Both - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(ver5[15], ver5[19], ver5[11])
+summary(TCL)
+```
+#### Both - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(ver6[19], ver6[15], ver6[11])
+summary(TLC)
+```
+
+# R
+#### R - all
+```{r echo=F}
+
+ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17)], r4[,c(4:7, 18:21)], r5[,c(4:7, 14:17)], r6[,c(4:7, 18:21)])
+log_y_scale_r <- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
+trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
+
+con_2_r <- ctrl_y_scale_r[,2]
+trn_2_r <- trnc_y_scale_r[,2]
+log_2_r <- log_y_scale_r[,2]
+
+y_scale_2_r <- cbind(con_2_r, trn_2_r, log_2_r)
+summary(y_scale_2_r)
+```
+
+#### R - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(r1[11], r1[15], r1[19])
+summary(CLT)
+```
+#### R - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(r2[11], r2[19], r2[15])
+summary(CTL)
+```
+#### R - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(r3[15], r3[11], r3[19])
+summary(LCT)
+```
+#### R - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(r4[19], r4[11], r4[15])
+summary(LTC)
+```
+#### R - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(r5[15], r5[19], r5[11])
+summary(TCL)
+```
+#### R - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(r6[19], r6[15], r6[11])
+summary(TLC)
+```
+
+# Python
+
+#### Py - all
+```{r echo=F}
+
+ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
+log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
+trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
+
+con_2_py <- ctrl_y_scale_py[,2]
+trn_2_py <- trnc_y_scale_py[,2]
+log_2_py <- log_y_scale_py[,2]
+
+y_scale_2_py <- cbind(con_2_py, trn_2_py, log_2_py)
+summary(y_scale_2_py)
+```
+
+#### Py - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(py1[11], py1[15], py1[19])
+summary(CLT)
+```
+#### Py - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(py2[11], py2[19], py2[15])
+summary(CTL)
+```
+#### Py - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(py3[15], py3[11], py3[19])
+summary(LCT)
+```
+#### Py - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(py4[19], py4[11], py4[15])
+summary(LTC)
+```
+#### Py - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(py5[15], py5[19], py5[11])
+summary(TCL)
+```
+#### Py - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(py6[19], py6[15], py6[11])
+summary(TLC)
+```
+
+
+
+
+
+#### *Q3 - Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?*
+# Both
+#### Both - all
+```{r echo=F}
+con_3_all <- ctrl_y_scale[,3]
+trn_3_all <- trnc_y_scale[,3]
+log_3_all <- log_y_scale[,3]
+
+y_scale_3_all <- cbind(con_3_all, trn_3_all, log_3_all)
+summary(y_scale_3_all)
+```
+
+#### Both - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(ver1[12], ver1[16], ver1[20])
+summary(CLT)
+```
+#### Both - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(ver2[12], ver2[20], ver2[16])
+summary(CTL)
+```
+#### Both - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(ver3[16], ver3[12], ver3[20])
+summary(LCT)
+```
+#### Both - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(ver4[20], ver4[12], ver4[16])
+summary(LTC)
+```
+#### Both - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(ver5[16], ver5[20], ver5[12])
+summary(TCL)
+```
+#### Both - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(ver6[20], ver6[16], ver6[12])
+summary(TLC)
+```
+
+# R
+#### R - all
+```{r echo=F}
+
+ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17)], r4[,c(4:7, 18:21)], r5[,c(4:7, 14:17)], r6[,c(4:7, 18:21)])
+log_y_scale_r <- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
+trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
+
+con_3_r <- ctrl_y_scale_r[,3]
+trn_3_r <- trnc_y_scale_r[,3]
+log_3_r <- log_y_scale_r[,3]
+
+y_scale_3_r <- cbind(con_3_r, trn_3_r, log_3_r)
+summary(y_scale_3_r)
+```
+
+#### R - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(r1[12], r1[16], r1[20])
+summary(CLT)
+```
+#### R - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(r2[12], r2[20], r2[16])
+summary(CTL)
+```
+#### R - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(r3[16], r3[12], r3[20])
+summary(LCT)
+```
+#### R - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(r4[20], r4[12], r4[16])
+summary(LTC)
+```
+#### R - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(r5[16], r5[20], r5[12])
+summary(TCL)
+```
+#### R - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(r6[20], r6[16], r6[12])
+summary(TLC)
+```
+
+
+#### Python
+```{r echo=F}
+
+ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
+log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
+trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
+
+con_3_py <- ctrl_y_scale_py[,3]
+trn_3_py <- trnc_y_scale_py[,3]
+log_3_py <- log_y_scale_py[,3]
+
+y_scale_3_py <- cbind(con_3_py, trn_3_py, log_3_py)
+summary(y_scale_3_py)
+```
+
+
+#### Py - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(py1[12], py1[16], py1[20])
+summary(CLT)
+```
+#### Py - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(py2[12], py2[20], py2[16])
+summary(CTL)
+```
+#### Py - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(py3[16], py3[12], py3[20])
+summary(LCT)
+```
+#### Py - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(py4[20], py4[12], py4[16])
+summary(LTC)
+```
+#### Py - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(py5[16], py5[20], py5[12])
+summary(TCL)
+```
+#### Py - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(py6[20], py6[16], py6[12])
+summary(TLC)
+```
+
+
+
+#### *Q4 - In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?*
+
+# Both
+#### Both - all
+```{r echo=F}
+con_4_all <- ctrl_y_scale[,4]
+con_4_all[18] <- 12.5
+con_4_all <- as.numeric(con_4_all)
+for(i in 1:length(con_4_all)){
+    if(con_4_all[i] < 1 && is.na(con_4_all[i])==FALSE){
+       con_4_all[i] <- con_4_all[i]*100
+    }
+}
+
+
+trn_4_all <- trnc_y_scale[,4]
+for(i in 1:length(trn_4_all)){
+    if(trn_4_all[i] < 1 && is.na(trn_4_all[i])==FALSE){
+       trn_4_all[i] <- trn_4_all[i]*100
+    }
+}
+
+log_4_all <- log_y_scale[,4]
+log_4_all[18] <- 3
+log_4_all <- as.numeric(log_4_all)
+trn_4_all <- trnc_y_scale[,4]
+for(i in 1:length(log_4_all)){
+    if(log_4_all[i] < 1 && is.na(log_4_all[i])==FALSE){
+       log_4_all[i] <- log_4_all[i]*100
+    }
+}
+
+
+
+y_scale_4_all <- cbind(con_4_all, trn_4_all, log_4_all)
+summary(y_scale_4_all)
+```
+
+#### Both - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(ver1[13], ver1[17], ver1[21])
+
+for(i in 1:dim(CLT)[1]){
+    if(CLT[i, 1] < 1 && is.na(CLT[i, 1])==FALSE){
+       CLT[i, 1] <- CLT[i, 1]*100
+    } 
+  
+    if(CLT[i, 2] < 1 && is.na(CLT[i, 2])==FALSE){
+       CLT[i, 2] <- CLT[i, 2]*100
+    }
+  
+    if(CLT[i, 3] < 1 && is.na(CLT[i, 3])==FALSE){
+       CLT[i, 3] <- CLT[i, 3]*100
+    }
+}
+
+summary(CLT)
+```
+
+#### Both - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(ver2[13], ver2[21], ver2[17])
+CTL$con_4[5] <- 12.5
+CTL$log_4[5] <- 3
+
+CTL$log_4 <- as.numeric(CTL$log_4)
+CTL$con_4 <- as.numeric(CTL$con_4)
+
+for(i in 1:dim(CTL)[1]){
+    if(CTL[i, 1] < 1 && is.na(CTL[i, 1])==FALSE){
+       CTL[i, 1] <- CTL[i, 1]*100
+    } 
+  
+    if(CTL[i, 2] < 1 && is.na(CTL[i, 2])==FALSE){
+       CTL[i, 2] <- CTL[i, 2]*100
+    }
+  
+    if(CTL[i, 3] < 1 && is.na(CTL[i, 3])==FALSE){
+       CTL[i, 3] <- CTL[i, 3]*100
+    }
+}
+
+
+summary(CTL)
+```
+#### Both - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(ver3[17], ver3[13], ver3[21])
+
+for(i in 1:dim(LCT)[1]){
+    if(LCT[i, 1] < 1 && is.na(LCT[i, 1])==FALSE){
+       LCT[i, 1] <- LCT[i, 1]*100
+    } 
+  
+    if(LCT[i, 2] < 1 && is.na(LCT[i, 2])==FALSE){
+       LCT[i, 2] <- LCT[i, 2]*100
+    }
+  
+    if(LCT[i, 3] < 1 && is.na(LCT[i, 3])==FALSE){
+       LCT[i, 3] <- LCT[i, 3]*100
+    }
+}
+
+summary(LCT)
+```
+#### Both - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(ver4[21], ver4[13], ver4[17])
+
+for(i in 1:dim(LTC)[1]){
+    if(LTC[i, 1] < 1 && is.na(LTC[i, 1])==FALSE){
+       LTC[i, 1] <- LTC[i, 1]*100
+    } 
+  
+    if(LTC[i, 2] < 1 && is.na(LTC[i, 2])==FALSE){
+       LTC[i, 2] <- LTC[i, 2]*100
+    }
+  
+    if(LTC[i, 3] < 1 && is.na(LTC[i, 3])==FALSE){
+       LTC[i, 3] <- LTC[i, 3]*100
+    }
+}
+
+summary(LTC)
+```
+#### Both - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(ver5[17], ver5[21], ver5[13])
+
+for(i in 1:dim(TCL)[1]){
+    if(TCL[i, 1] < 1 && is.na(TCL[i, 1])==FALSE){
+       TCL[i, 1] <- TCL[i, 1]*100
+    } 
+  
+    if(TCL[i, 2] < 1 && is.na(TCL[i, 2])==FALSE){
+       TCL[i, 2] <- TCL[i, 2]*100
+    }
+  
+    if(TCL[i, 3] < 1 && is.na(TCL[i, 3])==FALSE){
+       TCL[i, 3] <- TCL[i, 3]*100
+    }
+}
+
+summary(TCL)
+```
+#### Both - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(ver6[21], ver6[17], ver6[13])
+
+for(i in 1:dim(TLC)[1]){
+    if(TLC[i, 1] < 1 && is.na(TLC[i, 1])==FALSE){
+       TLC[i, 1] <- TLC[i, 1]*100
+    } 
+  
+    if(TLC[i, 2] < 1 && is.na(TLC[i, 2])==FALSE){
+       TLC[i, 2] <- TLC[i, 2]*100
+    }
+  
+    if(TLC[i, 3] < 1 && is.na(TLC[i, 3])==FALSE){
+       TLC[i, 3] <- TLC[i, 3]*100
+    }
+}
+
+
+summary(TLC)
+```
+
+
+
+# R
+#### R - all
+```{r echo=F}
+
+ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17)], r4[,c(4:7, 18:21)], r5[,c(4:7, 14:17)], r6[,c(4:7, 18:21)])
+log_y_scale_r <- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
+trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
+
+con_4_r <- ctrl_y_scale_r[,4]
+con_4_r[13] <- 12.5
+con_4_r <- as.numeric(con_4_r)
+for(i in 1:length(con_4_r)){
+    if(con_4_r[i] < 1 && is.na(con_4_r[i])==FALSE){
+       con_4_r[i] <- con_4_r[i]*100
+    }
+}
+
+trn_4_r <- trnc_y_scale_r[,4]
+for(i in 1:length(trn_4_r)){
+    if(trn_4_r[i] < 1 && is.na(trn_4_r[i])==FALSE){
+       trn_4_r[i] <- trn_4_r[i]*100
+    }
+}
+
+log_4_r <- log_y_scale_r[,4]
+log_4_r[13] <- 3
+log_4_r <- as.numeric(log_4_r)
+for(i in 1:length(log_4_r)){
+    if(log_4_r[i] < 1 && is.na(log_4_r[i])==FALSE){
+       log_4_r[i] <- log_4_r[i]*100
+    }
+}
+
+y_scale_4_r <- cbind(con_4_r, trn_4_r, log_4_r)
+summary(y_scale_4_r)
+```
+
+
+
+#### R - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(r1[13], r1[17], r1[21])
+
+for(i in 1:dim(CLT)[1]){
+    if(CLT[i, 1] < 1 && is.na(CLT[i, 1])==FALSE){
+       CLT[i, 1] <- CLT[i, 1]*100
+    } 
+  
+    if(CLT[i, 2] < 1 && is.na(CLT[i, 2])==FALSE){
+       CLT[i, 2] <- CLT[i, 2]*100
+    }
+  
+    if(CLT[i, 3] < 1 && is.na(CLT[i, 3])==FALSE){
+       CLT[i, 3] <- CLT[i, 3]*100
+    }
+}
+
+summary(CLT)
+```
+
+#### R - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(r2[13], r2[21], r2[17])
+CTL$con_4[5] <- 12.5
+CTL$log_4[5] <- 3
+
+CTL$log_4 <- as.numeric(CTL$log_4)
+CTL$con_4 <- as.numeric(CTL$con_4)
+
+for(i in 1:dim(CTL)[1]){
+    if(CTL[i, 1] < 1 && is.na(CTL[i, 1])==FALSE){
+       CTL[i, 1] <- CTL[i, 1]*100
+    } 
+  
+    if(CTL[i, 2] < 1 && is.na(CTL[i, 2])==FALSE){
+       CTL[i, 2] <- CTL[i, 2]*100
+    }
+  
+    if(CTL[i, 3] < 1 && is.na(CTL[i, 3])==FALSE){
+       CTL[i, 3] <- CTL[i, 3]*100
+    }
+}
+
+
+summary(CTL)
+```
+#### R - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(r3[17], r3[13], r3[21])
+
+for(i in 1:dim(LCT)[1]){
+    if(LCT[i, 1] < 1 && is.na(LCT[i, 1])==FALSE){
+       LCT[i, 1] <- LCT[i, 1]*100
+    } 
+  
+    if(LCT[i, 2] < 1 && is.na(LCT[i, 2])==FALSE){
+       LCT[i, 2] <- LCT[i, 2]*100
+    }
+  
+    if(LCT[i, 3] < 1 && is.na(LCT[i, 3])==FALSE){
+       LCT[i, 3] <- LCT[i, 3]*100
+    }
+}
+
+summary(LCT)
+```
+#### R - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(r4[21], r4[13], r4[17])
+
+for(i in 1:dim(LTC)[1]){
+    if(LTC[i, 1] < 1 && is.na(LTC[i, 1])==FALSE){
+       LTC[i, 1] <- LTC[i, 1]*100
+    } 
+  
+    if(LTC[i, 2] < 1 && is.na(LTC[i, 2])==FALSE){
+       LTC[i, 2] <- LTC[i, 2]*100
+    }
+  
+    if(LTC[i, 3] < 1 && is.na(LTC[i, 3])==FALSE){
+       LTC[i, 3] <- LTC[i, 3]*100
+    }
+}
+
+summary(LTC)
+```
+#### R - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(r5[17], r5[21], r5[13])
+
+for(i in 1:dim(TCL)[1]){
+    if(TCL[i, 1] < 1 && is.na(TCL[i, 1])==FALSE){
+       TCL[i, 1] <- TCL[i, 1]*100
+    } 
+  
+    if(TCL[i, 2] < 1 && is.na(TCL[i, 2])==FALSE){
+       TCL[i, 2] <- TCL[i, 2]*100
+    }
+  
+    if(TCL[i, 3] < 1 && is.na(TCL[i, 3])==FALSE){
+       TCL[i, 3] <- TCL[i, 3]*100
+    }
+}
+
+summary(TCL)
+```
+#### R - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(r6[21], r6[17], r6[13])
+
+for(i in 1:dim(TLC)[1]){
+    if(TLC[i, 1] < 1 && is.na(TLC[i, 1])==FALSE){
+       TLC[i, 1] <- TLC[i, 1]*100
+    } 
+  
+    if(TLC[i, 2] < 1 && is.na(TLC[i, 2])==FALSE){
+       TLC[i, 2] <- TLC[i, 2]*100
+    }
+  
+    if(TLC[i, 3] < 1 && is.na(TLC[i, 3])==FALSE){
+       TLC[i, 3] <- TLC[i, 3]*100
+    }
+}
+
+
+summary(TLC)
+
+```
+
+
+# Python
+#### Python - all
+```{r echo=F}
+
+ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
+log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
+trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
+
+con_4_py <- ctrl_y_scale_py[,4]
+for(i in 1:length(con_4_py)){
+    if(con_4_py[i] < 1 && is.na(con_4_py[i])==FALSE){
+       con_4_py[i] <- con_4_py[i]*100
+    }
+}
+
+trn_4_py <- trnc_y_scale_py[,4]
+for(i in 1:length(trn_4_py)){
+    if(trn_4_py[i] < 1 && is.na(trn_4_py[i])==FALSE){
+       trn_4_py[i] <- trn_4_py[i]*100
+    }
+}
+
+log_4_py <- log_y_scale_py[,4]
+for(i in 1:length(log_4_py)){
+    if(log_4_py[i] < 1 && is.na(log_4_py[i])==FALSE){
+       log_4_py[i] <- log_4_py[i]*100
+    }
+}
+
+y_scale_4_py <- cbind(con_4_py, trn_4_py, log_4_py)
+summary(y_scale_4_py)
+```
+
+#### Py - v1 (CLT)
+```{r echo=F}
+CLT <- cbind(py1[13], py1[17], py1[21])
+
+for(i in 1:dim(CLT)[1]){
+    if(CLT[i, 1] < 1 && is.na(CLT[i, 1])==FALSE){
+       CLT[i, 1] <- CLT[i, 1]*100
+    } 
+  
+    if(CLT[i, 2] < 1 && is.na(CLT[i, 2])==FALSE){
+       CLT[i, 2] <- CLT[i, 2]*100
+    }
+  
+    if(CLT[i, 3] < 1 && is.na(CLT[i, 3])==FALSE){
+       CLT[i, 3] <- CLT[i, 3]*100
+    }
+}
+
+summary(CLT)
+```
+
+#### Py - v2 (CTL)
+```{r echo=F}
+CTL <- cbind(py2[13], py2[21], py2[17])
+CTL$con_4[5] <- 12.5
+CTL$log_4[5] <- 3
+
+CTL$log_4 <- as.numeric(CTL$log_4)
+CTL$con_4 <- as.numeric(CTL$con_4)
+
+for(i in 1:dim(CTL)[1]){
+    if(CTL[i, 1] < 1 && is.na(CTL[i, 1])==FALSE){
+       CTL[i, 1] <- CTL[i, 1]*100
+    } 
+  
+    if(CTL[i, 2] < 1 && is.na(CTL[i, 2])==FALSE){
+       CTL[i, 2] <- CTL[i, 2]*100
+    }
+  
+    if(CTL[i, 3] < 1 && is.na(CTL[i, 3])==FALSE){
+       CTL[i, 3] <- CTL[i, 3]*100
+    }
+}
+
+
+summary(CTL)
+```
+#### Py - v3 (LCT)
+```{r echo=F}
+LCT <- cbind(py3[17], py3[13], py3[21])
+
+for(i in 1:dim(LCT)[1]){
+    if(LCT[i, 1] < 1 && is.na(LCT[i, 1])==FALSE){
+       LCT[i, 1] <- LCT[i, 1]*100
+    } 
+  
+    if(LCT[i, 2] < 1 && is.na(LCT[i, 2])==FALSE){
+       LCT[i, 2] <- LCT[i, 2]*100
+    }
+  
+    if(LCT[i, 3] < 1 && is.na(LCT[i, 3])==FALSE){
+       LCT[i, 3] <- LCT[i, 3]*100
+    }
+}
+
+summary(LCT)
+```
+#### Py - v4 (LTC)
+```{r echo=F}
+LTC <- cbind(py4[21], py4[13], py4[17])
+
+for(i in 1:dim(LTC)[1]){
+    if(LTC[i, 1] < 1 && is.na(LTC[i, 1])==FALSE){
+       LTC[i, 1] <- LTC[i, 1]*100
+    } 
+  
+    if(LTC[i, 2] < 1 && is.na(LTC[i, 2])==FALSE){
+       LTC[i, 2] <- LTC[i, 2]*100
+    }
+  
+    if(LTC[i, 3] < 1 && is.na(LTC[i, 3])==FALSE){
+       LTC[i, 3] <- LTC[i, 3]*100
+    }
+}
+
+summary(LTC)
+```
+#### Py - v5 (TCL)
+```{r echo=F}
+TCL <- cbind(py5[17], py5[21], py5[13])
+
+for(i in 1:dim(TCL)[1]){
+    if(TCL[i, 1] < 1 && is.na(TCL[i, 1])==FALSE){
+       TCL[i, 1] <- TCL[i, 1]*100
+    } 
+  
+    if(TCL[i, 2] < 1 && is.na(TCL[i, 2])==FALSE){
+       TCL[i, 2] <- TCL[i, 2]*100
+    }
+  
+    if(TCL[i, 3] < 1 && is.na(TCL[i, 3])==FALSE){
+       TCL[i, 3] <- TCL[i, 3]*100
+    }
+}
+
+summary(TCL)
+```
+#### Py - v6 (TLC)
+```{r echo=F}
+TLC <- cbind(py6[21], py6[17], py6[13])
+
+for(i in 1:dim(TLC)[1]){
+    if(TLC[i, 1] < 1 && is.na(TLC[i, 1])==FALSE){
+       TLC[i, 1] <- TLC[i, 1]*100
+    } 
+  
+    if(TLC[i, 2] < 1 && is.na(TLC[i, 2])==FALSE){
+       TLC[i, 2] <- TLC[i, 2]*100
+    }
+  
+    if(TLC[i, 3] < 1 && is.na(TLC[i, 3])==FALSE){
+       TLC[i, 3] <- TLC[i, 3]*100
+    }
+}
+
+
+summary(TLC)
+
+```
+
+
+
+
+
+
+
+
+
