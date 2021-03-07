@@ -80,12 +80,10 @@
     \item Intuitive visualisations
     \end{itemize}
 
-
     \include{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/tex/chapters/survey/main.tex}
     \include{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/tex/chapters/interviews/main.tex}
     \include{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/tex/chapters/univariate-analysis/main.Rtex}
     
-
     \bibliographystyle{plain}
     \bibliography{references.bib}
 

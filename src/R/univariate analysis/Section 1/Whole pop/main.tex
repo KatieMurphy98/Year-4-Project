@@ -1,0 +1,185 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Univariate Analysis - Whole Pop},
+  pdfauthor={Katie Murphy},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Univariate Analysis - Whole Pop}
+\author{Katie Murphy}
+\date{27/02/2021}
+
+\begin{document}
+\maketitle
+
+\hypertarget{q1---approximately-many-times-would-you-say-the-salmon-ladder-was-used}{%
+\paragraph{\texorpdfstring{\textbf{Q1 - Approximately many times would
+you say the `Salmon Ladder' was
+used?}}{Q1 - Approximately many times would you say the `Salmon Ladder' was used?}}\label{q1---approximately-many-times-would-you-say-the-salmon-ladder-was-used}}
+
+\begin{verbatim}
+## [1] n = 70
+\end{verbatim}
+
+\begin{verbatim}
+##    con_1_all       trn_1_all       log_1_all        
+##  Min.   :40.00   Min.   :40.00   Min.   :9.000e+00  
+##  1st Qu.:41.00   1st Qu.:41.00   1st Qu.:3.000e+01  
+##  Median :41.00   Median :41.00   Median :3.500e+01  
+##  Mean   :41.21   Mean   :41.35   Mean   :1.493e+13  
+##  3rd Qu.:42.00   3rd Qu.:42.00   3rd Qu.:4.000e+01  
+##  Max.   :45.00   Max.   :45.00   Max.   :1.000e+15  
+##                                  NA's   :3
+\end{verbatim}
+
+\hypertarget{nas}{%
+\paragraph{NAs}\label{nas}}
+
+\begin{verbatim}
+##      index value          
+## [1,] "23"  "Don't know"   
+## [2,] "25"  "Next to none."
+## [3,] "68"  NA
+\end{verbatim}
+
+\begin{verbatim}
+##                                   uni sp_aware obs_skl num_skl cblind vis_pro
+## 101                        Technology        4       4       3     No      No
+## 121                              <NA>        4       3       3     No      No
+## 105 Sustainability/geological science        3       4       3     No    ADHD
+\end{verbatim}
+
+\hypertarget{q2---approximately-how-much-more-than-log-grip-would-you-say-salmon-ladder-was-was-used}{%
+\paragraph{\texorpdfstring{\textbf{Q2 - Approximately how much more than
+`Log Grip' would you say `Salmon Ladder' was was
+used?}}{Q2 - Approximately how much more than `Log Grip' would you say `Salmon Ladder' was was used?}}\label{q2---approximately-how-much-more-than-log-grip-would-you-say-salmon-ladder-was-was-used}}
+
+\begin{verbatim}
+## [1] n = 70
+\end{verbatim}
+
+\begin{verbatim}
+##    con_2_all       log_2_all       trn_2_all    
+##  Min.   :3.000   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:4.250   1st Qu.:2.250   1st Qu.:5.000  
+##  Median :5.000   Median :3.500   Median :6.000  
+##  Mean   :5.357   Mean   :3.671   Mean   :5.871  
+##  3rd Qu.:6.000   3rd Qu.:5.000   3rd Qu.:7.000  
+##  Max.   :7.000   Max.   :7.000   Max.   :7.000
+\end{verbatim}
+
+\hypertarget{q3---approximately-how-much-more-than-quintuple-steps-would-you-say-salmon-ladder-was-used}{%
+\paragraph{\texorpdfstring{\textbf{Q3 - Approximately how much more than
+`Quintuple Steps' would you say `Salmon Ladder' was
+used?}}{Q3 - Approximately how much more than `Quintuple Steps' would you say `Salmon Ladder' was used?}}\label{q3---approximately-how-much-more-than-quintuple-steps-would-you-say-salmon-ladder-was-used}}
+
+\begin{verbatim}
+## [1] n = 70
+\end{verbatim}
+
+\begin{verbatim}
+##    con_3_all       log_3_all       trn_3_all    
+##  Min.   :3.000   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:4.250   1st Qu.:2.250   1st Qu.:5.000  
+##  Median :5.000   Median :3.500   Median :6.000  
+##  Mean   :5.357   Mean   :3.671   Mean   :5.871  
+##  3rd Qu.:6.000   3rd Qu.:5.000   3rd Qu.:7.000  
+##  Max.   :7.000   Max.   :7.000   Max.   :7.000
+\end{verbatim}
+
+\hypertarget{q4---in-your-opinion-approximately-how-many-times-would-you-say-log-grip-was-used-as-a-percentage-of-the-number-of-times-salmon-ladder-was-used}{%
+\paragraph{\texorpdfstring{\textbf{Q4 - In your opinion, approximately
+how many times would you say `Log Grip' was used, as a percentage of the
+number of times `Salmon Ladder' was
+used?}}{Q4 - In your opinion, approximately how many times would you say `Log Grip' was used, as a percentage of the number of times `Salmon Ladder' was used?}}\label{q4---in-your-opinion-approximately-how-many-times-would-you-say-log-grip-was-used-as-a-percentage-of-the-number-of-times-salmon-ladder-was-used}}
+
+\begin{verbatim}
+## [1] n = 70
+\end{verbatim}
+
+\begin{verbatim}
+##    con_4_all       log_4_all       trn_4_all     
+##  Min.   : 5.00   Min.   : 0.10   Min.   :  1.00  
+##  1st Qu.:50.00   1st Qu.: 0.50   1st Qu.: 14.38  
+##  Median :50.00   Median : 0.75   Median : 50.00  
+##  Mean   :47.66   Mean   :12.86   Mean   : 39.81  
+##  3rd Qu.:50.00   3rd Qu.: 0.90   3rd Qu.: 50.00  
+##  Max.   :75.00   Max.   :90.00   Max.   :100.00  
+##  NA's   :3       NA's   :4       NA's   :2
+\end{verbatim}
+
+\hypertarget{nas-1}{%
+\paragraph{NAs}\label{nas-1}}
+
+\begin{verbatim}
+##      index con_4_all log_4_all trn_4_all
+## [1,]    11        NA        NA        NA
+## [2,]    48        NA        NA        48
+## [3,]    60        NA        NA        NA
+## [4,]    68        50        NA        50
+\end{verbatim}
+
+\begin{verbatim}
+##                                   uni sp_aware obs_skl num_skl cblind vis_pro
+## 12                            Science        2       3       2     No      No
+## 17                        Engineering        4       4       4     No     Yes
+## 25                          Geography        4       4       4   <NA>      No
+## 105 Sustainability/geological science        3       4       3     No    ADHD
+\end{verbatim}
+
+\end{document}

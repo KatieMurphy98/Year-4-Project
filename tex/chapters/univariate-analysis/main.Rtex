@@ -1,3 +1,4 @@
+
 This chapter will discuss basic univariate analysis and summary statistics from the survey results, alongside what
 could be inferred from these. We will look at each section individually and perform multiple initial comperisions
 whereby we subset for various factors, such as degree subject, the language used to make the plots, and the order
@@ -21,13 +22,15 @@ were observed can cause any discrepancies.
 
 \subsection{Whole Population}
 
-<<echo=FALSE, cache=TRUE>>=
+<<echo=FALSE, cache=T>>=
 rm(list=ls())
 library(readxl)
 library(dplyr)
+@
 
+<<echo=FALSE, cache=T>>=
 for(i in 1:6){
-    r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
+    r <- assign( paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
     py <- assign(paste0("py",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("Py - v",i)))))
     assign(paste0("ver",i), rbind(r, py))
 }
@@ -476,9 +479,9 @@ names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
 ctrl_y_scale <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)], ver3[,c(4:7, 14:17)], ver4[,c(4:7, 18:21)], ver5[,c(4:7, 14:17)], ver6[,c(4:7, 18:21)])
 log_y_scale <- rbind(ver1[,c(4:7, 14:17)], ver2[,c(4:7, 18:21)], ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)], ver5[,c(4:7, 18:21)], ver6[,c(4:7, 14:17)])
 trnc_y_scale <- rbind(ver1[,c(4:7, 18:21)], ver2[,c(4:7, 14:17)], ver3[,c(4:7, 18:21)], ver4[,c(4:7, 14:17)], ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
+@
 
-
- Q1 - Approximately many times would you say the 'Salmon Ladder' was used?
+<<echo=FALSE>>=
 
 con_1_all <- ctrl_y_scale$con_1
 con_1_all[which(con_1_all == "41/42")] <- 41.5 # take midpoint of two values
@@ -497,9 +500,6 @@ y_scale_1_all <- cbind(con_1_all, trn_1_all, log_1_all)
 noquote(paste0('n = ', dim(y_scale_1_all)[1]))
 summary(y_scale_1_all)
 
-
- NAs
-
 index <- which(is.na(log_1_all))
 value <- log_y_scale$log_1[index]
 cbind(index, value)
@@ -507,7 +507,7 @@ cbind(index, value)
 rbind(ver1[4:9], ver2[4:9], ver3[4:9], ver4[4:9], ver5[4:9], ver6[4:9])[index,]
 
 
- Q2 - Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?
+
 
 
 con_2_all <- ctrl_y_scale$con_2
@@ -519,7 +519,6 @@ noquote(paste0('n = ', dim(y_scale_2_all)[1]))
 summary(y_scale_2_all)
 
 
- Q3 - Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?
 
 con_3_all <- ctrl_y_scale$con_2
 trn_3_all <- trnc_y_scale$trn_2
@@ -529,9 +528,6 @@ y_scale_3_all <- cbind(con_3_all, log_3_all, trn_3_all)
 noquote(paste0('n = ', dim(y_scale_3_all)[1]))
 summary(y_scale_3_all)
 
-
-
- Q4 - In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?
 
 con_4_all <- ctrl_y_scale$con_4
 con_4_all[which(con_4_all == '12.5 %')] <- 12.5
@@ -559,24 +555,10 @@ noquote(paste0('n = ', dim(y_scale_4_all)[1]))
 summary(y_scale_4_all)
 
 
-
- NAs
-
 index <- which(is.na(log_4_all))
 cbind(index, y_scale_4_all[which(is.na(log_4_all)),])
 
 rbind(ver1[4:9], ver2[4:9], ver3[4:9], ver4[4:9], ver5[4:9], ver6[4:9])[index,]
 
-
-
-
-
-
-
-
-
-
-
-
-
+@
 

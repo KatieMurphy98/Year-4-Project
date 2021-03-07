@@ -3,8 +3,8 @@ title: "Univariate Analysis"
 author: "Katie Murphy"
 date: "27/02/2021"
 output:
-  word_document: default
   html_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -480,30 +480,138 @@ con_1_all <- as.numeric(con_1_all)
 trn_1_all <- as.numeric(trnc_y_scale$trn_1)
 
 log_1_all <- log_y_scale$log_1
-log_1_all[c(23, 25, 67)] <- NA
-log_1_all[35] <- 1e+15
-log_1_all[54] <- 1e+9
+log_1_all[which(log_1_all == "Don't know")] <- NA
+log_1_all[which(log_1_all == "Next to none.")] <- NA
+log_1_all[which(log_1_all == "10^15")] <- 1e+15
+log_1_all[which(log_1_all == "10^9")] <- 1e+9
 log_1_all <- as.numeric(log_1_all)
 
 y_scale_1_all <- cbind(con_1_all, trn_1_all, log_1_all)
 summary(y_scale_1_all)
+noquote(paste0("NA at index ", which(is.na(y_scale_1_all)), "."))
 ```
 
 #### Both - degree
 ```{r echo=F}
-for(i in unique(ctrl_y_scale$uni)){
-  assign(paste0("deg_",i,"_crtl"), ctrl_y_scale %>% filter(uni == i))
+
+deg_codes <- c("mat", "sci", "arts", "soc_sci", "eng", "arch", "bus", "tech", "NA", "med", "hum", "crim", "psych", "geog", "sus")
+
+for(i in 1:length(unique(ctrl_y_scale$uni))){
+  assign(paste0(deg_codes[i],"_crtl"), ctrl_y_scale %>% filter(uni == unique(ctrl_y_scale$uni)[i]))
 }
 
-for(i in unique(ctrl_y_scale$uni)){
-  assign(paste0("deg_",i,"_trnc"), ctrl_y_scale %>% filter(uni == i))
+for(i in 1:length(unique(trnc_y_scale$uni))){
+  assign(paste0(deg_codes[i],"_trnc"), trnc_y_scale %>% filter(uni == unique(trnc_y_scale$uni)[i]))
 }
 
-for(i in unique(ctrl_y_scale$uni)){
-  assign(paste0("deg_",i,"_log"), ctrl_y_scale %>% filter(uni == i))
+for(i in 1:length(unique(log_y_scale$uni))){
+  assign(paste0(deg_codes[i],"_log"), log_y_scale %>% filter(uni == unique(log_y_scale$uni)[i]))
 }
- 
 
+```
+
+
+
+##### Science
+```{r echo=F}
+con_1 <- as.numeric(sci_crtl$con_1)
+log_1 <- as.numeric(sci_log$log_1) 
+trn_1 <- as.numeric(sci_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+```
+##### Technology
+```{r echo=F}
+con_1 <- as.numeric(tech_crtl$con_1)
+log_1 <- as.numeric(tech_log$log_1) 
+trn_1 <- as.numeric(tech_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+
+#NA: 'Don't know'
+```
+##### Engineering
+```{r echo=F}
+con_1 <- as.numeric(eng_crtl$con_1)
+log_1 <- as.numeric(eng_log$log_1) 
+trn_1 <- as.numeric(eng_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+```
+##### Maths
+```{r echo=F}
+con_1 <- as.numeric(mat_crtl$con_1)
+log_1 <- as.numeric(mat_log$log_1) 
+trn_1 <- as.numeric(mat_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+```
+
+##### Arts
+```{r echo=F}
+con_1 <- as.numeric(arts_crtl$con_1)
+log_1 <- as.numeric(arts_log$log_1) 
+trn_1 <- as.numeric(arts_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+```
+##### Social sciences
+```{r echo=F}
+con_1 <- as.numeric(c(soc_sci_crtl$con_1, psych_crtl$con_1))
+
+log_1 <- c(soc_sci_log$log_1, psych_log$log_1)
+log_1 [which(log_1 == "10^15")] <- 1e+15
+log_1 [which(log_1 == "10^9")] <- 1e+9
+log_1  <- as.numeric(log_1)
+
+trn_1 <- as.numeric(c(soc_sci_trnc$trn_1, psych_trnc$trn_1))
+
+summary(cbind(con_1, log_1, trn_1))
+
+```
+##### Architecture
+```{r echo=F}
+con_1 <- as.numeric(arch_crtl$con_1)
+log_1 <- as.numeric(arch_log$log_1) 
+trn_1 <- as.numeric(arch_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+```
+##### Business
+```{r echo=F}
+con_1 <- as.numeric(bus_crtl$con_1)
+log_1 <- as.numeric(bus_log$log_1) 
+trn_1 <- as.numeric(bus_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+```
+##### Medicine
+```{r echo=F}
+con_1 <- as.numeric(med_crtl$con_1)
+log_1 <- as.numeric(med_log$log_1) 
+trn_1 <- as.numeric(med_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+```
+##### Humanities
+```{r echo=F}
+con_1 <- as.numeric(hum_crtl$con_1)
+log_1 <- as.numeric(hum_log$log_1) 
+trn_1 <- as.numeric(hum_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+```
+##### Criminology
+```{r echo=F}
+con_1 <- as.numeric(crim_crtl$con_1)
+log_1 <- as.numeric(crim_log$log_1) 
+trn_1 <- as.numeric(crim_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+```
+##### Geography
+```{r echo=F}
+con_1 <- as.numeric(geog_crtl$con_1)
+log_1 <- as.numeric(geog_log$log_1) 
+trn_1 <- as.numeric(geog_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
+```
+##### Sustainability/geological science
+```{r echo=F}
+con_1 <- as.numeric(sus_crtl$con_1)
+log_1 <- as.numeric(sus_log$log_1) 
+trn_1 <- as.numeric(sus_trnc$trn_1)
+summary(cbind(con_1, log_1, trn_1))
 ```
 
 #### Both - v1 (CLT)
@@ -564,8 +672,120 @@ trn_1_r <- as.numeric(trnc_y_scale_r$trn_2)
 
 log_1_r <- log_y_scale_r$log_2
 
-y_scale_r <- cbind(con_1_r, trn_1_r, log_1_r)
+y_scale_r <- cbind(con_1_r, log_1_r, trn_1_r)
 summary(y_scale_r)
+```
+
+```{r echo=F}
+
+deg_codes <- c("mat", "sci", "arts", "soc_sci", "eng", "arch", "med", "tech", "bus", "crim", "hum", "geog")
+
+for(i in 1:length(unique(ctrl_y_scale_r$uni))){
+  assign(paste0(deg_codes[i],"_ctrl_r"), ctrl_y_scale_r %>% filter(uni == unique(ctrl_y_scale_r$uni)[i]))
+}
+
+for(i in 1:length(unique(trnc_y_scale_r$uni))){
+  assign(paste0(deg_codes[i],"_trnc_r"), trnc_y_scale_r %>% filter(uni == unique(trnc_y_scale_r$uni)[i]))
+}
+
+for(i in 1:length(unique(log_y_scale_r$uni))){
+  assign(paste0(deg_codes[i],"_log_r"), log_y_scale_r %>% filter(uni == unique(log_y_scale_r$uni)[i]))
+}
+
+```
+
+
+##### Science
+```{r echo=F}
+con_1_r <- as.numeric(sci_ctrl_r$con_1)
+log_1_r  <- as.numeric(sci_log_r$log_1) 
+trn_1_r  <- as.numeric(sci_trnc_r$trn_1)
+summary(cbind(con_1_r, log_1_r , trn_1_r))
+```
+##### Technology
+```{r echo=F}
+con_1_r <- as.numeric(tech_ctrl_r$con_1)
+log_1_r  <- as.numeric(tech_log_r$log_1) 
+trn_1_r  <- as.numeric(tech_trnc_r$trn_1)
+summary(cbind(con_1_r, log_1_r , trn_1_r ))
+
+```
+##### Engineering
+```{r echo=F}
+con_1_r <- as.numeric(eng_ctrl_r$con_1)
+log_1_r  <- as.numeric(eng_log_r$log_1) 
+trn_1_r  <- as.numeric(eng_trnc_r$trn_1)
+summary(cbind(con_1_r, log_1_r , trn_1_r))
+```
+##### Maths
+```{r echo=F}
+con_1_r <- as.numeric(mat_ctrl_r$con_1)
+log_1_r  <- as.numeric(mat_log_r$log_1) 
+trn_1_r  <- as.numeric(mat_trnc_r$trn_1)
+summary(cbind(con_1_r, log_1_r , trn_1_r ))
+```
+
+##### Arts
+```{r echo=F}
+con_1_r <- as.numeric(arts_ctrl_r$con_1)
+log_1_r  <- as.numeric(arts_log_r$log_1) 
+trn_1_r  <- as.numeric(arts_trnc_r$trn_1)
+summary(cbind(con_1_r, log_1_r , trn_1_r ))
+```
+##### Social sciences
+```{r echo=F}
+con_1_r <- soc_sci_ctrl_r$con_1
+con_1_r[which(con_1_r == "41/42")] <- 41.5
+con_1_r <- as.numeric(con_1_r)
+
+log_1_r  <- (soc_sci_log_r$log_1)
+
+trn_1_r  <- as.numeric(soc_sci_trnc_r$trn_1)
+
+summary(cbind(con_1_r, log_1_r , trn_1_r))
+
+```
+##### Architecture
+```{r echo=F}
+con_1_r <- as.numeric(arch_ctrl_r$con_1)
+log_1_r  <- as.numeric(arch_log_r$log_1) 
+trn_1_r  <- as.numeric(arch_trnc_r$trn_1)
+summary(cbind(con_1_r, log_1_r , trn_1_r ))
+```
+##### Business
+```{r echo=F}
+con_1_r <- as.numeric(bus_ctrl_r$con_1)
+log_1_r  <- as.numeric(bus_log_r$log_1) 
+trn_1_r  <- as.numeric(bus_trnc_r$trn_1)
+summary(cbind(con_1_r, log_1_r , trn_1_r ))
+```
+##### Medicine
+```{r echo=F}
+con_1_r <- as.numeric(med_ctrl_r$con_1)
+log_1_r  <- as.numeric(med_log_r$log_1) 
+trn_1_r  <- as.numeric(med_trnc_r$trn_1)
+summary(cbind(con_1_r, log_1_r , trn_1_r ))
+```
+##### Humanities
+```{r echo=F}
+con_1_r <- as.numeric(hum_ctrl_r$con_1)
+log_1_r  <- as.numeric(hum_log_r$log_1) 
+trn_1_r  <- as.numeric(hum_trnc_r$trn_1)
+summary(cbind(con_1, log_1_r , trn_1))
+```
+##### Criminology
+```{r echo=F}
+con_1_r <- as.numeric(crim_ctrl_r$con_1)
+log_1_r  <- as.numeric(crim_log_r$log_1) 
+trn_1_r  <- as.numeric(crim_trnc_r$trn_1)
+summary(cbind(con_1_r, log_1_r , trn_1_r ))
+```
+##### Geography
+```{r echo=F}
+con_1_r <- as.numeric(geog_ctrl_r$con_1)
+log_1_r  <- as.numeric(geog_log_r$log_1) 
+trn_1_r  <- as.numeric(geog_trnc_r$trn_1)
+summary(cbind(con_1_r, log_1_r , trn_1_r ))
 ```
 
 #### R - v1 (CLT)
@@ -609,19 +829,103 @@ ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 1
 log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
 trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
 
-con_1_py <- ctrl_y_scale_py[,1]
+con_1_py <- ctrl_y_scale_py$con_1
 
-trn_1_py <- as.numeric(trnc_y_scale_py[,1])
+trn_1_py <- as.numeric(trnc_y_scale_py$trn_1)
 
-log_1_py <- log_y_scale_py[,1]
-log_1_py[c(8, 10, 28)] <- NA
-log_1_py[15] <- 1e+15
-log_1_py[22] <- 1e+9
+log_1_py <- log_y_scale_py$log_1
+log_1_py[which(log_1_py == "Don't know")] <- NA
+log_1_py[which(log_1_py == "Next to none.")] <- NA
+log_1_py[which(log_1_py == "10^15")] <- 1e+15
+log_1_py[which(log_1_py == "10^9")] <- 1e+9
 log_1_py <- as.numeric(log_1_py)
 
-y_scale_py <- cbind(con_1_py, trn_1_py, log_1_py)
+
+y_scale_py <- cbind(con_1_py, log_1_py, trn_1_py)
 summary(y_scale_py)
 ```
+
+```{r echo=F}
+
+deg_codes <- c("soc_sci", "sci", "bus", "tech", "NA", "mat", "eng", "hum", "psych", "sus")
+
+for(i in 1:length(unique(ctrl_y_scale_py$uni))){
+  assign(paste0(deg_codes[i],"_ctrl_py"), ctrl_y_scale_py %>% filter(uni == unique(ctrl_y_scale_py$uni)[i]))
+}
+
+for(i in 1:length(unique(trnc_y_scale_py$uni))){
+  assign(paste0(deg_codes[i],"_trnc_py"), trnc_y_scale_py %>% filter(uni == unique(trnc_y_scale_py$uni)[i]))
+}
+
+for(i in 1:length(unique(log_y_scale_py$uni))){
+  assign(paste0(deg_codes[i],"_log_py"), log_y_scale_py %>% filter(uni == unique(log_y_scale_py$uni)[i]))
+}
+
+```
+
+
+##### Science
+```{r echo=F}
+con_1_py <- as.numeric(sci_ctrl_py$con_1)
+log_1_py  <- as.numeric(sci_log_py$log_1) 
+trn_1_py  <- as.numeric(sci_trnc_py$trn_1)
+summary(cbind(con_1_py, log_1_py , trn_1_py))
+```
+##### Technology
+##### NOTE: Only one respondent here, and they wrote 'Don't Know' for the log scale
+```{r echo=F}
+con_1_py <- as.numeric(tech_ctrl_py$con_1)
+trn_1_py  <- as.numeric(tech_trnc_py$trn_1)
+summary(cbind(con_1_py, trn_1_py ))
+#NA: 'Don't know'
+```
+##### Engineering
+```{r echo=F}
+con_1_py <- as.numeric(eng_ctrl_py$con_1)
+log_1_py  <- as.numeric(eng_log_py$log_1) 
+trn_1_py  <- as.numeric(eng_trnc_py$trn_1)
+summary(cbind(con_1_py, log_1_py , trn_1_py))
+```
+##### Maths
+```{r echo=F}
+con_1_py <- as.numeric(mat_ctrl_py$con_1)
+log_1_py  <- as.numeric(mat_log_py$log_1) 
+trn_1_py  <- as.numeric(mat_trnc_py$trn_1)
+summary(cbind(con_1_py, log_1_py , trn_1_py ))
+```
+
+##### Social sciences
+```{r echo=F}
+
+con_1_py <- as.numeric(c(soc_sci_ctrl_py$con_1, psych_ctrl_py$con_1))
+
+log_1_py <- c(soc_sci_log_py$log_1, psych_log_py$log_1)
+log_1_py[which(log_1_py == "10^15")] <- 1e+15
+log_1_py[which(log_1_py == "10^9")] <- 1e+9
+log_1_py <- as.numeric(log_1_py)
+
+trn_1_py <- as.numeric(c(soc_sci_trnc_py$trn_1, psych_trnc_py$trn_1))
+
+summary(cbind(con_1_py, log_1_py , trn_1_py))
+
+```
+##### Business
+```{r echo=F}
+con_1_py <- as.numeric(bus_ctrl_py$con_1)
+log_1_py  <- as.numeric(bus_log_py$log_1) 
+trn_1_py  <- as.numeric(bus_trnc_py$trn_1)
+summary(cbind(con_1_py, log_1_py , trn_1_py ))
+```
+##### Humanities
+```{r echo=F}
+con_1_py <- as.numeric(hum_ctrl_py$con_1)
+log_1_py  <- as.numeric(hum_log_py$log_1) 
+trn_1_py  <- as.numeric(hum_trnc_py$trn_1)
+summary(cbind(con_1, log_1_py , trn_1))
+```
+
+
+
 #### Py - v1 (CLT)
 ```{r echo=F}
 CLT <- cbind(py1[10], py1[14], py1[18])
@@ -668,7 +972,7 @@ con_2_all <- ctrl_y_scale[,2]
 trn_2_all <- trnc_y_scale[,2]
 log_2_all <- log_y_scale[,2]
 
-y_scale_2_all <- cbind(con_2_all, trn_2_all, log_2_all)
+y_scale_2_all <- cbind(con_2_all, log_2_all, trn_2_all)
 summary(y_scale_2_all)
 ```
 
@@ -715,7 +1019,7 @@ con_2_r <- ctrl_y_scale_r[,2]
 trn_2_r <- trnc_y_scale_r[,2]
 log_2_r <- log_y_scale_r[,2]
 
-y_scale_2_r <- cbind(con_2_r, trn_2_r, log_2_r)
+y_scale_2_r <- cbind(con_2_r, log_2_r, trn_2_r)
 summary(y_scale_2_r)
 ```
 
@@ -763,7 +1067,7 @@ con_2_py <- ctrl_y_scale_py[,2]
 trn_2_py <- trnc_y_scale_py[,2]
 log_2_py <- log_y_scale_py[,2]
 
-y_scale_2_py <- cbind(con_2_py, trn_2_py, log_2_py)
+y_scale_2_py <- cbind(con_2_py, log_2_py, trn_2_py)
 summary(y_scale_2_py)
 ```
 
@@ -810,7 +1114,7 @@ con_3_all <- ctrl_y_scale[,3]
 trn_3_all <- trnc_y_scale[,3]
 log_3_all <- log_y_scale[,3]
 
-y_scale_3_all <- cbind(con_3_all, trn_3_all, log_3_all)
+y_scale_3_all <- cbind(con_3_all, log_3_all, trn_3_all)
 summary(y_scale_3_all)
 ```
 
@@ -857,7 +1161,7 @@ con_3_r <- ctrl_y_scale_r[,3]
 trn_3_r <- trnc_y_scale_r[,3]
 log_3_r <- log_y_scale_r[,3]
 
-y_scale_3_r <- cbind(con_3_r, trn_3_r, log_3_r)
+y_scale_3_r <- cbind(con_3_r, log_3_r, trn_3_r)
 summary(y_scale_3_r)
 ```
 
@@ -904,7 +1208,7 @@ con_3_py <- ctrl_y_scale_py[,3]
 trn_3_py <- trnc_y_scale_py[,3]
 log_3_py <- log_y_scale_py[,3]
 
-y_scale_3_py <- cbind(con_3_py, trn_3_py, log_3_py)
+y_scale_3_py <- cbind(con_3_py, log_3_py, trn_3_py)
 summary(y_scale_3_py)
 ```
 
@@ -976,8 +1280,14 @@ for(i in 1:length(log_4_all)){
 
 
 
-y_scale_4_all <- cbind(con_4_all, trn_4_all, log_4_all)
+y_scale_4_all <- cbind(con_4_all, log_4_all, trn_4_all)
 summary(y_scale_4_all)
+```
+
+#### Both - Degree
+```{r echo=F}
+
+
 ```
 
 #### Both - v1 (CLT)
@@ -1144,7 +1454,7 @@ for(i in 1:length(log_4_r)){
     }
 }
 
-y_scale_4_r <- cbind(con_4_r, trn_4_r, log_4_r)
+y_scale_4_r <- cbind(con_4_r, log_4_r, trn_4_r)
 summary(y_scale_4_r)
 ```
 
@@ -1310,7 +1620,7 @@ for(i in 1:length(log_4_py)){
     }
 }
 
-y_scale_4_py <- cbind(con_4_py, trn_4_py, log_4_py)
+y_scale_4_py <- cbind(con_4_py, log_4_py, trn_4_py)
 summary(y_scale_4_py)
 ```
 
