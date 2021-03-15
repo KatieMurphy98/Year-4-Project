@@ -1,36 +1,21 @@
+---
+output: pdf_document
+fontsize: 12pt
+documentclass: book
+---
 
-This chapter will discuss basic univariate analysis and summary statistics from the survey results, alongside what
-could be inferred from these. We will look at each section individually and perform multiple initial comperisions
-whereby we subset for various factors, such as degree subject, the language used to make the plots, and the order
-in which plots have been presented.
+```{r setup, include=FALSE, warning=F}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-\section{American Ninja Warrior, Part 1 - Y-Scaling}
-This section was testing to see whether altering the type of y-scaling used would affect perception of the data, in 
-terms of both guaging exact values as well as giving subjecting opinions on differences between values. For each of
-the three plots we ask the following four questions: 
-
-\begin{itemize}
-    \item \textit{Q1 - "Approximately many times would you say the 'Salmon Ladder' was used?"}
-    \item \textit{Q2 - "Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was used?"}
-    \item \textit{Q3 - "Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder was used?"}
-    \item \textit{Q4 - "In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?"}
-\end{itemize}
-
-First we will look at the summary statistics for of the four questions laid out above for the whole population, before 
-looking into whether perceptions differ depending on the language used as well as how the order in which the three plots 
-were observed can cause any discrepancies. 
-
-\subsection{Whole Population}
-
-<<echo=FALSE, cache=T>>=
+```{r include = FALSE}
 rm(list=ls())
 library(readxl)
 library(dplyr)
-@
+library(ggplot2)
 
-<<echo=FALSE, cache=T>>=
 for(i in 1:6){
-    r <- assign( paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
+    r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
     py <- assign(paste0("py",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("Py - v",i)))))
     assign(paste0("ver",i), rbind(r, py))
 }
@@ -479,10 +464,33 @@ names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
 ctrl_y_scale <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)], ver3[,c(4:7, 14:17)], ver4[,c(4:7, 18:21)], ver5[,c(4:7, 14:17)], ver6[,c(4:7, 18:21)])
 log_y_scale <- rbind(ver1[,c(4:7, 14:17)], ver2[,c(4:7, 18:21)], ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)], ver5[,c(4:7, 18:21)], ver6[,c(4:7, 14:17)])
 trnc_y_scale <- rbind(ver1[,c(4:7, 18:21)], ver2[,c(4:7, 14:17)], ver3[,c(4:7, 18:21)], ver4[,c(4:7, 14:17)], ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
-@
+```
+\pagenumbering{gobble}
 
-<<echo=FALSE>>=
+\thispagestyle{empty}
+This chapter will discuss basic univariate analysis and summary statistics from the survey results, alongside what
+could be inferred from these. We will look at each section individually and perform multiple initial comparisons
+whereby we subset for various factors, such as degree subject, the language used to make the plots, and the order
+in which plots have been presented.
 
+\section{2.1  American Ninja Warrior, Part 1 - Y-Scaling}
+The purpose of this set of questions was to decipher whether altering the type of y-scaling used would notably affect perception of the data, in 
+terms of both gauging exact values as well as giving subjective opinions on differences between values. As described previously, the set of questions in the first section is as follows:
+
+\begin{itemize}
+    \item \textbf{Q1 - "Approximately many times would you say the 'Salmon Ladder' was used?"}
+    \item \textbf{Q2 - "Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was used?"}
+    \item \textbf{Q3 - "Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder was used?"}
+    \item \textbf{Q4 - "In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?"}
+\end{itemize}
+
+First we will look at the summary statistics for each of the four questions laid out above for the whole population, before subsetting for language, degree subject, and survey version number. Each table of summary statistics presents columns for the three plot types; the control plot, the truncated plot, and the log-scaled plot, respectively in that order.
+
+\subsection{2.1.1  Whole Population (N=70)}
+**Q1 - Approximately many times would you say the 'Salmon Ladder' was used?**
+
+
+```{r echo=F}
 con_1_all <- ctrl_y_scale$con_1
 con_1_all[which(con_1_all == "41/42")] <- 41.5 # take midpoint of two values
 con_1_all <- as.numeric(con_1_all)
@@ -496,30 +504,177 @@ log_1_all[which(log_1_all == "10^15")] <- 1e+15
 log_1_all[which(log_1_all == "10^9")] <- 1e+9
 log_1_all <- as.numeric(log_1_all)
 
-y_scale_1_all <- cbind(con_1_all, trn_1_all, log_1_all)
-noquote(paste0('n = ', dim(y_scale_1_all)[1]))
-summary(y_scale_1_all)
+y_scale_1_all <- cbind(con_1_all, log_1_all, trn_1_all)
+```
 
+The table below presents the summary statistics for the total population for the first question. Here the `correct' answer, or rather the true value of the corresponding bar, was 42. 
+
+```{r echo=F}
+summary(y_scale_1_all)
+```
+
+We can see that for the control and truncated plots we have means 41.21 and 41.35 respectively and both have median 41, which at first glance do not appear significantly different from the true value of 42. However using a two-sided Wilcoxon test with \(\mu = 42\) we achieve \(p << 0.05\) for both of the sets of responses, signifying that we do in fact see a statistically significant difference in the location of these responses from the true value. Furthermore, applying one sided one sided tests, we see that the sample value is likely to be less than the true value, meaning respondents tended to underestimate. It does, however, appear that there is not much difference between the average values of responses for each of the two plots, but this comparison will be discussed in a later chapter.
+
+
+\textbf{Wilcoxon tests for the control Plot}
+```{r echo=F}
+wilcox.test(con_1_all, mu=42, alt="t")
+wilcox.test(con_1_all, mu=42, alt="l")
+wilcox.test(con_1_all, mu=42, alt="g")
+```
+
+\textbf{Wilcoxon tests for the truncated Plot}
+```{r echo=F}
+wilcox.test(trn_1_all, mu=42, alt="t")
+wilcox.test(trn_1_all, mu=42, alt="l")
+wilcox.test(trn_1_all, mu=42, alt="g")
+```
+
+A Wilcoxon test was chosen as the data is non-normal, which we can see from both the density plots below in addition to the results of the Shapiro-Wilk normality tests, whereby we once again have p << 0.05, and thus there is significant evidence to reject the hypothesis that these data are normal, and so they violate the normality condition required for a one-sample t-test.
+
+```{r echo=F}
+ggplot() +
+  geom_density(data = as.data.frame(con_1_all), aes(x=con_1_all, col = "red"))+
+  geom_density(data = as.data.frame(trn_1_all), aes(x=trn_1_all, col = "blue"))+
+  labs(x="Response", y="Density")+
+  scale_color_manual(name = "Plot Type",
+         values = c('red','blue'), labels = c('Control','Truncated'))+
+  theme_classic()
+
+```
+
+\textbf{Control Plot}
+```{r echo=F}
+shapiro.test(con_1_all)
+```
+
+\textbf{Truncated Plot}
+```{r echo=F}
+shapiro.test(trn_1_all)
+```
+For both of these we also have a minimum of 40 and maximum of 45, giving a range of 5. 
+
+Now consider the values for the log plot. We see a much higher mean of 1.493e+13 which, on closer inspection of the languages (below), is attributed fully to the python versions of the plot. 
+
+\textbf{Summary statistics of the R versions}
+```{r echo=F}
+
+ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17)], r4[,c(4:7, 18:21)], r5[,c(4:7, 14:17)], r6[,c(4:7, 18:21)])
+log_y_scale_r <- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
+trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
+
+con_1_r <- ctrl_y_scale_r$con_1
+con_1_r[15] <- 41.5 # take midpoint of two values
+con_1_r <- as.numeric(con_1_r)
+
+trn_1_r <- as.numeric(trnc_y_scale_r$trn_1)
+
+log_1_r <- log_y_scale_r$log_1
+
+y_scale_r <- cbind(con_1_r, log_1_r, trn_1_r)
+summary(y_scale_r)
+```
+
+\textbf{Summary statistics of the Python versions}
+```{r echo=F}
+
+ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
+log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
+trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
+
+con_1_py <- ctrl_y_scale_py$con_1
+
+trn_1_py <- as.numeric(trnc_y_scale_py$trn_1)
+
+log_1_py <- log_y_scale_py$log_1
+log_1_py[which(log_1_py == "Don't know")] <- NA
+log_1_py[which(log_1_py == "Next to none.")] <- NA
+log_1_py[which(log_1_py == "10^15")] <- 1e+15
+log_1_py[which(log_1_py == "10^9")] <- 1e+9
+log_1_py <- as.numeric(log_1_py)
+
+
+y_scale_py <- cbind(con_1_py, log_1_py, trn_1_py)
+summary(y_scale_py)
+```
+
+The responses contributing very heavily to this very large mean were written as 10^15 and 10^9, alongside two responses of 1000 one of 100. This lends to the idea that using matplotlib's default standard form notation for the log scale may have misled some participants who perhaps are less familiar with standard form. Adding to this conclusion are the NA values, two of which were responses of "Don't know" and "Next to None.". Looking at the R version, we have a mean of 39.74 and median 35 which, after once again applying the Wilcoxon tests, shows statistically significant under-estimation of the value, but are much closer to the true value than that of the Python plot.
+
+
+\textbf{Wilcoxon tests for the R log Plot}
+```{r echo=F }
+wilcox.test(log_1_r, mu=42, alt="t")
+wilcox.test(log_1_r, mu=42, alt="l")
+wilcox.test(log_1_r, mu=42, alt="g")
+```
+
+
+\textbf{NA values for log plot data}
+```{r echo=F}
 index <- which(is.na(log_1_all))
 value <- log_y_scale$log_1[index]
 cbind(index, value)
 
 rbind(ver1[4:9], ver2[4:9], ver3[4:9], ver4[4:9], ver5[4:9], ver6[4:9])[index,]
+```
+
+**Q2 - Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?**
+Now we consider the results from the second question, in which the participants were asked to respond on a scale from 1-5. The density plot below depicts the distribution of results for each of the three plot types. We see that the distributions appear to once again be non-normal. 
 
 
-
-
+```{r echo=F}
 
 con_2_all <- ctrl_y_scale$con_2
 trn_2_all <- trnc_y_scale$trn_2
 log_2_all <- log_y_scale$log_2
 
 y_scale_2_all <- cbind(con_2_all, log_2_all, trn_2_all)
-noquote(paste0('n = ', dim(y_scale_2_all)[1]))
+
+ggplot() +
+  geom_density(data = as.data.frame(con_2_all), aes(x=con_2_all, col = "red"))+
+  geom_density(data = as.data.frame(log_2_all), aes(x=log_2_all, col = "green"))+
+  geom_density(data = as.data.frame(trn_2_all), aes(x=trn_2_all, col = "blue"))+
+  
+  labs(x="Response", y="Density")+
+  scale_color_manual(name = "Plot Type",
+         values = c('red', 'green','blue'), labels = c('Control', 'Log','Truncated'))+
+  theme_classic()
+
+```
+
+
+```{r echo=F}
+
 summary(y_scale_2_all)
+```
+An initial look at the table of summary statistics reveal means of 5.375, 3.671 and 5.871 respectively for the control, log and truncated plots, meaning that for the 'baseline' control plot participants, on average, judged the difference to be moderately significant, with the perceived difference being smaller for the log plot and larger for the truncated plot. This is consistent with results from [[[CITE chrome-extension://cbnaodkpfinfiipjblikofhlhlcickei/src/pdfviewer/web/viewer.html?file=file:///C:/Users/Katie/Downloads/YangVargasRestrepoStanleyMarsh%20(2020).pdf]]], in which the researchers, similar to this survey, showed participants a series of control bar plots alongside those with a truncated axis, and concluded that the difference in values for the truncated axis were perceived to be larger than those of the control plots. 
+
+
+The box plot shows these results for each plot type.
+
+```{r echo=F}
+y_scale_2_all <- as.data.frame(y_scale_2_all)
+vals <- c(y_scale_2_all$con_2_all, y_scale_2_all$log_2_all, y_scale_2_all$trn_2_all)
+type <- c(rep('Control', 70), rep('Log', 70), rep('Truncated', 70)) 
+stats_2 <- data.frame(vals, type)
+
+ggplot(data = stats_2, aes(x=type, y=vals, fill=type))+
+geom_boxplot(outlier.colour="black", outlier.shape=1,
+             outlier.size=2, notch=F)+
+  theme_classic()+
+  stat_summary(fun=mean, geom="point", shape=15, size=4)+
+  scale_fill_brewer(palette="Dark2")+
+  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
+  ylab("Value")+
+  xlab("Plot Type")
+```
+We see that the interquartile range for the control plot is smallest of the three at 1.75, followed by the truncated plot at 2, and then the log plot at 2.75. This depicts that overall, there was more of a consensus in the subjective perception of the difference for the control plot than the other two, and less agreement between participants for the logarithmic scale. This could be once again hypothesised to  be due to misunderstanding of the standard form notation as well as the logarithmic scaling itself. The black squares represent the means here, and we can see that for the first two boxes, the mean is higher than the median, perhaps signifying a positive skew, with a slightly negative skew for the truncated plot. 
 
 
 
+
+**Q3 - Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?**
+```{r echo=F}
 con_3_all <- ctrl_y_scale$con_2
 trn_3_all <- trnc_y_scale$trn_2
 log_3_all <- log_y_scale$log_2
@@ -527,8 +682,11 @@ log_3_all <- log_y_scale$log_2
 y_scale_3_all <- cbind(con_3_all, log_3_all, trn_3_all)
 noquote(paste0('n = ', dim(y_scale_3_all)[1]))
 summary(y_scale_3_all)
+```
 
 
+**Q4 - In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?**
+```{r echo=F}
 con_4_all <- ctrl_y_scale$con_4
 con_4_all[which(con_4_all == '12.5 %')] <- 12.5
 con_4_all <- as.numeric(con_4_all)
@@ -555,10 +713,24 @@ noquote(paste0('n = ', dim(y_scale_4_all)[1]))
 summary(y_scale_4_all)
 
 
+```
+#### NAs
+```{r echo=F}
 index <- which(is.na(log_4_all))
 cbind(index, y_scale_4_all[which(is.na(log_4_all)),])
 
 rbind(ver1[4:9], ver2[4:9], ver3[4:9], ver4[4:9], ver5[4:9], ver6[4:9])[index,]
+```
 
-@
+
+
+
+
+
+
+
+
+
+
+
 

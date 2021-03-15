@@ -1,12 +1,9 @@
----
-title: "Univariate Analysis - Whole Pop"
-author: "Katie Murphy"
-date: "27/02/2021"
-output:
-  pdf_document: default
-  word_document: default
-  html_document: default
----
+\documentclass{article}
+
+\usepackage{Sweave}
+\begin{document}
+\input{Test-concordance}
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -562,12 +559,4 @@ rbind(ver1[4:9], ver2[4:9], ver3[4:9], ver4[4:9], ver5[4:9], ver6[4:9])[index,]
 
 
 
-
-
-
-
-
-
-
-
-
+\end{document}
