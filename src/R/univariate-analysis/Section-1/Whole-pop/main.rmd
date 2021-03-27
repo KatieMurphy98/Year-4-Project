@@ -1,8 +1,14 @@
 ---
-output: pdf_document
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
 fontsize: 12pt
 documentclass: book
 ---
+
+\pagenumbering{gobble}
+\pagestyle{empty}
 
 ```{r setup, include=FALSE, warning=F}
 knitr::opts_chunk$set(echo = TRUE)
@@ -465,30 +471,12 @@ ctrl_y_scale <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)], ver3[,c(4:7, 1
 log_y_scale <- rbind(ver1[,c(4:7, 14:17)], ver2[,c(4:7, 18:21)], ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)], ver5[,c(4:7, 18:21)], ver6[,c(4:7, 14:17)])
 trnc_y_scale <- rbind(ver1[,c(4:7, 18:21)], ver2[,c(4:7, 14:17)], ver3[,c(4:7, 18:21)], ver4[,c(4:7, 14:17)], ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
 ```
-\pagenumbering{gobble}
 
-\thispagestyle{empty}
-This chapter will discuss basic univariate analysis and summary statistics from the survey results, alongside what
-could be inferred from these. We will look at each section individually and perform multiple initial comparisons
-whereby we subset for various factors, such as degree subject, the language used to make the plots, and the order
-in which plots have been presented.
-
-\section{2.1  American Ninja Warrior, Part 1 - Y-Scaling}
-The purpose of this set of questions was to decipher whether altering the type of y-scaling used would notably affect perception of the data, in 
-terms of both gauging exact values as well as giving subjective opinions on differences between values. As described previously, the set of questions in the first section is as follows:
-
-\begin{itemize}
-    \item \textbf{Q1 - "Approximately many times would you say the 'Salmon Ladder' was used?"}
-    \item \textbf{Q2 - "Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was used?"}
-    \item \textbf{Q3 - "Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder was used?"}
-    \item \textbf{Q4 - "In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?"}
-\end{itemize}
-
-First we will look at the summary statistics for each of the four questions laid out above for the whole population, before subsetting for language, degree subject, and survey version number. Each table of summary statistics presents columns for the three plot types; the control plot, the truncated plot, and the log-scaled plot, respectively in that order.
 
 \subsection{2.1.1  Whole Population (N=70)}
-**Q1 - Approximately many times would you say the 'Salmon Ladder' was used?**
 
+**Approximately many times would you say the 'Salmon Ladder' was used?**
+\thispagestyle{headings}
 
 ```{r echo=F}
 con_1_all <- ctrl_y_scale$con_1
@@ -534,11 +522,12 @@ A Wilcoxon test was chosen as the data is non-normal, which we can see from both
 
 ```{r echo=F}
 ggplot() +
-  geom_density(data = as.data.frame(con_1_all), aes(x=con_1_all, col = "red"))+
-  geom_density(data = as.data.frame(trn_1_all), aes(x=trn_1_all, col = "blue"))+
+  geom_density(data = as.data.frame(con_1_all), aes(x=con_1_all, col = "Control"))+
+  geom_density(data = as.data.frame(trn_1_all), aes(x=trn_1_all, col = "Truncated"))+
   labs(x="Response", y="Density")+
   scale_color_manual(name = "Plot Type",
          values = c('red','blue'), labels = c('Control','Truncated'))+
+  scale_colour_brewer(palette="Dark2")+
   theme_classic()
 
 ```
@@ -618,7 +607,7 @@ cbind(index, value)
 rbind(ver1[4:9], ver2[4:9], ver3[4:9], ver4[4:9], ver5[4:9], ver6[4:9])[index,]
 ```
 
-**Q2 - Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?**
+**Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?**
 Now we consider the results from the second question, in which the participants were asked to respond on a scale from 1-5. The density plot below depicts the distribution of results for each of the three plot types. We see that the distributions appear to once again be non-normal. 
 
 
@@ -631,13 +620,14 @@ log_2_all <- log_y_scale$log_2
 y_scale_2_all <- cbind(con_2_all, log_2_all, trn_2_all)
 
 ggplot() +
-  geom_density(data = as.data.frame(con_2_all), aes(x=con_2_all, col = "red"))+
-  geom_density(data = as.data.frame(log_2_all), aes(x=log_2_all, col = "green"))+
-  geom_density(data = as.data.frame(trn_2_all), aes(x=trn_2_all, col = "blue"))+
+  geom_density(data = as.data.frame(con_2_all), aes(x=con_2_all, col = "Control"))+
+  geom_density(data = as.data.frame(log_2_all), aes(x=log_2_all, col = "Log"))+
+  geom_density(data = as.data.frame(trn_2_all), aes(x=trn_2_all, col = "Truncated"))+
   
   labs(x="Response", y="Density")+
   scale_color_manual(name = "Plot Type",
          values = c('red', 'green','blue'), labels = c('Control', 'Log','Truncated'))+
+  scale_colour_brewer(palette="Dark2")+
   theme_classic()
 
 ```
@@ -673,19 +663,50 @@ We see that the interquartile range for the control plot is smallest of the thre
 
 
 
-**Q3 - Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?**
+**Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?**
 ```{r echo=F}
-con_3_all <- ctrl_y_scale$con_2
-trn_3_all <- trnc_y_scale$trn_2
-log_3_all <- log_y_scale$log_2
+con_3_all <- ctrl_y_scale$con_3
+trn_3_all <- trnc_y_scale$trn_3
+log_3_all <- log_y_scale$log_3
 
 y_scale_3_all <- cbind(con_3_all, log_3_all, trn_3_all)
-noquote(paste0('n = ', dim(y_scale_3_all)[1]))
+
+ggplot() +
+  geom_density(data = as.data.frame(con_3_all), aes(x=con_3_all, col = "Control"))+
+  geom_density(data = as.data.frame(log_3_all), aes(x=log_3_all, col = "Log"))+
+  geom_density(data = as.data.frame(trn_3_all), aes(x=trn_3_all, col = "Truncated"))+
+  
+  labs(x="Response", y="Density")+
+  scale_color_manual(name = "Plot Type",
+         values = c('red', 'green','blue'), labels = c('Control', 'Log','Truncated'))+
+  scale_colour_brewer(palette="Dark2")+
+  theme_classic()
+```
+
+```{r, echo=F}
 summary(y_scale_3_all)
 ```
 
+```{r, echo=F}
+y_scale_3_all <- as.data.frame(y_scale_3_all)
 
-**Q4 - In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?**
+vals <- c(y_scale_3_all$con_3_all, y_scale_3_all$log_3_all, y_scale_3_all$trn_3_all)
+type <- c(rep('Control', 70), rep('Log', 70), rep('Truncated', 70)) 
+stats_3 <- data.frame(vals, type)
+
+ggplot(data = stats_3, aes(x=type, y=vals, fill=type))+
+geom_boxplot(outlier.colour="black", outlier.shape=1,
+             outlier.size=2, notch=F)+
+  theme_classic()+
+  stat_summary(fun=mean, geom="point", shape=15, size=4)+
+  scale_fill_brewer(palette="Dark2")+
+  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
+  ylab("Value")+
+  xlab("Plot Type")
+
+```
+
+**In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?**
 ```{r echo=F}
 con_4_all <- ctrl_y_scale$con_4
 con_4_all[which(con_4_all == '12.5 %')] <- 12.5
@@ -708,11 +729,30 @@ log_4_all <- log_y_scale$log_4
 log_4_all[which(log_4_all == '3 %')] <- 3
 log_4_all <- as.numeric(log_4_all)
 
+for(i in 1:length(log_4_all)){
+    if(log_4_all[i] < 1 && is.na(log_4_all[i])==FALSE){
+       log_4_all[i] <- log_4_all[i]*100
+    }
+}
+
 y_scale_4_all <- cbind(con_4_all, log_4_all, trn_4_all)
-noquote(paste0('n = ', dim(y_scale_4_all)[1]))
 summary(y_scale_4_all)
 
 
+```
+
+```{r echo=F}
+
+ggplot() +
+  geom_density(data = as.data.frame(con_4_all), aes(x=con_4_all, col = "Control"))+
+  geom_density(data = as.data.frame(log_4_all), aes(x=log_4_all, col = "Log"))+
+  geom_density(data = as.data.frame(trn_4_all), aes(x=trn_4_all, col = "Truncated"))+
+  
+  labs(x="Response", y="Density")+
+  scale_color_manual(name = "Plot Type",
+         values = c('red', 'green','blue'), labels = c('Control', 'Log','Truncated'))+
+  scale_colour_brewer(palette="Dark2")+
+  theme_classic()
 ```
 #### NAs
 ```{r echo=F}
@@ -723,8 +763,25 @@ rbind(ver1[4:9], ver2[4:9], ver3[4:9], ver4[4:9], ver5[4:9], ver6[4:9])[index,]
 ```
 
 
+```{r, echo=F}
+y_scale_4_all <- as.data.frame(y_scale_4_all)
 
+vals <- c(y_scale_4_all$con_4_all, y_scale_4_all$log_4_all, y_scale_4_all$trn_4_all)
+type <- c(rep('Control', 70), rep('Log', 70), rep('Truncated', 70)) 
+stats_4 <- data.frame(vals, type)
 
+ggplot(data = stats_4, aes(x=type, y=vals, fill=type))+
+geom_boxplot(outlier.colour="black", outlier.shape=1,
+             outlier.size=2, notch=F)+
+  theme_classic()+
+  stat_summary(fun=mean, geom="point", shape=15, size=4)+
+  scale_fill_brewer(palette="Dark2")+
+  scale_y_continuous()+
+  ylab("Value")+
+  xlab("Plot Type")
+
+```
+****
 
 
 
