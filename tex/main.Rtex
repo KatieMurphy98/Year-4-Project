@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{setspace}
-\usepackage[]{pdfpages}
+
 \doublespacing
 
 \title{\textbf{An Empirical Study of Visualisation of Data}}
@@ -82,10 +82,10 @@
 
 
     \input{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/tex/chapters/survey/main.tex}
-    
-    \chapter{Univariate Analysis}
-    \input{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/tex/chapters/univariate-analysis/main.tex}    
-
+%    \input{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/tex/chapters/interviews/main.tex}
+    \input{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/tex/chapters/univariate-analysis/main.Rtex}
+%    
+%
 %    \bibliographystyle{plain}
 %    \bibliography{references.bib}
 
