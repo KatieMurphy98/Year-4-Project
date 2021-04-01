@@ -1,18 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document:
-    df_print: paged
-fontsize: 12pt
-documentclass: book
----
-
-\pagenumbering{gobble}
-\pagestyle{empty}
-
-```{r setup, include=FALSE, warning=F}
-knitr::opts_chunk$set(echo = F, warning=F)
-```
 
 ```{r include = FALSE}
 rm(list=ls())

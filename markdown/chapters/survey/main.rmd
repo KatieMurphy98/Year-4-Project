@@ -1,13 +1,3 @@
----
-title: "Survey"
-author: "Katie Murphy"
-date: "01/04/2021"
-output: pdf_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
 
 chapter{Data collection}
 
@@ -247,9 +237,6 @@ The following bar charts present information regarding how many times 4 obstacle
 The first three questions refer to this bar chart, bar chart A.
 
 \textbf{Figure}
-
-\includepdf[pages=-, pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/An Empirical Study of Data Visualisation (R - v1) - Google Forms}
-
 
 
 %Note: Deliberately design 'bad' as well as good plots?
