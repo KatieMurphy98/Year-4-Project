@@ -11,7 +11,7 @@ documentclass: book
 \pagestyle{empty}
 
 ```{r setup, include=FALSE, warning=F}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = F, warning=F)
 ```
 
 ```{r include = FALSE}
@@ -19,6 +19,7 @@ rm(list=ls())
 library(readxl)
 library(dplyr)
 library(ggplot2)
+library(rstatix)
 
 for(i in 1:6){
     r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
@@ -508,11 +509,18 @@ cd_zro <- rbind(ver1[,c(4:7, 55)], ver2[,c(4:7, 55)], ver3[,c(4:7, 54)], ver4[,c
 
 ```
 
+In this section we will consider univariate analyses of the data obtained from the survey. This will involve looking at the distributions of responses and initial summary statistics for each question.
 
 \subsection{2.1.1  Ninja Warrior - Part 1}
 
+The first part of the survey consisted of showing the respondents three bar plots representing data regarding how many times four obstacles were used throughout 10 seasons of American Ninja Warrior. The three presented visualisations all showed the same raw data, but used three different y-axis scalings in order to assess whether changing this scale in these ways affects viewer interpretation. The questions asked were designed to test the effect of scale on both reading off exact values and gauging differences in values. Each respondent was asked four questions; two free form answer and two multiple choice. The use of free form answers did result in occasional non-valid answers, such as statements along the lines of "Don't know" when a number was required. Many people also opted to write a number between 0 and 1 when a percentage was required, but these will not be considered invalid, as there were a large number of responses of this type, but rather we will assume that any number between 0 and 1 is considered as the corresponding percentage. Ie. an answer of 0.5 will be considered as 50%.
+
 **Approximately many times would you say the 'Salmon Ladder' was used?**
 \thispagestyle{headings}
+
+This question, the first of the survey, asked participants to type the how many times Salmon Ladder was used, based on the bar plot. The `correct' answer, or rather the true height of the corresponding bar, was 42. There were three invalid answers in these responses; one for the R versions of the survey and two for the Python versions. The invalid response in the R survey was '41/42', which we will take to be 41.5, and the invalid Python responses were given as 'Don't know' and 'Next to none.'. These two will be considered as 'NA' responses and thus discounted from the analysis of this question. These responses will. however, still be useful in our investigation; both were entered for the logarithmically scaled plot made in Python. The default log scaling in Python uses standard form notation, which perhaps these two participants were less familiar with. Similarly, there were two answers of '10^15' and '10^9', again potentially pointing towards the respondents being less familiar with this notation. 
+
+Below we see the summary statistics for the overall population, where we have taken the '41/42' response as 41.5 and omitted the two invalid text answers as well as an additional NA response and thus obtain a sample size of 67.
 
 ```{r echo=F}
 con_1_all <- ctrl_y_scale$con_1
@@ -528,33 +536,17 @@ log_1_all[which(log_1_all == "10^15")] <- 1e+15
 log_1_all[which(log_1_all == "10^9")] <- 1e+9
 log_1_all <- as.numeric(log_1_all)
 
-y_scale_1_all <- cbind(con_1_all, log_1_all, trn_1_all)
+y_scale_1_all <- na.exclude(cbind(con_1_all, log_1_all, trn_1_all))
 ```
 
-The table below presents the summary statistics for the total population for the first question. Here the `correct' answer, or rather the true value of the corresponding bar, was 42. 
+The table below presents the summary statistics for the total population for the first question. 
 
 ```{r echo=F}
+noquote(paste("n = ", dim(y_scale_1_all)[1]))
 summary(y_scale_1_all)
 ```
 
-We can see that for the control and truncated plots we have means 41.21 and 41.35 respectively and both have median 41, which at first glance do not appear significantly different from the true value of 42. However using a two-sided Wilcoxon test with \(\mu = 42\) we achieve \(p << 0.05\) for both of the sets of responses, signifying that we do in fact see a statistically significant difference in the location of these responses from the true value. Furthermore, applying one sided one sided tests, we see that the sample value is likely to be less than the true value, meaning respondents tended to underestimate. It does, however, appear that there is not much difference between the average values of responses for each of the two plots, but this comparison will be discussed in a later chapter.
-
-
-\textbf{Wilcoxon tests for the control Plot}
-```{r echo=F}
-wilcox.test(con_1_all, mu=42, alt="t")
-wilcox.test(con_1_all, mu=42, alt="l")
-wilcox.test(con_1_all, mu=42, alt="g")
-```
-
-\textbf{Wilcoxon tests for the truncated Plot}
-```{r echo=F}
-wilcox.test(trn_1_all, mu=42, alt="t")
-wilcox.test(trn_1_all, mu=42, alt="l")
-wilcox.test(trn_1_all, mu=42, alt="g")
-```
-
-A Wilcoxon test was chosen as the data is non-normal, which we can see from both the density plots below in addition to the results of the Shapiro-Wilk normality tests, whereby we once again have p << 0.05, and thus there is significant evidence to reject the hypothesis that these data are normal, and so they violate the normality condition required for a one-sample t-test.
+We can see that for the control and truncated plots we have means 41.21 and 41.35 respectively and both have median 41, which at first glance do not appear significantly different from the true value of 42. To investigate this further we will run some statistical tests. To decide if z-tests are applicable here we will first look at the distribution of these variables before running Shapiro-Wilk tests of normality. Below we can see a density plot depicting the distributions of the values for the control and truncated plots.
 
 ```{r echo=F}
 ggplot() +
@@ -568,6 +560,68 @@ ggplot() +
   theme_classic()
 
 ```
+The two distributions are very similarly shaped, and neither appears similar to a Gaussian curve, hence it is likely that they will violate the normality condition of a z-test. To confirm this hypothesis, Shapiro-Wilk tests for normality are performed. 
+\textbf{Control Plot}
+```{r echo=F}
+shapiro.test(con_1_all)
+```
+
+\textbf{Truncated Plot}
+```{r echo=F}
+shapiro.test(trn_1_all)
+```
+
+For both the control plot and truncated plot responses, the Shapiro-Wilk tests give p << 0.05, and thus we reject the hypothesis that these data are normal, and so they do, in fact, violate the normality condition required for a one-sample z-test. However, we can also calculate whether the sample size of 70 dictates that we may still use the z-test as an approximation. 
+
+One alternative to using a t-test is to use a Wilcoxon-Mann-Whitney (WMW) test. Note however that this test requires a symmetric distribution with even spread of values about the median. We see below, and from the density plot, that this isn't the case.
+
+\textbf{Control Plot}
+```{r}
+noquote(paste("Median:", median(con_1_all)))
+noquote(paste("Number of observations below median:", length(con_1_all[which(con_1_all < median(con_1_all))])))
+noquote(paste("Number of observations above median:", length(con_1_all[which(con_1_all > median(con_1_all))])))
+noquote(paste("Number of observations at median:", length(con_1_all[which(con_1_all == median(con_1_all))])))
+```
+
+
+\textbf{Control Plot}
+```{r}
+noquote(paste("Median:", median(trn_1_all)))
+noquote(paste("Number of observations below median:", length(trn_1_all[which(trn_1_all < median(trn_1_all))])))
+noquote(paste("Number of observations above median:", length(trn_1_all[which(trn_1_all > median(trn_1_all))])))
+noquote(paste("Number of observations at median:", length(trn_1_all[which(trn_1_all == median(trn_1_all))])))
+```
+
+
+We now move on to consider the one-sample sign test. This is less powerful than the t-test and WMW test, but is required as the data violates the conditions for these two test.
+
+
+However using a two-sided Wilcoxon test with \(\mu = 42\) we achieve \(p << 0.05\) for both of the sets of responses, signifying that we do in fact see a statistically significant difference in the location of these responses from the true value. Furthermore, applying one sided one sided tests, we see that the sample value is likely to be less than the true value, meaning respondents tended to underestimate. It does, however, appear that there is not much difference between the average values of responses for each of the two plots, but this comparison will be discussed in a later chapter.
+
+
+\textbf{Sign tests for the control Plot}
+```{r echo=F}
+
+less <- length(con_1_all[which(con_1_all < median(con_1_all))])
+greater <- length(con_1_all[which(con_1_all > median(con_1_all))])
+
+binom.test(42, n=length(con_1_all), 0.5)
+
+binom.test(greater, n=length(con_1_all), 0.5)
+
+
+wilcox.test(con_1_all, mu=42, alt="l")
+wilcox.test(con_1_all, mu=42, alt="g")
+```
+
+\textbf{Wilcoxon tests for the truncated Plot}
+```{r echo=F}
+wilcox.test(trn_1_all, mu=42, alt="t")
+wilcox.test(trn_1_all, mu=42, alt="l")
+wilcox.test(trn_1_all, mu=42, alt="g")
+```
+
+
 
 
 ```{r echo=F}
@@ -585,15 +639,6 @@ ggplot() +
 
 ```
 
-\textbf{Control Plot}
-```{r echo=F}
-shapiro.test(con_1_all)
-```
-
-\textbf{Truncated Plot}
-```{r echo=F}
-shapiro.test(trn_1_all)
-```
 For both of these we also have a minimum of 40 and maximum of 45, giving a range of 5. 
 
 Now consider the values for the log plot. We see a much higher mean of 1.493e+13 which, on closer inspection of the languages (below), is attributed fully to the python versions of the plot. 
@@ -724,8 +769,12 @@ wilcox.test(log_1_r, mu=42, alt="g")
 index <- which(is.na(log_1_all))
 value <- log_y_scale$log_1[index]
 cbind(index, value)
+```
 
-rbind(ver1[4:9], ver2[4:9], ver3[4:9], ver4[4:9], ver5[4:9], ver6[4:9])[index,]
+```{r}
+
+con_first <- ver1[]
+
 ```
 
 **Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?**
@@ -929,9 +978,9 @@ summary(ratio_1_all)
 ```{r echo=F}
 
 ggplot() +
-  geom_density(data = as.data.frame(def_2_all), aes(x=def_2_all, col = "Default"))+
-  geom_density(data = as.data.frame(wid_2_all), aes(x=wid_2_all, col = "Wide"))+
-  geom_density(data = as.data.frame(nar_2_all), aes(x=nar_2_all, col = "Narrow"))+
+  geom_density(data = as.data.frame(def_1_all), aes(x=def_1_all, col = "Default"))+
+  geom_density(data = as.data.frame(wid_1_all), aes(x=wid_1_all, col = "Wide"))+
+  geom_density(data = as.data.frame(nar_1_all), aes(x=nar_1_all, col = "Narrow"))+
   
   labs(x="Response", y="Density", title = "How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?")+
   scale_colour_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
@@ -1313,7 +1362,7 @@ sumy
 
 
 ```{r echo=F}
-trn_cd<- na.exclude(cd_trn$cd_trn)
+trn_cd <- na.exclude(cd_trn$cd_trn)
 zro_cd <- na.exclude(cd_zro$cd_zro)
 
 sumy <- cbind(summary(trn_cd), summary(zro_cd))
