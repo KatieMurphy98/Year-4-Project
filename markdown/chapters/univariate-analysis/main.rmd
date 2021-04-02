@@ -20,6 +20,7 @@ library(readxl)
 library(dplyr)
 library(ggplot2)
 library(rstatix)
+library(BSDA)
 
 for(i in 1:6){
     r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
@@ -516,7 +517,7 @@ This chapter will discuss basic univariate analysis and summary statistics from 
 
 The first part of the survey consisted of showing the respondents three bar plots representing data regarding how many times four obstacles were used throughout 10 seasons of American Ninja Warrior. The three presented visualisations all showed the same raw data, but used three different y-axis scalings in order to assess whether changing this scale in these ways affects viewer interpretation. The questions asked were designed to test the effect of scale on both reading off exact values and gauging differences in values. Each respondent was asked four questions; two free form answer and two multiple choice. The use of free form answers did result in occasional non-valid answers, such as statements along the lines of "Don't know" when a number was required. Many people also opted to write a number between 0 and 1 when a percentage was required, but these will not be considered invalid, as there were a large number of responses of this type, but rather we will assume that any number between 0 and 1 is considered as the corresponding percentage. Ie. an answer of 0.5 will be considered as 50%. 
 
-First we will look at the summary statistics for each of the four questions laid out above for the whole population, before sub-setting for language and survey version number. Each table of summary statistics presents columns for the three plot types; the control plot, the logarithmic plot, and the truncated plot, respectively in that order.
+First we will look at the summary statistics for each of the four questions laid out above for the whole population, before sub-setting for language and survey version number. Each table of summary statistics presents columns for the three plot types; the control plot, the truncated plot, and the logarithmic plot, respectively in that order.
 
 **Approximately many times would you say the 'Salmon Ladder' was used?**
 \thispagestyle{headings}
@@ -526,20 +527,20 @@ This question, the first of the survey, asked participants to type the how many 
 Below we see the summary statistics for the overall population, where we have taken the '41/42' response as 41.5 and omitted the two invalid text answers as well as an additional NA response and thus obtain a sample size of 67.
 
 ```{r echo=F}
-con_1_all <- ctrl_y_scale$con_1
-con_1_all[which(con_1_all == "41/42")] <- 41.5 # take midpoint of two values
-con_1_all <- as.numeric(con_1_all)
+control <- ctrl_y_scale$con_1
+control[which(control == "41/42")] <- 41.5 # take midpoint of two values
+control <- as.numeric(control)
  
-trn_1_all <- as.numeric(trnc_y_scale$trn_1)
+truncated <- as.numeric(trnc_y_scale$trn_1)
 
-log_1_all <- log_y_scale$log_1
-log_1_all[which(log_1_all == "Don't know")] <- NA
-log_1_all[which(log_1_all == "Next to none.")] <- NA
-log_1_all[which(log_1_all == "10^15")] <- 1e+15
-log_1_all[which(log_1_all == "10^9")] <- 1e+9
-log_1_all <- as.numeric(log_1_all)
+logarithmic <- log_y_scale$log_1
+logarithmic[which(logarithmic == "Don't know")] <- NA
+logarithmic[which(logarithmic == "Next to none.")] <- NA
+logarithmic[which(logarithmic == "10^15")] <- 1e+15
+logarithmic[which(logarithmic == "10^9")] <- 1e+9
+logarithmic <- as.numeric(logarithmic)
 
-y_scale_1_all <- na.exclude(cbind(con_1_all, log_1_all, trn_1_all))
+y_scale_1_all <- cbind(control, truncated, logarithmic)
 ```
 
 The table below presents the summary statistics for the total population for the first question. 
@@ -549,12 +550,12 @@ noquote(paste("n = ", dim(y_scale_1_all)[1]))
 summary(y_scale_1_all)
 ```
 
-We can see that for the control and truncated plots we have means 41.21 and 41.35 respectively and both have median 41, which at first glance do not appear significantly different from the true value of 42. To investigate this further we will run some statistical tests. To decide if z-tests are applicable here we will first look at the distribution of these variables before running Shapiro-Wilk tests of normality. Below we can see a density plot depicting the distributions of the values for the control and truncated plots.
+We can see that for the control and truncated plots we have means 41.21 and 41.35 respectively and both have median 41, which at first glance do not appear significantly different from the true value of 42. To investigate this further we will run some statistical tests. To decide if t-tests are applicable here we will first look at the distribution of these variables before running Shapiro-Wilk tests of normality. Below we can see a density plot depicting the distributions of the values for the control and truncated plots.
 
-```{r echo=F}
+```{r echo=F, fig.cap = Density plot showing distributions of responses regarding the control and logarithmically scaled plots}
 ggplot() +
-  geom_density(data = as.data.frame(con_1_all), aes(x=con_1_all, col = "Control"))+
-  geom_density(data = as.data.frame(trn_1_all), aes(x=trn_1_all, col = "Truncated"))+
+  geom_density(data = as.data.frame(control), aes(x=control, col = "Control"))+
+  geom_density(data = as.data.frame(truncated), aes(x=truncated, col = "Truncated"))+
   labs(x="Response", y="Density")+
   annotate("text", x=44, y = 0.66, label="Approximately many times would you say the", size = 5)+
   annotate("text", x=43.7, y = 0.62, label="'Salmon Ladder' was used?", size = 5)+
@@ -563,88 +564,158 @@ ggplot() +
   theme_classic()
 
 ```
-The two distributions are very similarly shaped, and neither appears similar to a Gaussian curve, hence it is likely that they will violate the normality condition of a z-test. To confirm this hypothesis, Shapiro-Wilk tests for normality are performed. 
+The two distributions are very similarly shaped, and neither appears similar to a Gaussian curve, hence it is likely that they will violate the normality condition of a t-test. To confirm this hypothesis, Shapiro-Wilk tests for normality are performed. 
 \textbf{Control Plot}
 ```{r echo=F}
-shapiro.test(con_1_all)
+shapiro.test(control)
 ```
 
 \textbf{Truncated Plot}
 ```{r echo=F}
-shapiro.test(trn_1_all)
+shapiro.test(truncated)
 ```
 
-For both the control plot and truncated plot responses, the Shapiro-Wilk tests give p << 0.05, and thus we reject the hypothesis that these data are normal, and so they do, in fact, violate the normality condition required for a one-sample z-test. However, we can also calculate whether the sample size of 70 dictates that we may still use the z-test as an approximation. 
+For both the control plot and truncated plot responses, the Shapiro-Wilk tests give p << 0.05, and thus we reject the hypothesis that these data are normal, and so they do, in fact, violate the normality condition required for a one-sample t-test.
 
 One alternative to using a t-test is to use a Wilcoxon-Mann-Whitney (WMW) test. Note however that this test requires a symmetric distribution with even spread of values about the median. We see below, and from the density plot, that this isn't the case.
 
 \textbf{Control Plot}
 ```{r}
-noquote(paste("Median:", median(con_1_all)))
-noquote(paste("Number of observations below median:", length(con_1_all[which(con_1_all < median(con_1_all))])))
-noquote(paste("Number of observations above median:", length(con_1_all[which(con_1_all > median(con_1_all))])))
-noquote(paste("Number of observations at median:", length(con_1_all[which(con_1_all == median(con_1_all))])))
+noquote(paste("Median:", median(control)))
+noquote(paste("Number of observations below median:", length(control[which(control < median(control))])))
+noquote(paste("Number of observations above median:", length(control[which(control > median(control))])))
+noquote(paste("Number of observations at median:", length(control[which(control == median(control))])))
 ```
 
 
-\textbf{Control Plot}
+\textbf{Truncated Plot}
 ```{r}
-noquote(paste("Median:", median(trn_1_all)))
-noquote(paste("Number of observations below median:", length(trn_1_all[which(trn_1_all < median(trn_1_all))])))
-noquote(paste("Number of observations above median:", length(trn_1_all[which(trn_1_all > median(trn_1_all))])))
-noquote(paste("Number of observations at median:", length(trn_1_all[which(trn_1_all == median(trn_1_all))])))
+noquote(paste("Median:", median(truncated)))
+noquote(paste("Number of observations below median:", length(truncated[which(truncated < median(truncated))])))
+noquote(paste("Number of observations above median:", length(truncated[which(truncated > median(truncated))])))
+noquote(paste("Number of observations at median:", length(truncated[which(truncated == median(truncated))])))
+```
+We now move on to consider the one-sample sign test. This has a significantly lower power than the t-test and WMW test, but is required as the data violates the conditions for these two tests.
+
+We will first look at the two sided tests to decipher if the sample medians differ significantly from the true value of 42. 
+\textbf{Two sided sign tests for the control and truncated plots}
+```{r echo=F}
+noquote(paste("*CONTROL*"))
+SIGN.test(control, md=42, alternative="t")
+
+noquote(paste("*TRUNCATED*"))
+SIGN.test(truncated, md=42, alternative="t")
+```
+The p values both being << 0.05 signifies that the medians do in fact differ from the true value of 42. In fact we see that, for the control plot, the $95%$ confidence interval has both a lower and upper bound of 41, meaning we have a $95%$ chance that the true median of this population is 41. Similarly, the $95%$ confidence interval for the truncated plot is given as $[41, 41.25]$, meaning once again we have a $95%$ chance of the true median lying in this range. Thus we can infer that participants tended to slightly underestimate the height of this bar, no matter whether the axis was truncated or not. This makes sense as the top of the bar will appear to be at the same point on both scales. The underestimation may be as a result of the default scales going up to only 40; the respondents may have seen the bar being slightly above the 40 mark, and thus taken this as 41 rather than the true value of 42. Here this doesn't have a significant impact, but say the scale was in £ billions for example, then an underestimation of one is significant. It may then be important to specify the exact numerical values of the bars alongside the bars themselves in order for the interpretation to be accurate. This again could be used to either deliberately or accidentally mislead consumers, such as into believing a rival company may be doing worse than they actually are.
+
+To confirm that it is in fact underestimation we are dealing with, we perform one-sided sign tests. 
+
+\textbf{One-sided sign tests for the control and truncated plots}
+```{r echo=F}
+noquote(paste("*CONTROL*"))
+SIGN.test(control, md=42, alternative="l")
+SIGN.test(control, md=42, alternative="g")
+
+noquote(paste("*TRUNCATED*"))
+SIGN.test(truncated, md=42, alternative="l")
+SIGN.test(truncated, md=42, alternative="g")
+```
+From this series of tests we see p-values of << 0.05 when considering the median as less than 42, and p-values of 1 when considering it as greater than 42. Thus, we can deduce that respondents tended to underestimate by a small but statistically significant margin.
+
+
+We could also consider taking a set of samples from a normal distribution of mean and variance the same as our set of responses, and performing a t-test on the set of means of these samples. Below is the result of taking the means of 100 samples, each of size 100, and performing two sided t-tests on the set of means.
+```{r}
+noquote(paste("*CONTROL*"))
+means <- rep(NA, 100)
+for(i in 1:100){
+  samp <- rnorm(100, mean=mean(control), sd=sd(control))
+  means[i] <- mean(samp)
+}
+t.test(means, mu=42)
+
+noquote(paste("*TRUNCATED*"))
+means <- rep(NA, 100)
+for(i in 1:100){
+  samp <- rnorm(100, mean=mean(truncated), sd=sd(truncated))
+  means[i] <- mean(samp)
+}
+t.test(means, mu=42)
+
+```
+This follows our previous testing in the conclusion that we differ from the true value of 42, and once again we can observe a tendency to underestimate.
+
+
+Now, we haven't yet considered the plot with logarithmic scaling. Looking back at the summary statistics we see wildly different values to the responses in relation to other two plots. As previously mentioned there are answers of '10^9' and '10^15'. Even discounting these two values, as seen below by setting these values to NA, there is a wide range in the responses, from 9 all the way up to 1000. In some situations the responses that are orders of magnitude greater than the others could be considered outliers, but here they provide important insight. 
+
+```{r}
+logarithmic <- log_y_scale$log_1
+logarithmic[which(logarithmic == "Don't know")] <- NA
+logarithmic[which(logarithmic == "Next to none.")] <- NA
+logarithmic[which(logarithmic == "10^15")] <- NA
+logarithmic[which(logarithmic == "10^9")] <-NA
+logarithmic <- as.numeric(logarithmic)
+
+summary(logarithmic)
 ```
 
+The below density plot shows the two curve from before, but with the curve of the logarithmic curve added. 
 
-We now move on to consider the one-sample sign test. This is less powerful than the t-test and WMW test, but is required as the data violates the conditions for these two test.
+```{r echo=F, fig.cap = Density plot showing distributions of responses regarding all three plots}
 
-
-However using a two-sided Wilcoxon test with \(\mu = 42\) we achieve \(p << 0.05\) for both of the sets of responses, signifying that we do in fact see a statistically significant difference in the location of these responses from the true value. Furthermore, applying one sided one sided tests, we see that the sample value is likely to be less than the true value, meaning respondents tended to underestimate. It does, however, appear that there is not much difference between the average values of responses for each of the two plots, but this comparison will be discussed in a later chapter.
-
-
-\textbf{Sign tests for the control Plot}
-```{r echo=F}
-
-less <- length(con_1_all[which(con_1_all < median(con_1_all))])
-greater <- length(con_1_all[which(con_1_all > median(con_1_all))])
-
-binom.test(42, n=length(con_1_all), 0.5)
-
-binom.test(greater, n=length(con_1_all), 0.5)
+logarithmic <- log_y_scale$log_1
+logarithmic[which(logarithmic == "Don't know")] <- NA
+logarithmic[which(logarithmic == "Next to none.")] <- NA
+logarithmic[which(logarithmic == "10^15")] <- 10e+15
+logarithmic[which(logarithmic == "10^9")] <- 10e+9
+logarithmic <- as.numeric(logarithmic)
 
 
-wilcox.test(con_1_all, mu=42, alt="l")
-wilcox.test(con_1_all, mu=42, alt="g")
-```
-
-\textbf{Wilcoxon tests for the truncated Plot}
-```{r echo=F}
-wilcox.test(trn_1_all, mu=42, alt="t")
-wilcox.test(trn_1_all, mu=42, alt="l")
-wilcox.test(trn_1_all, mu=42, alt="g")
-```
-
-
-
-
-```{r echo=F}
 ggplot() +
-  geom_density(data = as.data.frame(con_1_all), aes(x=con_1_all, col = "Control"))+  
-  geom_density(data = as.data.frame(log_1_all), aes(x=log_1_all, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(trn_1_all), aes(x=trn_1_all, col = "Truncated"))+
+  geom_density(data = as.data.frame(control), aes(x=control, col = "Control"))+  
+  geom_density(data = as.data.frame(truncated), aes(x=logarithmic, col = "Truncated"))+
+  geom_density(data = as.data.frame(logarithmic), aes(x=truncated, col = "Logarithmic"))+
 
   labs(x="Response", y="Density")+
-  annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
-  annotate("text", x=5e+14, y = 1.4, label="'Salmon Ladder' was used?", size = 5)+
-  annotate("text", x=5e+14, y = 1.3, label="Whole population (n=70)", size = 4)+
+  annotate("text", x=6e+15, y = 1.5, label="Approximately many times would you say the", size = 5)+
+  annotate("text", x=6e+15, y = 1.4, label="'Salmon Ladder' was used?", size = 5)+
+  annotate("text", x=6e+15, y = 1.3, label="Whole population, NAs excluded (n=67)", size = 4)+
   scale_colour_brewer(palette="Dark2", labels = c('Control','Truncated', 'Logarithmic'))+
   theme_classic()
 
 ```
 
-For both of these we also have a minimum of 40 and maximum of 45, giving a range of 5. 
+This plot does not give us much information about the distribution of the responses for the logarithmically scaled plot due to the values with high magnitude.Consider removing values $\geq 1000$ to look at the distribution of the lower values. Removing the four values $\geq 1000$ we obtain the following density plot;
 
-Now consider the values for the log plot. We see a much higher mean of 1.493e+13 which, on closer inspection of the languages (below), is attributed fully to the python versions of the plot. 
+```{r echo=F, fig.cap = Density plot showing distributions of responses regarding all three plots, after removing values of greater or equal to 1000}
+
+logarithmic <- log_y_scale$log_1
+logarithmic[which(logarithmic == "Don't know")] <- NA
+logarithmic[which(logarithmic == "Next to none.")] <- NA
+logarithmic[which(logarithmic == "10^15")] <- NA
+logarithmic[which(logarithmic == "10^9")] <- NA
+logarithmic[which(logarithmic == "1000.0")] <- NA
+logarithmic[which(logarithmic == "1000")] <- NA
+logarithmic <- as.numeric(logarithmic)
+
+
+ggplot() +
+  geom_density(data = as.data.frame(control), aes(x=control, col = "Control"))+  
+  geom_density(data = as.data.frame(truncated), aes(x=logarithmic, col = "Truncated"))+
+  geom_density(data = as.data.frame(logarithmic), aes(x=truncated, col = "Logarithmic"))+
+
+  labs(x="Response", y="Density")+
+  annotate("text", x=110, y = 0.63, label="Approximately many times would you say the", size = 5)+
+  annotate("text", x=110, y = 0.6, label="'Salmon Ladder' was used?", size = 5)+
+  annotate("text", x=110, y = 0.57, label="Without values >= 1000 (n=70)", size = 4)+
+  scale_colour_brewer(palette="Dark2", labels = c('Control','Truncated', 'Logarithmic'))+
+  theme_classic()
+
+```
+This gives a better idea of the distribution. we see that almost all of the density of the control and truncated plot is around the 40 mark, whereas the logarithmic has a much greater spread with much lower densities. This, again, could reflect confusion or less familiarity regarding this scaling. This should be considered when designing visualisations; the creator of the visualisations may find the logarithmic scale more effective in showing the data, but they should consider the target audience. Are the audience going to be familiar with this? If, for example, visualisations are being published in a paper targeted at academics in a subject likely to use such scalings often and understand them, this may be a good way to depict the data. However, using this in something such as an advertising campaign could mislead the public, causing them to either over or under estimate values. As previously discussed, however, this is often done deliberately in order to push the message the creator wishes to sell. 
+
+While it at first glance appears that the logarithmic scale alone causes these drastic range of values, we must also consider the notation used. As mentioned prior, the default notation in Python for a logarithmic scale is standard form; in our case we have three tick values on the y-axis of 0, $10^0$ and $10^1$. To explore this, we can split the surveys by language to obtain two sets of data; one for R and one for Python. Now on closer inspection of the separate languages (below), the large range is almost fully attributed fully to the python versions of the plot. 
+
+Consider first the summary statistics for the R version. 
 
 \textbf{Summary statistics of the R versions}
 ```{r echo=F}
@@ -653,23 +724,24 @@ ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17
 log_y_scale_r <- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
 trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
 
-con_1_r <- ctrl_y_scale_r$con_1
-con_1_r[15] <- 41.5 # take midpoint of two values
-con_1_r <- as.numeric(con_1_r)
+r_control <- ctrl_y_scale_r$con_1
+r_control[15] <- 41.5 # take midpoint of two values
+control <- as.numeric(r_control)
 
-trn_1_r <- as.numeric(trnc_y_scale_r$trn_1)
+truncated <- as.numeric(trnc_y_scale_r$trn_1)
 
-log_1_r <- log_y_scale_r$log_1
+logarithmic <- log_y_scale_r$log_1
 
-y_scale_r <- cbind(con_1_r, log_1_r, trn_1_r)
+y_scale_r <- cbind(control, truncated, logarithmic)
 summary(y_scale_r)
 ```
+We see that, based on the median and mean, the responses for log plot is actually
 
 ```{r echo=F}
 ggplot() +
-  geom_density(data = as.data.frame(con_1_r), aes(x=con_1_r, col = "Control"))+  
-  geom_density(data = as.data.frame(log_1_r), aes(x=log_1_r, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(trn_1_r), aes(x=trn_1_r, col = "Truncated"))+
+  geom_density(data = as.data.frame(r_control), aes(x=r_control, col = "Control"))+  
+  geom_density(data = as.data.frame(r_logarithmic), aes(x=r_logarithmic, col = "Logarithmic"))+
+  geom_density(data = as.data.frame(r_truncated), aes(x=r_truncated, col = "Truncated"))+
 
   labs(x="Response", y="Density")+
   #annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
@@ -682,12 +754,12 @@ ggplot() +
 
 ```{r echo=F}
 
-log_1_r <- log_1_r[-which(log_1_r == 120)]
+r_logarithmic <- r_logarithmic[-which(r_logarithmic == 120)]
 
 ggplot() +
-  geom_density(data = as.data.frame(con_1_r), aes(x=con_1_r, col = "Control"))+  
-  geom_density(data = as.data.frame(log_1_r), aes(x=log_1_r, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(trn_1_r), aes(x=trn_1_r, col = "Truncated"))+
+  geom_density(data = as.data.frame(r_control), aes(x=r_control, col = "Control"))+  
+  geom_density(data = as.data.frame(r_logarithmic), aes(x=r_logarithmic, col = "Logarithmic"))+
+  geom_density(data = as.data.frame(r_truncated), aes(x=r_truncated, col = "Truncated"))+
 
   labs(x="Response", y="Density")+
   #annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
@@ -705,19 +777,19 @@ ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 1
 log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
 trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
 
-con_1_py <- ctrl_y_scale_py$con_1
+py_control <- ctrl_y_scale_py$con_1
 
-trn_1_py <- as.numeric(trnc_y_scale_py$trn_1)
+py_truncated <- as.numeric(trnc_y_scale_py$trn_1)
 
-log_1_py <- log_y_scale_py$log_1
-log_1_py[which(log_1_py == "Don't know")] <- NA
-log_1_py[which(log_1_py == "Next to none.")] <- NA
-log_1_py[which(log_1_py == "10^15")] <- 1e+15
-log_1_py[which(log_1_py == "10^9")] <- 1e+9
-log_1_py <- as.numeric(log_1_py)
+py_logarithmic <- log_y_scale_py$log_1
+py_logarithmic[which(py_logarithmic == "Don't know")] <- NA
+py_logarithmic[which(py_logarithmic == "Next to none.")] <- NA
+py_logarithmic[which(py_logarithmic == "10^15")] <- 1e+15
+py_logarithmic[which(py_logarithmic == "10^9")] <- 1e+9
+py_logarithmic <- as.numeric(py_logarithmic)
 
 
-y_scale_py <- cbind(con_1_py, log_1_py, trn_1_py)
+y_scale_py <- cbind(py_control, py_truncated, py_logarithmic)
 summary(y_scale_py)
 ```
 
@@ -726,28 +798,30 @@ The responses contributing very heavily to this very large mean were written as 
 
 ```{r echo=F}
 ggplot() +
-  geom_density(data = as.data.frame(con_1_py), aes(x=con_1_py, col = "Control"))+  
-  geom_density(data = as.data.frame(log_1_py), aes(x=log_1_py, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(trn_1_py), aes(x=trn_1_py, col = "Truncated"))+
+  geom_density(data = as.data.frame(py_control), aes(x=py_control, col = "Control"))+  
+  geom_density(data = as.data.frame(py_logarithmic), aes(x=py_logarithmic, col = "Logarithmic"))+
+  geom_density(data = as.data.frame(py_truncated), aes(x=py_truncated, col = "Truncated"))+
 
   labs(x="Response", y="Density")+
-  #annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
-  #annotate("text", x=5e+14, y = 1.4, label="'Salmon Ladder' was used?", size = 5)+
-  #annotate("text", x=5e+14, y = 1.3, label="Whole population (n=70)", size = 4)+
-  scale_colour_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
+  annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
+  annotate("text", x=5e+14, y = 1.4, label="'Salmon Ladder' was used?", size = 5)+
+  annotate("text", x=5e+14, y = 1.3, label="Python plots, NAs excluded (n=70)", size = 4)+
+  scale_colour_brewer(palette="Dark2", labels = c('Control','Truncated', 'Logarithmic'))+
   theme_classic()
 
 ```
+
 ```{r echo=F}
 
-log_1_py <- log_1_py[-which(log_1_py == 1e+15)]
-log_1_py <- log_1_py[-which(log_1_py == 1e+9)]
+py_logarithmic <- py_logarithmic[-which(py_logarithmic == 1e+15)]
+py_logarithmic <- py_logarithmic[-which(py_logarithmic == 1e+9)]
 
 
 ggplot() +
-  geom_density(data = as.data.frame(con_1_py), aes(x=con_1_py, col = "Control"))+  
-  geom_density(data = as.data.frame(log_1_py), aes(x=log_1_py, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(trn_1_py), aes(x=trn_1_py, col = "Truncated"))+
+  geom_density(data = as.data.frame(py_control), aes(x=py_control, col = "Control"))+ 
+  geom_density(data = as.data.frame(py_truncated), aes(x=py_truncated, col = "Truncated"))+ 
+  geom_density(data = as.data.frame(py_logarithmic), aes(x=py_logarithmic, col = "Logarithmic"))+
+  
 
   labs(x="Response", y="Density")+
   #annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
@@ -759,20 +833,6 @@ ggplot() +
 ```
 
 
-\textbf{Wilcoxon tests for the R log Plot}
-```{r echo=F }
-wilcox.test(log_1_r, mu=42, alt="t")
-wilcox.test(log_1_r, mu=42, alt="l")
-wilcox.test(log_1_r, mu=42, alt="g")
-```
-
-
-\textbf{NA values for log plot data}
-```{r echo=F}
-index <- which(is.na(log_1_all))
-value <- log_y_scale$log_1[index]
-cbind(index, value)
-```
 
 ```{r}
 
