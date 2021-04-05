@@ -515,12 +515,13 @@ cd_zro <- rbind(ver1[,c(4:7, 55)], ver2[,c(4:7, 55)], ver3[,c(4:7, 54)], ver4[,c
 
 This chapter will discuss basic univariate analysis and summary statistics from the survey results, alongside what could be inferred from these. We will look at each section individually and perform multiple initial comparisons whereby we subset for various factors, such as the language used to make the plots, and the order in which plots have been presented.
 
+First we will look at the summary statistics for each of the survey questions for the whole population, alongside box plots and density plots to gain an overview of the shape of the data and spread of values. Each table of summary statistics presents columns for the three plot types; the control plot, the truncated plot, and the logarithmic plot, respectively in that order. Note that sample size, n, and summary statistics are given after removing NA values. In the chapter 3 we will delve deeper into the data, sub-setting for various groups and performing comparisons between these groups to ascertain whether different demographic or population factors have an effect on responses.
 
 \subsection{Ninja Warrior - Part 1}
 
 The first part of the survey consisted of showing the respondents three bar plots representing data regarding how many times four obstacles were used throughout 10 seasons of American Ninja Warrior. The three presented visualisations all showed the same raw data, but used three different y-axis scalings in order to assess whether changing this scale in these ways affects viewer interpretation. The questions asked were designed to test the effect of scale on both reading off exact values and gauging differences in values. Each respondent was asked four questions; two free form answer and two multiple choice. The use of free form answers did result in occasional non-valid answers, such as statements along the lines of "Don't know" when a number was required. Many people also opted to write a number between 0 and 1 when a percentage was required, but these will not be considered invalid, as there were a large number of responses of this type, but rather we will assume that any number between 0 and 1 is considered as the corresponding percentage. Ie. an answer of 0.5 will be considered as 50%. 
 
-First we will look at the summary statistics for each of the four questions laid out above for the whole population, before sub-setting for language and survey version number. Each table of summary statistics presents columns for the three plot types; the control plot, the truncated plot, and the logarithmic plot, respectively in that order. Note that sample size, n, and summary statistics are given after removing NA values.
+
 
 \vspace{5cm}
 
@@ -1099,6 +1100,20 @@ logarithmic_r <- log_y_scale_r$log_2
 
 y_scale_2_r <- cbind(control_r, truncated_r, logarithmic_r)
 
+ggplot() +
+  geom_density(data = as.data.frame(control_r), aes(x=control_r, col = "Control"))+
+  geom_density(data = as.data.frame(truncated_r), aes(x=truncated_r, col = "Truncated"))+ 
+  geom_density(data = as.data.frame(logarithmic_r), aes(x=logarithmic_r, col = "Logarithmic"))+
+  
+  annotate("text", x=4, y = 0.5, label="Approximately how much more than 'Log Grip'", size = 4)+
+  annotate("text", x=4, y = 0.47, label="would you say 'Salmon Ladder' was used?", size = 4)+
+  annotate("text", x=4, y = 0.44, label="Whole population (n=70)", size = 3)+
+  scale_colour_manual(breaks = brks, values = vals)+
+  labs(x="Response", y="Density")+
+  
+  theme_classic()
+
+
 noquote(paste('n (control) = ', length(control_r)))
 noquote(paste('n (truncated) = ', length(truncated_r)))
 noquote(paste('n (logarithmic) = ', length(logarithmic_r)))
@@ -1135,6 +1150,19 @@ logarithmic_py <- log_y_scale_py$log_2
 
 y_scale_2_py <- cbind(control_py, truncated_py, logarithmic_py)
 
+ggplot() +
+  geom_density(data = as.data.frame(control_py), aes(x=control_py, col = "Control"))+
+  geom_density(data = as.data.frame(truncated_py), aes(x=truncated_py, col = "Truncated"))+ 
+  geom_density(data = as.data.frame(logarithmic_py), aes(x=logarithmic_py, col = "Logarithmic"))+
+  
+  annotate("text", x=4, y = 0.5, label="Approximately how much more than 'Log Grip'", size = 4)+
+  annotate("text", x=4, y = 0.47, label="would you say 'Salmon Ladder' was used?", size = 4)+
+  annotate("text", x=4, y = 0.44, label="Whole population (n=70)", size = 3)+
+  scale_colour_manual(breaks = brks, values = vals)+
+  labs(x="Response", y="Density")+
+  
+  theme_classic()
+
 noquote(paste('n (control) = ', length(control_py)))
 noquote(paste('n (truncated) = ', length(truncated_py)))
 noquote(paste('n (logarithmic) = ', length(logarithmic_py)))
@@ -1163,6 +1191,7 @@ geom_boxplot(outlier.colour="black", outlier.shape=1,
 The box plots for the python population are much more distinct than for the R population, with little crossover of boxes. The log responses box is very obviously sat below the control, and the truncated lies above. The lower values of 1 and 2 are counted as outliers here for the truncated plot, although the boxplot for the log responses once again spreads over the whole range, but the box itself is shorter than that of the R population.
 
 **Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?**
+
 This is a similar question to the one prior, but the purpose was to see if there was a difference in perceived difference for bars next to each other vs bars on opposite sides of the plot.
 
 
@@ -1191,7 +1220,7 @@ summary(y_scale_3_all)
 ```{r, echo=F}
 y_scale_3_all <- as.data.frame(y_scale_3_all)
 resp <- c(y_scale_3_all$control, y_scale_3_all$logarithmic, y_scale_3_all$truncated)
-type <- c(rep('Control', 70), rep('Truncated', 70), rep('Log', 70)) 
+type <- c(rep('Control', 70), rep('Truncated', 70), rep('Logarithmic', 70)) 
 stats_3 <- data.frame(resp, type)
 
 ggplot(data = stats_3, aes(x=type, y=resp, fill=type))+
@@ -1199,7 +1228,7 @@ geom_boxplot(outlier.colour="black", outlier.shape=1,
              outlier.size=2, notch=F)+
   theme_classic()+
   stat_summary(fun=mean, geom="point", shape=15, size=4)+
-  scale_fill_brewer(palette="Dark2")+
+  scale_fill_manual(breaks = brks, values = vals)+
   scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
   ylab("Value")+
   xlab("Plot Type")
@@ -1279,7 +1308,7 @@ geom_boxplot(outlier.colour="black", outlier.shape=1,
              outlier.size=2, notch=F)+
   theme_classic()+
   stat_summary(fun=mean, geom="point", shape=15, size=4)+
-  scale_fill_brewer(palette="Dark2")+
+  scale_colour_manual(breaks = brks, values = vals)+
   scale_y_continuous()+
   ylab("Value")+
   xlab("Plot Type")
@@ -1288,59 +1317,211 @@ geom_boxplot(outlier.colour="black", outlier.shape=1,
 
 \subsection{Ninja Warrior - Part 2}
 
-The second section of the survey tests whether altering aspect ratio of plots affects interpretation. The purpose of this is to mirror what my occur when visualisations are published, and may be resized to fit the section of the page they sit on. As in [[[CITE: http://perceptualedge.com/articles/visual_business_intelligence/bar_widths.pdf]]], it was hypothesised prior to the survey that an aspect ratio that narrows the bars may cause overestimation in values, and vice versa, using a ratio that widens bars could lead to underestimation
-
+The second section of the survey tests whether altering aspect ratio of plots affects interpretation. The purpose of this is to mirror what my occur when visualisations are published, and may be resized to fit the section of the page they sit on. As in [[[CITE: http://perceptualedge.com/articles/visual_business_intelligence/bar_widths.pdf]]], it was hypothesised prior to the survey that an aspect ratio that narrows the bars may cause overestimation in values, and vice versa, using a ratio that widens bars could lead to underestimation. In the paper, the author discusses how increasing the widths of bars could distract from the bar height as well as take up excessive space on a page. It is also mentioned that wider bars may be "aesthetically displeasing". This section tests both how bar width alters perceived difference between bars as well as opinions on the aesthetics. The method in the paper also involves altering spaces between bars, including bar plots with spaces at 50% of the bar widths and then reducing the width of the space by a third. Conversely to this, we will not be considering different width of spaces between bars, but only the widths of the bars themselves. The author concludes that a length-to-width ratio of 10:1 appears to suffer from perceptual imbalance, but increasing this such that the bars become narrower and longer does not appear to have as much of an impact; the ratio can be increased relatively far with out causing much perceptual imbalance. In our version of this investigation, we have three bar plots of 7 obstacles, each with a different aspect ratio. The control, or default, plot is given as the plot for which the aspect ratio has not been altered, the plot with narrow bars has a doubled aspect ratio, and the plot wide bars a halved aspect ratio.
 
 
 **How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?**
+This question once again uses the 7-point scale to gain a subjective view on the degree to which respondents felt the heights between the two bars corresponding to 'Jumping Spider' and 'Salmon Ladder' differed for three bar plots of 7 obstacles, where 'Salmon Ladder' is furthest to the left, and 'Jumping Spider' furthest to the right. 
+
+```{r echo=F}
+default <- def_ratio$def_1
+narrower <- nar_ratio$nar_1
+wider <- wid_ratio$wid_1
+ratio_1_all <- cbind(default, wider, narrower)
+
+
+noquote(paste('n (default) = ', length(default)))
+noquote(paste('n (narrower) = ', length(narrower)))
+noquote(paste('n (wider) = ', length(wider)))
+noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
+
+```
+Looking at the means and medians here, it doesn't seem like there is that much of a difference in perception of the differences between the three aspect ratios. If anything, based on the means, we could say that the wider plot gave a slightly smaller perception of the difference, and the narrower plot slightly larger. However, these differences appear very marginal, although they do agree with the hypothesis formed from [[[CITE AS ABOVE]]].
+
+To discuss the ranges, see the box plot below.
+
+```{r, echo=F}
+
+brks <- c("Default", "Wider", "Narrower")
+vals <- c("#1c9e77", "#d95f02", "#7570b3")
+
+ratio_1_all <- as.data.frame(ratio_1_all)
+resp <- c(default, wider, narrower)
+type <- c(rep('Default', 70), rep('Wider', 70), rep('Narrower', 70)) 
+stats <- data.frame(resp, type)
+
+ggplot(data = stats, aes(x=type, y=resp, fill=type))+
+  geom_boxplot(outlier.colour="black", outlier.shape=1,
+             outlier.size=2, notch=F)+
+  theme_classic()+
+  stat_summary(fun=mean, geom="point", shape=15, size=4)+
+  scale_fill_manual(breaks = brks, values = vals)+
+  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
+  ylab("Value")+
+  xlab("Plot Type")
+
+```
+From these box plots, it appears that the IQRs for the two plots with altered aspect ratios have very little, if any, overlap, despite the means being similar and medians being identical. The narrower plot shows a tendency for the responses to lie more towards the upper end of the scale than the wider plot, which also ranges over the upper half of the scale but between roughly 5 and 6 rather than 6 and 7. The default plot covers the entire IQR of both of the other plots, and the box plots then show that, even though the means and medians are very similar, the center bulk of the values for the narrower plot tended to be more towards the upper end of the default's IQR, whereas the central points of the wider plot sat on the lower half of this IQR. Additionally, we see that there are two outliers each for the narrower and wider plots, with values 2, 3 and 4. Perhaps excluding these from the data and re-checking the summary statistics we will see a more marked difference.
+
 
 
 ```{r echo=F}
-def_1_all <- def_ratio$def_1
-nar_1_all <- nar_ratio$nar_1
-wid_1_all <- wid_ratio$wid_1
-ratio_1_all <- cbind(def_1_all, wid_1_all, nar_1_all)
+default <- def_ratio$def_1
 
-summary(ratio_1_all)
+narrower <- nar_ratio$nar_1[which(nar_ratio$nar_1 != 3)]
+narrower <- narrower[which(narrower != 4)]
+
+wider <- wid_ratio$wid_1[which(wid_ratio$wid_1 != 2)]
+wider <- wider[which(wider != 3)]
+
+ratio_1_all <- cbind(default, wider, narrower)
+
+
+noquote(paste('n (default) = ', length(default)))
+noquote(paste('n (narrower) = ', length(narrower)))
+noquote(paste('n (wider) = ', length(wider)))
+noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
+
 ```
+
+It seems that removing these outliers didn't actually have a huge effect on the means and medians, although as expected, the ranges and variances are lower, meaning the spread over values over the range is smaller, however this only furthers the point that altering the axis ratio appears to have minimal effect.This is again confirmed by looking at the distributions of the three plot types, which are very similar to one another. We can however see that the plot with the density for the wider plot is highest of the three for the values of 4 and 5, but is the lowest of the three for upper end of the distributions, and vice versa for the densities narrower plot. The default mostly stays in between the other two curves. For a third time, this gives way to the observation that the wider bars have a small lessening effect on gauging differences in height, and using narrower bars has a mild increasing effect on difference perception.
 
 ```{r echo=F}
 
 ggplot() +
-  geom_density(data = as.data.frame(def_1_all), aes(x=def_1_all, col = "Default"))+
-  geom_density(data = as.data.frame(wid_1_all), aes(x=wid_1_all, col = "Wide"))+
-  geom_density(data = as.data.frame(nar_1_all), aes(x=nar_1_all, col = "Narrow"))+
-  
-  labs(x="Response", y="Density", title = "How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?")+
-  scale_colour_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
-
+  geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
+  geom_density(data = as.data.frame(wider   ), aes(x=wider   , col = "Wider"))+
+  geom_density(data = as.data.frame(narrower), aes(x=narrower, col = "Narrower"))+
+  labs(x="Response", y="Density")+
+  annotate("text", x = 5, y = 0.63, label = "How large would you say the difference between") +
+  annotate("text", x = 5, y = 0.6, label = "'Jumping spider' and 'Salmon Ladder' is?") +
+  annotate("text", x = 5, y = 0.55, label = "Whole popualation") +
+  scale_colour_manual(breaks = brks, values = vals)+
   theme_classic()
 
 ```
 
 
 **How large would you say the difference between 'Log Grip' and 'Floating Steps' is?**
-```{r echo=F}
-def_2_all <- def_ratio$def_2
-nar_2_all <- nar_ratio$nar_2
-wid_2_all <- wid_ratio$wid_2
-ratio_2_all <- cbind(def_2_all, wid_2_all, nar_2_all)
 
-summary(ratio_2_all)
+Similar to part 1, we have two questions for gauging differences between bars, for which one asks about bars far away from each other, and one about bars next to each other. In the case of this section, the first question contained bars on opposite ends of the x-axis, and this question asks about two bars that sit adjacent to one another. 
+
+
+```{r echo=F}
+default <- def_ratio$def_2
+narrower <- nar_ratio$nar_2
+wider <- wid_ratio$wid_2
+
+ratio_1_all <- cbind(default, wider, narrower)
+
+
+noquote(paste('n (default) = ', length(default)))
+noquote(paste('n (narrower) = ', length(narrower)))
+noquote(paste('n (wider) = ', length(wider)))
+noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
+
 ```
+From these statistics we see that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wider plots being identical, with the mean of the narrower plot responses only 0.157 greater. The medians are identical for all three, along with the IQRs. The variances, however, appear to differ more than the other statistics. 
+
+```{r, echo=F}
+
+brks <- c("Default", "Wider", "Narrower")
+vals <- c("#1c9e77", "#d95f02", "#7570b3")
+
+ratio_1_all <- as.data.frame(ratio_1_all)
+resp <- c(default, wider, narrower)
+type <- c(rep('Default', 70), rep('Wider', 70), rep('Narrower', 70)) 
+stats <- data.frame(resp, type)
+
+ggplot(data = stats, aes(x=type, y=resp, fill=type))+
+  geom_boxplot(outlier.colour="black", outlier.shape=1,
+             outlier.size=2, notch=F)+
+  theme_classic()+
+  stat_summary(fun=mean, geom="point", shape=15, size=4)+
+  scale_fill_manual(breaks = brks, values = vals)+
+  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
+  ylab("Value")+
+  xlab("Plot Type")
+
+```
+As anticipated from the table of summary statistics, all three IQR boxes are identical with the exception of the slightly higher mean of the responses from the narrower bars as well as differences in the overall range.  
+
+
+```{r echo=F}
+
+ggplot() +
+  geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
+  geom_density(data = as.data.frame(wider   ), aes(x=wider   , col = "Wider"))+
+  geom_density(data = as.data.frame(narrower), aes(x=narrower, col = "Narrower"))+
+  labs(x="Response", y="Density")+
+  annotate("text", x = 5, y = 0.63, label = "How large would you say the difference between") +
+  annotate("text", x = 5, y = 0.6, label = "'Log Grip' and 'Floating Steps' is?") +
+  annotate("text", x = 5, y = 0.55, label = "Whole popualation") +
+  scale_x_continuous(limits=c(0, 7))+
+  scale_colour_manual(breaks = brks, values = vals)+
+  theme_classic()
+
+```
+
+We see all three distributions are very similar, and almost appear to form bell curve shaped distributions, albeit with some irregularities.
 
 
 **How many times would you say 'Floating Steps' were used?**
-```{r echo=F}
-def_3_all <- def_ratio$def_3
-nar_3_all <- nar_ratio$nar_3
-wid_3_all <- wid_ratio$wid_3
-ratio_3_all <- cbind(def_3_all, wid_3_all, nar_3_all)
 
-summary(ratio_3_all)
+This is again similar to question 1 of part 1, where participants were asked to state what they believed to be the height of the bar for 'Salmon Ladder', however this time we choose the third bar from the axis. This is to ascertain whether the distance of the bar from the axis may have an effect alongside any potential perceived distortion of values.
+
+```{r echo=F}
+default <- def_ratio$def_3
+narrower <- nar_ratio$nar_3
+wider <- wid_ratio$wid_3
+
+ratio_1_all <- cbind(default, wider, narrower)
+
+
+noquote(paste('n (default) = ', length(default)))
+noquote(paste('n (narrower) = ', length(narrower)))
+noquote(paste('n (wider) = ', length(wider)))
+noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
+
 ```
 
 
+```{r, echo=F}
+
+brks <- c("Default", "Wider", "Narrower")
+vals <- c("#1c9e77", "#d95f02", "#7570b3")
+
+resp <- c(default, wider, narrower)
+type <- c(rep('Default', 70), rep('Wider', 70), rep('Narrower', 70)) 
+stats <- data.frame(resp, type)
+
+ggplot(data = stats, aes(x=type, y=resp, fill=type))+
+  geom_boxplot(outlier.colour="black", outlier.shape=1,
+             outlier.size=2, notch=F)+
+  theme_classic()+
+  stat_summary(fun=mean, geom="point", shape=15, size=4)+
+  scale_fill_manual(breaks = brks, values = vals)+
+  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
+  ylab("Value")+
+  xlab("Plot Type")
+
+```
+
+
+```{r echo=F}
+
+ggplot() +
+  geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
+  geom_density(data = as.data.frame(wider   ), aes(x=wider   , col = "Wider"))+
+  geom_density(data = as.data.frame(narrower), aes(x=narrower, col = "Narrower"))+
+  labs(x="Response", y="Density")+
+  #annotate("text", x = 5, y = 0.63, label = "How large would you say the difference between") +
+  #annotate("text", x = 5, y = 0.6, label = "'Jumping spider' and 'Salmon Ladder' is?") +
+  #annotate("text", x = 5, y = 0.55, label = "Whole popualation") +
+  scale_colour_manual(breaks = brks, values = vals)+
+  theme_classic()
+
+```
 **Comparisons**
 ```{r echo=F}
 comp_1 <- comp_ratio$all_1
