@@ -9,9 +9,6 @@ header-includes:
   \setlength{\parskip}{1em}
 ---
 
-\pagenumbering{gobble}
-\pagestyle{empty}
-
 ```{r setup, include=FALSE, warning=F}
 knitr::opts_chunk$set(echo = F, warning=F, comment = NA)
 ```
@@ -24,6 +21,7 @@ library(ggplot2)
 library(rstatix)
 library(BSDA)
 library(gridExtra)
+library(kableExtra)
 
 for(i in 1:6){
     r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
@@ -481,6 +479,203 @@ trnc_y_scale <- rbind(ver1[,c(4:7, 18:21)], ver2[,c(4:7, 14:17)], ver3[,c(4:7, 1
 def_ratio <- rbind(ver1[,c(4:7, 22:24)], ver2[,c(4:7, 22:24)], ver3[,c(4:7, 25:27)], ver4[,c(4:7, 28:30)], ver5[,c(4:7, 25:27)], ver6[,c(4:7, 28:30)])
 nar_ratio <- rbind(ver1[,c(4:7, 25:27)], ver2[,c(4:7, 28:30)], ver3[,c(4:7, 22:24)], ver4[,c(4:7, 22:24)], ver5[,c(4:7, 28:30)], ver6[,c(4:7, 25:27)])
 wid_ratio <- rbind(ver1[,c(4:7, 28:30)], ver2[,c(4:7, 25:27)], ver3[,c(4:7, 28:30)], ver4[,c(4:7, 25:27)], ver5[,c(4:7, 22:24)], ver6[,c(4:7, 22:24)])
+
+
+for(i in 1:dim(ver1)[1]){
+  if(ver1$all_1[i]=="A"){
+    ver1$all_1[i] <- "Default"
+  }
+  if(ver1$all_1[i]=="B"){
+    ver1$all_1[i] <- "Narrower"
+  }
+  if(ver1$all_1[i]=="C"){
+    ver1$all_1[i] <- "Wider"
+  }
+  
+  if(ver1$all_2[i]=="A"){
+    ver1$all_2[i] <- "Default"
+  }
+  if(ver1$all_2[i]=="B"){
+    ver1$all_2[i] <- "Narrower"
+  }
+  if(ver1$all_2[i]=="C"){
+    ver1$all_2[i] <- "Wider"
+  }
+  
+  if(ver1$all_3[i]=="A"){
+    ver1$all_3[i] <- "Default"
+  }
+  if(ver1$all_3[i]=="B"){
+    ver1$all_3[i] <- "Narrower"
+  }
+  if(ver1$all_3[i]=="C"){
+    ver1$all_3[i] <- "Wider"
+  }
+}
+
+for(i in 1:dim(ver2)[1]){
+  if(ver2$all_1[i]=="A"){
+    ver2$all_1[i] <- "Default"
+  }
+  if(ver2$all_1[i]=="C"){
+    ver2$all_1[i] <- "Narrower"
+  }
+  if(ver2$all_1[i]=="B"){
+    ver2$all_1[i] <- "Wider"
+  }
+  
+  if(ver2$all_2[i]=="A"){
+    ver2$all_2[i] <- "Default"
+  }
+  if(ver2$all_2[i]=="C"){
+    ver2$all_2[i] <- "Narrower"
+  }
+  if(ver2$all_2[i]=="B"){
+    ver2$all_2[i] <- "Wider"
+  }
+  
+  if(ver2$all_3[i]=="A"){
+    ver2$all_3[i] <- "Default"
+  }
+  if(ver2$all_3[i]=="C"){
+    ver2$all_3[i] <- "Narrower"
+  }
+  if(ver2$all_3[i]=="B"){
+    ver2$all_3[i] <- "Wider"
+  }
+}
+
+for(i in 1:dim(ver3)[1]){
+  if(ver3$all_1[i]=="B"){
+    ver3$all_1[i] <- "Default"
+  }
+  if(ver3$all_1[i]=="A"){
+    ver3$all_1[i] <- "Narrower"
+  }
+  if(ver3$all_1[i]=="C"){
+    ver3$all_1[i] <- "Wider"
+  }
+  
+  if(ver3$all_2[i]=="B"){
+    ver3$all_2[i] <- "Default"
+  }
+  if(ver3$all_2[i]=="A"){
+    ver3$all_2[i] <- "Narrower"
+  }
+  if(ver3$all_2[i]=="C"){
+    ver3$all_2[i] <- "Wider"
+  }
+  
+  if(ver3$all_3[i]=="B"){
+    ver3$all_3[i] <- "Default"
+  }
+  if(ver3$all_3[i]=="A"){
+    ver3$all_3[i] <- "Narrower"
+  }
+  if(ver3$all_3[i]=="C"){
+    ver3$all_3[i] <- "Wider"
+  }
+}
+
+for(i in 1:dim(ver4)[1]){
+  if(ver4$all_1[i]=="B"){
+    ver4$all_1[i] <- "Default"
+  }
+  if(ver4$all_1[i]=="C"){
+    ver4$all_1[i] <- "Narrower"
+  }
+  if(ver4$all_1[i]=="A"){
+    ver4$all_1[i] <- "Wider"
+  }
+  
+  if(ver4$all_2[i]=="B"){
+    ver4$all_2[i] <- "Default"
+  }
+  if(ver4$all_2[i]=="C"){
+    ver4$all_2[i] <- "Narrower"
+  }
+  if(ver4$all_2[i]=="A"){
+    ver4$all_2[i] <- "Wider"
+  }
+  
+  if(ver4$all_3[i]=="B"){
+    ver4$all_3[i] <- "Default"
+  }
+  if(ver4$all_3[i]=="C"){
+    ver4$all_3[i] <- "Narrower"
+  }
+  if(ver4$all_3[i]=="A"){
+    ver4$all_3[i] <- "Wider"
+  }
+}
+
+ver5$all_1[is.na(ver5$all_1)] <- "none"
+
+for(i in 1:dim(ver5)[1]){
+  
+  if(ver5$all_1[i]=="C"){
+    ver5$all_1[i] <- "Default"
+  }
+  if(ver5$all_1[i]=="A"){
+    ver5$all_1[i] <- "Narrower"
+  }
+  if(ver5$all_1[i]=="B"){
+    ver5$all_1[i] <- "Wider"
+  }
+  
+  if(ver5$all_2[i]=="C"){
+    ver5$all_2[i] <- "Default"
+  }
+  if(ver5$all_2[i]=="A"){
+    ver5$all_2[i] <- "Narrower"
+  }
+  if(ver5$all_2[i]=="B"){
+    ver5$all_2[i] <- "Wider"
+  }
+  
+  if(ver5$all_3[i]=="C"){
+    ver5$all_3[i] <- "Default"
+  }
+  if(ver5$all_3[i]=="A"){
+    ver5$all_3[i] <- "Narrower"
+  }
+  if(ver5$all_3[i]=="B"){
+    ver5$all_3[i] <- "Wider"
+  }
+}
+
+for(i in 1:dim(ver6)[1]){
+  if(ver6$all_1[i]=="C"){
+    ver6$all_1[i] <- "Default"
+  }
+  if(ver6$all_1[i]=="B"){
+    ver6$all_1[i] <- "Narrower"
+  }
+  if(ver6$all_1[i]=="A"){
+    ver6$all_1[i] <- "Wider"
+  }
+  
+  if(ver6$all_2[i]=="C"){
+    ver6$all_2[i] <- "Default"
+  }
+  if(ver6$all_2[i]=="B"){
+    ver6$all_2[i] <- "Narrower"
+  }
+  if(ver6$all_2[i]=="A"){
+    ver6$all_2[i] <- "Wider"
+  }
+  
+  if(ver6$all_3[i]=="C"){
+    ver6$all_3[i] <- "Default"
+  }
+  if(ver6$all_3[i]=="B"){
+    ver6$all_3[i] <- "Narrower"
+  }
+  if(ver6$all_3[i]=="A"){
+    ver6$all_3[i] <- "Wider"
+  }
+}
+
 comp_ratio <- rbind(ver1[,c(4:7, 31:33)], ver2[,c(4:7, 31:33)], ver3[,c(4:7, 31:33)], ver4[,c(4:7, 31:33)], ver5[,c(4:7, 31:33)], ver6[,c(4:7, 31:33)])
 
 
@@ -1468,7 +1663,7 @@ We see all three distributions are very similar, and almost appear to form bell 
 
 **How many times would you say 'Floating Steps' were used?**
 
-This is again similar to question 1 of part 1, where participants were asked to state what they believed to be the height of the bar for 'Salmon Ladder', however this time we choose the third bar from the axis. This is to ascertain whether the distance of the bar from the axis may have an effect alongside any potential perceived distortion of values.
+This is again similar to question 1 of part 1, where participants were asked to state what they believed to be the height of the bar for 'Salmon Ladder', however this time we choose the third bar from the axis. This is to ascertain whether the distance of the bar from the axis may have an effect alongside any potential perceived distortion of values. Note that the true value was 28.
 
 ```{r echo=F}
 default <- def_ratio$def_3
@@ -1484,7 +1679,7 @@ noquote(paste('n (wider) = ', length(wider)))
 noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
 
 ```
-
+We see that the means of each of the three sets of responses are very close to the true value, and the medians are exactly equal to the true value. Based on the means and medians it appears that, once again, altering the axis ratio had minimal, if any, effect on interpretation of the data value. The value for the default plot also appear to be closer to the true value than the control plot in part 1, question 1. 
 
 ```{r, echo=F}
 
@@ -1501,11 +1696,12 @@ ggplot(data = stats, aes(x=type, y=resp, fill=type))+
   theme_classic()+
   stat_summary(fun=mean, geom="point", shape=15, size=4)+
   scale_fill_manual(breaks = brks, values = vals)+
-  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
   ylab("Value")+
   xlab("Plot Type")
 
 ```
+
+Looking at the box plots, we see very small ranges in the values, signifying that there was a large consensus between respondents in terms of what they perceived the height to be. It can also be seen that there are three outliers below the box plot for the narrower plot responses, and two above for the default plot responses. There is very little overlap between the boxes, and it appears again that there altering the aspect ratio of the bar plot has little to no impact on reading the height of the bar. Additionally, there was less agreement between respondents for the wider plot than for the other two, although this doesn't seem to be too significant.  
 
 
 ```{r echo=F}
@@ -1515,16 +1711,41 @@ ggplot() +
   geom_density(data = as.data.frame(wider   ), aes(x=wider   , col = "Wider"))+
   geom_density(data = as.data.frame(narrower), aes(x=narrower, col = "Narrower"))+
   labs(x="Response", y="Density")+
-  #annotate("text", x = 5, y = 0.63, label = "How large would you say the difference between") +
-  #annotate("text", x = 5, y = 0.6, label = "'Jumping spider' and 'Salmon Ladder' is?") +
-  #annotate("text", x = 5, y = 0.55, label = "Whole popualation") +
+  annotate("text", x = 25, y = 1, label = "How many times would you say") +
+  annotate("text", x = 25, y = 0.95, label = "'Floating Steps' were used?") +
+  annotate("text", x = 25, y = 0.9, label = "Whole popualation", size=3) +
   scale_colour_manual(breaks = brks, values = vals)+
   theme_classic()
 
 ```
+The distributions for the default and narrower plot responses are very similar, both seeming to be fairly centred on the mean with a steep decrease in density on either side of the mean to very shallow tails within the range $[25, 30]$. The responses for the wider plot appear to be more spread with lower density function values, with a slight negative skew.
+
+Consider now the summary statistics after removing outliers.
+
+```{r echo=F}
+default <- default[-which(default >= 30)]
+narrower <- narrower[-which(narrower <= 25)]
+
+ratio_1_all <- cbind(default, wider, narrower)
+
+
+noquote(paste('n (default) = ', length(default)))
+noquote(paste('n (narrower) = ', length(narrower)))
+noquote(paste('n (wider) = ', length(wider)))
+noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
+
+```
+After removing the outliers the medians have stayed the same, and the mean has obviously decreased for the default and increased for the narrower, however, these means are all still fairly similar to each other and at a first glance prior to testing it again seems that changing the aspect ratio, at least to the degree tested here, is inconsequential to interpretation of the actual value. As expected as well, the variances for the outlier-removed sets have decreased.
+
+
+
 **Comparisons**
+
+The last set of questions in part 2 show respondents all three of the bar plots presented in this section and ask them to select which they find most aesthetically pleasing, and which they find easiest and hardest to interpret. Below a table is laid out giving the number of respondents that selected each plot for each of the three questions.
+
 ```{r echo=F}
 comp_1 <- comp_ratio$all_1
+comp_1 <- comp_1[-which(comp_1 == "none")]
 comp_2 <- comp_ratio$all_2
 comp_3 <- comp_ratio$all_3
 tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
@@ -1532,11 +1753,32 @@ rownames(tab) <- c("Which of the three bar charts do you find most aesthetically
 
 knitr::kable(tab)
 ```
+For the first question, relating to how aesthetically pleasing respondents found each plot, just over half of the respondents chose the default aspect ratio as the most aesthetically pleasing, with 37 out of the 69 who responded selecting this. 
 
+Similarly, 37 out of the 70 that responded to the second question found the plot with the default aspect ratio easiest to read and interpret. Perhaps the people that preferred this aspect ratio aesthetically did so because they found it easiest to interpret. Investigating this, we find that 27 who chose the default for question 1 also chose this for question 2.
+
+```{r include=F}
+cbind(comp_ratio$all_1, comp_ratio$all_2)
+
+count <- 0
+
+for(i in 1:length(comp_ratio$all_1)){
+  if (comp_ratio$all_1[i] == "Default" && comp_ratio$all_2[i] == "Default"){
+    count <- count + 1
+  }
+}
+
+count
+
+```
+
+The plot judged hardest to read and interpret by the most respondents was the one with the wider bars, with 30 selecting this and 20 selecting each of the other two. While a significant number chose the default and narrower bars, the slightly higher amount selecting the plot with wider bars matches the previously stated hypothesis formulated from following the Stephen Few paper, which discusses that an ratio of greater width to length could suffer from perceptual imbalance. While we don't see this imbalance in the numbers from the previous questions, the result here does give some indication that the aspect ratio producing wider bars may impact on ease of interpretation.
 
 
 
 \subsection{Ninja Warrior - Part 3}
+
+The third and final part of the questions about the American Ninja Warrior data discusses stacked bars and colour schemes. The questions asked in this part are used to decipher how data with multiple categories may be best represented in a bar plot. The plots presented use the same bars as in part 1, but this time we highlight the number of times each obstacle was used in each stage of the competition for each bar.  
 
 **How many times would you say 'Floating Steps' were used in the Finals (Regional/City) round?**
 
