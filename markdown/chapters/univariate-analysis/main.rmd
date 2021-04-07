@@ -1778,26 +1778,75 @@ The plot judged hardest to read and interpret by the most respondents was the on
 
 \subsection{Ninja Warrior - Part 3}
 
-The third and final part of the questions about the American Ninja Warrior data discusses stacked bars and colour schemes. The questions asked in this part are used to decipher how data with multiple categories may be best represented in a bar plot. The plots presented use the same bars as in part 1, but this time we highlight the number of times each obstacle was used in each stage of the competition for each bar.  
+The third and final part of the questions about the American Ninja Warrior data discusses stacked bars and colour schemes. The questions asked in this part are used to decipher how data with multiple categories may be best represented in a bar plot. The plots presented use the same bars as in part 1, but this time we highlight the number of times each obstacle was used in each stage of the competition for each bar.  Each participant was shown both a stacked and a grouped bar plot in one of three colour schemes; the default for the language, viridis, and greyscale. For three versions of the survey, the stacked bars were shown first, and for the other three versions the first shown was the grouped bars. The final question of this part also asked respondents to compare two colour schemes, and through the 6 surveys we have comparisons of every colour scheme against every other colour scheme.
 
 **How many times would you say 'Floating Steps' were used in the Finals (Regional/City) round?**
+
+Again we start with the less subjective question regarding the reading of a numerical value off the axis. In this question we ask about 'Floating Steps', which is the bar third along from the y-axis. The question asks respondents to view the bar plot, where the bars will either be grouped of stacked, and decipher how many times this obstacle was used in the specified round of the competition. The true value for this was 11. The hypothesis for this question is that the respondents will more accurately gauge the value for the grouped bar than the stacked, which as we see below appears to be the case.
 
 ```{r echo=F}
 vir_stacked_1 <- vir_stacked$vir_sta_1
 def_stacked_1 <- def_stacked$def_sta_1
 gr_stacked_1 <- gr_stacked$gr_sta_1
 
-vir_dodged_1 <- vir_stacked$vir_dge_1
-def_dodged_1 <- def_stacked$def_dge_1
-gr_dodged_1 <- gr_stacked$gr_dge_1
+vir_grouped_1 <- vir_stacked$vir_dge_1
+def_grouped_1 <- def_stacked$def_dge_1
+gr_grouped_1 <- gr_stacked$gr_dge_1
 
 stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
-dodged_1 <- c(vir_dodged_1, def_dodged_1, gr_dodged_1)
+grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
 
-sumy <- rbind(summary(stacked_1), summary(dodged_1))
-rownames(sumy) <- c("Stacked", "Side by side")
+
+noquote(paste('n (stacked) = ', length(stacked_1)))
+noquote(paste('n (grouped) = ', length(grouped_1)))
+
+sumy <- cbind(summary(stacked_1), summary(grouped_1))
+colnames(sumy) <- c("Stacked", "Grouped")
+rbind(sumy, cbind(paste0('Var    :', round(var(stacked_1), 3)), paste0('Var    :', round(var(grouped_1), 3))))
+```
+The mean for the values estimated by respondents using the stacked bars is 14.32, a fair bit larger than the true value of 11, and the mean estimated value for the grouped bars was closer to the true value, at 11.8. The IQR for the grouped bars is also smaller than for the stacked, and comprises of the range $[11, 12]$, insinuating that the estimated values tended to be fairly accurate but with some respondents perhaps slightly overestimating. The IQR for the stacked bars on the other hand covers the interval $[10, 14]$, which does contain the true value, but shows a tendency for both over and underestimation of respondents. We do see however that the median for both the stacked and grouped bars is 11, showing that the higher mean of the stacked bars may be a result of an influential value at the upper end of the distribution, and that many observations do actually sit around 11. This could be reflected in the maximum of the stacked summary statistics being 35, although the maximum of the grouped responses is 40, so there may be more than one influential point in the stacked responses. We can check for outliers by looking at the box plots for this data.
+
+```{r echo=F}
+brks <- c("Stacked", "Grouped")
+vals <- c("#1c9e77", "#d95f02", "#7570b3")
+
+resp <- c(stacked_1, grouped_1)
+type <- c(rep('Stacked', 70), rep('Grouped', 70)) 
+stats_2 <- data.frame(resp, type)
+
+ggplot(data = stats_2, aes(x=type, y=resp, fill=type))+
+geom_boxplot(outlier.colour="black", outlier.shape=1,
+             outlier.size=2, notch=F)+
+  theme_classic()+
+  stat_summary(fun=mean, geom="point", shape=15, size=4)+
+  scale_fill_manual(breaks = brks, values = vals)+
+  ylab("Value")+
+  xlab("Plot Type")
+```
+We do in fact see that the box for the grouped responses is very short and centered around 11. The box for the stacked responses shows many high valued outliers that could be causing the mean to be higher, although the IQR is still a fair bit larger than that of the responses for the grouped bars. The mean for this also sits above the IQR, and thus the outliers may be having a significant influence. Now we will remove the outliers assuming, from the box plot, that outliers are any values above or equal to 25 for the stacked responses and above or equal to 20 for the grouped. 
+
+```{r}
+
+before_s <- length(stacked_1)
+stacked_1 <- stacked_1[-which(stacked_1 >= 25)] 
+after_s <- length(stacked_1)
+
+before_g <- length(grouped_1)
+grouped_1 <- grouped_1[-which(grouped_1 >= 20)] 
+after_g <- length(grouped_1)
+
+n.outliers_s <- before_s-after_s
+n.outliers_g <- before_g-after_g
+
+noquote(paste("Number of outliers (stacked):", n.outliers_s))
+noquote(paste("Number of outliers (grouped):", n.outliers_g))
+
+sumy <- cbind(summary(stacked_1), summary(grouped_1))
+colnames(sumy) <- c("Stacked", "Grouped")
 sumy
 ```
+We see that removing the outliers as specified by the box plot, the mean of the stacked responses is now just above 11, and the median has decreased to 10, from which one could infer that there is no difference between each type of bar plot. However, we see that there are 12 outliers in the stacked responses, which leads to the idea that these are not in fact all outliers and may be valid responses that just sit on the upper end of the distribution. The measure for calculating outliers when drawing the box plot may then have mis-classified these points. We will decide to keep all values for both types of plot. With this, we can conclude that the respondents appeared to judge the value of the bar better when shown the grouped bars as opposed to the stacked bars, following the prior hypothesis.
+
 
 **How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?**
 
@@ -1814,7 +1863,7 @@ stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
 dodged_2 <- c(vir_dodged_2, def_dodged_2, gr_dodged_2)
 
 sumy <- rbind(summary(stacked_2), summary(dodged_2))
-rownames(sumy) <- c("Stacked", "Side by side")
+rownames(sumy) <- c("Stacked", "Grouped")
 sumy
 ```
 
@@ -1834,7 +1883,7 @@ stacked_3 <- c(vir_stacked_3, def_stacked_3, gr_stacked_3)
 dodged_3 <- c(vir_dodged_3, def_dodged_3, gr_dodged_3)
 
 tab <- rbind(table(stacked_3), table(dodged_3))
-rownames(tab) <- c("Stacked", "Side by side")
+rownames(tab) <- c("Stacked", "Grouped")
 colnames(tab) <- c("Equal", "Less", "More")
 tab
 ```
@@ -1854,7 +1903,7 @@ stacked_4 <- c(vir_stacked_4, def_stacked_4, gr_stacked_4)
 dodged_4 <- c(vir_dodged_4, def_dodged_4, gr_dodged_4)
 
 tab <- rbind(table(stacked_4), table(dodged_4))
-rownames(tab) <- c("Stacked", "Side by side")
+rownames(tab) <- c("Stacked", "Grouped")
 colnames(tab) <- c("Equal", "Less", "More")
 tab
 ```
@@ -1873,37 +1922,37 @@ f_1 <- set_f$sta_dge
 for(i in 1:length(a_1)){
   if(a_1[i] == "A"){
     a_1[i] <- "Stacked"
-  } else a_1[i] <- "Side by side"
+  } else a_1[i] <- "Grouped"
 }
 
 for(i in 1:length(b_1)){
   if(b_1[i] == "A"){
     b_1[i] <- "Stacked"
-  } else b_1[i] <- "Side by side"
+  } else b_1[i] <- "Grouped"
 }
 
 for(i in 1:length(d_1)){ 
   if(d_1[i] == "A"){
     d_1[i] <- "Stacked"
-  } else d_1[i] <- "Side by side"
+  } else d_1[i] <- "Grouped"
 }
 
 for(i in 1:length(c_1)){
   if(c_1[i] == "B"){
     c_1[i] <- "Stacked"
-  } else c_1[i] <- "Side by side"
+  } else c_1[i] <- "Grouped"
 }
 
 for(i in 1:length(e_1)){
   if(e_1[i] == "B"){
     e_1[i] <- "Stacked"
-  } else e_1[i] <- "Side by side"
+  } else e_1[i] <- "Grouped"
 }
 
 for(i in 1:length(f_1)){
   if(f_1[i] == "B"){
     f_1[i] <- "Stacked"
-  } else f_1[i] <- "Side by side"
+  } else f_1[i] <- "Grouped"
 }
 
 tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
