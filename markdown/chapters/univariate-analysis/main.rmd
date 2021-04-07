@@ -1851,7 +1851,7 @@ We see that removing the outliers as specified by the box plot, the mean of the 
 
 **How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?**
 
-This question is similar the above, but for the next bar to the right. The purpose of this question was to test the same hypothesis as the previous question, and also to lead into the following question, where respondents were asked to compare the 'Floating Steps' and 'Log Grip'. Additionally, the bar in the previous question had only two categories, of which the respondents were asked to judge the size of the category on the top of the bar in the stacked plot, whereas the bar for 'Log Grip' has 5 categories, of which the category of interest sits above 4.
+This question is similar the above, but for the next bar to the right. The purpose of this question was to test the same hypothesis as the previous question, and also to lead into the following question, where respondents were asked to compare the 'Floating Steps' and 'Log Grip'. Additionally, the bar in the previous question had only two categories, of which the respondents were asked to judge the size of the category on the top of the bar in the stacked plot, whereas the bar for 'Log Grip' has 5 categories, of which the category of interest sits above 4. The true value of this was 9.
 
 ```{r echo=F}
 vir_stacked_2 <- vir_stacked$vir_sta_2
@@ -1874,7 +1874,7 @@ sumy <- summary(bars)
 colnames(sumy) <- c("Stacked", "Grouped")
 noquote(rbind(sumy, c(paste0('Var    :', round(var(stacked_2), 3)), paste0('Var    :', round(var(grouped_2), 3)))))
 ```
-Similarly to the previous question, we see that the 
+Similarly to the previous question, we see that the mean response for the stacked bar plots are higher than that of the grouped, and the mean of the stacked also overestimates the true value. 
 
 **Please select the statement you feel applies to the bar chart above.**
 
