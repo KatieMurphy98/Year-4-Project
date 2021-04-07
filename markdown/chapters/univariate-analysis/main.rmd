@@ -22,6 +22,7 @@ library(rstatix)
 library(BSDA)
 library(gridExtra)
 library(kableExtra)
+library(lawstat)
 
 for(i in 1:6){
     r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
@@ -1828,6 +1829,9 @@ We do in fact see that the box for the grouped responses is very short and cente
 
 ```{r}
 
+stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
+grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
+
 before_s <- length(stacked_1)
 stacked_1 <- stacked_1[-which(stacked_1 >= 25)] 
 after_s <- length(stacked_1)
@@ -1844,10 +1848,77 @@ noquote(paste("Number of outliers (grouped):", n.outliers_g))
 
 sumy <- noquote(rbind(cbind(summary(stacked_1), summary(grouped_1)), c(paste0('Var    :', round(var(stacked_1), 3)), paste0('Var    :', round(var(grouped_1), 3)))))
 colnames(sumy) <- c("Stacked", "Grouped")
-sum_y
+sumy
 ```
-We see that removing the outliers as specified by the box plot, the mean of the stacked responses is now just above 11, and actually closer to the true value than the mean of the other set of responses, and the median has decreased to 10. From this one could infer that there is no difference between each type of bar plot in terms of gauging the size of the bars. However, we see that there are 12 outliers in the stacked responses, which leads to the idea that these are not in fact all outliers and may be valid responses that just sit on the upper end of the distribution. The measure for calculating outliers when drawing the box plot may then have misclassified these points. We will decide to keep all values for both types of plot. With this, we can conclude that the respondents appeared to judge the value of the bar better when shown the grouped bars as opposed to the stacked bars, following the earlier defined hypothesis. As expected, removing the outliers also significantly decreases the variances of the two sets of responses.
+We see that removing the outliers as specified by the box plot, the mean of the stacked responses is now just above 11, and actually closer to the true value than the mean of the other set of responses, and the median has decreased to 10. From this one could infer that there is no difference between each type of bar plot in terms of gauging the size of the bars. However, we see that there are 12 outliers in the stacked responses, which leads to the idea that these are not in fact all outliers and may be valid responses that just sit on the upper end of the distribution. However, it seems the cause of the high values could be respondents taking the whole height of the bar, which has an actual height of 28, rather than the section of interest. Many of the potentially influential values fall around the range $[25, 30]$, with all but 2 of the 12 potential outliers sitting in this interval, with the remaining two both being 35. Looking below at the summary statistics for only the values picked up as outliers, we see a mean of 29.83, which is higher than the true value of 28, and interestingly goes against the analysis from part 1, question 2 whereby respondents were asked to judge the height of this bar and on average underestimated. The fact that so many participants misinterpreted this plot and signify that stacked bar plots may not be the best way to present data to general public, as there may be the potential to misread the height of the whole bar as the size of the top category.
 
+
+```{r}
+
+vir_stacked_1 <- vir_stacked$vir_sta_1
+def_stacked_1 <- def_stacked$def_sta_1
+gr_stacked_1 <- gr_stacked$gr_sta_1
+
+vir_grouped_1 <- vir_stacked$vir_dge_1
+def_grouped_1 <- def_stacked$def_dge_1
+gr_grouped_1 <- gr_stacked$gr_dge_1
+
+stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
+grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
+
+stacked_1 <- stacked_1[which(stacked_1 >= 25)] 
+
+summary(stacked_1)
+
+stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
+stacked_1 <- stacked_1[-which(stacked_1 >= 25)]
+grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1) 
+```
+As a result of this, we will discount this set of 12 values from the analysis, and thus come to the conclusion that, for the respondents that appear to have judged the height of the correct section, there was little to no impact when using stacked vs grouped bar charts, and most of the difference comes from misinterpretation of the plot itself, as opposed to a poorer judgment of size.
+
+To see if either of these values are significantly far from the true value, we once again run tests. Firstly, run Shapiro tests to test for normality.
+
+\textbf{Shapiro test for the responses for the stacked bar plot}
+```{r}
+shapiro.test(stacked_1)
+```
+
+\textbf{Shapiro test for the responses for the stacked bar plot}
+```{r}
+shapiro.test(grouped_1)
+```
+The small p-values signify that this data is not normal, and a look at the summary statistics tells us neither is symmetric about the mean. Thus, as in question 1, we run sign tests, alongside the t-tests on samples from a normal distribution with mean and variance equal to out data. We will test against a median of 11 for the sign tests, and a mean of 11 for the t-tests. 
+
+\textbf{Sign test for the responses for the stacked bar plot}
+```{r}
+SIGN.test(stacked_1, md=11, alternative="t")
+```
+This test gives a high p value of 0.5258, showing that for the stacked bar plot responses (after removing the values as priorly specified), the participant estimated values do not differ significantly from the true value.
+
+\textbf{Sign test for the responses for the grouped bar plot}
+```{r}
+SIGN.test(grouped_1, md=11, alternative="t")
+```
+For the grouped bar plot we have a p value of 0.009 < 0.05, and thus these responses are statistically significantly different from the true value. 
+```{r}
+noquote(paste("*CONTROL*"))
+means <- rep(NA, 100)
+for(i in 1:100){
+  samp <- rnorm(100, mean=mean(stacked_1), sd=sd(stacked_1))
+  means[i] <- mean(samp)
+}
+t.test(means, mu=11)
+
+noquote(paste("*TRUNCATED*"))
+means <- rep(NA, 100)
+for(i in 1:100){
+  samp <- rnorm(100, mean=mean(grouped_1), sd=sd(grouped_1))
+  means[i] <- mean(samp)
+}
+t.test(means, mu=11)
+
+```
+Running t-tests on the means, however, we see both sets of responses differ statistically significantly from the true value.
 
 **How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?**
 
@@ -1874,7 +1945,92 @@ sumy <- summary(bars)
 colnames(sumy) <- c("Stacked", "Grouped")
 noquote(rbind(sumy, c(paste0('Var    :', round(var(stacked_2), 3)), paste0('Var    :', round(var(grouped_2), 3)))))
 ```
-Similarly to the previous question, we see that the mean response for the stacked bar plots are higher than that of the grouped, and the mean of the stacked also overestimates the true value. 
+Similarly to the previous question, we see that the mean response for the stacked bar plots are higher than that of the grouped, and the mean of the stacked also slightly overestimates the value. Once again however, we appear to see a selection of respondents judging the full height of the bar rather than the category as asked. Looking at the data, the interval for these responses seems to be $[20, 25]$, as the next response below 20 is a value of 10, seeming to separate the data into two separate subsets. This can be confirmed by a box plot. 
+
+```{r echo=F}
+brks <- c("Stacked", "Grouped")
+vals <- c("#1c9e77", "#d95f02", "#7570b3")
+
+resp <- c(stacked_2, grouped_2)
+type <- c(rep('Stacked', 70), rep('Grouped', 70)) 
+stats_2 <- data.frame(resp, type)
+
+ggplot(data = stats_2, aes(x=type, y=resp, fill=type))+
+geom_boxplot(outlier.colour="black", outlier.shape=1,
+             outlier.size=2, notch=F)+
+  theme_classic()+
+  stat_summary(fun=mean, geom="point", shape=15, size=4)+
+  scale_fill_manual(breaks = brks, values = vals)+
+  ylab("Value")+
+  xlab("Plot Type")
+```
+We indeed see that the distribution of values for each of the two response sets appears to be almost identical with the exception of outliers at and above 20 for the box plot of responses for the stacked bar plot. Thus we view the sets of summary statistics for the two but with these values removed. 
+
+```{r}
+
+stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
+grouped_2 <- c(vir_grouped_2, def_grouped_2, gr_grouped_2)
+
+before_s <- length(stacked_2)
+stacked_2 <- stacked_2[-which(stacked_2 >= 20)] 
+after_s <- length(stacked_2)
+
+n.outliers_s <- before_s-after_s
+n.outliers_g <- before_g-after_g
+
+noquote(paste("Number of outliers (stacked):", n.outliers_s))
+noquote(paste("Number of outliers (grouped):", n.outliers_g))
+
+sumy <- noquote(rbind(cbind(summary(stacked_2), summary(grouped_2)), c(paste0('Var    :', round(var(stacked_2), 3)), paste0('Var    :', round(var(grouped_2), 3)))))
+colnames(sumy) <- c("Stacked", "Grouped")
+sumy
+```
+Here we see that there tended to be a slight underestimation in the value for the stacked bar plot, however this is approximately 0.46 away from the true value, and unlikely to be significant. This can again be tested as above, where it is less clear whether the data are symmetric, so we will also run symmetry test.
+
+\textbf{Shapiro test for the responses for the stacked bar plot}
+```{r}
+shapiro.test(stacked_2)
+symmetry.test(stacked_2)
+```
+
+\textbf{Shapiro test for the responses for the stacked bar plot}
+```{r}
+shapiro.test(grouped_2)
+symmetry.test(grouped_2)
+```
+Once again we see that the response sets are non-normally distributed and asymmetric, and so sign tests are once again applicable. 
+
+\textbf{Sign test for the responses for the stacked bar plot}
+```{r}
+SIGN.test(stacked_2, md=9, alternative="t")
+```
+Here we see a p value of around 0.04, which shows a statistically significant difference in the responses from the true value of 9 at the 0.05 level of significance. However, this would very easily become insignificant by slightly lowering the significance level to, say, 0.035.
+
+\textbf{Sign test for the responses for the grouped bar plot}
+```{r}
+SIGN.test(grouped_2, md=9, alternative="t")
+```
+Once again, this shows a significant p value, but this would once again be classes as insignificant at, for example, a 0.01 level of significance.
+
+```{r}
+noquote(paste("*CONTROL*"))
+means <- rep(NA, 100)
+for(i in 1:100){
+  samp <- rnorm(100, mean=mean(stacked_2), sd=sd(stacked_2))
+  means[i] <- mean(samp)
+}
+t.test(means, mu=9)
+
+noquote(paste("*TRUNCATED*"))
+means <- rep(NA, 100)
+for(i in 1:100){
+  samp <- rnorm(100, mean=mean(grouped_2), sd=sd(grouped_2))
+  means[i] <- mean(samp)
+}
+t.test(means, mu=9)
+
+```
+
 
 **Please select the statement you feel applies to the bar chart above.**
 
