@@ -1,0 +1,2 @@
+12:42:12	 From  Vincent Knight : https://prettier.io/docs/en/cli.html
+12:46:08	 From  Vincent Knight : npx prettier --write .
