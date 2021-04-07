@@ -1796,15 +1796,16 @@ gr_grouped_1 <- gr_stacked$gr_dge_1
 stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
 grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
 
+bars <- data.frame(stacked_1, grouped_1)
 
 noquote(paste('n (stacked) = ', length(stacked_1)))
 noquote(paste('n (grouped) = ', length(grouped_1)))
 
-sumy <- cbind(summary(stacked_1), summary(grouped_1))
+sumy <- summary(bars)
 colnames(sumy) <- c("Stacked", "Grouped")
-rbind(sumy, cbind(paste0('Var    :', round(var(stacked_1), 3)), paste0('Var    :', round(var(grouped_1), 3))))
+noquote(rbind(sumy, c(paste0('Var    :', round(var(stacked_1), 3)), paste0('Var    :', round(var(grouped_1), 3)))))
 ```
-The mean for the values estimated by respondents using the stacked bars is 14.32, a fair bit larger than the true value of 11, and the mean estimated value for the grouped bars was closer to the true value, at 11.8. The IQR for the grouped bars is also smaller than for the stacked, and comprises of the range $[11, 12]$, insinuating that the estimated values tended to be fairly accurate but with some respondents perhaps slightly overestimating. The IQR for the stacked bars on the other hand covers the interval $[10, 14]$, which does contain the true value, but shows a tendency for both over and underestimation of respondents. We do see however that the median for both the stacked and grouped bars is 11, showing that the higher mean of the stacked bars may be a result of an influential value at the upper end of the distribution, and that many observations do actually sit around 11. This could be reflected in the maximum of the stacked summary statistics being 35, although the maximum of the grouped responses is 40, so there may be more than one influential point in the stacked responses. We can check for outliers by looking at the box plots for this data.
+The mean for the values estimated by respondents using the stacked bars is 14.32, a fair bit larger than the true value of 11, and the mean estimated value for the grouped bars was closer to the true value, at 11.8. The IQR for the grouped bars is also smaller than for the stacked, and comprises of the range $[11, 12]$, insinuating that the estimated values tended to be fairly accurate but with some respondents perhaps slightly overestimating. The IQR for the stacked bars on the other hand covers the interval $[10, 14]$, which does contain the true value, but shows a tendency for both over and underestimation of respondents. Additionally to this, there is a very large variance in the responses to this question, at 54.8 compared to the variance of 13.1 for the responses regarding the grouped bar plots. This adds to the picture that there was much less agreement between respondents, with many straying away from the mean of 14.3. We do see however that the median for both the stacked and grouped bars is 11, showing that the higher mean of the stacked bars may be a result of an influential value at the upper end of the distribution, and that many observations do actually sit around 11. The fact that many values actually sit around 11 could be contributing to the higher variance, as variance is simply the sum of the squared distances from the mean, and so will be elevated if there are many values that sit some distance away from the mean. The higher mean could be reflected in the maximum of the stacked responses being 35, although the maximum of the grouped responses is 40, so there may be more than one influential point in the stacked responses. We can check for outliers by looking at the box plots for this data.
 
 ```{r echo=F}
 brks <- c("Stacked", "Grouped")
@@ -1841,32 +1842,39 @@ n.outliers_g <- before_g-after_g
 noquote(paste("Number of outliers (stacked):", n.outliers_s))
 noquote(paste("Number of outliers (grouped):", n.outliers_g))
 
-sumy <- cbind(summary(stacked_1), summary(grouped_1))
+sumy <- noquote(rbind(cbind(summary(stacked_1), summary(grouped_1)), c(paste0('Var    :', round(var(stacked_1), 3)), paste0('Var    :', round(var(grouped_1), 3)))))
 colnames(sumy) <- c("Stacked", "Grouped")
-sumy
+sum_y
 ```
-We see that removing the outliers as specified by the box plot, the mean of the stacked responses is now just above 11, and the median has decreased to 10, from which one could infer that there is no difference between each type of bar plot. However, we see that there are 12 outliers in the stacked responses, which leads to the idea that these are not in fact all outliers and may be valid responses that just sit on the upper end of the distribution. The measure for calculating outliers when drawing the box plot may then have mis-classified these points. We will decide to keep all values for both types of plot. With this, we can conclude that the respondents appeared to judge the value of the bar better when shown the grouped bars as opposed to the stacked bars, following the prior hypothesis.
+We see that removing the outliers as specified by the box plot, the mean of the stacked responses is now just above 11, and actually closer to the true value than the mean of the other set of responses, and the median has decreased to 10. From this one could infer that there is no difference between each type of bar plot in terms of gauging the size of the bars. However, we see that there are 12 outliers in the stacked responses, which leads to the idea that these are not in fact all outliers and may be valid responses that just sit on the upper end of the distribution. The measure for calculating outliers when drawing the box plot may then have misclassified these points. We will decide to keep all values for both types of plot. With this, we can conclude that the respondents appeared to judge the value of the bar better when shown the grouped bars as opposed to the stacked bars, following the earlier defined hypothesis. As expected, removing the outliers also significantly decreases the variances of the two sets of responses.
 
 
 **How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?**
+
+This question is similar the above, but for the next bar to the right. The purpose of this question was to test the same hypothesis as the previous question, and also to lead into the following question, where respondents were asked to compare the 'Floating Steps' and 'Log Grip'. Additionally, the bar in the previous question had only two categories, of which the respondents were asked to judge the size of the category on the top of the bar in the stacked plot, whereas the bar for 'Log Grip' has 5 categories, of which the category of interest sits above 4.
 
 ```{r echo=F}
 vir_stacked_2 <- vir_stacked$vir_sta_2
 def_stacked_2 <- def_stacked$def_sta_2
 gr_stacked_2 <- gr_stacked$gr_sta_2
 
-vir_dodged_2 <- vir_stacked$vir_dge_2
-def_dodged_2 <- def_stacked$def_dge_2
-gr_dodged_2 <- gr_stacked$gr_dge_2
+vir_grouped_2 <- vir_stacked$vir_dge_2
+def_grouped_2 <- def_stacked$def_dge_2
+gr_grouped_2 <- gr_stacked$gr_dge_2
 
 stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
-dodged_2 <- c(vir_dodged_2, def_dodged_2, gr_dodged_2)
+grouped_2 <- c(vir_grouped_2, def_grouped_2, gr_grouped_2)
 
-sumy <- rbind(summary(stacked_2), summary(dodged_2))
-rownames(sumy) <- c("Stacked", "Grouped")
-sumy
+bars <- data.frame(stacked_2, grouped_2)
+
+noquote(paste('n (stacked) = ', length(stacked_2)))
+noquote(paste('n (grouped) = ', length(grouped_2)))
+
+sumy <- summary(bars)
+colnames(sumy) <- c("Stacked", "Grouped")
+noquote(rbind(sumy, c(paste0('Var    :', round(var(stacked_2), 3)), paste0('Var    :', round(var(grouped_2), 3)))))
 ```
-
+Similarly to the previous question, we see that the 
 
 **Please select the statement you feel applies to the bar chart above.**
 
