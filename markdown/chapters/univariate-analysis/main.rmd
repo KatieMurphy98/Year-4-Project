@@ -1,12 +1,11 @@
 ---
 output:
   pdf_document: default
-  html_document:
-    df_print: paged
 fontsize: 12pt
 documentclass: book
 header-includes:
   \setlength{\parskip}{1em}
+classoption: twocolumn
 ---
 
 ```{r setup, include=FALSE, warning=F}
@@ -46,7 +45,7 @@ names(ver1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "all_1", "all_2", "all_3",
   
                  "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
                  "sta_dge",
                  "a_cols_1", "a_cols_2", 
   
@@ -70,7 +69,7 @@ names(r1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num
                  "all_1", "all_2", "all_3",
   
                  "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
                  "sta_dge",
                  "a_cols_1", "a_cols_2", 
   
@@ -94,7 +93,7 @@ names(py1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "all_1", "all_2", "all_3",
   
                  "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
                  "sta_dge",
                  "a_cols_1", "a_cols_2", 
   
@@ -119,7 +118,7 @@ names(ver2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "all_1", "all_2", "all_3",
                  
                  "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
                  "sta_dge",
                  "b_cols_1", "b_cols_2", 
   
@@ -143,7 +142,7 @@ names(r2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num
                  "all_1", "all_2", "all_3",
                  
                  "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
                  "sta_dge",
                  "b_cols_1", "b_cols_2", 
   
@@ -167,7 +166,7 @@ names(py2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "all_1", "all_2", "all_3",
                  
                  "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
                  "sta_dge",
                  "b_cols_1", "b_cols_2", 
   
@@ -191,7 +190,7 @@ names(ver3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "wid_1", "wid_2", "wid_3",  
                  "all_1", "all_2", "all_3",
                  
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
                  "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
                  "sta_dge",
                  "c_cols_1", "c_cols_2", 
@@ -215,7 +214,7 @@ names(r3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num
                  "wid_1", "wid_2", "wid_3",  
                  "all_1", "all_2", "all_3",
                  
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
                  "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
                  "sta_dge",
                  "c_cols_1", "c_cols_2", 
@@ -239,7 +238,7 @@ names(py3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "wid_1", "wid_2", "wid_3",  
                  "all_1", "all_2", "all_3",
                  
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
                  "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
                  "sta_dge",
                  "c_cols_1", "c_cols_2", 
@@ -265,7 +264,7 @@ names(ver4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "all_1", "all_2", "all_3",
   
                  "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",  
+                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
                  "sta_dge",
                  "d_cols_1", "d_cols_2", 
   
@@ -289,7 +288,7 @@ names(r4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num
                  "all_1", "all_2", "all_3",
   
                  "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",  
+                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
                  "sta_dge",
                  "d_cols_1", "d_cols_2", 
   
@@ -313,7 +312,7 @@ names(py4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "all_1", "all_2", "all_3",
   
                  "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",  
+                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
                  "sta_dge",
                  "d_cols_1", "d_cols_2", 
   
@@ -337,7 +336,7 @@ names(ver5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "nar_1", "nar_2", "nar_3", 
                  "all_1", "all_2", "all_3",
   
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
                  "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
                  "sta_dge",
                  "e_cols_1", "e_cols_2", 
@@ -361,7 +360,7 @@ names(r5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num
                  "nar_1", "nar_2", "nar_3", 
                  "all_1", "all_2", "all_3",
   
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
                  "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
                  "sta_dge",
                  "e_cols_1", "e_cols_2", 
@@ -385,7 +384,7 @@ names(py5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "nar_1", "nar_2", "nar_3", 
                  "all_1", "all_2", "all_3",
   
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
                  "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
                  "sta_dge",
                  "e_cols_1", "e_cols_2", 
@@ -410,7 +409,7 @@ names(ver6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "def_1", "def_2", "def_3", 
                  "all_1", "all_2", "all_3",
   
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",
+                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
                  "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
                  "sta_dge",
                  "f_cols_1", "f_cols_2", 
@@ -434,7 +433,7 @@ names(r6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num
                  "def_1", "def_2", "def_3", 
                  "all_1", "all_2", "all_3",
   
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",
+                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
                  "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
                  "sta_dge",
                  "f_cols_1", "f_cols_2", 
@@ -458,7 +457,7 @@ names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "def_1", "def_2", "def_3", 
                  "all_1", "all_2", "all_3",
   
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",
+                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
                  "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
                  "sta_dge",
                  "f_cols_1", "f_cols_2", 
@@ -1790,9 +1789,9 @@ vir_stacked_1 <- vir_stacked$vir_sta_1
 def_stacked_1 <- def_stacked$def_sta_1
 gr_stacked_1 <- gr_stacked$gr_sta_1
 
-vir_grouped_1 <- vir_stacked$vir_dge_1
-def_grouped_1 <- def_stacked$def_dge_1
-gr_grouped_1 <- gr_stacked$gr_dge_1
+vir_grouped_1 <- vir_stacked$vir_grp_1
+def_grouped_1 <- def_stacked$def_grp_1
+gr_grouped_1 <- gr_stacked$gr_grp_1
 
 stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
 grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
@@ -1859,9 +1858,9 @@ vir_stacked_1 <- vir_stacked$vir_sta_1
 def_stacked_1 <- def_stacked$def_sta_1
 gr_stacked_1 <- gr_stacked$gr_sta_1
 
-vir_grouped_1 <- vir_stacked$vir_dge_1
-def_grouped_1 <- def_stacked$def_dge_1
-gr_grouped_1 <- gr_stacked$gr_dge_1
+vir_grouped_1 <- vir_stacked$vir_grp_1
+def_grouped_1 <- def_stacked$def_grp_1
+gr_grouped_1 <- gr_stacked$gr_grp_1
 
 stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
 grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
@@ -1900,16 +1899,18 @@ This test gives a high p value of 0.5258, showing that for the stacked bar plot 
 SIGN.test(grouped_1, md=11, alternative="t")
 ```
 For the grouped bar plot we have a p value of 0.009 < 0.05, and thus these responses are statistically significantly different from the true value. 
+\textbf{T-test on samples from the distribution of responses for the stacked bar plot}
 ```{r}
-noquote(paste("*CONTROL*"))
 means <- rep(NA, 100)
 for(i in 1:100){
   samp <- rnorm(100, mean=mean(stacked_1), sd=sd(stacked_1))
   means[i] <- mean(samp)
 }
 t.test(means, mu=11)
+```
 
-noquote(paste("*TRUNCATED*"))
+\textbf{T-test on samples from the distribution of responses for the grouped bar plot}
+```{r}
 means <- rep(NA, 100)
 for(i in 1:100){
   samp <- rnorm(100, mean=mean(grouped_1), sd=sd(grouped_1))
@@ -1929,9 +1930,9 @@ vir_stacked_2 <- vir_stacked$vir_sta_2
 def_stacked_2 <- def_stacked$def_sta_2
 gr_stacked_2 <- gr_stacked$gr_sta_2
 
-vir_grouped_2 <- vir_stacked$vir_dge_2
-def_grouped_2 <- def_stacked$def_dge_2
-gr_grouped_2 <- gr_stacked$gr_dge_2
+vir_grouped_2 <- vir_stacked$vir_grp_2
+def_grouped_2 <- def_stacked$def_grp_2
+gr_grouped_2 <- gr_stacked$gr_grp_2
 
 stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
 grouped_2 <- c(vir_grouped_2, def_grouped_2, gr_grouped_2)
@@ -2010,18 +2011,21 @@ Here we see a p value of around 0.04, which shows a statistically significant di
 ```{r}
 SIGN.test(grouped_2, md=9, alternative="t")
 ```
-Once again, this shows a significant p value, but this would once again be classes as insignificant at, for example, a 0.01 level of significance.
+This p value is >> 0.05, as expected given that the median of the data sits at the true value.
 
+For the below t-tests, we see 
+\textbf{T-test on samples from the distribution of responses for the stacked bar plot}
 ```{r}
-noquote(paste("*CONTROL*"))
 means <- rep(NA, 100)
 for(i in 1:100){
   samp <- rnorm(100, mean=mean(stacked_2), sd=sd(stacked_2))
   means[i] <- mean(samp)
 }
 t.test(means, mu=9)
+```
 
-noquote(paste("*TRUNCATED*"))
+\textbf{T-test on samples from the distribution of responses for the grouped bar plot}
+```{r}
 means <- rep(NA, 100)
 for(i in 1:100){
   samp <- rnorm(100, mean=mean(grouped_2), sd=sd(grouped_2))
@@ -2031,47 +2035,53 @@ t.test(means, mu=9)
 
 ```
 
+The t-tests show that the differences in the means from the true value are statistically significant, although not considering the tests we can see by eye that the means are relatively close to 9.
+
 
 **Please select the statement you feel applies to the bar chart above.**
+This question asked respondents to judge whether log grip was used more, less, or an equal amount in the Finals (Regional/City) and Qualifying(Regional/City) rounds. This was to see how well differences between sizes of categories are judged when relating to the same variable, and are in the same bar. The results for this are given in the table below.
 
 ```{r echo=F}
 vir_stacked_3 <- vir_stacked$vir_sta_3
 def_stacked_3 <- def_stacked$def_sta_3
 gr_stacked_3 <- gr_stacked$gr_sta_3
 
-vir_dodged_3 <- vir_stacked$vir_dge_3
-def_dodged_3 <- def_stacked$def_dge_3
-gr_dodged_3 <- gr_stacked$gr_dge_3
+vir_grouped_3 <- vir_stacked$vir_grp_3
+def_grouped_3 <- def_stacked$def_grp_3
+gr_grouped_3 <- gr_stacked$gr_grp_3
 
 stacked_3 <- c(vir_stacked_3, def_stacked_3, gr_stacked_3)
-dodged_3 <- c(vir_dodged_3, def_dodged_3, gr_dodged_3)
+grouped_3 <- c(vir_grouped_3, def_grouped_3, gr_grouped_3)
 
-tab <- rbind(table(stacked_3), table(dodged_3))
+tab <- rbind(table(stacked_3), table(grouped_3))
 rownames(tab) <- c("Stacked", "Grouped")
 colnames(tab) <- c("Equal", "Less", "More")
 tab
 ```
+The table shows overwhelmingly that significantly more people accurately judged that the two values were the same for the grouped bars than for the stacked bars. This was the hypothesised result, and has presented to an  even greater extent than previously anticipated. All but 7 of the respondents who responded to this question correctly judged from the grouped bars that the obstacle was used an equal number of times in each of the two rounds, whereas the responses for the grouped bar seemed fairly well split between the three options. It may be interesting in the multivariate analysis section to compare responses depending on whether respondents were shown the stacked or grouped bars first. Perhaps a reason for the incorrect judging with the stacked
+
 
 **Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?**
+Similar to the previous question, this asks for a comparison between the size of two categories, but this time about how many times two different obstacles were used in the round Finals (Regional/City), where these two obstacles are those discussed at the start of this part of the survey.
 
 ```{r echo=F}
 vir_stacked_4 <- vir_stacked$vir_sta_4
 def_stacked_4 <- def_stacked$def_sta_4
 gr_stacked_4 <- gr_stacked$gr_sta_4
 
-vir_dodged_4 <- vir_stacked$vir_dge_4
-def_dodged_4 <- def_stacked$def_dge_4
-gr_dodged_4 <- gr_stacked$gr_dge_4
+vir_grouped_4 <- vir_stacked$vir_grp_4
+def_grouped_4 <- def_stacked$def_grp_4
+gr_grouped_4 <- gr_stacked$gr_grp_4
 
 stacked_4 <- c(vir_stacked_4, def_stacked_4, gr_stacked_4)
-dodged_4 <- c(vir_dodged_4, def_dodged_4, gr_dodged_4)
+grouped_4 <- c(vir_grouped_4, def_grouped_4, gr_grouped_4)
 
-tab <- rbind(table(stacked_4), table(dodged_4))
+tab <- rbind(table(stacked_4), table(grouped_4))
 rownames(tab) <- c("Stacked", "Grouped")
 colnames(tab) <- c("Equal", "Less", "More")
 tab
 ```
-
+Despite previously gauging the sizes of these bars or bar sections fairly accurately on the whole, most of the participants incorrectly judged that the obstacles were used an equal number of times, for both plots. 
 
 **Which bar chart do you feel is easiest to read and interpret?**
 
