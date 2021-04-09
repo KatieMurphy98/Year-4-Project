@@ -2,10 +2,10 @@
 output:
   pdf_document: default
 fontsize: 12pt
+geometry: margin=1in
 documentclass: book
 header-includes:
   \setlength{\parskip}{1em}
-classoption: twocolumn
 ---
 
 ```{r setup, include=FALSE, warning=F}
@@ -22,6 +22,9 @@ library(BSDA)
 library(gridExtra)
 library(kableExtra)
 library(lawstat)
+
+require(pander)
+panderOptions('round', 2)
 
 for(i in 1:6){
     r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
@@ -684,12 +687,12 @@ vir_stacked <- rbind(ver1[,c(4:7, 34:41)], ver5[,c(4:7, 34:41)])
 def_stacked <- rbind(ver2[,c(4:7, 34:41)], ver3[,c(4:7, 34:41)])
 gr_stacked <- rbind(ver4[,c(4:7, 34:41)], ver6[,c(4:7, 34:41)])
 
-set_a <- ver1[,c(4:7, 42:44)]
-set_b <- ver2[,c(4:7, 42:44)]
-set_c <- ver3[,c(4:7, 42:44)]
-set_d <- ver4[,c(4:7, 42:44)]
-set_e <- ver5[,c(4:7, 42:44)]
-set_f <- ver6[,c(4:7, 42:44)]
+set_a <- ver1[,c(4:9, 42:44)]
+set_b <- ver2[,c(4:9, 42:44)]
+set_c <- ver3[,c(4:9, 42:44)]
+set_d <- ver4[,c(4:9, 42:44)]
+set_e <- ver5[,c(4:9, 42:44)]
+set_f <- ver6[,c(4:9, 42:44)]
 
 ### SALES_AB
 ab_sep <- rbind(ver1[,c(4:7, 45:47)], ver2[,c(4:7, 45:47)], ver3[,c(4:7, 48:50)], ver4[,c(4:7, 51:53)], ver5[,c(4:7, 48:50)], ver6[,c(4:7, 51:53)])
@@ -750,6 +753,7 @@ noquote(paste('n (control) =', length(na.exclude(control))))
 noquote(paste('n (truncated) =', length(na.exclude(truncated))))
 noquote(paste('n (logarithmic) =', length(na.exclude(logarithmic))))
 noquote(rbind(summary(y_scale_1_all), c(paste0('Var    :', round(var(control), 3)), paste0('Var    :', round(var(truncated), 3)), paste0('Var    :', round(var(logarithmic, na.rm=T), 3)))))
+
 ```
 
 ```{r include=F}
@@ -968,6 +972,7 @@ y_scale_r <- cbind(r_control, r_truncated, r_logarithmic)
 
 noquote(paste("n = ", length(r_control)))
 summary(y_scale_r)
+
 ```
 We see that, based on the median and mean, the responses for log plot were on average lower than that of the control or truncated plots, conversely to the whole population in which the mean is magnitudes greater, although the median here is the same as for the whole population, with a slightly smaller interquartile range of size 5. We again see that the upper limit of the interquartile range is 40; below the true value. The whole range here is from 30 to 120, so does still show that there may be some large discrepancies between responses, however much less than the whole population.
 
@@ -1170,6 +1175,7 @@ noquote(paste('n (control) = ', length(py_control)))
 noquote(paste('n (truncated) = ', length(py_truncated)))
 noquote(paste('n (logarithmic) = ', length(py_logarithmic)))
 summary(y_scale_py)
+
 ```
 
 The statistics for the control and truncated plots again appear to centre around 41, based on the median and mean values as well as the IQR. The range for the truncated plot responses is slightly smaller than that of the overall population, at size 4 rather than 5. These results are consistent with the statistics for the prior analysed populations, whereby there appears to be a slight underestimation in gauging the height of the bar. This perhaps depicts that the plotting package defaults don't significantly affect interpretation when considering these two scales.
@@ -1259,6 +1265,7 @@ noquote(paste('n (control) = ', length(control)))
 noquote(paste('n (truncated) = ', length(truncated)))
 noquote(paste('n (logarithmic) = ', length(logarithmic)))
 noquote(rbind(summary(y_scale_2_all), c(paste0('Var    :', round(var(control), 3)), paste0('Var    :', round(var(truncated), 3)), paste0('Var    :', round(var(logarithmic), 3)))))
+
 ```
 An initial look at the table of summary statistics reveal means of 5.375, 3.671 and 5.871 respectively for the control, log and truncated plots, meaning that for the 'baseline' control plot participants, on average, judged the difference to be moderately significant, with the perceived difference being smaller for the log plot and marginally larger for the truncated plot. This appears to be consistent with results from [[[CITE chrome-extension://cbnaodkpfinfiipjblikofhlhlcickei/src/pdfviewer/web/viewer.html?file=file:///C:/Users/Katie/Downloads/YangVargasRestrepoStanleyMarsh%20(2020).pdf]]], in which the researchers, similar to this survey, showed participants a series of control bar plots alongside those with a truncated axis, and concluded that the difference in values for the truncated axis were perceived to be larger than those of the control plots. However, the average perceived difference here is fairly small, much smaller than initially hypothesised, so tests will be needed to decipher whether this is significant.
 The logarithmic plot causing the average perceived difference to be smaller follows the hypothesis from prior to running the survey. 
@@ -1314,6 +1321,7 @@ noquote(paste('n (truncated) = ', length(truncated_r)))
 noquote(paste('n (logarithmic) = ', length(logarithmic_r)))
 
 noquote(rbind(summary(y_scale_2_r), c(paste0('Var    :', round(var(control_r), 3)), paste0('Var    :', round(var(truncated_r), 3)), paste0('Var    :', round(var(logarithmic_r), 3)))))
+
 ```
 
 The means of the R population are very similar to the whole population for the control and truncated plots, with the mean for the logarithmic plot is slightly higher. The control and truncated values lie on the upper half of the scale, depicting that the difference in heights between the two bars was perceived to be considerable. The mean for the logarithmic responses is 4.243; almost directly in the centre of the scale. Thus, this difference was considered moderate but not too considerable. The medians for both the control and truncated plots are 6, with the median of the logarithmic slightly lower at 5, showing that these data centre around 6 and 5 respectively. All of these do, however, have large ranges, with the truncated and logarithmic responses having a range over the whole scale of $[1, 7]$ and the control with a range over $[3, 7]$. We therefore had some respondents who felt the differences between bar heights were very small, although the IQRs of the three, in order, are $[5, 6]$, $[5, 7]$ and $[3, 5.75]$ respectively, showing that 50% of the responses lie fairly close to the means, and the IQRs for the control and truncated plot responses encompass values in the upper half of the scale, furthering the conclusion that these height differences were perceived to be larger. 
@@ -1363,6 +1371,8 @@ noquote(paste('n (truncated) = ', length(truncated_py)))
 noquote(paste('n (logarithmic) = ', length(logarithmic_py)))
 
 noquote(rbind(summary(y_scale_2_py), c(paste0('Var    :', round(var(control_py), 3)), paste0('Var    :', round(var(truncated_py), 3)), paste0('Var    :', round(var(logarithmic_py), 3)))))
+
+
 ```
 The statistics for the control and truncated plots are once again similar to those of the whole population and the R population, with the mean of the logarithmic responses slightly lower again at 2.968, signifying that the difference between the bar heights was perceived as very minimal. The IQR for the control responses place the bulk of these values in the range $[4, 6]$, which tells us that, on average, respondents felt the height difference was moderate. The truncated plot responses IQR places these values in the range $[5.5, 7]$, showing a larger perceived difference, and conversely the perceived differences in the log scaled plot appear on the smaller side, given the IQR of $[2, 4]$.
 
@@ -1383,7 +1393,7 @@ geom_boxplot(outlier.colour="black", outlier.shape=1,
   ylab("Value")+
   xlab("Plot Type")
 ```
-The box plots for the python population are much more distinct than for the R population, with little crossover of boxes. The log responses box is very obviously sat below the control, and the truncated lies above. The lower values of 1 and 2 are counted as outliers here for the truncated plot, although the boxplot for the log responses once again spreads over the whole range, but the box itself is shorter than that of the R population.
+The box plots for the python population are much more distinct than for the R population, with little crossover of boxes. The log responses box is very obviously sat below the control, and the truncated lies above. The lower values of 1 and 2 are counted as outliers here for the truncated plot, although the box plot for the log responses once again spreads over the whole range, but the box itself is shorter than that of the R population.
 
 **Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?**
 
@@ -1410,6 +1420,7 @@ ggplot() +
 
 ```{r, echo=F}
 summary(y_scale_3_all)
+
 ```
 
 ```{r, echo=F}
@@ -1430,85 +1441,7 @@ geom_boxplot(outlier.colour="black", outlier.shape=1,
 
 ```
 
-**In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?**
-```{r echo=F}
-con_4_all <- ctrl_y_scale$con_4
-con_4_all[which(con_4_all == '12.5 %')] <- 12.5
-con_4_all <- as.numeric(con_4_all)
-for(i in 1:length(con_4_all)){
-    if(con_4_all[i] < 1 && is.na(con_4_all[i])==FALSE){
-       con_4_all[i] <- con_4_all[i]*100
-    }
-}
 
-
-trn_4_all <- trnc_y_scale$trn_4
-for(i in 1:length(trn_4_all)){
-    if(trn_4_all[i] < 1 && is.na(trn_4_all[i])==FALSE){
-       trn_4_all[i] <- trn_4_all[i]*100
-    }
-}
-
-log_4_all <- log_y_scale$log_4
-log_4_all[which(log_4_all == '3 %')] <- 3
-log_4_all <- as.numeric(log_4_all)
-
-for(i in 1:length(log_4_all)){
-    if(log_4_all[i] < 1 && is.na(log_4_all[i])==FALSE){
-       log_4_all[i] <- log_4_all[i]*100
-    }
-}
-
-y_scale_4_all <- cbind(con_4_all, log_4_all, trn_4_all)
-summary(y_scale_4_all)
-
-
-```
-
-```{r echo=F}
-
-ggplot() +
-  geom_density(data = as.data.frame(con_4_all), aes(x=con_4_all, col = "Control"))+
-  geom_density(data = as.data.frame(trn_4_all), aes(x=trn_4_all, col = "Truncated"))+ 
-  geom_density(data = as.data.frame(log_4_all), aes(x=log_4_all, col = "Log"))+
-  
-  annotate("text", x=52, y = 0.089, label="In your opinion, approximately how many times would you say ", size = 3)+
-  annotate("text", x=52, y = 0.084, label="'Log Grip' was used, as a percentage of the number of times", size = 3)+
-  annotate("text", x=52, y = 0.08, label="'Salmon Ladder' was used?", size = 3)+
-  annotate("text", x=52, y = 0.075, label="Whole population (n=70)", size = 3)+
-  
-  labs(x="Response", y="Density")+
-  scale_colour_brewer(palette="Dark2", labels = c('Control', 'Truncated', 'Log'))+
-  theme_classic()
-
-```
-#### NAs
-```{r echo=F}
-index <- which(is.na(log_4_all))
-cbind(index, y_scale_4_all[which(is.na(log_4_all)),])
-
-rbind(ver1[4:9], ver2[4:9], ver3[4:9], ver4[4:9], ver5[4:9], ver6[4:9])[index,]
-```
-
-
-```{r, echo=F}
-y_scale_4_all <- as.data.frame(na.exclude(y_scale_4_all))
-
-vals <- c(y_scale_4_all$con_4_all, y_scale_4_all$log_4_all, y_scale_4_all$trn_4_all)
-type <- c(rep('Control', 66), rep('Log', 66), rep('Truncated', 66)) 
-stats_4 <- data.frame(vals, type)
-
-ggplot(data = stats_4, aes(x=type, y=vals, fill=type))+
-geom_boxplot(outlier.colour="black", outlier.shape=1,
-             outlier.size=2, notch=F)+
-  theme_classic()+
-  stat_summary(fun=mean, geom="point", shape=15, size=4)+
-  scale_colour_manual(breaks = brks, values = vals)+
-  scale_y_continuous()+
-  ylab("Value")+
-  xlab("Plot Type")
-
-```
 
 \subsection{Ninja Warrior - Part 2}
 
@@ -1516,6 +1449,7 @@ The second section of the survey tests whether altering aspect ratio of plots af
 
 
 **How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?**
+
 This question once again uses the 7-point scale to gain a subjective view on the degree to which respondents felt the heights between the two bars corresponding to 'Jumping Spider' and 'Salmon Ladder' differed for three bar plots of 7 obstacles, where 'Salmon Ladder' is furthest to the left, and 'Jumping Spider' furthest to the right. 
 
 ```{r echo=F}
@@ -1749,9 +1683,8 @@ comp_1 <- comp_1[-which(comp_1 == "none")]
 comp_2 <- comp_ratio$all_2
 comp_3 <- comp_ratio$all_3
 tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
-rownames(tab) <- c("Which of the three bar charts do you find most aesthetically pleasing?", "Which bar chart do you feel is easiest to read and interpret?", "Which bar chart do you find hardest to read and interpret?")
-
-knitr::kable(tab)
+rownames(tab) <- c("Most aesthetically pleasing?", "Easiest to read and interpret?", "Hardest to read and interpret?")
+tab
 ```
 For the first question, relating to how aesthetically pleasing respondents found each plot, just over half of the respondents chose the default aspect ratio as the most aesthetically pleasing, with 37 out of the 69 who responded selecting this. 
 
@@ -1803,7 +1736,7 @@ noquote(paste('n (grouped) = ', length(grouped_1)))
 
 sumy <- summary(bars)
 colnames(sumy) <- c("Stacked", "Grouped")
-noquote(rbind(sumy, c(paste0('Var    :', round(var(stacked_1), 3)), paste0('Var    :', round(var(grouped_1), 3)))))
+noquote(rbind(sumy, c(paste0('Var    :', round(var(stacked_1), 2)), paste0('Var    :', round(var(grouped_1), 2)))))
 ```
 The mean for the values estimated by respondents using the stacked bars is 14.32, a fair bit larger than the true value of 11, and the mean estimated value for the grouped bars was closer to the true value, at 11.8. The IQR for the grouped bars is also smaller than for the stacked, and comprises of the range $[11, 12]$, insinuating that the estimated values tended to be fairly accurate but with some respondents perhaps slightly overestimating. The IQR for the stacked bars on the other hand covers the interval $[10, 14]$, which does contain the true value, but shows a tendency for both over and underestimation of respondents. Additionally to this, there is a very large variance in the responses to this question, at 54.8 compared to the variance of 13.1 for the responses regarding the grouped bar plots. This adds to the picture that there was much less agreement between respondents, with many straying away from the mean of 14.3. We do see however that the median for both the stacked and grouped bars is 11, showing that the higher mean of the stacked bars may be a result of an influential value at the upper end of the distribution, and that many observations do actually sit around 11. The fact that many values actually sit around 11 could be contributing to the higher variance, as variance is simply the sum of the squared distances from the mean, and so will be elevated if there are many values that sit some distance away from the mean. The higher mean could be reflected in the maximum of the stacked responses being 35, although the maximum of the grouped responses is 40, so there may be more than one influential point in the stacked responses. We can check for outliers by looking at the box plots for this data.
 
@@ -1868,7 +1801,6 @@ grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
 stacked_1 <- stacked_1[which(stacked_1 >= 25)] 
 
 summary(stacked_1)
-
 stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
 stacked_1 <- stacked_1[-which(stacked_1 >= 25)]
 grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1) 
@@ -1899,6 +1831,7 @@ This test gives a high p value of 0.5258, showing that for the stacked bar plot 
 SIGN.test(grouped_1, md=11, alternative="t")
 ```
 For the grouped bar plot we have a p value of 0.009 < 0.05, and thus these responses are statistically significantly different from the true value. 
+
 \textbf{T-test on samples from the distribution of responses for the stacked bar plot}
 ```{r}
 means <- rep(NA, 100)
@@ -2013,7 +1946,6 @@ SIGN.test(grouped_2, md=9, alternative="t")
 ```
 This p value is >> 0.05, as expected given that the median of the data sits at the true value.
 
-For the below t-tests, we see 
 \textbf{T-test on samples from the distribution of responses for the stacked bar plot}
 ```{r}
 means <- rep(NA, 100)
@@ -2078,12 +2010,13 @@ grouped_4 <- c(vir_grouped_4, def_grouped_4, gr_grouped_4)
 
 tab <- rbind(table(stacked_4), table(grouped_4))
 rownames(tab) <- c("Stacked", "Grouped")
-colnames(tab) <- c("Equal", "Less", "More")
+colnames(tab) <- c("Floating Steps", "Log Grip", "Both the same")
 tab
 ```
-Despite previously gauging the sizes of these bars or bar sections fairly accurately on the whole, most of the participants incorrectly judged that the obstacles were used an equal number of times, for both plots. 
+This was a potentially poorly formulated question, as the respondents had already been asked to specify how many times each of these obstacle was used in this round and respondents mostly judged this accurately with regard to both plots, but this could have been impacted by the previous questions. However, this does follow from the results from the past questions showing that respondents mostly accurately judged the values correctly, aside from those who instead judged the height of the whole bar.
 
 **Which bar chart do you feel is easiest to read and interpret?**
+Here was simply assess the perceived ease of interpretation of both bar plots. This is to gain an understanding in how data may best be presented in an easily understandable, easily readable manner. This is an important factor in visualisation, as a main aim in creating visuals is to provide an aid for the viewer to simply and quickly see the message. The opposite may be beneficial in certain applications however; based on the misreadings in the question regarding judging the number of times 'Log Grip' was used in the specific round, viewers of the visualisations could be easily mislead by incorrectly interpreting the plot. The people being shown the plot in, for example, an advert, may only take a fleeting look and not go beyond to analyse the plot to see accurate differences between values, and thus it is important to produce a plot that gives the easiest interpretation.
 
 ```{r echo=F}
 a_1 <- set_a$sta_dge
@@ -2132,6 +2065,7 @@ for(i in 1:length(f_1)){
 tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
 tab
 ```
+The large majority of participants found the grouped bar chart easier to read and interpret, as predicted.
 
 ``` {r, echo=F}
 tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), table(e_1), table(f_1))
@@ -2141,22 +2075,18 @@ tab
 
 
 **Which colour scheme do you find most aesthetically pleasing?**
+This question and the one following it are asked with the purpose of assessing the colour scheme that gives the greatest aesthetic pleasure, or effectively which colour palette the respondents feel is subjectively the 'prettiest' or 'nicest'. It is important to note here that aesthetics and readability do not always go hand-in-hand; a plot that is made to look very aesthetically pleasing may sacrifice readability, and vice versa. For each of the two languages we created six pairings of three different colour palettes, whereby the first colour was the one displayed for the main questions, and the second used only for the comparison questions. As previously discussed, the three colour schemes considered are viridis, greyscale, and each language's default plotting colour palette. The colour palette pairings are outlined below.
 
-```{r echo=F}
-a_1 <- set_a$sta_dge
-b_1 <- set_b$sta_dge
-c_1 <- set_c$sta_dge
-d_1 <- set_d$sta_dge
-e_1 <- set_e$sta_dge
-f_1 <- set_f$sta_dge
+```{r}
 
-tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), table(e_1), table(f_1))
-rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
-tab
+set <- c("A", "B", "C", "D", "E", "F")
+first_col <- c("Viridis", "Default", "Default", "Greyscale", "Viridis", "Greyscale")
+second_col <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viridis")
+
+df <- data.frame(set, first_col, second_col)
+names(df) <- c("Pairing ID", "Main Colour Palette", "Secondary Colour Pallette")
+knitr::kable(df)
 ```
-
-
-**Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.**
 
 ```{r echo=F}
 a_1 <- set_a$a_cols_1
@@ -2166,66 +2096,82 @@ d_1 <- set_d$d_cols_1
 e_1 <- set_e$e_cols_1
 f_1 <- set_f$f_cols_1
 
+tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), c(table(e_1), 0), table(f_1))
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+tab
+```
+This table shows that when it came to the default/viridis pairings, displayed in the first two rows, the respondents tended to have no preference overall, although this may differ between languages, which will be explored later on. Comparing this to the bottom two rows, in which we put viridis against greyscale, only 1 respondent out of the 23, a proportion of 0.04, found the grey more aesthetically pleasing, as hypothesised. When considering greyscale/default, there was still a majority preferring the non-greyscale palette, but a higher proportion preferred this as compared to the viridis/greyscale, with 4 out of the 22, or a proportion of 0.18, preferring the grey.
+
+**Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.**
+Complementing the aesthetic preferences, this question assesses the colour preference with regard to readability and ease of interpretation. As mentioned before, this will be used to test both the colour palette preference itself alongside whether this preference matches up with aesthetic preference.
+
+```{r echo=F, fig.cap="Table showing which colour palettes respondents found easiest to read and interpret"}
+a_1 <- set_a$a_cols_2
+b_1 <- set_b$b_cols_2
+c_1 <- set_c$c_cols_2
+d_1 <- set_d$d_cols_2
+e_1 <- set_e$e_cols_2
+f_1 <- set_f$f_cols_2
+
 for(i in 1:length(a_1)){
-  if(a_1[i] == "A"){
-    a_1[i] <- "Dark2"
-  } else a_1[i] <- "Default"
+  if(a_1[i] == "Yes, A is easier"){
+    a_1[i] <- "A"
+  } else if(a_1[i] == "Yes, A is easier"){
+  a_1[i] <- "B"
+  } else a_1[i] <- "None"
 }
 
 for(i in 1:length(b_1)){
-  if(b_1[i] == "B"){
-    b_1[i] <- "Dark2"
-  } else b_1[i] <- "Default"
+  if(b_1[i] == "Yes, B is easier"){
+    b_1[i] <- "B"
+  } else if(b_1[i] == "Yes, A is easier"){ 
+    b_1[i] <- "A"
+    }else b_1[i] <- "None"
 }
 
 for(i in 1:length(e_1)){
-  if(e_1[i] == "A"){
-    e_1[i] <- "Dark2"
-  } else e_1[i] <- "Greyscale"
+  if(e_1[i] == "Yes, A is easier"){
+    e_1[i] <- "A"
+  } else if(e_1[i] == "Yes, B is easier"){
+    e_1[i] <- "B"
+  } else e_1[i] <- "None"
 }
 
 for(i in 1:length(f_1)){
-  if(f_1[i] == "B"){
-    f_1[i] <- "Dark2"
-  } else f_1[i] <- "Greyscale"
+  if(f_1[i] == "Yes, B is easier"){
+    f_1[i] <- "B"
+  } else if(f_1[i] == "Yes, A is easier"){
+    f_1[i] <- "A"
+  } else f_1[i] <- "None"
 }
 
 for(i in 1:length(c_1)){
-  if(c_1[i] == "A"){
-    c_1[i] <- "Default"
-  } else c_1[i] <- "Greyscale"
+  if(c_1[i] == "Yes, A is easier"){
+    c_1[i] <- "A"
+  } else if(c_1[i] == "Yes, B is easier"){ 
+    c_1[i] <- "B"
+  } else c_1[i] <- "None"
 }
 
 for(i in 1:length(d_1)){
-  if(d_1[i] == "A"){
-    d_1[i] <- "Greyscale"
-  } else d_1[i] <- "Default"
+  if(d_1[i] == "Yes, A is easier"){
+    d_1[i] <- "A"
+  } else if(d_1[i] == "Yes, B is easier"){ 
+    d_1[i] <- "B"
+  } else d_1[i] <- "None"
 }
 
-tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
+tab <- rbind(c(table(a_1)[1], 0, table(a_1)[2]), c(table(b_1)[1], 0, table(b_1)[2]), c(table(c_1), 0), c(table(d_1), 0), c(table(e_1), 0, 0), table(f_1))
+colnames(tab) <- c("A", "B", "None")
 tab
 ```
-
-```{r echo=F}
-tab <- table(c(a_1, b_1))
-tab
-```
-
-```{r echo=F}
-tab <- table(c(c_1, d_1))
-tab
-```
-
-```{r echo=F}
-tab <- table(c(e_1, f_1))
-tab
-```
-
+Interestingly here, we see that the top two rows appear to give opposing results; the respondents who were presented with viridis for the main questions and the default as a secondary palette stated that they found either viridis easier to interpret or had no preference, whereas those presented with the default first and viridis second tended to find the default easier. Once again looking at the comparisons with the greyscale, there were some respondents that found this easier to read, but the majority chose the alternative, whether this is viridis or the default.
 
 \subsection{Sales - Part 1}
-
+Now we move on to the sales part of the survey. In this section data was taken from a the BJsales data set in R, which is a time series data set containing 150 observations. This data set constitutes a single vector of values with no specified timings, and the visualisation data was formed by taking subsets of size 12 this and setting a month between each point to give a year of fictional sales data.
 
 **How much would you say sales of each company increased between January and December? [Company A]**
+This question was included for the purpose of testing whether, again, axix scaling impacts the precieved differences between values.
 
 ```{r echo=F}
 sep_1a <- na.exclude(ab_sep$sep_1a)
