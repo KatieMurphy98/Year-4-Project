@@ -1014,22 +1014,6 @@ noquote(rbind(summary(y_scale_2_r), c(paste0('Var    :', round(var(control_r), 3
 
 
 
-```{r echo=F}
-y_scale_2_r <- as.data.frame(y_scale_2_r)
-resp <- c(control_r, truncated_r, logarithmic_r)
-type <- c(rep('Control', 38), rep('Truncated', 38), rep('Logarithmic', 38)) 
-stats_2 <- data.frame(resp, type)
-
-ggplot(data = stats_2, aes(x=type, y=resp, fill=type))+
-geom_boxplot(outlier.colour="black", outlier.shape=1,
-             outlier.size=2, notch=F)+
-  theme_classic()+
-  stat_summary(fun=mean, geom="point", shape=15, size=4)+
-  scale_fill_manual(breaks = brks, values = vals)+
-  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
-  ylab("Value")+
-  xlab("Plot Type")
-```
 
 ```{r}
 control_py <- ctrl_y_scale_py$con_2
@@ -1070,24 +1054,6 @@ y_scale_3_all <- cbind(control, logarithmic, truncated)
 
 ```{r, echo=F}
 summary(y_scale_3_all)
-
-```
-
-```{r, echo=F}
-y_scale_3_all <- as.data.frame(y_scale_3_all)
-resp <- c(y_scale_3_all$control, y_scale_3_all$logarithmic, y_scale_3_all$truncated)
-type <- c(rep('Control', 70), rep('Truncated', 70), rep('Logarithmic', 70)) 
-stats_3 <- data.frame(resp, type)
-
-ggplot(data = stats_3, aes(x=type, y=resp, fill=type))+
-geom_boxplot(outlier.colour="black", outlier.shape=1,
-             outlier.size=2, notch=F)+
-  theme_classic()+
-  stat_summary(fun=mean, geom="point", shape=15, size=4)+
-  scale_fill_manual(breaks = brks, values = vals)+
-  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
-  ylab("Value")+
-  xlab("Plot Type")
 
 ```
 
