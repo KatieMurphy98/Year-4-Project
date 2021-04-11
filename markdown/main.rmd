@@ -6,8 +6,15 @@ output:
      toc: yes
      theme: united
      pandoc_args: --top-level-division=chapter
+     extra_dependencies: ["float"]
 fontsize: 12pt
 documentclass: book
+fontsize: 12pt
+geometry: margin=1in
+classoption:
+- twocolumn
+header-includes:
+  \setlength{\parskip}{1em}
 ---
 
 
