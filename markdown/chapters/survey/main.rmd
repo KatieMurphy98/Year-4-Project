@@ -19,41 +19,16 @@ chapter{Data collection}
 
 \section{Background on survey design}
 
-TODO 1 cite: https://books.google.co.uk/books?id=mSRTDwAAQBAJ&lpg=PP1&ots=nynKGurXVG&dq=how%20to%20write%20a%20survey&lr&pg=PP1#v=onepage&q&f=false
-TODO 2 cite: https://www.idsurvey.com/en/advantages-and-disadvantages-of-phone-survey/
-TODO 3 cite: https://books.google.co.uk/books?hl=en&lr=&id=ctow8zWdyFgC&oi=fnd&pg=PR15&dq=survey+methodology&ots=fgcIbBXkS9&sig=LvdOfWOBGrtHFrcVbdfi1ahV970#v=onepage&q=survey%20methodology&f=true
-TODO 4 cite: https://en.wikipedia.org/wiki/Census
-TODO 5 cite: https://www.understandingsociety.ac.uk/
-TODO 6 cite: https://ora.ox.ac.uk/objects/uuid:526114c2-8266-4dee-b663-351119249fd5
-TODO 7 cite: https://www.nature.com/articles/bdj.2008.149
-TODO 8 cite: https://www.collinsdictionary.com/dictionary/english/systematic
+As explained by @wiley2004, a survey is a means of obtaining quantitative information regarding opinions and experiences of the respondents in order to explore the views of the target population as a whole. In this book, a survey is noted as a "systematic" method of collecting data, where the author states that the word "systematic" is deliberately used 
+in order to separate surveys from other methods of information collection. "systematic" is defined by the Collins English Dictionary as something that \textit{"is done according to a fixed plan, in a thorough and efficient way"} [@collins-systematic], and this reflects the manner in which surveys are created in accordance with a given system, where methods for distribution, implementation and analysis are defined under a pre-determined structure. The survey will be delivered to potential respondents in the target population, who will then be asked to complete a series of standardised questions. Referring again to the definition of 'systematic',  while having a 'fixed plan' is a key defining factor of a survey, whether or not the survey is 'thorough' and 'efficient' depends heavily on the survey structure and design. Designing an effective, systematic survey involves balancing efficiency with completeness, creating a survey that can obtain as much information as possible whilst not boring or fatiguing participants. A well-designed systematic survey has the capacity to yield large amounts of qualitative information regarding the research topic, which can be easily aggregated and analysed numerically, providing empirical evidence either proving or disproving any pre-defined hypotheses, and potentially highlighting new links to be explored.
 
+There exist a variety of methods for delivering a survey, such as self-completed questionnaires and interviewer-administered structured interviews. Depending on the aims of the study, there will be advantages and downfalls to each method. There may also be times when a combined approach is helpful in gather the necessary information. The first method, a questionnaire, may consist of either physical paper forms that are mailed or handed out to people within the target population, or in an online format. As discussed by @brace2004, this form of surveying constitutes a method of indirect communication between the respondent and researcher, in effect a non-verbal conversation in which the respondent is replying to the researcher's questions. The non-face-to-face aspect of this method can be beneficial in terms of anonymity; an anonymous respondent is more likely to be honest in their answers than a respondent for whom the identity is known. As a result, an anonymous questionnaire can mitigate any errors that may be caused by respondents fearing judgment of their answers. There are negative aspects to this 
 
+A questionnaire is composed of two types of questions; closed-ended questions, for which the respondent selects their answer from a given set of potential responses, and open-ended questions, in which the participants are able to write their answers in a free-form format. 
+Closed-ended questions are very good for obtaining quantitative data that may be easily categorised and counted, which is useful for gathering empirical evidence in order to form objective conclusions regarding the sample population. 
 
-As explained in @wiley2004, a survey is a means of obtaining quantitative information regarding opinions and 
-experiences of the respondents in order to explore the views of the target population as a whole. In this book, a survey 
-is noted as a "systematic" method of collecting data, where the author states that the word "systematic" is deliberately used 
-in order to separate surveys from other methods of information collection. The word "systematic'' is defined by the Collins English Dictionary as 
-something that \textit{"is done according to a fixed plan, in a thorough and efficient way"} [CITE 8 HERE], and this reflects that a survey is 
-highly structured, with each participant being asked to answer standardised set of questions with no deviation from the 'fixed plan' of the
-survey. However, while having a 'fixed plan' is a key defining factor of a survey, whether or not the survey is 'thorough' and
-'efficient' depends heavily on the survey structure and design. Designing an effective, systematic survey involves the task of balancing 
-being thorough alongside being efficient, and this will be discussed in more depth later. A survey of a systematic nature as described here has the 
-ability to yield a large volume of easily comparable results as every participant has been asked the same exact questions.
+Open-ended questions are generally used where more 
 
-
-This is in contrast to the more free-form structure of focus groups and unstructured or semi-structured interviews. These are less systematic as they 
-involve back-and-forth discussion between the participants and interviewer, which is discussed in 
-
-can be more difficult to 
-analyse statistically, and are better suited for gaining 
-general insights rather than to undergo rigorous statistical testing. 
-
-
-As mentioned above, survey methodology involves asking a sample of the target population a series of standardised questions, 
-which may be presented in mediums such as written questionaires or structured interviews. Depending on the aims of the study, there
-will be many benefits and downfalls of each method. There may also be times when a combined approach is required to
-gather the necessary information.
 
 Phone calls and other forms of interview-based survey allow the interviewer to form a personal connection with 
 the survey participant, which can be especially helpful for a company's image if the interviewer is particularly professional 
@@ -66,24 +41,15 @@ a short time frame available in which to gather information.
 
 However, there are also shortfalls to an interview-based survey method. For instance, although a charismatic interviewer can 
 positively impact the image of whoever is conducting the survey, this could also lead to biases, such as the respondent 
-answering in a way they feel will please the interviwer.
-Additionally, the image of the organisation could potentially be tainted if the interviwer appears rude or unprofessional, 
+answering in a way they feel will please the interviewer.
+Additionally, the image of the organisation could potentially be tainted if the interviewer appears rude or unprofessional, 
 alongside potentially providing bias in the opposite direction. As well as this, telephone surveys are likely to be 
 interpreted as a telemarketing scheme, and thus potentially have a negative impact on the number of willing respondents.
 The reduced anonymity of this type of survey may also create bias in the way of participants avoiding making statements
 that could be deemed socially unacceptable, or that they feel they may be judged for, and therefore may not provide answers
 accurate to their true line of thought.
 
-A second way of presenting survey questions, and the way that will be used in this study, is a self-completed written questionaire.
-A questionaire may either consist of physical paper forms that are mailed or handed out to people within the target population, or may
-exist in an online format. As discussed in [CITE 1 HERE], this form of surveying 
-
-A questionaire is composed of two types of questions; closed-ended questions, where participants 
-select answers from a given set, and open-ended questions, in which the participants are able to provide free-form answers. 
-
-This method of surveying
-is also often anonymous, which can mitigate the errors caused by participants fearing being judged on their responses. Closed-ended questions are
-very good for obtaining quantitative data as the answers may be easily categorised and counted. Open-ended questions are generally used to 
+A second way of presenting survey questions, and the way that will be used in this study, is a self-completed written questionnaire.
 
 The UK Household Longitudinal Study is an ongoing study and an example of implementation of a combined use of the above mentioned surveying methods.
 Initially, in 'wave 1' of the study, a sample of 40,000 households in the UK were selected to be surveyed on a yearly basis. The survey involves all 
