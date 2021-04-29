@@ -13,7 +13,11 @@ classoption:
 - twocolumn
 bibliography: main.bib
 ---
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.pos = 'H', warning = F, message = F, include=T)
+library(knitr)
+library(kableExtra)
+```
 
 chapter{Data collection}
 
@@ -79,7 +83,7 @@ As well as scaling, another aspect of visualisation design that could potentiall
 
 Additionally, stacked bar charts will be investigated, showing a comparison between using the stacking method as opposed to a grouped bar plot. An article from the University of Stuttgart [@HuynhHaiDang2017] gives an overview of may types of bar chart, including stacked and grouped bars. The author remarks that grouped bar charts may make the comparison of bars in the same category more difficult, while the stacked bar chart sacrifices ease of comparison of values in the bars for increased spacial efficiency. A 2018 work from the journal of \textit{'Visual Informatics'} [@INDRATMO2018155] also provides a discussion on the use of various forms of stacked and grouped bar charts and their efficacy. The paper notes how a classical stacked bar chart can be useful for overall comparisons as the height of the bar represents the value of the item, with the different attributes depicted as a segmentation of this single bar into different colours. When discussing grouped bar charts it is mentioned that stacked bar charts may be less useful when performing attribute comparisons, in other words comparisons between different categories on the same bar, as a result of the bar segments being non-aligned. This results in comparison taking the form of length judgment as opposed to position judgment. Cleveland and McGill in their 1984 article in the \textit{'Journal of the American Statistical Association'} [@clevelandmcgill] discuss how judgments based on length are likely to be less accurate than those based on position. A grouped bar chart is a way to allow for easy comparison between individual categories, but is discussed to be less effective in overall comparison. Based on this research, part 3 of the survey will include questions with the objective of testing standard stacked against grouped bar charts, alongside questions relating to the colour palettes used in depicting the different groups. We aim to test which colour palette is preferred in terms of aesthetics as well as ease of interpretation and reading.
 
-The last two parts of the survey, noted henceforth as 'Sales - part 1' and 'Sales - part 2', explore the different y-axis scalings with respect to line plots, but for these, as opposed to the bar plots, the default was a truncated axis.
+The last two parts of the survey, noted henceforth as 'Sales - part 1' and 'Sales - part 2', explore the different y-axis scalings with respect to line plots, but for these, as opposed to the bar plots, the default was a truncated axis. The three plots investigated will consist of line plots relating to time series data for two fictitious companies. One will display each of the two lines on separate plots with the default axis, one will show both on the same plot with the default axis, and finally one with both on the same plot but with a zeroed axis. It is hypothesised that a difference in value for two time points will be perceived as smaller fopr the zeroed axis, and larger for the separated plots.
 
 As discussed in @Peytchev_Peytcheva_2017, too long a survey can result in higher measurement error due to factors such as waning interest or mental fatigue of respondents, resulting in careless responding and non-response. This is also further explored in @brower, whereby a study is carried out to determine causes of careless responding, and specifically looks at questionnaire length and participant disinterest. The study performed in this work provides evidence that longer survey length can have a detrimental affect on careless responding; a long survey may make participants more likely to respond carelessly, and this must be considered when designing an effective and efficient survey. An additional conclusion states that participant interest in the survey content could have an effect, but also that evidence is less supported for this claim. There is significant enough evidence, however, to say that this should also be considered when designing the survey. 
 
@@ -94,8 +98,8 @@ Although the content of the surveys for this study is not likely to be controver
 The set will consist of two groups if surveys, which will be identical up to the visualisation package used. Particularly, one group will contain 
 visualisations made with R's ggplot2, the next with matplotlib from Python. These surveys will be distributed to the general public by sharing links on social media platforms such as Facebook. The reasoning behind creating two separate surveys in different languages is to ascertain whether the language used influences the interpretation. Within the groups there are 6 surveys, with each altering the order of visualisations shown in part 1 to assess the perception of each plot type without reference or comparison to another, and the same with part 2. in Part 3, each of the 6 used one of 3 colour palettes as the main colour, and another as a comparitor to test which the preferred colour palette is and which respondents find easier to read and interpret.
 
-\section{The survey}
-This section will discuss the specific survey questions and explain the differences in plot ordering and colour schemes between survey versions.
+\section{The Survey}
+This section will discuss the specific survey questions and explain the differences in plot ordering and colour schemes between survey versions. Google forms was chosen as the medium for delivering the survey, as it is a free service and provides easy way to send out survey links and automatically compiles responses in a Google sheet along with time stamps, which can be exported to csv for analysis. To randomly assign each participant a survey, a javascript code was created to link to a landing page, which redirected the participant randomly to one of the 12 surveys. As time progressed it was possible to see how many respondents were taking each survey, and it was possibly to alter the Javascript accordingly to ensure each survey had an approximately even number of respondents. The survey was set such that each page contained a single question with a set of related subquestions and only the plots relevent to these subquestions, to prevent participants scrolling through the survey and seeing other figures which may alter their perception. This can also be used to analyse the effect of seeing other plots on perception of the plots following.
 
 
 \subsection{Demographic Questions}
@@ -106,9 +110,9 @@ As discussed, the questions below are used to assess whether these factors have 
     \item Please enter your age (Open)
     \item If you are a university student or past university graduate please specify your area of study. (Drop down box: Science, Technology, Engineering, Maths, Arts, Social Sciences, Humanities, Business, N/A, Other (please specify))
     \item How strongly do you agree with each of the following statements? (Linear scale with 1 - 5, 1=strongly disagree, 5=strongly agree)
-    \item\item I have good spatial awareness skills 
-    \item\item I have good observational skills 
-    \item\item I have good numerical skills 
+    \item  - I have good spatial awareness skills 
+    \item  - I have good observational skills 
+    \item  - I have good numerical skills 
     \item Are you colourblind? (Checkbox: Yes, No, Prefer not to answer)
     \item Do you have any disorders that may affect visual processing? (this could be a general visual processing disorder 
     or dyslexia, dyscalculia, ADHD etc)
@@ -116,23 +120,160 @@ As discussed, the questions below are used to assess whether these factors have 
 \end{itemize}
 
 
-\section{\textbf{American Ninja Warrior - Part 1}}
-The questions regarding each of the three bar plots (shown in the below figure) were as follows:
+\subsection{American Ninja Warrior - Part 1}
+The questions regarding each of the three bar plots were as follows:
 
-\item Approximately many times would you say the 'Salmon Ladder' was used? (Open)
-\item Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was used? (1-7 scale)
-\item Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used? (1-7 scale)
-\item In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used? (Open)
+\begin{itemize}
+  \item Approximately many times would you say the 'Salmon Ladder' was used? (Open)
+  \item Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was used? (1-7 scale)
+  \item Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used? (1-7 scale)
+  \item In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used? (Open)
+\end{itemize}
 
-Here, two questions with the difference rating scale are used to assess whether having the bars next to each other vs on opposite ends of the plot has an effect.
+Here, the two questions with the difference rating scale are used to assess whether having the bars next to each other vs on opposite ends of the plot has an effect on the difference in rating when comparing the responses for each of the plots. 
 
-See below the three plots used for these questions.
-
+The table below shows all the permutations of the three plot types, and which questionnaire version they appear in.
 ```{r}
+version <- c("V1", "V2", "V3", "V4", "V5", "V6")
+question <- c("Q1", "Q2", "Q3")
 
+order <- matrix(NA, 6, 3)
+
+order[1,] <- c("Control", "Log", "Truncated")
+order[2,] <- c("Control", "Truncated", "Log")
+order[3,] <- c("Log", "Control", "Truncated")
+order[4,] <- c("Log", "Truncated", "Control")
+order[5,] <- c("Truncated", "Control", "Log")
+order[6,] <- c("Truncated", "Log", "Control")
+
+rownames(order) <- version
+
+kable(order, col.names = question)
 ```
 
+The table shows that, for example, in version 1, the control plot was shown in question 1, the log-scaled in question 2 and the truncated in question 3.
+
+\subsection{American Ninja Warrior - Part 2}
+The questions regarding each of the three bar plots were as follows:
+
+\begin{itemize}
+  \item How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is? (1-7 scale)
+  \item How large would you say the difference between 'Log Grip' and 'Floating Steps' is? (1-7 scale)
+  \item How many times would you say 'Floating Steps' were used? (Open)
+\end{itemize}
+
+Similar to part 1, the below table gives all permutations of the three plot types.
+```{r}
+version <- c("V1", "V2", "V3", "V4", "V5", "V6")
+question <- c("Q1", "Q2", "Q3")
+
+order <- matrix(NA, 6, 3)
+
+order[1,] <- c("Default", "Narrow", "Wide")
+order[2,] <- c("Default", "Wide", "Narrow")
+order[3,] <- c("Narrow", "Default", "Wide")
+order[4,] <- c("Narrow", "Wide", "Default")
+order[5,] <- c("Wide", "Default", "Narrow")
+order[6,] <- c("Wide", "Narrow", "Default")
+
+rownames(order) <- version
+
+kable(order, col.names = question)
+```
+
+Questions regarding comparisons between the plots were then administered as follows, while showing respondents all of the three plots on a single page.
+
+\begin{itemize}
+  \item Which of the three bar charts do you find most aesthetically pleasing? (Multiple choice with options "A", "B" or "C")
+  \item Which bar chart do you feel is easiest to read and interpret? (Multiple choice with options "A", "B" or "C")
+  \item Which bar chart do you find hardest to read and interpret? (Multiple choice with options "A", "B" or "C")
+\end{itemize}
 
 
+\subsection{American Ninja Warrior - Part 3}
+This part explored the differences in perception for stacked and grouped bar charts, alongside colour preferences. This part had 4 questions, with the first two asking about the stacked and grouped bar plots, with either the stacked first or grouped first. 
 
-\section{Conclusion}
+The first two sub-questions are given below.
+
+\begin{itemize}
+  \item How many times would you say 'Floating Steps' were used in the Finals (Regional/City) rounds? (Open)
+  \item How many times would you say 'Log Grip' was used in the Finals (Regional/City) rounds? (Open)
+\end{itemize}
+
+The next question is "Please select the statement you feel applies to the bar chart above." and consists of a multiple choice answer with the following options: 
+\begin{itemize}
+  \item 'Log Grip' was used MORE in Finals (Regional/City) rounds than in Qualifying (Regional/City) rounds.
+  \item 'Log Grip' was used Less in Finals (Regional/City) rounds than in Qualifying (Regional/City) rounds. 
+  \item 'Log Grip' was used an EQUAL number of times in Finals (Regional/City) rounds and Qualifying (Regional/City) rounds.")
+\end{itemize}
+
+This is followed by another mulitple choice question, given as Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?, with the following options:
+\begin{itemize}  
+  \item 'Log Grip'
+  \item 'Floating Steps'
+  \item They were used the same amount of times
+\end{itemize}
+
+After answering these questions for both plot types, the respondents were shown both on the same page and asked to select which of the two they found easier to read and interpret, and were then shown the stacked bar plot in two different colour palettes; the one used for the questions so far and a comparitor, with the questions below.
+
+For the stacked vs grouped comparison:
+\begin{itemize}
+  \item Which bar chart do you feel is easiest to read and interpret? (Multiple choice with options "A", "B", "C")
+\end{itemize}
+
+For the colours comparison:
+\begin{itemize}
+  \item Which colour scheme do you find most aesthetically pleasing? (Multiple choice with options "A", "B", "C")
+  \item Do you feel that one of the colour schemes makes it easier to read and interpret the data than the other? If so, please select which one. (Multiple choice with options "No", "Yes, A is easier", "Yes, B is easier")
+\end{itemize}
+
+For this part, survey versions 1, 2 and 4 showed the stacked bars first, followed by the grouped, and versions 3, 5 and 6 displayed the grouped first. It is shown in the below table which colour schemes were used in each survey.
+
+```{r}
+prim <- c("Viridis", "Default", "Default", "Greyscale", "Viridis", "Greyscale")
+comp <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viridis")
+vers <- c("V1", "V2", "V3", "V4", "V5", "V6")
+
+mat <- matrix(NA, 6, 3)
+
+mat[,1] <- vers
+mat[,2] <- prim
+mat[,3] <- comp
+
+colnames(mat) <- c("Version", "Primary Colour Palette", "Comparitor Colour Palette")
+
+kable(mat)
+
+```
+\subsection{Sales - Part 1}
+The respondents then moved onto part 1 of the sales section of the survey, in which they are asked to once again give subjective opinions regarding the y-axis scaling, but this time relating to time series line plots. 
+
+Once again, the same set of questions is asked for each plot which consist of, firstly, a two-row multiple choice grid, with each row relating to one of the companies. Respondents were asked the question "How much would you say sales of each company increased between January and December?" and were to give a response on the 7-point scale. 
+
+The ordering of the plots for each version number are given below.
+
+```{r}
+version <- c("V1", "V2", "V3", "V4", "V5", "V6")
+question <- c("Q1", "Q2", "Q3")
+
+order <- matrix(NA, 6, 3)
+
+order[1,] <- c("Separated", "Truncated", "Zeroed")
+order[2,] <- c("Separated", "Zeroed", "Truncated")
+order[3,] <- c("Truncated", "Separated", "Zeroed")
+order[4,] <- c("Truncated", "Zeroed", "Separated")
+order[5,] <- c("Zeroed", "Separated", "Truncated")
+order[6,] <- c("Zeroed", "Truncated", "Separated")
+
+rownames(order) <- version
+
+kable(order, col.names = question)
+```
+
+The second question was "How large would you say the drop in sales between April and July of Company A  is?", which once again was rated based on the 7-point scale.
+
+
+\subsection{Sales - Part 2}
+
+The final part of the survey showed zeroed and truncated plots once again, for two different fictitious companies, this time with the intention of gaining an overall view. For each of the two, each respondent was asked a single 7-point scale rating question; "Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?".
+
