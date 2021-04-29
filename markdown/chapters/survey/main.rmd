@@ -25,7 +25,6 @@ in order to separate surveys from other methods of information collection. "syst
 Whether or not the survey is 'thorough' and 'efficient' depends heavily on the survey structure and design. Designing an effective, systematic survey involves balancing efficiency with completeness, creating a survey that can obtain as much information as possible whilst not boring or fatiguing participants, which can lead to non-response and measurement errors due to participants skipping questions or selecting answers at random. A well-designed systematic survey has the capacity to yield large amounts of both qualitative and quantitative information regarding the research topic while minimising these errors.
 
 There exist a variety of methods for delivering a survey, such as self-completed questionnaires and interviewer-administered interviews. Depending on the aims of the study, there will be advantages and disadvantages to each method. There may also be times when a combined approach is helpful in gathering the necessary information. 
-
 The first method of surveying, a questionnaire, may consist of either physical paper forms that are mailed or handed out to people within the target population, or in an online format. As discussed by @brace2004, this form of surveying constitutes a method of indirect communication between the respondent and researcher, in effect a non-verbal conversation in which the respondent is replying to the researcher's questions. The non-face-to-face aspect of this method can be beneficial in terms of anonymity; an anonymous respondent is more likely to be honest in their answers than a respondent for whom the identity is known. As a result, an anonymous questionnaire can mitigate errors that may be caused by respondents fearing judgment of their answers. It is also possible to administer a large number of these questionnaires in a short period of time since they are self-administered, and thus
 constraints such as the number of interviewers or time taken to administer the survey has less effect on the amount of information obtained.  
 
@@ -57,7 +56,6 @@ However, there are also shortfalls to an interview-based survey method. For inst
 The UK Household Longitudinal Study [@longitudinal] is an ongoing study and an example of implementation of a combined use of the above mentioned surveying methods. Initially, in 'wave 1' of the study, a sample of 40,000 households in the UK were selected to be surveyed on a yearly basis. The survey involves all members of each selected household, overall comprising of around 100,000 individuals, and asks them a range of questions regarding areas such as family life, income, employment and health. The study consists of a self-administered youth paper questionnaire given to respondents ages 10-15, and an interview for those aged 16 and up. This split in age demographic allows some questions to be omitted from the youth survey, such as those about income and employment, and some to be added such as about pocket money habits and 'future intentions', as the website states. Giving the youth respondents a paper questionnaire may help obtain more useful or relevant answers, as the respondent may be more comfortable with this than being interviewed by an adult. The youth questionnaire is also shorter, which could perhaps just be a result of many questions not being relevant to this demographic, or it could be a conscious decision, but either way this with help to ensure the young respondent doesn't lose interest and potentially incur bias in their answers due to either rushing to finish the survey or not paying attention. The adult survey also includes a section specific to 16-21 year olds. The surveys contain a standardised set of core questions asked each year alongside a set asked every other year. The reasoning behind this is given to be that this study has a very large scope, asking about many aspects of each respondents' life, and so it becomes inefficient and counterproductive to include all questions every year since, as mentioned previously, the longer a survey is, the more likely a respondent is to get bored or mentally fatigued. The fact that the adult survey is administered in an interview also means that there may be limits on the amount of time the survey can take, as interviewers may have to get through a certain number of respondents in a day, additionally to the interviewer potentially also becoming fatigued. If the interviewer is fatigued, their tone and how they hold themselves may change, and potentially cause a subconscious bias in how the respondent answers the questions. 
 
 
-
 \section{Specific goals of survey tool for this study}
 While visualisations can be a very useful tool for understanding data, they also have the potential to be highly misleading. This section of the study will explore how modifying certain aesthetic features of visualisations can impact perception and interpretation of data, and how these modifications can be exploited in order to mislead the observer. Misleading visualisations may be created in an effort to deliberately influence the viewers' perceptions, or accidentally as a result of poor practice and knowledge surrounding data visualisation. In either case, visualisations have the ability to communicate different messages and stories depending on how they present the data to the observer. There is a large amount of research and literature surrounding this topic, both in terms of providing frameworks for good visualisation practice as well as looking into how various techniques are used to deceive viewers. Results from some of these papers will be replicated, as well as used to form hypotheses which this survey will investigate.
 
@@ -71,140 +69,69 @@ The 2020 paper "The Deceptive Potential of Common Design Tactics Used in Data Vi
 
 With regard to truncated axes, Claire and O'Brian asked participants to subjectively judge the difference between two data points using a 6 point scale ranging from "a little" to "a lot". For both the bar plot and line plot it was found the the use of a truncated scale increases the perceived difference between the data points. The use of a truncated scale is also discussed by @YANG2021, whereby 5 empirical studies were performed in order to assess the effect of altering the scale in this way. The first of the 5 studies once again assessed how large the difference between data points is perceived to be in the truncated plot as compared to a control, again using a subjective scale from "Not at all different" to "Extremely different" on a 7 point scale. This scale differed, however, in the way that a midpoint label of "Moderately different" was provided. The 7 point scale may be preferable to the 6 point scale as the 7 point has a defined midpoint at 4, whereas the 6 point does not. This study once again concludes that the differences in data points tended to be perceived as larger than for the control plot. Alongside these studies, a 2014 blog post [@parikh_2014] discusses axis truncation and its effect on perceived data point difference for bar plots alongside other aesthetic features. The first example shows how truncating the y-axis of a bar plot can over-exaggerate differences in the heights of the bars, perhaps leading to incorrect observations regarding comparisons of values within the data. 
 
-The paper @stackscale performs a similar study, but instead investigates the use of 'stack-scale', or 'stacked' bar charts and logarithmic scaling. The aim of the study was to explore whether stack-scale bar charts are an effective way to visualise large value data, which is less relevant to our study since we have relatively low-valued data compared to the paper, but nevertheless provides a framework for exploring the use of logarithmic scaling and stacked bars in a respondent study. Participants were shown three plots; a control with a linear scale, a bar plot using a stack-scale, and one with logarithmic scaling. The questions asked determined how the different scaling affected accuracy in reading individual values, interpreting differences in values and determining which time-step exhibits the largest difference in values. 
+The paper @stackscale performs a similar study, but instead investigates the use of 'stack-scale', or 'stacked' bar charts and logarithmic scaling. The aim of the study was to explore whether stack-scale bar charts are an effective way to visualise large value data, which is less relevant to our study since we have relatively low-valued data compared to the paper, but nevertheless provides a framework for exploring the use of logarithmic scaling and stacked bars in a respondent study. Participants were shown three plots; a control with a linear scale, a bar plot using a stack-scale, and one with logarithmic scaling. The questions asked determined how the different scaling affected accuracy in reading individual values, interpreting differences in values and determining which time-step exhibits the largest difference in values. @logax additionally discusses the use of a logarithmic axis in bar plots, explaining how it is impossible for a zero value to be displayed on this axis, and thus the bar start points are arbitrary and produce an inaccurate representation of the bar height with relation to the true value. To quote the paper, \textit{"Don’t create bar graphs using a logarithmic axis if your goal is to honestly show the data"}. We see that the logarithmic scale makes the percieved difference appear smaller than in the control. 
 
-Following this, questions will be included in part 1 the survey with the aim of gauging whether altering the y-scale to be truncated or logarithmic has an effect on user perception of difference in data point values, for both bar and line plots. These will ask the respondents to gauge both individual values and differences in values, with the former providing an open answer box in which the may type their answer to allow for maximum freedom and obtain their true observation, unimpeded by the bias of having a specific set of numbers to pick from when their true observation may lie outside this range. The question for gauging difference perception will follow @claire-obrian and @YANG2021 in using a numbered scale from not much difference up to a large difference. The @YANG2021 method of a 7-point scale will be employed here. It is hypothesised that the truncated scale will cause respondents to overestimate differences between data values, and the logarithmic scale will cause an underestimation.
-
-
-As well as scaling, another aspect of visualisation design that could potentially mislead the observer is bar width and aspect ratios. When adding a visualisation into a publication, re-sizing the visualisation to fit a specific gap may include altering the aspect ratio, in turn affecting the length to width ratio of the bars in a bar plot. As explored by Steven Few in a 2016 article for the \textit{'Visual Business Intelligence Newsletter'} [@Few2016], altering this ration
+Following this, questions included in part 1 the survey will focus on gauging whether altering the y-scale to be truncated or logarithmic has an effect on user perception of difference in data point values, for both bar and line plots. The respondents will be asked to gauge both individual values and differences in values, with the former providing an open answer box in which the may type their answer to allow for maximum freedom and obtain their true observation, unimpeded by the bias of having a specific set of numbers to pick from when their true observation may lie outside this range. The question for gauging difference perception follows @claire-obrian and @YANG2021 in using a numbered scale with numbers representing a range from not much difference up to a large difference. The @YANG2021 method of a 7-point scale was employed here. From these papers, it is hypothesised that the truncated scale will cause respondents to overestimate differences between data values, and the logarithmic scale will be hypothesised to result in underestimation.
 
 
-Additionally, stacked bar charts will be investigated, showing a comparison between using the stacking method as opposed to a grouped bar plot. An article from the University of Stuttgart [@HuynhHaiDang2017] gives an overview of may types of bar chart, including stacked and grouped bars. The author remarks that grouped bar charts may make the comparison of bars in the same category more difficult, while the stacked bar chart sacrifices ease of comparison of values in the bars for increased spacial efficiency. A 2018 work from the journal of \textit{'Visual Informatics'} [@INDRATMO2018155] also provides a discussion on the use of various forms of stacked and grouped bar charts and their efficacy. The paper notes how a classical stacked bar chart can be useful for overall comparisons as the height of the bar represents the value of the item, with the different attributes depicted as a segmentation of this single bar into different colours. When discussing grouped bar charts it is mentioned that stacked bar charts may be less useful when performing attribute comparisons, in other words comparisons between different categories on the same bar, as a result of the bar segments being non-aligned. This results in comparison taking the form of length judgment as opposed to position judgment. Cleveland and McGill in their 1984 article in the \textit{'Journal of the American Statistical Association'} [@clevelandmcgill] discuss how judgments based on length are likely to be less accurate than those based on position. A grouped bar chart is a way to allow for easy comparison between individual categories, but is discussed to be less effective in overall comparison. Based on this research, part 3 of the survey will include questions with the objective of testing standard stacked against grouped bar charts, alongside questions relating to the colour palettes used in depicting the different groups.
+As well as scaling, another aspect of visualisation design that could potentially mislead the observer is bar width and aspect ratios. When adding a visualisation into a publication, re-sizing the visualisation to fit a specific gap may include altering the aspect ratio, in turn affecting the length to width ratio of the bars in a bar plot. As explored by Steven Few in a 2016 article for the \textit{'Visual Business Intelligence Newsletter'} [@Few2016], altering this ratio can affect viewer perception in the way of a narrower and taller image distorting bars to appear longer, and vice versa, meaning that perceived differences between bar heights may be affected. Part 2 of the survey was based around investigating this idea, alongside how the reading of exact values is affected.
 
 
+Additionally, stacked bar charts will be investigated, showing a comparison between using the stacking method as opposed to a grouped bar plot. An article from the University of Stuttgart [@HuynhHaiDang2017] gives an overview of may types of bar chart, including stacked and grouped bars. The author remarks that grouped bar charts may make the comparison of bars in the same category more difficult, while the stacked bar chart sacrifices ease of comparison of values in the bars for increased spacial efficiency. A 2018 work from the journal of \textit{'Visual Informatics'} [@INDRATMO2018155] also provides a discussion on the use of various forms of stacked and grouped bar charts and their efficacy. The paper notes how a classical stacked bar chart can be useful for overall comparisons as the height of the bar represents the value of the item, with the different attributes depicted as a segmentation of this single bar into different colours. When discussing grouped bar charts it is mentioned that stacked bar charts may be less useful when performing attribute comparisons, in other words comparisons between different categories on the same bar, as a result of the bar segments being non-aligned. This results in comparison taking the form of length judgment as opposed to position judgment. Cleveland and McGill in their 1984 article in the \textit{'Journal of the American Statistical Association'} [@clevelandmcgill] discuss how judgments based on length are likely to be less accurate than those based on position. A grouped bar chart is a way to allow for easy comparison between individual categories, but is discussed to be less effective in overall comparison. Based on this research, part 3 of the survey will include questions with the objective of testing standard stacked against grouped bar charts, alongside questions relating to the colour palettes used in depicting the different groups. We aim to test which colour palette is preferred in terms of aesthetics as well as ease of interpretation and reading.
 
+The last two parts of the survey, noted henceforth as 'Sales - part 1' and 'Sales - part 2', explore the different y-axis scalings with respect to line plots, but for these, as opposed to the bar plots, the default was a truncated axis.
 
-Although the content of the surveys for this study is not likely to be controversial or highly personal, anonymity is still important as the participants could otherwise potentially feel pressure to give a 'correct' answer, given the mathematical nature of the questions. Anonymity here means that this pressure is potentially reduced and thus the relevant measurement bias may be mitigated. 
+As discussed in @Peytchev_Peytcheva_2017, too long a survey can result in higher measurement error due to factors such as waning interest or mental fatigue of respondents, resulting in careless responding and non-response. This is also further explored in @brower, whereby a study is carried out to determine causes of careless responding, and specifically looks at questionnaire length and participant disinterest. The study performed in this work provides evidence that longer survey length can have a detrimental affect on careless responding; a long survey may make participants more likely to respond carelessly, and this must be considered when designing an effective and efficient survey. An additional conclusion states that participant interest in the survey content could have an effect, but also that evidence is less supported for this claim. There is significant enough evidence, however, to say that this should also be considered when designing the survey. 
 
-The decision to focus on the two plot types was made in part to follow the existing literature, but also to ensure the survey is not too long. 
-As discussed in [CITE: https://ojs.ub.uni-konstanz.de/srm/article/view/7145], too long a survey can result in higher measurement error due to factors 
-such as waning interest or mental fatigue of respondents, resulting in careless responding and non-response. This is also further explored in 
-[CITE: https://corescholar.libraries.wright.edu/cgi/viewcontent.cgi?article=3059&context=etd_all]. While 
-[CITE: https://ojs.ub.uni-konstanz.de/srm/article/view/7145] does conclude that a 'split survey' design, where each respondent is only asked to 
-answer a selection of questions from the whole set, is effective in reducing error while gathering large amount of information, this will not be employed
-here. The reasoning for this is that there will already be a large set of different surveys being sent, and creating further splits could potentially lead
-to small sample sizes and thus inconclusive results. Additionally to this, the paper investigates how placement of questions in the survey can affect
-responses, concluding that questions asked later in the survey are more susceptible to bias. 
+The @Peytchev_Peytcheva_2017 paper explains that a 'split survey' design, where each respondent is only asked to answer a selection of questions from the whole set, is effective in reducing error while gathering large amount of information, however this will not be employed here. The reasoning for this is that there will already be a set of 12 different surveys being sent, and creating further splits could potentially lead to much too small sample sizes and thus inconclusive results. Additionally to this, the paper investigates how placement of questions in the survey can affect responses, concluding that questions asked later in the survey are more susceptible to bias, which tracks with the conclusion of survey length being a cause of careless responding; the longer a participant is taking a survey for, the more likely they are to start being careless with responding. 
 
-%%%%% TODO:
+Due to this, the survey was designed to last in the range of approximately 15-20 minutes, as suggested in @length. One paper [@burdenpercep] explores the pecieved burden of a survey on the participant, and performs a study whereby respondents were assigned a questionnaire, but given one of two different time estimates, for which the true length of the survey lay between. It was found that more people started the survey with the lower estimated completion time, but more also dropped out. However, the time at which respondents dropped out did not significantly differ in the two groups. In order to obtain maximum response, it is wise to as accurately as possible disclose the true survey length, and even slightly over-estimate in the disclosure.  
 
-% Perform meta-analysis of different sources to find optimal number of survey questions?
-% "20 minute rule" -> Don't go beyond 20 mins
-% Work out how long each question will take... Guessing 1-2 mins per question => ~10-20 questions?
-% Long surveys can increase measurement error
-% 
+With regard to the interest factor, the survey was designed with engaging respondents. The topic of the majority of the survey was chosen to be data relating to the television show \textit{American Ninja Warrior}, as this could be subjectively viewed as a 'more interesting' topic than seemingly meaningless numbers. The survey was administered to a test subject, who commented that they found this topic interesting, with the additional comment that perhaps some pictures of the Ninja Warrior obstacles would be nice, however was not employed. The survey also took this respondent about 20 minutes to complete. 
 
-%%%%% Potential sources about survey length %%%%%
-% https://journals.sagepub.com/doi/pdf/10.2501/IJMR-2017-039 -> Study about ideal length of survey in terms of time
-% https://ojs.ub.uni-konstanz.de/srm/article/view/7145 -> Study about reducing measurement error due to survey length
-% https://corescholar.libraries.wright.edu/etd_all/1918/ -> About 'careless responding' and 'insufficient effort responding'
-% https://journals.sagepub.com/doi/abs/10.1177/089443930101900202 
-
-Two types of questionaire will be written for this study. The first type will present a series of fairly basic visualisations accompanied
-by questions created to guage whether each presented visualisation has an impact on how the data is interpreted by the survey participant.
-
-
-The set will consist of three separate surveys, which will be identical up to the visualisation package used. Particularly, one will contain 
-visualisations made with R's ggplot2, the next with matplotlib from Python, and the last with the JavaScript library D3. These surveys will 
-be distributed to the general public by sharing links on social media platforms such as Facebook. The reasoning behind creating three separate 
-surveys in a variety of languages is to ascertain whether the language used influences the interpretation. 
-
-
-
-
-%TODO explain the second type of survey further
-The second type will be a single survey comparing the implementation of the different languages and will be distributed to a group specialising 
-in visual analytics for pharmaceutical research. This second survey aims to explore opinions on the coding languages themselves, in terms of 
-features such as readability, reproducibility and ease of implementation.
-
-%TODO explain that I'm using questionaires and why
-
-
-In the set of three surveys we aim to answer questions such as: 
-
-\begin{itemize}
-    \item In which form is the given information of interest most accurately interpreted by the viewer?
-    \item What factors of a plot can bias interpretation? 
-    \item Does the visualisation tool used have an impact on interpretation?
-    \item Does the tool used have an impact on opinions regarding aesthetic features?
-\end{itemize}
-
-
-% Idea: Since I have had to extract things from ninja warrior data (lots of data), could show data and then a plot to show how
-%       visualisations are useful to find things you can't immediately see in the data itself.
-% Idea: Axes in time series plots - Use short and tall axes and ask which varies most? (Maybe use HR data from http://ecg.mit.edu/time-series/)
-% Idea: Distance between bars in barplot - further apart harder to interpret?
-% Idea: Does uning a logarithmic scale impact interpretation?
+Although the content of the surveys for this study is not likely to be controversial or highly personal, anonymity is still important as the participants could otherwise potentially feel pressure to give a 'correct' answer, given the mathematical nature of the questions. As mentioned prior, anonymity here means that this pressure is potentially reduced and thus the relevant measurement bias may be mitigated. Additionally to the more technical visualisation questions, respondents were asked a series of demographic questions such as age, degree subject (if applicable),  and whether they are colourblind or have any disorders that my affect visual processing. Additionally, three Likert scaled questions relating to well they would rate their spatial, observational and numerical skills. The @YANG2021 paper, which explores the truncation effect of barplots, looks at graph literacy and its relation to perception, and hypothesises that those undertaking quantitative subjects at PhD level would be less impacted by the truncation effect as compared to humanities PhD students. It was found that the truncation effect did impact both groups, but those in quantitative fields had their perception marginally less affected. Thus the degree subject question was included to explore if this has an effect here. In relation to the visual processing and colorblindness questions, these are again included to test whether they have any significant impact on perception, as it may be important to consider these factors when creating visualisations to ensure they are accessible to all, and the study will examine the potential impact of such disorders.
+ 
+The set will consist of two groups if surveys, which will be identical up to the visualisation package used. Particularly, one group will contain 
+visualisations made with R's ggplot2, the next with matplotlib from Python. These surveys will be distributed to the general public by sharing links on social media platforms such as Facebook. The reasoning behind creating two separate surveys in different languages is to ascertain whether the language used influences the interpretation. Within the groups there are 6 surveys, with each altering the order of visualisations shown in part 1 to assess the perception of each plot type without reference or comparison to another, and the same with part 2. in Part 3, each of the 6 used one of 3 colour palettes as the main colour, and another as a comparitor to test which the preferred colour palette is and which respondents find easier to read and interpret.
 
 \section{The survey}
+This section will discuss the specific survey questions and explain the differences in plot ordering and colour schemes between survey versions.
 
-Potentially will use google sheets and post all three, and ask people to complete one of them.
-%TODO Specify further
 
-\section{\textbf{Demographic Questions}}
+\subsection{Demographic Questions}
 
-The questions below are used to 
+As discussed, the questions below are used to assess whether these factors have an impact on graph literacy and graph perception.
 
 \begin{itemize}
-    \item Please enter your age
-    
+    \item Please enter your age (Open)
     \item If you are a university student or past university graduate please specify your area of study. (Drop down box: Science, Technology, Engineering, Maths, Arts, Social Sciences, Humanities, Business, N/A, Other (please specify))
-
     \item How strongly do you agree with each of the following statements? (Linear scale with 1 - 5, 1=strongly disagree, 5=strongly agree)
-
     \item\item I have good spatial awareness skills 
-    
     \item\item I have good observational skills 
-    
     \item\item I have good numerical skills 
-    
     \item Are you colourblind? (Checkbox: Yes, No, Prefer not to answer)
-    
     \item Do you have any disorders that may affect visual processing? (this could be a general visual processing disorder 
-    or dyslexia, dyscalculia etc)
+    or dyslexia, dyscalculia, ADHD etc)
     ((Checkbox: Yes, No, Prefer not to answer))
 \end{itemize}
 
 
-\section{\textbf{Bar Plot Questions}}
+\section{\textbf{American Ninja Warrior - Part 1}}
+The questions regarding each of the three bar plots (shown in the below figure) were as follows:
 
-American Ninja Warrior\newline
+\item Approximately many times would you say the 'Salmon Ladder' was used? (Open)
+\item Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was used? (1-7 scale)
+\item Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used? (1-7 scale)
+\item In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used? (Open)
 
-The following bar charts present information regarding how many times 4 obstacles were used over the course of 10 seasons of the TV show 'American Ninja Warrior'. Please note that the answers to this section are entirely subjective, and that there are no 'correct' answers.\newline
+Here, two questions with the difference rating scale are used to assess whether having the bars next to each other vs on opposite ends of the plot has an effect.
 
+See below the three plots used for these questions.
 
-The first three questions refer to this bar chart, bar chart A.
+```{r}
 
-\textbf{Figure}
+```
 
-
-%Note: Deliberately design 'bad' as well as good plots?
-
-%%%%% Misleading aspects of plots: %%%%%
-
-% Axis Scales
-% - Sources:
-%   - https://www.nature.com/articles/s41559-018-0610-7
-%   - https://web.archive.org/web/20101123050530/http://graphpad.com/faq/file/1487logaxes.pdf
-%   - https://dl.acm.org/doi/fullHtml/10.1145/3231772
-%   - https://journals.sagepub.com/doi/pdf/10.1177/1050651920958392 
-%   - https://journals.sagepub.com/doi/pdf/10.1177/1050651920958392
-%   - 
-
-
-%%%%%
-
-% TODO Write about choosing more 'basic' questions to cut down on number of questions as well as appealing to audience
 
 
 
