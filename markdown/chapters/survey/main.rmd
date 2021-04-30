@@ -98,8 +98,40 @@ Although the content of the surveys for this study is not likely to be controver
 The set will consist of two groups if surveys, which will be identical up to the visualisation package used. Particularly, one group will contain 
 visualisations made with R's ggplot2, the next with matplotlib from Python. These surveys will be distributed to the general public by sharing links on social media platforms such as Facebook. The reasoning behind creating two separate surveys in different languages is to ascertain whether the language used influences the interpretation. Within the groups there are 6 surveys, with each altering the order of visualisations shown in part 1 to assess the perception of each plot type without reference or comparison to another, and the same with part 2. in Part 3, each of the 6 used one of 3 colour palettes as the main colour, and another as a comparitor to test which the preferred colour palette is and which respondents find easier to read and interpret.
 
+\section{Creating the Visualisations}
+
+See appendix for figures of the visualisations.
+
+\subsection{The Data}
+The visualisations for the survey were created with inspiration from the papers discussed above. The bar plots were created using a data set regarding the history of obstacles used over 10 seasons of \textit{'American Ninja Warrior'} [@ANW]. Each row of the data represents a single instance of an obstacle being used, and each instance has variables as specified in the below table.
+
+```{r}
+vars <- c("season", "location", "round_stage", "obstacle_name", "obstacle_order")
+expl <- c("Season in which instance occured", 
+          "Location of use", 
+          "Stage of competition in which instance occured", 
+          "Name of the obstacle", 
+          "Order in which the obstacle was placed in the course")
+mat <- matrix(NA, 5, 2)
+mat[,1] <- vars
+mat[,2] <- expl
+
+colnames(mat) <- c("Variable Name", "Explanation")
+
+kable(mat)
+```
+
+This data was manipulated in R to produce a data frame containing the count of the number of times each obstacle was used over the course of the whole ten seasons. For the stacked and grouped bar plots, a data frame was produced, once again in R, containing columns 'obstacle' and 'stage', where 'obstacle' is a vector containing the name of each obstacle repeated the number of times it was used, and 'stage' similarly contains the names of all the stages of the competition, with each repeated the number of times it appeared. For example, Salmon Ladder was used 41 times, and thus is also repeated this many times, and there are 41 entries in the 'stage' vector corresponding to this. These data frames were exported to csv files to use in creation of the Python visualisations. 
+
+The data for the time series plots was taken from the data set `BJsales` in the R package `datasets`. This data consists of a single vector of values with 150 entries, where each entry corresponds to a measurement taken at some arbitrary time point. Four subsets were taken from this data such that a start index was selected, and then this entry and the 11 following consecutive entries were extracted. The vectors were put into a data frame with the time steps set as months, giving a year of sales data for four fictional companies.
+
+\subsection{The Bar Plots}
+As explained before, the bar plots for part 1 were made such that one uses the default axis scaling, one uses a truncated axis, and one uses a logarithmically-scaled axis. It is worth noting that in R attempting to truncate the bar plot itself does not work; the bar must start at the zero tick mark otherwise the bars do not show up. To get around this issue, the data itself was truncated before applying to a bar plot with the tick labels then altered to fit the truncation, using intervals of 10 as in the default plot. Python, on the other had, will perform the truncation without this issue and defaults to steps of 2.5, which could affect the reading of values. For the logarithmically scaled plots, R by default uses a non-standard form notation with tick labels of 1, 3, 20, 30. Python does use standard form and has labels 0, $10^0$ and $10^1$
+
+\subsection{The Line Plots}
+
 \section{The Survey}
-This section will discuss the specific survey questions and explain the differences in plot ordering and colour schemes between survey versions. Google forms was chosen as the medium for delivering the survey, as it is a free service and provides easy way to send out survey links and automatically compiles responses in a Google sheet along with time stamps, which can be exported to csv for analysis. To randomly assign each participant a survey, a javascript code was created to link to a landing page, which redirected the participant randomly to one of the 12 surveys. As time progressed it was possible to see how many respondents were taking each survey, and it was possibly to alter the Javascript accordingly to ensure each survey had an approximately even number of respondents. The survey was set such that each page contained a single question with a set of related subquestions and only the plots relevent to these subquestions, to prevent participants scrolling through the survey and seeing other figures which may alter their perception. This can also be used to analyse the effect of seeing other plots on perception of the plots following.
+This section will discuss the specific survey questions and explain the differences in plot ordering and colour schemes between survey versions. Google forms was chosen as the medium for delivering the survey, as it is a free service and provides easy way to send out survey links and automatically compiles responses in a Google sheet along with time stamps, which can be exported to csv for analysis. To randomly assign each participant a survey, a javascript code was created to link to a landing page, which redirected the participant randomly to one of the 12 surveys. As time progressed it was possible to see how many respondents were taking each survey, and it was possibly to alter the Javascript accordingly to ensure each survey had an approximately even number of respondents. The survey was set such that each page contained a single question with a set of related sub-questions and only the plots relevant to these sub-questions, to prevent participants scrolling through the survey and seeing other figures which may alter their perception. This can also be used to analyse the effect of seeing other plots on perception of the plots following.
 
 
 \subsection{Demographic Questions}
