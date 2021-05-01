@@ -102,6 +102,7 @@ See appendix for the code and figures of the visualisations. The R visualisation
 \subsection{The Data}
 The visualisations for the survey were created with inspiration from the papers discussed above. The bar plots were created using a data set regarding the history of obstacles used over 10 seasons of \textit{'American Ninja Warrior'} [@ANW]. Each row of the data represents a single instance of an obstacle being used, and each instance has variables as specified in the below table.
 
+\begin{center}
 ```{r}
 vars <- c("season", "location", "round_stage", "obstacle_name", "obstacle_order")
 expl <- c("Season in which instance occured", 
@@ -117,6 +118,7 @@ colnames(mat) <- c("Variable Name", "Explanation")
 
 kable(mat)
 ```
+\end{center}
 
 This data was manipulated in R to produce a data frame containing the count of the number of times each obstacle was used over the course of the whole ten seasons. For the stacked and grouped bar plots, a data frame was produced, once again in R, containing columns 'obstacle' and 'stage', where 'obstacle' is a vector containing the name of each obstacle repeated the number of times it was used, and 'stage' similarly contains the names of all the stages of the competition, with each repeated the number of times it appeared. For example, Salmon Ladder was used 41 times, and thus is also repeated this many times, and there are 41 entries in the 'stage' vector corresponding to this. For the python version, the frequency tables were created manually.
 
@@ -169,6 +171,8 @@ The questions regarding each of the three bar plots were as follows:
 Here, the two questions with the difference rating scale are used to assess whether having the bars next to each other vs on opposite ends of the plot has an effect on the difference in rating when comparing the responses for each of the plots. 
 
 The table below shows all the permutations of the three plot types, and which questionnaire version they appear in.
+
+\begin{center}
 ```{r}
 version <- c("V1", "V2", "V3", "V4", "V5", "V6")
 question <- c("Q1", "Q2", "Q3")
@@ -186,6 +190,7 @@ rownames(order) <- version
 
 kable(order, col.names = question)
 ```
+\end{center}
 
 The table shows that, for example, in version 1, the control plot was shown in question 1, the log-scaled in question 2 and the truncated in question 3.
 
@@ -199,6 +204,7 @@ The questions regarding each of the three bar plots were as follows:
 \end{itemize}
 
 Similar to part 1, the below table gives all permutations of the three plot types.
+\begin{center}
 ```{r}
 version <- c("V1", "V2", "V3", "V4", "V5", "V6")
 question <- c("Q1", "Q2", "Q3")
@@ -216,7 +222,7 @@ rownames(order) <- version
 
 kable(order, col.names = question)
 ```
-
+\end{center}
 Questions regarding comparisons between the plots were then administered as follows, while showing respondents all of the three plots on a single page.
 
 \begin{itemize}
@@ -265,6 +271,7 @@ For the colours comparison:
 
 For this part, survey versions 1, 2 and 4 showed the stacked bars first, followed by the grouped, and versions 3, 5 and 6 displayed the grouped first. It is shown in the below table which colour schemes were used in each survey.
 
+\begin{center}
 ```{r}
 prim <- c("Viridis", "Default", "Default", "Greyscale", "Viridis", "Greyscale")
 comp <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viridis")
@@ -279,8 +286,9 @@ mat[,3] <- comp
 colnames(mat) <- c("Version", "Main colours", "Comparitor")
 
 kable(mat)
-
 ```
+\end{center}
+
 \subsection{Sales - Part 1}
 The respondents then moved onto part 1 of the sales section of the survey, in which they are asked to once again give subjective opinions regarding the y-axis scaling, but this time relating to time series line plots. 
 
@@ -288,6 +296,7 @@ Once again, the same set of questions is asked for each plot which consist of, f
 
 The ordering of the plots for each version number are given below.
 
+\begin{center}
 ```{r}
 version <- c("V1", "V2", "V3", "V4", "V5", "V6")
 question <- c("Q1", "Q2", "Q3")
@@ -305,6 +314,7 @@ rownames(order) <- version
 
 kable(order, col.names = question)
 ```
+\end{center}
 
 The second question was "How large would you say the drop in sales between April and July of Company A  is?", which once again was rated based on the 7-point scale.
 
