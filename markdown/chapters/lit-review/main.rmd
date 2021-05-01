@@ -1,0 +1,21 @@
+---
+output:
+  pdf_document: 
+    extra_dependencies: ["float"]
+    citation_package: natbib
+fontsize: 12pt
+geometry: margin=1in
+documentclass: book
+header-includes:
+  \setlength{\parskip}{1em}
+bibliography: main.bib
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.pos = 'H', warning = F, message = F, include=T)
+library(knitr)
+library(kableExtra)
+```
+
+@wilke2019
+
+@chen2017
