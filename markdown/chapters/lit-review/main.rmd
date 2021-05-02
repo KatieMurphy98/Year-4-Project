@@ -16,6 +16,15 @@ library(knitr)
 library(kableExtra)
 ```
 
-@wilke2019
+\section{Introduction}
+Data visualisation is a method of conveying data in an easily digestible manner through graphics. It is an important aspect of data presentation and allows key information to be quickly identified by the observer. Very many subject areas rely on such visualisations to relay messages that may get lost or have less impact when presented as written word or raw numbers. The main objective of visualisation is to create figures that display the data accurately in an aesthetic manner, giving non-misleading messages in a format that is pleasing to the eye. A good visualisation strikes a balance between aesthetics and information, where the aesthetic features are designed such that they 'enhance the message of the visualisation' [@wilke2019]. An incorrect balance of aesthetics to information can lead to figures that are misleading, confusing, or unengaging. Wilke discusses the way in which, for example, a research scientist with limited design experience may produce a visualisation displaying the data in an informative manner, but fail to draw immediate attention to the desired message, and on the other hand, someone with a main interest in the aesthetic design of a visualisation could create a figure that is very pleasing to the eye, but create a misleading visualisation in the process.
 
-@chen2017
+This literature review will discuss a range of publications discussing various aspects of data visualisation with a focus on how poor or uninformed visualisation design can produce misleading figures, as well as how such visualisations may be abused to deliberately deceive the observer. Starting with publications discussing general good visualisation practice, the discussion will then lead on to look at studies investigating the implementation of different visualisation practices, from which inspiration will be drawn to design the study for this paper.
+
+\section{Good Visualisation Practice}
+The book \textit{'Fundamentals of Data Visualization'} is renowned as \textit{'an excellent reference about producing and understanding static figures, figures'} [see @wilkerev] and described as being \textit{'suitable to be used as a reference manual'} [see @hwang2020]. Thus, this book provides a good basis to understanding the principles behind data visualisation, and how to create effective, informative and aesthetic figures. 
+
+\section{}
+
+
+
