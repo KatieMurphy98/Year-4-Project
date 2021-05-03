@@ -461,14 +461,19 @@ trnc_y_scale <- rbind(ver1[,18:21], ver2[,14:17], ver3[,18:21], ver4[,14:17], ve
 #control
 con_1 <- ctrl_y_scale[,1]
 which(con_1 == '41/42') # entry 26 
-
 con_1[26] <- 41.5 # take midpoint of two values
-#OR
-#con_1 <- con_1[-26] # remove value
-
 con_1 <- as.numeric(con_1)
+
 summary(con_1)
 range(con_1)[2]-range(con_1)[1]
+
+con_1_r <- rbind(r1[,10:13], r2[,10:13], r3[,14:17], r4[,18:21], r5[,14:17], r6[,18:21])
+con_1_py <- rbind(py1[,10:13], py2[,10:13], py3[,14:17], py4[,18:21], py5[,14:17], py6[,18:21])
+
+con_1_r <- ctrl_y_scale[,1]
+which(con_1_r == '41/42') # entry 26 
+con_1_r[26] <- 41.5 # take midpoint of two values
+con_1_r <- as.numeric(con_1_r)
 
 #truncated
 trn_1 <- trnc_y_scale[,1]
@@ -497,7 +502,6 @@ log_1 <- c(log_1_r, log_1_py)
 summary(log_1_r)
 summary(log_1_py)
 summary(log_1)
-
 
 ### Y Scales Q2 ###
 # Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was
