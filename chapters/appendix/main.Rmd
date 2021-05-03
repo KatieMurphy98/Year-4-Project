@@ -26,6 +26,8 @@ library(lawstat)
 require(pander)
 panderOptions('round', 2)
 
+
+##### SET UP DATA #####
 for(i in 1:6){
     r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
     py <- assign(paste0("py",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("Py - v",i)))))
@@ -105,9 +107,8 @@ names(py1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
   
                  "cd_trn",
-                 "cd_zro"
-                 )
-###
+                 "cd_zro")
+
 
 names(ver2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -180,7 +181,7 @@ names(py2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "cd_trn",
                  "cd_zro"
                  )
-###
+
 
 names(ver3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -253,7 +254,7 @@ names(py3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "cd_zro",
                  "cd_trn"
                  )
-###
+
 
 names(ver4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -326,7 +327,7 @@ names(py4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "cd_trn",
                  "cd_zro"
                  )
-###
+
 
 names(ver5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -399,7 +400,6 @@ names(py5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "cd_zro",
                  "cd_trn"
                  )
-###
 
 names(ver6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -472,16 +472,59 @@ names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "cd_zro",
                  "cd_trn"
                  )
-### Y SCALES 
+##### Y SCALES #####
 ctrl_y_scale <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)], ver3[,c(4:7, 14:17)], ver4[,c(4:7, 18:21)], ver5[,c(4:7, 14:17)], ver6[,c(4:7, 18:21)])
 log_y_scale <- rbind(ver1[,c(4:7, 14:17)], ver2[,c(4:7, 18:21)], ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)], ver5[,c(4:7, 18:21)], ver6[,c(4:7, 14:17)])
 trnc_y_scale <- rbind(ver1[,c(4:7, 18:21)], ver2[,c(4:7, 14:17)], ver3[,c(4:7, 18:21)], ver4[,c(4:7, 14:17)], ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
 
+ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17)], r4[,c(4:7, 18:21)], r5[,c(4:7, 14:17)], r6[,c(4:7, 18:21)])
+log_y_scale_r<- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
+trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
 
-### ASPECT RATIO
+ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
+log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
+trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
+
+for(i in c(unique(ctrl_y_scale$uni), unique(trnc_y_scale$uni), unique(log_y_scale$uni))){
+  assign(paste0(i, "_ctrl"), ctrl_y_scale[which(ctrl_y_scale$uni==i),])
+  assign(paste0(i, "_trnc"), trnc_y_scale[which(trnc_y_scale$uni==i),])
+  assign(paste0(i, "_log"), log_y_scale[which(log_y_scale$uni==i),])
+}
+
+Soc_sci_ctrl <- `Social Sciences_ctrl`
+Soc_sci_trnc <- `Social Sciences_trnc`
+Soc_sci_log <- `Social Sciences_log`
+
+Sus_geog_ctrl <- `Sustainability/geological science_ctrl`
+Sus_geog_trnc <- `Sustainability/geological science_trnc`
+Sus_geog_log <- `Sustainability/geological science_log`
+
+stem_ctrl <- rbind(Science_ctrl, Technology_ctrl, Engineering_ctrl, Maths_ctrl, Medicine_ctrl, Architecture_ctrl)
+socsci_ctrl <- rbind(psychology_ctrl, Soc_sci_ctrl, Sus_geog_ctrl, Criminology)
+hum_ctrl <- rbind(Humanities_ctrl, Geography_ctrl)
+
+stem_trnc <- rbind(Science_trnc, Technology_trnc, Engineering_trnc, Maths_trnc, Medicine_trnc, Architecture_trnc)
+socsci_trnc <- rbind(psychology_trnc, Soc_sci_trnc, Sus_geog_trnc, Criminology_trnc)
+hum_trnc <- rbind(Humanities_trnc, Geography_trnc)
+
+stem_log <- rbind(Science_log, Technology_log, Engineering_log, Maths_log, Medicine_log, Architecture_log)
+socsci_log <- rbind(psychology_log, Soc_sci_log, Sus_geog_log, Criminology_log)
+hum_log <- rbind(Humanities_log, Geography_log)
+
+
+
+##### ASPECT RATIO #####
 def_ratio <- rbind(ver1[,c(4:7, 22:24)], ver2[,c(4:7, 22:24)], ver3[,c(4:7, 25:27)], ver4[,c(4:7, 28:30)], ver5[,c(4:7, 25:27)], ver6[,c(4:7, 28:30)])
 nar_ratio <- rbind(ver1[,c(4:7, 25:27)], ver2[,c(4:7, 28:30)], ver3[,c(4:7, 22:24)], ver4[,c(4:7, 22:24)], ver5[,c(4:7, 28:30)], ver6[,c(4:7, 25:27)])
 wid_ratio <- rbind(ver1[,c(4:7, 28:30)], ver2[,c(4:7, 25:27)], ver3[,c(4:7, 28:30)], ver4[,c(4:7, 25:27)], ver5[,c(4:7, 22:24)], ver6[,c(4:7, 22:24)])
+
+def_ratio_r <- rbind(r1[,c(4:7, 22:24)], r2[,c(4:7, 22:24)], r3[,c(4:7, 25:27)], r4[,c(4:7, 28:30)], r5[,c(4:7, 25:27)], r6[,c(4:7, 28:30)])
+nar_ratio_r <- rbind(r1[,c(4:7, 25:27)], r2[,c(4:7, 28:30)], r3[,c(4:7, 22:24)], r4[,c(4:7, 22:24)], r5[,c(4:7, 28:30)], r6[,c(4:7, 25:27)])
+wid_ratio_r <- rbind(r1[,c(4:7, 28:30)], r2[,c(4:7, 25:27)], r3[,c(4:7, 28:30)], r4[,c(4:7, 25:27)], r5[,c(4:7, 22:24)], r6[,c(4:7, 22:24)])
+
+def_ratio_py <- rbind(py1[,c(4:7, 22:24)], py2[,c(4:7, 22:24)], py3[,c(4:7, 25:27)], py4[,c(4:7, 28:30)], py5[,c(4:7, 25:27)], py6[,c(4:7, 28:30)])
+nar_ratio_py <- rbind(py1[,c(4:7, 25:27)], py2[,c(4:7, 28:30)], py3[,c(4:7, 22:24)], py4[,c(4:7, 22:24)], py5[,c(4:7, 28:30)], py6[,c(4:7, 25:27)])
+wid_ratio_py <- rbind(py1[,c(4:7, 28:30)], py2[,c(4:7, 25:27)], py3[,c(4:7, 28:30)], py4[,c(4:7, 25:27)], py5[,c(4:7, 22:24)], py6[,c(4:7, 22:24)])
 
 
 for(i in 1:dim(ver1)[1]){
@@ -679,10 +722,10 @@ for(i in 1:dim(ver6)[1]){
   }
 }
 
-comp_ratio <- rbind(ver1[,c(4:7, 31:33)], ver2[,c(4:7, 31:33)], ver3[,c(4:7, 31:33)], ver4[,c(4:7, 31:33)], ver5[,c(4:7, 31:33)], ver6[,c(4:7, 31:33)])
+comp_ratio_all <- rbind(ver1[,c(4:7, 31:33)], ver2[,c(4:7, 31:33)], ver3[,c(4:7, 31:33)], ver4[,c(4:7, 31:33)], ver5[,c(4:7, 31:33)], ver6[,c(4:7, 31:33)])
 
 
-### STACKED
+##### STACKED #####
 vir_stacked <- rbind(ver1[,c(4:7, 34:41)], ver5[,c(4:7, 34:41)])
 def_stacked <- rbind(ver2[,c(4:7, 34:41)], ver3[,c(4:7, 34:41)])
 gr_stacked <- rbind(ver4[,c(4:7, 34:41)], ver6[,c(4:7, 34:41)])
@@ -694,7 +737,7 @@ set_d <- ver4[,c(4:9, 42:44)]
 set_e <- ver5[,c(4:9, 42:44)]
 set_f <- ver6[,c(4:9, 42:44)]
 
-### SALES_AB
+##### SALES_AB #####
 ab_sep <- rbind(ver1[,c(4:7, 45:47)], ver2[,c(4:7, 45:47)], ver3[,c(4:7, 48:50)], ver4[,c(4:7, 51:53)], ver5[,c(4:7, 48:50)], ver6[,c(4:7, 51:53)])
 
 ab_trn <- rbind(ver1[,c(4:7, 48:50)], ver2[,c(4:7, 51:53)], ver3[,c(4:7, 45:47)], ver4[,c(4:7, 45:47)], ver5[,c(4:7, 51:53)], ver6[,c(4:7, 48:50)])
@@ -702,7 +745,7 @@ ab_trn <- rbind(ver1[,c(4:7, 48:50)], ver2[,c(4:7, 51:53)], ver3[,c(4:7, 45:47)]
 ab_zero <- rbind(ver1[,c(4:7, 51:53)], ver2[,c(4:7, 48:50)], ver3[,c(4:7, 51:53)], ver4[,c(4:7, 48:50)], ver5[,c(4:7, 45:47)], ver6[,c(4:7, 45:47)])
 
 
-### SALES_CD
+##### SALES_CD #####
 cd_trn <- rbind(ver1[,c(4:7, 54)], ver2[,c(4:7, 54)], ver3[,c(4:7, 55)], ver4[,c(4:7, 54)], ver5[,c(4:7, 55)], ver6[,c(4:7, 55)])
 
 cd_zro <- rbind(ver1[,c(4:7, 55)], ver2[,c(4:7, 55)], ver3[,c(4:7, 54)], ver4[,c(4:7, 55)], ver5[,c(4:7, 54)], ver6[,c(4:7, 54)])
@@ -721,22 +764,62 @@ cd_zro <- rbind(ver1[,c(4:7, 55)], ver2[,c(4:7, 55)], ver3[,c(4:7, 54)], ver4[,c
 
 **Approximately many times would you say the 'Salmon Ladder' was used?**
 
+```{r echo=F}
+control_1 <- ctrl_y_scale$con_1
+control_1 <- control_1[which(control_1 == "41/42")] 
+control_1 <- na.exclude(as.numeric(control_1))
+
+control_1_r <- ctrl_y_scale$con_1_r
+control_1_r <- control_1_r[which(control_1_r == "41/42")] 
+control_1_r <- na.exclude(as.numeric(control_1_r))
+
+control_1_py <- ctrl_y_scale$con_1_py
+control_1_py <- control_1_py[which(control_1_py == "41/42")]
+control_1_py <- na.exclude(as.numeric(control_1_py))
+
+
+degsum <- cbind(summary(as.numeric(stem$con_1)), summary(as.numeric(socsci$con_1)), summary(as.numeric(hum$con_1)), summary(as.numeric(Arts$con_1)), summary(as.numeric(Business$con_1)))
+colnames(sum) <- c("STEM", "Social Sci", "Humanities", "Arts", "Business")
+sum
+```
+
+
+
+```{r}
+truncated_1 <- as.numeric(trnc_y_scale$trn_1)
+truncated_1_r<- as.numeric(trnc_y_scale_r$trn_1)
+truncated_1_py <- as.numeric(trnc_y_scale_py$trn_1)
+
+degsum <- cbind(summary(as.numeric(stem$con_1)), summary(as.numeric(socsci$con_1)), summary(as.numeric(hum$con_1)), summary(as.numeric(Arts$con_1)), summary(as.numeric(Business$con_1)))
+colnames(sum) <- c("STEM", "Social Sci", "Humanities", "Arts", "Business")
+sum
+```
+
+```{r}
+logarithmic_1 <- log_y_scale$log_1
+logarithmic_1[which(logarithmic == "Don't know")] <- NA
+logarithmic_1[which(logarithmic == "Next to none.")] <- NA
+logarithmic_1[which(logarithmic == "10^15")] <- 1e+15
+logarithmic_1[which(logarithmic == "10^9")] <- 1e+9
+logarithmic_1 <- as.numeric(na.exclude(logarithmic))
+```
+
+```{r}
+y_scale_1_all <- cbind(control, truncated, logarithmic)
+```
+
 
 ```{r echo=F}
-control <- ctrl_y_scale$con_1
-control[which(control == "41/42")] <- # take midpoint of two values
-control <- na.exclude(as.numeric(control))
- 
-truncated <- as.numeric(trnc_y_scale$trn_1)
+truncated_1_r <- as.numeric(trnc_y_scale$trn_1)
 
-logarithmic <- log_y_scale$log_1
-logarithmic[which(logarithmic == "Don't know")] <- NA
-logarithmic[which(logarithmic == "Next to none.")] <- NA
-logarithmic[which(logarithmic == "10^15")] <- 1e+15
-logarithmic[which(logarithmic == "10^9")] <- 1e+9
-logarithmic <- as.numeric(na.exclude(logarithmic))
+logarithmic_1_r <- log_y_scale$log_1
+logarithmic_1_r[which(logarithmic == "Don't know")] <- NA
+logarithmic_1_r[which(logarithmic == "Next to none.")] <- NA
+logarithmic_1_r[which(logarithmic == "10^15")] <- 1e+15
+logarithmic_1_r[which(logarithmic == "10^9")] <- 1e+9
+logarithmic_1_r <- as.numeric(na.exclude(logarithmic))
 
-y_scale_1_all <- cbind(control, truncated, logarithmic)
+y_scale_1_r <- cbind(control, truncated, logarithmic)
 ```
 
 
@@ -749,16 +832,10 @@ noquote(rbind(summary(y_scale_1_all), c(paste0('Var    :', round(var(control), 3
 ```
 
 ```{r include=F}
-var(control)
 var(truncated)
 var(logarithmic)
 ```
 
-
-\textbf{Control Plot}
-```{r echo=F}
-shapiro.test(control)
-```
 
 \textbf{Truncated Plot}
 ```{r echo=F}
@@ -775,6 +852,11 @@ noquote(paste("Number of observations above median:", length(control[which(contr
 noquote(paste("Number of observations at median:", length(control[which(control == median(control))])))
 ```
 
+\textbf{Two sided sign tests for the control plot responses}
+```{r echo=F}
+noquote(paste("*CONTROL*"))
+SIGN.test(control, md=41, alternative="t")
+```
 
 \textbf{Truncated Plot}
 ```{r}
@@ -784,33 +866,12 @@ noquote(paste("Number of observations above median:", length(truncated[which(tru
 noquote(paste("Number of observations at median:", length(truncated[which(truncated == median(truncated))])))
 ```
 
-\textbf{Two sided sign tests for the control plot responses}
-```{r echo=F}
-noquote(paste("*CONTROL*"))
-SIGN.test(control, md=42, alternative="t")
-```
-
 \textbf{Two sided sign tests for the truncated plot responses}
 ```{r}
 noquote(paste("*TRUNCATED*"))
-SIGN.test(truncated, md=42, alternative="t")
+SIGN.test(truncated, md=41, alternative="t")
 ```
 
-
-
-\textbf{One-sided sign tests for the control plot responses}
-```{r echo=F}
-noquote(paste("*CONTROL*"))
-SIGN.test(control, md=42, alternative="l")
-SIGN.test(control, md=42, alternative="g")
-```
-
-\textbf{One-sided sign tests for the truncated plot responses}
-```{r}
-noquote(paste("*TRUNCATED*"))
-SIGN.test(truncated, md=42, alternative="l")
-SIGN.test(truncated, md=42, alternative="g")
-```
 
 ```{r}
 noquote(paste("*CONTROL*"))
@@ -819,7 +880,7 @@ for(i in 1:100){
   samp <- rnorm(100, mean=mean(control), sd=sd(control))
   means[i] <- mean(samp)
 }
-t.test(means, mu=42)
+t.test(means, mu=41)
 
 noquote(paste("*TRUNCATED*"))
 means <- rep(NA, 100)
@@ -827,7 +888,7 @@ for(i in 1:100){
   samp <- rnorm(100, mean=mean(truncated), sd=sd(truncated))
   means[i] <- mean(samp)
 }
-t.test(means, mu=42)
+t.test(means, mu=41)
 
 ```
 
@@ -855,7 +916,6 @@ logarithmic[which(logarithmic == "10^9")] <- 10e+9
 logarithmic <- as.numeric(logarithmic)
 
 ```
-
 
 
 ```{r echo=F}
