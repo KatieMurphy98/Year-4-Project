@@ -36,7 +36,6 @@ for(i in 1:6){
 
 ver1 <- ver1[-1,]
 r1 <- r1[-1,]
-py1 <- py1[-1,]
 
 names(ver1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -472,6 +471,9 @@ names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "nu
                  "cd_zro",
                  "cd_trn"
                  )
+
+ver2$uni[which(is.na(ver2$uni))] <- "None"
+
 ##### Y SCALES #####
 ctrl_y_scale <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)], ver3[,c(4:7, 14:17)], ver4[,c(4:7, 18:21)], ver5[,c(4:7, 14:17)], ver6[,c(4:7, 18:21)])
 log_y_scale <- rbind(ver1[,c(4:7, 14:17)], ver2[,c(4:7, 18:21)], ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)], ver5[,c(4:7, 18:21)], ver6[,c(4:7, 14:17)])
@@ -500,15 +502,15 @@ Sus_geog_trnc <- `Sustainability/geological science_trnc`
 Sus_geog_log <- `Sustainability/geological science_log`
 
 stem_ctrl <- rbind(Science_ctrl, Technology_ctrl, Engineering_ctrl, Maths_ctrl, Medicine_ctrl, Architecture_ctrl)
-socsci_ctrl <- rbind(psychology_ctrl, Soc_sci_ctrl, Sus_geog_ctrl, Criminology)
+soc_sci_ctrl <- rbind(psychology_ctrl, Soc_sci_ctrl, Sus_geog_ctrl, Criminology_ctrl)
 hum_ctrl <- rbind(Humanities_ctrl, Geography_ctrl)
 
 stem_trnc <- rbind(Science_trnc, Technology_trnc, Engineering_trnc, Maths_trnc, Medicine_trnc, Architecture_trnc)
-socsci_trnc <- rbind(psychology_trnc, Soc_sci_trnc, Sus_geog_trnc, Criminology_trnc)
+soc_sci_trnc <- rbind(psychology_trnc, Soc_sci_trnc, Sus_geog_trnc, Criminology_trnc)
 hum_trnc <- rbind(Humanities_trnc, Geography_trnc)
 
 stem_log <- rbind(Science_log, Technology_log, Engineering_log, Maths_log, Medicine_log, Architecture_log)
-socsci_log <- rbind(psychology_log, Soc_sci_log, Sus_geog_log, Criminology_log)
+soc_sci_log <- rbind(psychology_log, Soc_sci_log, Sus_geog_log, Criminology_log)
 hum_log <- rbind(Humanities_log, Geography_log)
 
 
@@ -757,301 +759,314 @@ cd_zro <- rbind(ver1[,c(4:7, 55)], ver2[,c(4:7, 55)], ver3[,c(4:7, 54)], ver4[,c
 
 \subsection{Ninja Warrior - Part 1}
 
-
-
-
-\vspace{5cm}
-
-**Approximately many times would you say the 'Salmon Ladder' was used?**
+# Approximately many times would you say the 'Salmon Ladder' was used?
 
 ```{r echo=F}
 control_1 <- ctrl_y_scale$con_1
-control_1 <- control_1[which(control_1 == "41/42")] 
+control_1[which(control_1 == "41/42")] <- 41.5
 control_1 <- na.exclude(as.numeric(control_1))
 
-control_1_r <- ctrl_y_scale$con_1_r
-control_1_r <- control_1_r[which(control_1_r == "41/42")] 
-control_1_r <- na.exclude(as.numeric(control_1_r))
+truncated_1 <- as.numeric(trnc_y_scale$trn_1)
 
-control_1_py <- ctrl_y_scale$con_1_py
-control_1_py <- control_1_py[which(control_1_py == "41/42")]
-control_1_py <- na.exclude(as.numeric(control_1_py))
+logarithmic_1 <- log_y_scale$log_1
+logarithmic_1[which(logarithmic_1 == "Don't know")] <- NA
+logarithmic_1[which(logarithmic_1 == "Next to none.")] <- NA
+logarithmic_1[which(logarithmic_1 == "10^15")] <- 1e+15
+logarithmic_1[which(logarithmic_1 == "10^9")] <- 1e+9
+logarithmic_1 <- as.numeric(na.exclude(logarithmic_1))
 
-
-degsum <- cbind(summary(as.numeric(stem$con_1)), summary(as.numeric(socsci$con_1)), summary(as.numeric(hum$con_1)), summary(as.numeric(Arts$con_1)), summary(as.numeric(Business$con_1)))
-colnames(sum) <- c("STEM", "Social Sci", "Humanities", "Arts", "Business")
-sum
+y_scale_1_all <- cbind(control_1, truncated_1, logarithmic_1)
 ```
 
-
-
+## Whole Population
 ```{r}
-truncated_1 <- as.numeric(trnc_y_scale$trn_1)
-truncated_1_r<- as.numeric(trnc_y_scale_r$trn_1)
+N <- c(length(control_1), length(truncated_1), length(logarithmic_1))
+
+Var <- c(var(control_1), var(truncated_1), var(logarithmic_1))
+
+sum_ysc1all <- rbind(N, cbind(summary(control_1), summary(truncated_1), summary(logarithmic_1)), Var)
+colnames(sum_ysc1all) <- c("Control", "Truncated", "Logarithmic")
+sum_ysc1all
+```
+
+## Language comparisons
+```{r}
+control_1_r <- ctrl_y_scale_r$con_1
+control_1_r[which(control_1_r == "41/42")] <- 41.5
+control_1_r <- as.numeric(control_1_r)
+control_1_py <- ctrl_y_scale_py$con_1
+
+truncated_1_r <- as.numeric(trnc_y_scale_r$trn_1)
 truncated_1_py <- as.numeric(trnc_y_scale_py$trn_1)
 
-degsum <- cbind(summary(as.numeric(stem$con_1)), summary(as.numeric(socsci$con_1)), summary(as.numeric(hum$con_1)), summary(as.numeric(Arts$con_1)), summary(as.numeric(Business$con_1)))
-colnames(sum) <- c("STEM", "Social Sci", "Humanities", "Arts", "Business")
-sum
-```
+logarithmic_1_r <- log_y_scale_r$log_1
+logarithmic_1_py <- log_y_scale_py$log_1
+logarithmic_1_py[which(logarithmic_1_py == "Don't know")] <- NA
+logarithmic_1_py[which(logarithmic_1_py == "Next to none.")] <- NA
+logarithmic_1_py[which(logarithmic_1_py == "10^15")] <- 1e+15
+logarithmic_1_py[which(logarithmic_1_py == "10^9")] <- 1e+9
+logarithmic_1_py <- as.numeric(na.exclude(logarithmic_1_py))
+``` 
 
+## Control - Language comparison
 ```{r}
-logarithmic_1 <- log_y_scale$log_1
-logarithmic_1[which(logarithmic == "Don't know")] <- NA
-logarithmic_1[which(logarithmic == "Next to none.")] <- NA
-logarithmic_1[which(logarithmic == "10^15")] <- 1e+15
-logarithmic_1[which(logarithmic == "10^9")] <- 1e+9
-logarithmic_1 <- as.numeric(na.exclude(logarithmic))
+N <- c(length(control_1), length(control_1_r), length(control_1_py))
+
+Var <- c(var(control_1), var(control_1_r), var(control_1_py))
+
+sum_ysc1lang_ctrl <- rbind(N, cbind(summary(control_1), summary(control_1_r), summary(control_1_py)), Var)
+colnames(sum_ysc1lang_ctrl) <- c("Whole Pop", "R", "Python")
+sum_ysc1lang_ctrl
 ```
 
+## Truncated - Language comparison
 ```{r}
-y_scale_1_all <- cbind(control, truncated, logarithmic)
+N <- c(length(truncated_1), length(truncated_1_r), length(truncated_1_py))
+
+Var <- c(var(truncated_1), var(truncated_1_r), var(truncated_1_py))
+
+sum_ysc1lang_trnc <- rbind(N, cbind(summary(truncated_1), summary(truncated_1_r), summary(truncated_1_py)), Var)
+colnames(sum_ysc1lang_trnc) <- c("Whole Pop", "R", "Python")
+sum_ysc1lang_trnc
 ```
 
-
-```{r echo=F}
-truncated_1_r <- as.numeric(trnc_y_scale$trn_1)
-
-logarithmic_1_r <- log_y_scale$log_1
-logarithmic_1_r[which(logarithmic == "Don't know")] <- NA
-logarithmic_1_r[which(logarithmic == "Next to none.")] <- NA
-logarithmic_1_r[which(logarithmic == "10^15")] <- 1e+15
-logarithmic_1_r[which(logarithmic == "10^9")] <- 1e+9
-logarithmic_1_r <- as.numeric(na.exclude(logarithmic))
-
-y_scale_1_r <- cbind(control, truncated, logarithmic)
-```
-
-
-```{r echo=F}
-noquote(paste('n (control) =', length(na.exclude(control))))
-noquote(paste('n (truncated) =', length(na.exclude(truncated))))
-noquote(paste('n (logarithmic) =', length(na.exclude(logarithmic))))
-noquote(rbind(summary(y_scale_1_all), c(paste0('Var    :', round(var(control), 3)), paste0('Var    :', round(var(truncated), 3)), paste0('Var    :', round(var(logarithmic, na.rm=T), 3)))))
-
-```
-
-```{r include=F}
-var(truncated)
-var(logarithmic)
-```
-
-
-\textbf{Truncated Plot}
-```{r echo=F}
-shapiro.test(truncated)
-```
-
-
-\textbf{Control Plot}
+## Logarithmic - Language comparison
 ```{r}
-control <- na.exclude(control)
-noquote(paste("Median:", median(control)))
-noquote(paste("Number of observations below median:", length(control[which(control < median(control))])))
-noquote(paste("Number of observations above median:", length(control[which(control > median(control))])))
-noquote(paste("Number of observations at median:", length(control[which(control == median(control))])))
+
+N <- c(length(logarithmic_1), length(logarithmic_1_r), length(logarithmic_1_py))
+
+Var <- c(var(logarithmic_1), var(logarithmic_1_r), var(logarithmic_1_py))
+
+sum_ysc1lang_log <- rbind(N, cbind(summary(logarithmic_1), summary(logarithmic_1_r), summary(logarithmic_1_py)), Var)
+colnames(sum_ysc1lang_log) <- c("Whole Pop", "R", "Python")
+sum_ysc1lang_log
 ```
 
-\textbf{Two sided sign tests for the control plot responses}
-```{r echo=F}
-noquote(paste("*CONTROL*"))
-SIGN.test(control, md=41, alternative="t")
-```
-
-\textbf{Truncated Plot}
+## Control - Degree comparison
 ```{r}
-noquote(paste("Median:", median(truncated)))
-noquote(paste("Number of observations below median:", length(truncated[which(truncated < median(truncated))])))
-noquote(paste("Number of observations above median:", length(truncated[which(truncated > median(truncated))])))
-noquote(paste("Number of observations at median:", length(truncated[which(truncated == median(truncated))])))
+control_1_stem <- as.numeric(stem_ctrl$con_1)
+control_1_hum <- as.numeric(hum_ctrl$con_1)
+
+control_1_socsci <- as.numeric(soc_sci_ctrl$con_1)
+control_1_socsci[which(control_1_socsci == "41/42")] <- 41.5
+control_1_socsci <- na.exclude(control_1_socsci)
+
+control_1_arts <- as.numeric(Arts_ctrl$con_1)
+control_1_bus <- as.numeric(Business_ctrl$con_1)
+
+control_1_none <- as.numeric(None_ctrl$con_1)
+
+N <- c(length(control_1_stem), length(control_1_hum), length(control_1_socsci), length(control_1_arts), length(control_1_bus), length(control_1_none))
+
+Var <- c(c(var(control_1_stem), var(control_1_hum), var(control_1_socsci), var(control_1_arts), var(control_1_bus), var(control_1_none)))
+
+sum_ysc1deg_ctrl <- rbind(N, cbind(summary(control_1_stem), summary(control_1_hum), summary(control_1_socsci), summary(control_1_arts), summary(control_1_bus), summary(control_1_none)), Var)
+
+colnames(sum_ysc1deg_ctrl) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
+sum_ysc1deg_ctrl
 ```
 
-\textbf{Two sided sign tests for the truncated plot responses}
+## Truncated - Degree comparison
 ```{r}
-noquote(paste("*TRUNCATED*"))
-SIGN.test(truncated, md=41, alternative="t")
+truncated_1_stem <- as.numeric(stem_trnc$trn_1)
+truncated_1_hum <- as.numeric(hum_trnc$trn_1)
+
+truncated_1_socsci <- as.numeric(soc_sci_trnc$trn_1)
+truncated_1_socsci[which(truncated_1_socsci == "41/42")] <- 41.5
+
+truncated_1_arts <- as.numeric(Arts_trnc$trn_1)
+truncated_1_bus <- as.numeric(Business_trnc$trn_1)
+
+truncated_1_none <- None_trnc$trn_1
+
+N <- c(length(truncated_1_stem), length(truncated_1_hum), length(truncated_1_socsci), length(truncated_1_arts), length(truncated_1_bus), length(truncated_1_none))
+
+Var <- c(c(var(truncated_1_stem), var(truncated_1_hum), var(truncated_1_socsci), var(truncated_1_arts), var(truncated_1_bus), var(truncated_1_none)))
+
+sum_ysc1deg_trnc <- rbind(N, cbind(summary(truncated_1_stem), summary(truncated_1_hum), summary(truncated_1_socsci), summary(truncated_1_arts), summary(truncated_1_bus), summary(truncated_1_none)), Var)
+colnames(sum_ysc1deg_trnc) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
+sum_ysc1deg_trnc
 ```
 
-
+## Logarithmic - Degree comparison
 ```{r}
-noquote(paste("*CONTROL*"))
-means <- rep(NA, 100)
-for(i in 1:100){
-  samp <- rnorm(100, mean=mean(control), sd=sd(control))
-  means[i] <- mean(samp)
-}
-t.test(means, mu=41)
+logarithmic_1_stem <- stem_log$log_1
+logarithmic_1_stem[which(logarithmic_1_stem == "Don't Know")] <- NA
+logarithmic_1_stem <- c(na.exclude(as.numeric(logarithmic_1_stem)))
 
-noquote(paste("*TRUNCATED*"))
-means <- rep(NA, 100)
-for(i in 1:100){
-  samp <- rnorm(100, mean=mean(truncated), sd=sd(truncated))
-  means[i] <- mean(samp)
-}
-t.test(means, mu=41)
+logarithmic_1_hum <- as.numeric(hum_log$log_1) 
 
+logarithmic_1_socsci <- soc_sci_log$log_1
+logarithmic_1_socsci[which(logarithmic_1_socsci == "10^15")] <- 1e+15
+logarithmic_1_socsci[which(logarithmic_1_socsci == "10^9")] <- 1e+9
+logarithmic_1_socsci <- c(na.exclude(as.numeric(logarithmic_1_socsci)))
+
+logarithmic_1_arts <- as.numeric(Arts_log$log_1)
+logarithmic_1_bus <- as.numeric(Business_log$log_1)
+
+logarithmic_1_none <- as.numeric(None_log$log_1)
+logarithmic_1_none[which(logarithmic_1_none == "Next to none.")] <- NA
+
+N <- c(length(logarithmic_1_stem), length(logarithmic_1_hum), length(logarithmic_1_socsci), length(logarithmic_1_arts), length(logarithmic_1_bus), length(logarithmic_1_none))
+
+Var <- c(c(var(logarithmic_1_stem), var(logarithmic_1_hum), var(logarithmic_1_socsci), var(logarithmic_1_arts), var(logarithmic_1_bus), var(logarithmic_1_none)))
+
+sum_ysc1deg_log <- rbind(N, cbind(summary(logarithmic_1_stem), summary(logarithmic_1_hum), summary(logarithmic_1_socsci), summary(logarithmic_1_arts), summary(logarithmic_1_bus), summary(logarithmic_1_none)), Var)
+
+colnames(sum_ysc1deg_log) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
+sum_ysc1deg_log
 ```
 
-
+## Num skills - log
 ```{r}
-logarithmic <- log_y_scale$log_1
-logarithmic[which(logarithmic == "Don't know")] <- NA
-logarithmic[which(logarithmic == "Next to none.")] <- NA
-logarithmic[which(logarithmic == "10^15")] <- NA
-logarithmic[which(logarithmic == "10^9")] <-NA
-logarithmic <- as.numeric(logarithmic)
-noquote(paste('n = ', length(na.exclude(logarithmic))))
-summary(na.exclude(logarithmic))
-noquote(paste('Var =',var(logarithmic, na.rm=T)))
+rbind(
+  log_y_scale[which(log_y_scale$log_1 == "Don't know"),],
+  log_y_scale[which(log_y_scale$log_1 == "Next to none."),],
+  log_y_scale[which(log_y_scale$log_1 == "10^15"),],
+  log_y_scale[which(log_y_scale$log_1 == "10^9"),]
+)
 ```
+
+## Shapiro Tests - Whole
+```{r echo=F}
+shapiro.test(control_1)
+shapiro.test(truncated_1)
+shapiro.test(logarithmic_1)
+```
+
+## Symmetry Tests - Whole
+```{r echo=F}
+symmetry.test(control_1)
+symmetry.test(truncated_1)
+symmetry.test(logarithmic_1)
+```
+
+## Shapiro Tests - Language comp
+```{r echo=F}
+shapiro.test(control_1_r)
+shapiro.test(truncated_1_r)
+shapiro.test(logarithmic_1_r)
+
+shapiro.test(control_1_py)
+shapiro.test(truncated_1_py)
+shapiro.test(logarithmic_1_py)
+```
+
+## symmetry Tests - Language comp
+```{r echo=F}
+symmetry.test(control_1_r)
+symmetry.test(truncated_1_r)
+symmetry.test(logarithmic_1_r)
+
+symmetry.test(control_1_py)
+symmetry.test(truncated_1_py)
+symmetry.test(logarithmic_1_py)
+```
+
+## Shapiro Tests - Degree comp
+```{r echo=F}
+shapiro.test(control_1_stem)
+shapiro.test(control_1_hum) 
+shapiro.test(control_1_socsci)
+shapiro.test(control_1_bus) 
+
+shapiro.test(truncated_1_stem)
+shapiro.test(truncated_1_hum) 
+shapiro.test(truncated_1_socsci)
+shapiro.test(truncated_1_bus) 
+
+shapiro.test(logarithmic_1_stem)
+shapiro.test(logarithmic_1_hum) 
+shapiro.test(logarithmic_1_socsci)
+shapiro.test(logarithmic_1_bus) 
+```
+## T-tests - Degree comp
+```{r}
+t.test(control_1_hum, mu = 41)
+t.test(control_1_bus, mu = 41)
+
+t.test(truncated_1_hum, mu = 41)
+t.test(truncated_1_bus, mu = 41)
+
+t.test(control_1_hum, mu = 41)
+```
+
+## symmetry Tests - Degree comp
+```{r echo=F}
+symmetry.test(control_1_stem)
+symmetry.test(control_1_socsci)
+
+symmetry.test(truncated_1_stem)
+symmetry.test(truncated_1_socsci)
+
+symmetry.test(logarithmic_1_stem)
+symmetry.test(logarithmic_1_socsci)
+symmetry.test(logarithmic_1_bus) 
+```
+
+
+## Sign tests - Whole pop
+```{r echo=F}
+SIGN.test(control_1, md=41, alternative="t")
+SIGN.test(truncated_1, md=41, alternative="t")
+SIGN.test(logarithmic_1, md=41, alternative="t")
+```
+
+## Sign tests - Lang comp
+```{r echo=F}
+SIGN.test(control_1_r, md=41, alternative="t")
+SIGN.test(truncated_1_r, md=41, alternative="t")
+SIGN.test(logarithmic_1_r, md=41, alternative="t")
+
+SIGN.test(control_1_py, md=41, alternative="t")
+SIGN.test(truncated_1_py, md=41, alternative="t")
+SIGN.test(logarithmic_1_py, md=41, alternative="t")
+```
+
+## Sign tests - Deg comp
+```{r echo=F}
+SIGN.test(control_1_stem, md=41, alternative="t")
+SIGN.test(control_1_socsci, md=41, alternative="t")
+SIGN.test(control_1_arts, md=41, alternative="t")
+
+SIGN.test(truncated_1_stem, md=41, alternative="t")
+SIGN.test(truncated_1_socsci, md=41, alternative="t")
+SIGN.test(truncated_1_arts, md=41, alternative="t")
+
+SIGN.test(logarithmic_1_stem, md=41, alternative="t")
+SIGN.test(logarithmic_1_socsci, md=41, alternative="t")
+SIGN.test(logarithmic_1_arts, md=41, alternative="t")
+SIGN.test(logarithmic_1_bus, md=41, alternative="t")
+```
+
+
+#Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?
 
 
 ```{r echo=F}
 
-logarithmic <- log_y_scale$log_1
-logarithmic[which(logarithmic == "Don't know")] <- NA
-logarithmic[which(logarithmic == "Next to none.")] <- NA
-logarithmic[which(logarithmic == "10^15")] <- 10e+15
-logarithmic[which(logarithmic == "10^9")] <- 10e+9
-logarithmic <- as.numeric(logarithmic)
+control_2 <- ctrl_y_scale$con_2
+truncated_2 <- trnc_y_scale$trn_2
+logarithmic_2 <- log_y_scale$log_2
 
-```
-
-
-```{r echo=F}
-
-logarithmic <- log_y_scale$log_1
-logarithmic[which(logarithmic == "Don't know")] <- NA
-logarithmic[which(logarithmic == "Next to none.")] <- NA
-logarithmic[which(logarithmic == "10^15")] <- NA
-logarithmic[which(logarithmic == "10^9")] <- NA
-logarithmic[which(logarithmic == "1000.0")] <- NA
-logarithmic[which(logarithmic == "1000")] <- NA
-logarithmic <- as.numeric(logarithmic)
-```
-
-
-\textbf{Summary statistics of the R versions}
-```{r echo=F}
-
-ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17)], r4[,c(4:7, 18:21)], r5[,c(4:7, 14:17)], r6[,c(4:7, 18:21)])
-log_y_scale_r <- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
-trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
-
-r_control <- ctrl_y_scale_r$con_1
-r_control[15] <- 41.5 # take midpoint of two values
-r_control <- as.numeric(r_control)
-
-r_truncated <- as.numeric(trnc_y_scale_r$trn_1)
-
-r_logarithmic <- log_y_scale_r$log_1
-
-y_scale_r <- cbind(r_control, r_truncated, r_logarithmic)
-
-noquote(paste("n = ", length(r_control)))
-summary(y_scale_r)
-
-```
-
-
-```{r fig.height= 4, fig.width=9}
-control <- ctrl_y_scale$con_1
-control[which(control == "41/42")] <- 41.5 # take midpoint of two values
-control <- as.numeric(control)
- 
-truncated <- as.numeric(trnc_y_scale$trn_1)
-
-```
-
-
-
-```{r fig.height= 4, fig.width=9}
-
-logarithmic <- log_y_scale$log_1
-logarithmic[which(logarithmic == "Don't know")] <- NA
-logarithmic[which(logarithmic == "Next to none.")] <- NA
-logarithmic[which(logarithmic == "10^15")] <- NA
-logarithmic[which(logarithmic == "10^9")] <- NA
-logarithmic[which(logarithmic == "1000.0")] <- NA
-logarithmic[which(logarithmic == "1000")] <- NA
-logarithmic <- as.numeric(logarithmic)
-
-```
-
-\textbf{Summary statistics of the Python versions}
-```{r echo=F}
-
-ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
-log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
-trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
-
-py_control <- ctrl_y_scale_py$con_1
-
-py_truncated <- as.numeric(trnc_y_scale_py$trn_1)
-
-py_logarithmic <- log_y_scale_py$log_1
-py_logarithmic[which(py_logarithmic == "Don't know")] <- NA
-py_logarithmic[which(py_logarithmic == "Next to none.")] <- NA
-py_logarithmic[which(py_logarithmic == "10^15")] <- 1e+15
-py_logarithmic[which(py_logarithmic == "10^9")] <- 1e+9
-py_logarithmic <- na.exclude(as.numeric(py_logarithmic))
-
-
-y_scale_py <- cbind(py_control, py_truncated, py_logarithmic)
-noquote(paste('n (control) = ', length(py_control)))
-noquote(paste('n (truncated) = ', length(py_truncated)))
-noquote(paste('n (logarithmic) = ', length(py_logarithmic)))
-summary(y_scale_py)
-
-```
-
-
-
-
-```{r echo=F}
-
-py_logarithmic <- log_y_scale_py$log_1
-py_logarithmic[which(py_logarithmic == "Don't know")] <- NA
-py_logarithmic[which(py_logarithmic == "Next to none.")] <- NA
-py_logarithmic[which(py_logarithmic == "10^15")] <- NA
-py_logarithmic[which(py_logarithmic == "10^9")] <- NA
-py_logarithmic[which(py_logarithmic == "1000")] <- NA
-py_logarithmic[which(py_logarithmic == "1000.0")] <- NA
-
-py_logarithmic <- as.numeric(py_logarithmic)
-
-
-
-```
-
-**Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?**
-
-
-```{r echo=F}
-
-control <- ctrl_y_scale$con_2
-truncated <- trnc_y_scale$trn_2
-logarithmic <- log_y_scale$log_2
-
-y_scale_2_all <- cbind(control, truncated, logarithmic)
-
-
+y_scale_2_all <- cbind(control_2, truncated_2, logarithmic_2)
 ```
 
 ```{r echo=F}
-noquote(paste('n (control) = ', length(control)))
-noquote(paste('n (truncated) = ', length(truncated)))
-noquote(paste('n (logarithmic) = ', length(logarithmic)))
-noquote(rbind(summary(y_scale_2_all), c(paste0('Var    :', round(var(control), 3)), paste0('Var    :', round(var(truncated), 3)), paste0('Var    :', round(var(logarithmic), 3)))))
+N <- c(length(control_2), length(truncated_2), length(logarithmic_2))
 
+Var <- c(var(control_2), var(truncated_2), var(logarithmic_2))
+
+sum_ysc2all <- rbind(N, cbind(summary(control_2), summary(truncated_2), summary(logarithmic_2)), Var)
+colnames(sum_ysc2all) <- c("Control", "Truncated", "Logarithmic")
+sum_ysc2all
 ```
 
 ```{r echo=F}
 y_scale_2_all <- as.data.frame(y_scale_2_all)
-resp <- c(control, truncated, logarithmic)
+resp <- c(control_2, truncated_2, logarithmic_2)
 type <- c(rep('Control', 70), rep('Truncated', 70), rep('Logarithmic', 70)) 
 stats_2 <- data.frame(resp, type)
-
 ```
 
 
@@ -1092,10 +1107,10 @@ noquote(rbind(summary(y_scale_2_py), c(paste0('Var    :', round(var(control_py),
 ```
 
 ```{r echo=F}
-y_scale_2_py <- as.data.frame(y_scale_2_py)
-resp <- c(control_py, truncated_py, logarithmic_py)
-type <- c(rep('Control', 31), rep('Truncated', 31), rep('Logarithmic', 31)) 
-stats_2 <- data.frame(resp, type)
+#y_scale_2_py <- as.data.frame(y_scale_2_py)
+#resp <- c(control_py, truncated_py, logarithmic_py)
+#type <- c(rep('Control', 31), rep('Truncated', 31), rep('Logarithmic', 31)) 
+#stats_2 <- data.frame(resp, type)
 
 
 ```
@@ -1222,27 +1237,27 @@ noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3))
 
 
 ```{r echo=F}
-comp_1 <- comp_ratio$all_1
-comp_1 <- comp_1[-which(comp_1 == "none")]
-comp_2 <- comp_ratio$all_2
-comp_3 <- comp_ratio$all_3
-tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
-rownames(tab) <- c("Most aesthetically pleasing?", "Easiest to read and interpret?", "Hardest to read and interpret?")
-tab
+#comp_1 <- comp_ratio$all_1
+#comp_1 <- comp_1[-which(comp_1 == "none")]
+#comp_2 <- comp_ratio$all_2
+#comp_3 <- comp_ratio$all_3
+#tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
+#rownames(tab) <- c("Most aesthetically pleasing?", "Easiest to read and interpret?", "Hardest to read and interpret?")
+#tab
 ```
 
 ```{r include=F}
-cbind(comp_ratio$all_1, comp_ratio$all_2)
-
-count <- 0
-
-for(i in 1:length(comp_ratio$all_1)){
-  if (comp_ratio$all_1[i] == "Default" && comp_ratio$all_2[i] == "Default"){
-    count <- count + 1
-  }
-}
-
-count
+#cbind(comp_ratio$all_1, comp_ratio$all_2)
+#
+#count <- 0
+#
+#for(i in 1:length(comp_ratio$all_1)){
+#  if (comp_ratio$all_1[i] == "Default" && comp_ratio$all_2[i] == "Default"){
+#    count <- count + 1
+#  }
+#}
+#
+#count
 
 ```
 
