@@ -1057,16 +1057,18 @@ SIGN.test(truncated_1_r, md=41, alternative="t")
 SIGN.test(logarithmic_1_r, md=41, alternative="t")
 
 SIGN.test(control_1_py, md=41, alternative="t")
-
-wilcox.test(control_1_r, control_1_py)
-wilcox.test(truncated_1_r, truncated_1_py)
-wilcox.test(logarithmic_1_r, logarithmic_1_py)
 ```
 
 ### Wilcox tests - Py
-```{R}
+```{r}
 wilcox.test(truncated_1_py, mu=41, alternative="t")
 wilcox.test(logarithmic_1_py, mu=41, alternative="t")
+```
+
+### Wilcox tests - lang comp
+```{r}
+wilcox.test(control_1_r, control_1_py)
+wilcox.test(truncated_1_r, truncated_1_py)
 ```
 
 ### First Plot Comp
