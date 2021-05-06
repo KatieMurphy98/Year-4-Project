@@ -12,7 +12,7 @@ header-includes:
 knitr::opts_chunk$set(echo = F, warning=F, comment = NA)
 ```
 
-```{r include = FALSE}
+```{r Data manipulation, include = FALSE}
 rm(list=ls())
 library(readxl)
 library(dplyr)
@@ -27,11 +27,11 @@ require(pander)
 panderOptions('round', 2)
 
 
-##### SET UP DATA #####
+###### SET UP DATA ######
 for(i in 1:6){
-    r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
-    py <- assign(paste0("py",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("Py - v",i)))))
-    assign(paste0("ver",i), rbind(r, py))
+  r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
+  py <- assign(paste0("py",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("Py - v",i)))))
+  assign(paste0("ver",i), rbind(r, py))
 }
 
 ver1 <- ver1[-1,]
@@ -42,71 +42,71 @@ names(ver1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "con_1", "con_2", "con_3", "con_4", 
                  "log_1", "log_2", "log_3", "log_4",
                  "trn_1", "trn_2", "trn_3", "trn_4",
-  
+                 
                  "def_1", "def_2", "def_3", 
                  "nar_1", "nar_2", "nar_3", 
                  "wid_1", "wid_2", "wid_3",
                  "all_1", "all_2", "all_3",
-  
+                 
                  "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
                  "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
-                 "sta_dge",
+                 "sta_grp",
                  "a_cols_1", "a_cols_2", 
-  
+                 
                  "sep_1a", "sep_1b", "sep_2",
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-  
+                 
                  "cd_trn",
                  "cd_zro"
-                 )
+)
 
 names(r1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-  
-                 "def_1", "def_2", "def_3", 
-                 "nar_1", "nar_2", "nar_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "all_1", "all_2", "all_3",
-  
-                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
-                 "sta_dge",
-                 "a_cols_1", "a_cols_2", 
-  
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-  
-                 "cd_trn",
-                 "cd_zro"
-                 )
+               
+               "con_1", "con_2", "con_3", "con_4", 
+               "log_1", "log_2", "log_3", "log_4",
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               
+               "def_1", "def_2", "def_3", 
+               "nar_1", "nar_2", "nar_3", 
+               "wid_1", "wid_2", "wid_3",
+               "all_1", "all_2", "all_3",
+               
+               "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+               "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+               "sta_grp",
+               "a_cols_1", "a_cols_2", 
+               
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+               
+               "cd_trn",
+               "cd_zro"
+)
 
 names(py1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-  
-                 "def_1", "def_2", "def_3", 
-                 "nar_1", "nar_2", "nar_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "all_1", "all_2", "all_3",
-  
-                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
-                 "sta_dge",
-                 "a_cols_1", "a_cols_2", 
-  
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-  
-                 "cd_trn",
-                 "cd_zro")
+                
+                "con_1", "con_2", "con_3", "con_4", 
+                "log_1", "log_2", "log_3", "log_4",
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                
+                "def_1", "def_2", "def_3", 
+                "nar_1", "nar_2", "nar_3", 
+                "wid_1", "wid_2", "wid_3",
+                "all_1", "all_2", "all_3",
+                
+                "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+                "sta_grp",
+                "a_cols_1", "a_cols_2", 
+                
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                
+                "cd_trn",
+                "cd_zro")
 
 
 names(ver2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
@@ -122,64 +122,64 @@ names(ver2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  
                  "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
                  "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
-                 "sta_dge",
+                 "sta_grp",
                  "b_cols_1", "b_cols_2", 
-  
+                 
                  "sep_1a", "sep_1b", "sep_2",
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-  
+                 
                  "cd_trn",
                  "cd_zro"
-                 )
+)
 
 names(r2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "log_1", "log_2", "log_3", "log_4",
-                 
-                 "def_1", "def_2", "def_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "nar_1", "nar_2", "nar_3", 
-                 "all_1", "all_2", "all_3",
-                 
-                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
-                 "sta_dge",
-                 "b_cols_1", "b_cols_2", 
-  
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-  
-                 "cd_trn",
-                 "cd_zro"
-                 )
+               
+               "con_1", "con_2", "con_3", "con_4", 
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "log_1", "log_2", "log_3", "log_4",
+               
+               "def_1", "def_2", "def_3", 
+               "wid_1", "wid_2", "wid_3",
+               "nar_1", "nar_2", "nar_3", 
+               "all_1", "all_2", "all_3",
+               
+               "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+               "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+               "sta_grp",
+               "b_cols_1", "b_cols_2", 
+               
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               
+               "cd_trn",
+               "cd_zro"
+)
 
 names(py2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "log_1", "log_2", "log_3", "log_4",
-                 
-                 "def_1", "def_2", "def_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "nar_1", "nar_2", "nar_3", 
-                 "all_1", "all_2", "all_3",
-                 
-                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
-                 "sta_dge",
-                 "b_cols_1", "b_cols_2", 
-  
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-  
-                 "cd_trn",
-                 "cd_zro"
-                 )
+                
+                "con_1", "con_2", "con_3", "con_4", 
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "log_1", "log_2", "log_3", "log_4",
+                
+                "def_1", "def_2", "def_3", 
+                "wid_1", "wid_2", "wid_3",
+                "nar_1", "nar_2", "nar_3", 
+                "all_1", "all_2", "all_3",
+                
+                "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+                "sta_grp",
+                "b_cols_1", "b_cols_2", 
+                
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                
+                "cd_trn",
+                "cd_zro"
+)
 
 
 names(ver3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
@@ -195,64 +195,63 @@ names(ver3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  
                  "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
                  "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "sta_dge",
+                 "sta_grp",
                  "c_cols_1", "c_cols_2", 
-  
+                 
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
                  "sep_1a", "sep_1b", "sep_2",
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
-  
+                 
                  "cd_zro",
                  "cd_trn"
-                 )
+)
 
 names(r3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 
-                 "nar_1", "nar_2", "nar_3", 
-                 "def_1", "def_2", "def_3", 
-                 "wid_1", "wid_2", "wid_3",  
-                 "all_1", "all_2", "all_3",
-                 
-                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
-                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "sta_dge",
-                 "c_cols_1", "c_cols_2", 
-  
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
-  
-                 "cd_zro",
-                 "cd_trn"
-                 )
+               
+               "log_1", "log_2", "log_3", "log_4",
+               "con_1", "con_2", "con_3", "con_4", 
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               
+               "nar_1", "nar_2", "nar_3", 
+               "def_1", "def_2", "def_3", 
+               "wid_1", "wid_2", "wid_3",  
+               "all_1", "all_2", "all_3",
+               
+               "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+               "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+               "sta_grp",
+               "c_cols_1", "c_cols_2", 
+               
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
+               
+               "cd_zro",
+               "cd_trn"
+)
 
-names(py3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 
-                 "nar_1", "nar_2", "nar_3", 
-                 "def_1", "def_2", "def_3", 
-                 "wid_1", "wid_2", "wid_3",  
-                 "all_1", "all_2", "all_3",
-                 
-                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
-                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "sta_dge",
-                 "c_cols_1", "c_cols_2", 
-  
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
-  
-                 "cd_zro",
-                 "cd_trn"
-                 )
+names(py3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro", 
+                "log_1", "log_2", "log_3", "log_4",
+                "con_1", "con_2", "con_3", "con_4", 
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                
+                "nar_1", "nar_2", "nar_3", 
+                "def_1", "def_2", "def_3", 
+                "wid_1", "wid_2", "wid_3",  
+                "all_1", "all_2", "all_3",
+                
+                "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+                "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                "sta_grp",
+                "c_cols_1", "c_cols_2", 
+                
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
+                
+                "cd_zro",
+                "cd_trn"
+)
 
 
 names(ver4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
@@ -260,72 +259,72 @@ names(ver4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "log_1", "log_2", "log_3", "log_4",
                  "trn_1", "trn_2", "trn_3", "trn_4",
                  "con_1", "con_2", "con_3", "con_4", 
-  
+                 
                  "nar_1", "nar_2", "nar_3", 
                  "wid_1", "wid_2", "wid_3",
                  "def_1", "def_2", "def_3", 
                  "all_1", "all_2", "all_3",
-  
+                 
                  "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
                  "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
-                 "sta_dge",
+                 "sta_grp",
                  "d_cols_1", "d_cols_2", 
-  
+                 
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
                  "sep_1a", "sep_1b", "sep_2",
-
+                 
                  "cd_trn",
                  "cd_zro"
-                 )
+)
 
 names(r4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "con_1", "con_2", "con_3", "con_4", 
-  
-                 "nar_1", "nar_2", "nar_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "def_1", "def_2", "def_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
-                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
-                 "sta_dge",
-                 "d_cols_1", "d_cols_2", 
-  
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "sep_1a", "sep_1b", "sep_2",
-
-                 "cd_trn",
-                 "cd_zro"
-                 )
+               
+               "log_1", "log_2", "log_3", "log_4",
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "con_1", "con_2", "con_3", "con_4", 
+               
+               "nar_1", "nar_2", "nar_3", 
+               "wid_1", "wid_2", "wid_3",
+               "def_1", "def_2", "def_3", 
+               "all_1", "all_2", "all_3",
+               
+               "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
+               "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
+               "sta_grp",
+               "d_cols_1", "d_cols_2", 
+               
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+               "sep_1a", "sep_1b", "sep_2",
+               
+               "cd_trn",
+               "cd_zro"
+)
 
 names(py4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "con_1", "con_2", "con_3", "con_4", 
-  
-                 "nar_1", "nar_2", "nar_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "def_1", "def_2", "def_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
-                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
-                 "sta_dge",
-                 "d_cols_1", "d_cols_2", 
-  
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "sep_1a", "sep_1b", "sep_2",
-
-                 "cd_trn",
-                 "cd_zro"
-                 )
+                
+                "log_1", "log_2", "log_3", "log_4",
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "con_1", "con_2", "con_3", "con_4", 
+                
+                "nar_1", "nar_2", "nar_3", 
+                "wid_1", "wid_2", "wid_3",
+                "def_1", "def_2", "def_3", 
+                "all_1", "all_2", "all_3",
+                
+                "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
+                "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
+                "sta_grp",
+                "d_cols_1", "d_cols_2", 
+                
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                "sep_1a", "sep_1b", "sep_2",
+                
+                "cd_trn",
+                "cd_zro"
+)
 
 
 names(ver5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
@@ -338,67 +337,67 @@ names(ver5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "def_1", "def_2", "def_3", 
                  "nar_1", "nar_2", "nar_3", 
                  "all_1", "all_2", "all_3",
-  
+                 
                  "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
                  "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "sta_dge",
+                 "sta_grp",
                  "e_cols_1", "e_cols_2", 
-  
+                 
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
                  "sep_1a", "sep_1b", "sep_2",
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
                  
                  "cd_zro",
                  "cd_trn"
-                 )
+)
 
 names(r5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "con_1", "con_2", "con_3", "con_4",
-                 "log_1", "log_2", "log_3", "log_4", 
-                 
-                 "wid_1", "wid_2", "wid_3",
-                 "def_1", "def_2", "def_3", 
-                 "nar_1", "nar_2", "nar_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
-                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "sta_dge",
-                 "e_cols_1", "e_cols_2", 
-  
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 
-                 "cd_zro",
-                 "cd_trn"
-                 )
+               
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "con_1", "con_2", "con_3", "con_4",
+               "log_1", "log_2", "log_3", "log_4", 
+               
+               "wid_1", "wid_2", "wid_3",
+               "def_1", "def_2", "def_3", 
+               "nar_1", "nar_2", "nar_3", 
+               "all_1", "all_2", "all_3",
+               
+               "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+               "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+               "sta_grp",
+               "e_cols_1", "e_cols_2", 
+               
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               
+               "cd_zro",
+               "cd_trn"
+)
 
 names(py5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "con_1", "con_2", "con_3", "con_4",
-                 "log_1", "log_2", "log_3", "log_4", 
-                 
-                 "wid_1", "wid_2", "wid_3",
-                 "def_1", "def_2", "def_3", 
-                 "nar_1", "nar_2", "nar_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
-                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "sta_dge",
-                 "e_cols_1", "e_cols_2", 
-  
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 
-                 "cd_zro",
-                 "cd_trn"
-                 )
+                
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "con_1", "con_2", "con_3", "con_4",
+                "log_1", "log_2", "log_3", "log_4", 
+                
+                "wid_1", "wid_2", "wid_3",
+                "def_1", "def_2", "def_3", 
+                "nar_1", "nar_2", "nar_3", 
+                "all_1", "all_2", "all_3",
+                
+                "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+                "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                "sta_grp",
+                "e_cols_1", "e_cols_2", 
+                
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                
+                "cd_zro",
+                "cd_trn"
+)
 
 names(ver6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -410,71 +409,71 @@ names(ver6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "nar_1", "nar_2", "nar_3", 
                  "def_1", "def_2", "def_3", 
                  "all_1", "all_2", "all_3",
-  
+                 
                  "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
                  "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
-                 "sta_dge",
+                 "sta_grp",
                  "f_cols_1", "f_cols_2", 
-  
+                 
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
                  "sep_1a", "sep_1b", "sep_2",
                  
                  "cd_zro",
                  "cd_trn"
-                 )
-                 
+)
+
 names(r6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "log_1", "log_2", "log_3", "log_4", 
-                 "con_1", "con_2", "con_3", "con_4",
-                 
-                 "wid_1", "wid_2", "wid_3",
-                 "nar_1", "nar_2", "nar_3", 
-                 "def_1", "def_2", "def_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
-                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
-                 "sta_dge",
-                 "f_cols_1", "f_cols_2", 
-  
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "sep_1a", "sep_1b", "sep_2",
-                 
-                 "cd_zro",
-                 "cd_trn"
-                 )
+               
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "log_1", "log_2", "log_3", "log_4", 
+               "con_1", "con_2", "con_3", "con_4",
+               
+               "wid_1", "wid_2", "wid_3",
+               "nar_1", "nar_2", "nar_3", 
+               "def_1", "def_2", "def_3", 
+               "all_1", "all_2", "all_3",
+               
+               "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
+               "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
+               "sta_grp",
+               "f_cols_1", "f_cols_2", 
+               
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "sep_1a", "sep_1b", "sep_2",
+               
+               "cd_zro",
+               "cd_trn"
+)
 
 names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "log_1", "log_2", "log_3", "log_4", 
-                 "con_1", "con_2", "con_3", "con_4",
-                 
-                 "wid_1", "wid_2", "wid_3",
-                 "nar_1", "nar_2", "nar_3", 
-                 "def_1", "def_2", "def_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
-                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
-                 "sta_dge",
-                 "f_cols_1", "f_cols_2", 
-  
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "sep_1a", "sep_1b", "sep_2",
-                 
-                 "cd_zro",
-                 "cd_trn"
-                 )
+                
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "log_1", "log_2", "log_3", "log_4", 
+                "con_1", "con_2", "con_3", "con_4",
+                
+                "wid_1", "wid_2", "wid_3",
+                "nar_1", "nar_2", "nar_3", 
+                "def_1", "def_2", "def_3", 
+                "all_1", "all_2", "all_3",
+                
+                "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
+                "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
+                "sta_grp",
+                "f_cols_1", "f_cols_2", 
+                
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "sep_1a", "sep_1b", "sep_2",
+                
+                "cd_zro",
+                "cd_trn"
+)
 
 ver2$uni[which(is.na(ver2$uni))] <- "None"
 
-##### Y SCALES #####
+###### Y SCALES ######
 ctrl_y_scale <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)], ver3[,c(4:7, 14:17)], ver4[,c(4:7, 18:21)], ver5[,c(4:7, 14:17)], ver6[,c(4:7, 18:21)])
 log_y_scale <- rbind(ver1[,c(4:7, 14:17)], ver2[,c(4:7, 18:21)], ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)], ver5[,c(4:7, 18:21)], ver6[,c(4:7, 14:17)])
 trnc_y_scale <- rbind(ver1[,c(4:7, 18:21)], ver2[,c(4:7, 14:17)], ver3[,c(4:7, 18:21)], ver4[,c(4:7, 14:17)], ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
@@ -484,7 +483,9 @@ log_y_scale_r<- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)]
 trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
 
 ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
+
 log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
+
 trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
 
 for(i in c(unique(ctrl_y_scale$uni), unique(trnc_y_scale$uni), unique(log_y_scale$uni))){
@@ -513,9 +514,11 @@ stem_log <- rbind(Science_log, Technology_log, Engineering_log, Maths_log, Medic
 soc_sci_log <- rbind(psychology_log, Soc_sci_log, Sus_geog_log, Criminology_log)
 hum_log <- rbind(Humanities_log, Geography_log)
 
+con_first <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)])
+log_first <- rbind(ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)])
+trn_first <- rbind(ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
 
-
-##### ASPECT RATIO #####
+###### ASPECT RATIO ######
 def_ratio <- rbind(ver1[,c(4:7, 22:24)], ver2[,c(4:7, 22:24)], ver3[,c(4:7, 25:27)], ver4[,c(4:7, 28:30)], ver5[,c(4:7, 25:27)], ver6[,c(4:7, 28:30)])
 nar_ratio <- rbind(ver1[,c(4:7, 25:27)], ver2[,c(4:7, 28:30)], ver3[,c(4:7, 22:24)], ver4[,c(4:7, 22:24)], ver5[,c(4:7, 28:30)], ver6[,c(4:7, 25:27)])
 wid_ratio <- rbind(ver1[,c(4:7, 28:30)], ver2[,c(4:7, 25:27)], ver3[,c(4:7, 28:30)], ver4[,c(4:7, 25:27)], ver5[,c(4:7, 22:24)], ver6[,c(4:7, 22:24)])
@@ -534,30 +537,30 @@ for(i in 1:dim(ver1)[1]){
     ver1$all_1[i] <- "Default"
   }
   if(ver1$all_1[i]=="B"){
-    ver1$all_1[i] <- "Narrower"
+    ver1$all_1[i] <- "Narrow"
   }
   if(ver1$all_1[i]=="C"){
-    ver1$all_1[i] <- "Wider"
+    ver1$all_1[i] <- "Wide"
   }
   
   if(ver1$all_2[i]=="A"){
     ver1$all_2[i] <- "Default"
   }
   if(ver1$all_2[i]=="B"){
-    ver1$all_2[i] <- "Narrower"
+    ver1$all_2[i] <- "Narrow"
   }
   if(ver1$all_2[i]=="C"){
-    ver1$all_2[i] <- "Wider"
+    ver1$all_2[i] <- "Wide"
   }
   
   if(ver1$all_3[i]=="A"){
     ver1$all_3[i] <- "Default"
   }
   if(ver1$all_3[i]=="B"){
-    ver1$all_3[i] <- "Narrower"
+    ver1$all_3[i] <- "Narrow"
   }
   if(ver1$all_3[i]=="C"){
-    ver1$all_3[i] <- "Wider"
+    ver1$all_3[i] <- "Wide"
   }
 }
 
@@ -566,30 +569,30 @@ for(i in 1:dim(ver2)[1]){
     ver2$all_1[i] <- "Default"
   }
   if(ver2$all_1[i]=="C"){
-    ver2$all_1[i] <- "Narrower"
+    ver2$all_1[i] <- "Narrow"
   }
   if(ver2$all_1[i]=="B"){
-    ver2$all_1[i] <- "Wider"
+    ver2$all_1[i] <- "Wide"
   }
   
   if(ver2$all_2[i]=="A"){
     ver2$all_2[i] <- "Default"
   }
   if(ver2$all_2[i]=="C"){
-    ver2$all_2[i] <- "Narrower"
+    ver2$all_2[i] <- "Narrow"
   }
   if(ver2$all_2[i]=="B"){
-    ver2$all_2[i] <- "Wider"
+    ver2$all_2[i] <- "Wide"
   }
   
   if(ver2$all_3[i]=="A"){
     ver2$all_3[i] <- "Default"
   }
   if(ver2$all_3[i]=="C"){
-    ver2$all_3[i] <- "Narrower"
+    ver2$all_3[i] <- "Narrow"
   }
   if(ver2$all_3[i]=="B"){
-    ver2$all_3[i] <- "Wider"
+    ver2$all_3[i] <- "Wide"
   }
 }
 
@@ -598,30 +601,30 @@ for(i in 1:dim(ver3)[1]){
     ver3$all_1[i] <- "Default"
   }
   if(ver3$all_1[i]=="A"){
-    ver3$all_1[i] <- "Narrower"
+    ver3$all_1[i] <- "Narrow"
   }
   if(ver3$all_1[i]=="C"){
-    ver3$all_1[i] <- "Wider"
+    ver3$all_1[i] <- "Wide"
   }
   
   if(ver3$all_2[i]=="B"){
     ver3$all_2[i] <- "Default"
   }
   if(ver3$all_2[i]=="A"){
-    ver3$all_2[i] <- "Narrower"
+    ver3$all_2[i] <- "Narrow"
   }
   if(ver3$all_2[i]=="C"){
-    ver3$all_2[i] <- "Wider"
+    ver3$all_2[i] <- "Wide"
   }
   
   if(ver3$all_3[i]=="B"){
     ver3$all_3[i] <- "Default"
   }
   if(ver3$all_3[i]=="A"){
-    ver3$all_3[i] <- "Narrower"
+    ver3$all_3[i] <- "Narrow"
   }
   if(ver3$all_3[i]=="C"){
-    ver3$all_3[i] <- "Wider"
+    ver3$all_3[i] <- "Wide"
   }
 }
 
@@ -630,30 +633,30 @@ for(i in 1:dim(ver4)[1]){
     ver4$all_1[i] <- "Default"
   }
   if(ver4$all_1[i]=="C"){
-    ver4$all_1[i] <- "Narrower"
+    ver4$all_1[i] <- "Narrow"
   }
   if(ver4$all_1[i]=="A"){
-    ver4$all_1[i] <- "Wider"
+    ver4$all_1[i] <- "Wide"
   }
   
   if(ver4$all_2[i]=="B"){
     ver4$all_2[i] <- "Default"
   }
   if(ver4$all_2[i]=="C"){
-    ver4$all_2[i] <- "Narrower"
+    ver4$all_2[i] <- "Narrow"
   }
   if(ver4$all_2[i]=="A"){
-    ver4$all_2[i] <- "Wider"
+    ver4$all_2[i] <- "Wide"
   }
   
   if(ver4$all_3[i]=="B"){
     ver4$all_3[i] <- "Default"
   }
   if(ver4$all_3[i]=="C"){
-    ver4$all_3[i] <- "Narrower"
+    ver4$all_3[i] <- "Narrow"
   }
   if(ver4$all_3[i]=="A"){
-    ver4$all_3[i] <- "Wider"
+    ver4$all_3[i] <- "Wide"
   }
 }
 
@@ -665,30 +668,30 @@ for(i in 1:dim(ver5)[1]){
     ver5$all_1[i] <- "Default"
   }
   if(ver5$all_1[i]=="A"){
-    ver5$all_1[i] <- "Narrower"
+    ver5$all_1[i] <- "Narrow"
   }
   if(ver5$all_1[i]=="B"){
-    ver5$all_1[i] <- "Wider"
+    ver5$all_1[i] <- "Wide"
   }
   
   if(ver5$all_2[i]=="C"){
     ver5$all_2[i] <- "Default"
   }
   if(ver5$all_2[i]=="A"){
-    ver5$all_2[i] <- "Narrower"
+    ver5$all_2[i] <- "Narrow"
   }
   if(ver5$all_2[i]=="B"){
-    ver5$all_2[i] <- "Wider"
+    ver5$all_2[i] <- "Wide"
   }
   
   if(ver5$all_3[i]=="C"){
     ver5$all_3[i] <- "Default"
   }
   if(ver5$all_3[i]=="A"){
-    ver5$all_3[i] <- "Narrower"
+    ver5$all_3[i] <- "Narrow"
   }
   if(ver5$all_3[i]=="B"){
-    ver5$all_3[i] <- "Wider"
+    ver5$all_3[i] <- "Wide"
   }
 }
 
@@ -697,40 +700,94 @@ for(i in 1:dim(ver6)[1]){
     ver6$all_1[i] <- "Default"
   }
   if(ver6$all_1[i]=="B"){
-    ver6$all_1[i] <- "Narrower"
+    ver6$all_1[i] <- "Narrow"
   }
   if(ver6$all_1[i]=="A"){
-    ver6$all_1[i] <- "Wider"
+    ver6$all_1[i] <- "Wide"
   }
   
   if(ver6$all_2[i]=="C"){
     ver6$all_2[i] <- "Default"
   }
   if(ver6$all_2[i]=="B"){
-    ver6$all_2[i] <- "Narrower"
+    ver6$all_2[i] <- "Narrow"
   }
   if(ver6$all_2[i]=="A"){
-    ver6$all_2[i] <- "Wider"
+    ver6$all_2[i] <- "Wide"
   }
   
   if(ver6$all_3[i]=="C"){
     ver6$all_3[i] <- "Default"
   }
   if(ver6$all_3[i]=="B"){
-    ver6$all_3[i] <- "Narrower"
+    ver6$all_3[i] <- "Narrow"
   }
   if(ver6$all_3[i]=="A"){
-    ver6$all_3[i] <- "Wider"
+    ver6$all_3[i] <- "Wide"
   }
 }
 
+for(i in c(unique(def_ratio$uni), unique(nar_ratio$uni), unique(wid_ratio$uni))){
+  assign(paste0(i, "_def"), def_ratio[which(def_ratio$uni==i),])
+  assign(paste0(i, "_nar"), nar_ratio[which(nar_ratio$uni==i),])
+  assign(paste0(i, "_wid"), wid_ratio[which(wid_ratio$uni==i),])
+}
+
+Soc_sci_def <- `Social Sciences_def`
+Soc_sci_nar <- `Social Sciences_nar`
+Soc_sci_wid <- `Social Sciences_wid`
+
+Sus_geog_def <- `Sustainability/geological science_def`
+Sus_geog_nar <- `Sustainability/geological science_nar`
+Sus_geog_wid <- `Sustainability/geological science_wid`
+
+stem_def <- rbind(Science_def, Technology_def, Engineering_def, Maths_def, Medicine_def, Architecture_def)
+soc_sci_def <- rbind(psychology_def, Soc_sci_def, Sus_geog_def, Criminology_def)
+hum_def <- rbind(Humanities_def, Geography_def)
+
+stem_nar <- rbind(Science_nar, Technology_nar, Engineering_nar, Maths_nar, Medicine_nar, Architecture_nar)
+soc_sci_nar <- rbind(psychology_nar, Soc_sci_nar, Sus_geog_nar, Criminology_nar)
+hum_nar <- rbind(Humanities_nar, Geography_nar)
+
+stem_wid <- rbind(Science_wid, Technology_wid, Engineering_wid, Maths_wid, Medicine_wid, Architecture_wid)
+soc_sci_wid <- rbind(psychology_wid, Soc_sci_wid, Sus_geog_wid, Criminology_wid)
+hum_wid <- rbind(Humanities_wid, Geography_wid)
+
+
 comp_ratio_all <- rbind(ver1[,c(4:7, 31:33)], ver2[,c(4:7, 31:33)], ver3[,c(4:7, 31:33)], ver4[,c(4:7, 31:33)], ver5[,c(4:7, 31:33)], ver6[,c(4:7, 31:33)])
 
+comp_ratio_r <- rbind(r1[,c(4:7, 31:33)], r2[,c(4:7, 31:33)], r3[,c(4:7, 31:33)], r4[,c(4:7, 31:33)], r5[,c(4:7, 31:33)], r6[,c(4:7, 31:33)])
 
-##### STACKED #####
-vir_stacked <- rbind(ver1[,c(4:7, 34:41)], ver5[,c(4:7, 34:41)])
-def_stacked <- rbind(ver2[,c(4:7, 34:41)], ver3[,c(4:7, 34:41)])
-gr_stacked <- rbind(ver4[,c(4:7, 34:41)], ver6[,c(4:7, 34:41)])
+comp_ratio_py <- rbind(py1[,c(4:7, 31:33)], py2[,c(4:7, 31:33)], py3[,c(4:7, 31:33)], py4[,c(4:7, 31:33)], py5[,c(4:7, 31:33)], py6[,c(4:7, 31:33)])
+ 
+def_first <- rbind(ver1[,c(4:7, 22:24)], ver2[,c(4:7, 22:24)])
+nar_first <- rbind(ver3[,c(4:7, 22:24)], ver4[,c(4:7, 22:24)])
+wid_first <- rbind(ver5[,c(4:7, 22:24)], ver6[,c(4:7, 22:24)])
+
+###### STACKED ######
+vir_stacked <- rbind(ver1[,c(4:7, 34:37)], ver5[,c(4:7, 38:41)])
+def_stacked <- rbind(ver2[,c(4:7, 34:37)], ver3[,c(4:7, 38:41)])
+gr_stacked <- rbind(ver4[,c(4:7, 34:37)], ver6[,c(4:7, 38:41)])
+
+vir_grouped <- rbind(ver1[,c(4:7, 38:41)], ver5[,c(4:7, 34:37)])
+def_grouped <- rbind(ver2[,c(4:7, 38:41)], ver3[,c(4:7, 34:37)])
+gr_grouped <- rbind(ver4[,c(4:7, 38:41)], ver6[,c(4:7, 34:37)])
+
+vir_stacked_r <- rbind(r1[,c(4:7, 34:37)], r5[,c(4:7, 38:41)])
+def_stacked_r <- rbind(r2[,c(4:7, 34:37)], r3[,c(4:7, 38:41)])
+gr_stacked_r <- rbind(r4[,c(4:7, 34:37)], r6[,c(4:7, 38:41)])
+
+vir_grouped_r <- rbind(r1[,c(4:7, 38:41)], r5[,c(4:7, 34:37)])
+def_grouped_r <- rbind(r2[,c(4:7, 38:41)], r3[,c(4:7, 34:37)])
+gr_grouped_r <- rbind(r4[,c(4:7, 38:41)], r6[,c(4:7, 34:37)])
+
+vir_stacked_py <- rbind(py1[,c(4:7, 34:37)], py5[,c(4:7, 38:41)])
+def_stacked_py <- rbind(py2[,c(4:7, 34:37)], py3[,c(4:7, 38:41)])
+gr_stacked_py <- rbind(py4[,c(4:7, 34:37)], py6[,c(4:7, 38:41)])
+
+vir_grouped_py <- rbind(py1[,c(4:7, 38:41)], py5[,c(4:7, 34:37)])
+def_grouped_py <- rbind(py2[,c(4:7, 38:41)], py3[,c(4:7, 34:37)])
+gr_grouped_py <- rbind(py4[,c(4:7, 38:41)], py6[,c(4:7, 34:37)])
 
 set_a <- ver1[,c(4:9, 42:44)]
 set_b <- ver2[,c(4:9, 42:44)]
@@ -739,7 +796,21 @@ set_d <- ver4[,c(4:9, 42:44)]
 set_e <- ver5[,c(4:9, 42:44)]
 set_f <- ver6[,c(4:9, 42:44)]
 
-##### SALES_AB #####
+set_a_r <- r1[,c(4:9, 42:44)]
+set_b_r <- r2[,c(4:9, 42:44)]
+set_c_r <- r3[,c(4:9, 42:44)]
+set_d_r <- r4[,c(4:9, 42:44)]
+set_e_r <- r5[,c(4:9, 42:44)]
+set_f_r <- r6[,c(4:9, 42:44)]
+
+set_a_py <- py1[,c(4:9, 42:44)]
+set_b_py <- py2[,c(4:9, 42:44)]
+set_c_py <- py3[,c(4:9, 42:44)]
+set_d_py <- py4[,c(4:9, 42:44)]
+set_e_py <- py5[,c(4:9, 42:44)]
+set_f_py <- py6[,c(4:9, 42:44)]
+
+###### SALES_AB ######
 ab_sep <- rbind(ver1[,c(4:7, 45:47)], ver2[,c(4:7, 45:47)], ver3[,c(4:7, 48:50)], ver4[,c(4:7, 51:53)], ver5[,c(4:7, 48:50)], ver6[,c(4:7, 51:53)])
 
 ab_trn <- rbind(ver1[,c(4:7, 48:50)], ver2[,c(4:7, 51:53)], ver3[,c(4:7, 45:47)], ver4[,c(4:7, 45:47)], ver5[,c(4:7, 51:53)], ver6[,c(4:7, 48:50)])
@@ -747,7 +818,7 @@ ab_trn <- rbind(ver1[,c(4:7, 48:50)], ver2[,c(4:7, 51:53)], ver3[,c(4:7, 45:47)]
 ab_zero <- rbind(ver1[,c(4:7, 51:53)], ver2[,c(4:7, 48:50)], ver3[,c(4:7, 51:53)], ver4[,c(4:7, 48:50)], ver5[,c(4:7, 45:47)], ver6[,c(4:7, 45:47)])
 
 
-##### SALES_CD #####
+###### SALES_CD ######
 cd_trn <- rbind(ver1[,c(4:7, 54)], ver2[,c(4:7, 54)], ver3[,c(4:7, 55)], ver4[,c(4:7, 54)], ver5[,c(4:7, 55)], ver6[,c(4:7, 55)])
 
 cd_zro <- rbind(ver1[,c(4:7, 55)], ver2[,c(4:7, 55)], ver3[,c(4:7, 54)], ver4[,c(4:7, 55)], ver5[,c(4:7, 54)], ver6[,c(4:7, 54)])
@@ -778,7 +849,7 @@ logarithmic_1 <- as.numeric(na.exclude(logarithmic_1))
 y_scale_1_all <- cbind(control_1, truncated_1, logarithmic_1)
 ```
 
-## Whole Population
+### Whole Population
 ```{r}
 N <- c(length(control_1), length(truncated_1), length(logarithmic_1))
 
@@ -789,7 +860,7 @@ colnames(sum_ysc1all) <- c("Control", "Truncated", "Logarithmic")
 sum_ysc1all
 ```
 
-## Language comparisons
+
 ```{r}
 control_1_r <- ctrl_y_scale_r$con_1
 control_1_r[which(control_1_r == "41/42")] <- 41.5
@@ -808,7 +879,7 @@ logarithmic_1_py[which(logarithmic_1_py == "10^9")] <- 1e+9
 logarithmic_1_py <- as.numeric(na.exclude(logarithmic_1_py))
 ``` 
 
-## Control - Language comparison
+### Control - Language comparison
 ```{r}
 N <- c(length(control_1), length(control_1_r), length(control_1_py))
 
@@ -819,7 +890,7 @@ colnames(sum_ysc1lang_ctrl) <- c("Whole Pop", "R", "Python")
 sum_ysc1lang_ctrl
 ```
 
-## Truncated - Language comparison
+### Truncated - Language comparison
 ```{r}
 N <- c(length(truncated_1), length(truncated_1_r), length(truncated_1_py))
 
@@ -830,7 +901,7 @@ colnames(sum_ysc1lang_trnc) <- c("Whole Pop", "R", "Python")
 sum_ysc1lang_trnc
 ```
 
-## Logarithmic - Language comparison
+### Logarithmic - Language comparison
 ```{r}
 
 N <- c(length(logarithmic_1), length(logarithmic_1_r), length(logarithmic_1_py))
@@ -842,7 +913,7 @@ colnames(sum_ysc1lang_log) <- c("Whole Pop", "R", "Python")
 sum_ysc1lang_log
 ```
 
-## Control - Degree comparison
+### Control - Degree comparison
 ```{r}
 control_1_stem <- as.numeric(stem_ctrl$con_1)
 control_1_hum <- as.numeric(hum_ctrl$con_1)
@@ -866,7 +937,7 @@ colnames(sum_ysc1deg_ctrl) <- c("STEM", "Humanities", "Social Sci", "Arts", "Bus
 sum_ysc1deg_ctrl
 ```
 
-## Truncated - Degree comparison
+### Truncated - Degree comparison
 ```{r}
 truncated_1_stem <- as.numeric(stem_trnc$trn_1)
 truncated_1_hum <- as.numeric(hum_trnc$trn_1)
@@ -888,7 +959,7 @@ colnames(sum_ysc1deg_trnc) <- c("STEM", "Humanities", "Social Sci", "Arts", "Bus
 sum_ysc1deg_trnc
 ```
 
-## Logarithmic - Degree comparison
+### Logarithmic - Degree comparison
 ```{r}
 logarithmic_1_stem <- stem_log$log_1
 logarithmic_1_stem[which(logarithmic_1_stem == "Don't Know")] <- NA
@@ -917,7 +988,7 @@ colnames(sum_ysc1deg_log) <- c("STEM", "Humanities", "Social Sci", "Arts", "Busi
 sum_ysc1deg_log
 ```
 
-## Num skills - log
+### Num skills - log
 ```{r}
 rbind(
   log_y_scale[which(log_y_scale$log_1 == "Don't know"),],
@@ -927,21 +998,21 @@ rbind(
 )
 ```
 
-## Shapiro Tests - Whole
+### Shapiro Tests - Whole
 ```{r echo=F}
 shapiro.test(control_1)
 shapiro.test(truncated_1)
 shapiro.test(logarithmic_1)
 ```
 
-## Symmetry Tests - Whole
+### Symmetry Tests - Whole
 ```{r echo=F}
 symmetry.test(control_1)
 symmetry.test(truncated_1)
 symmetry.test(logarithmic_1)
 ```
 
-## Shapiro Tests - Language comp
+### Shapiro Tests - Language comp
 ```{r echo=F}
 shapiro.test(control_1_r)
 shapiro.test(truncated_1_r)
@@ -952,7 +1023,7 @@ shapiro.test(truncated_1_py)
 shapiro.test(logarithmic_1_py)
 ```
 
-## symmetry Tests - Language comp
+### symmetry Tests - Language comp
 ```{r echo=F}
 symmetry.test(control_1_r)
 symmetry.test(truncated_1_r)
@@ -963,86 +1034,54 @@ symmetry.test(truncated_1_py)
 symmetry.test(logarithmic_1_py)
 ```
 
-## Shapiro Tests - Degree comp
-```{r echo=F}
-shapiro.test(control_1_stem)
-shapiro.test(control_1_hum) 
-shapiro.test(control_1_socsci)
-shapiro.test(control_1_bus) 
 
-shapiro.test(truncated_1_stem)
-shapiro.test(truncated_1_hum) 
-shapiro.test(truncated_1_socsci)
-shapiro.test(truncated_1_bus) 
-
-shapiro.test(logarithmic_1_stem)
-shapiro.test(logarithmic_1_hum) 
-shapiro.test(logarithmic_1_socsci)
-shapiro.test(logarithmic_1_bus) 
-```
-## T-tests - Degree comp
-```{r}
-t.test(control_1_hum, mu = 41)
-t.test(control_1_bus, mu = 41)
-
-t.test(truncated_1_hum, mu = 41)
-t.test(truncated_1_bus, mu = 41)
-
-t.test(control_1_hum, mu = 41)
-```
-
-## symmetry Tests - Degree comp
-```{r echo=F}
-symmetry.test(control_1_stem)
-symmetry.test(control_1_socsci)
-
-symmetry.test(truncated_1_stem)
-symmetry.test(truncated_1_socsci)
-
-symmetry.test(logarithmic_1_stem)
-symmetry.test(logarithmic_1_socsci)
-symmetry.test(logarithmic_1_bus) 
-```
-
-
-## Sign tests - Whole pop
+### Sign tests - Whole pop
 ```{r echo=F}
 SIGN.test(control_1, md=41, alternative="t")
 SIGN.test(truncated_1, md=41, alternative="t")
 SIGN.test(logarithmic_1, md=41, alternative="t")
+
+logarithmic_1 <- log_y_scale$log_1
+logarithmic_1[which(logarithmic_1 == "Don't know")] <- NA
+logarithmic_1[which(logarithmic_1 == "Next to none.")] <- NA
+logarithmic_1[which(logarithmic_1 == "10^15")] <- 1e+15
+logarithmic_1[which(logarithmic_1 == "10^9")] <- 1e+9
+
+SIGN.test(control_1, truncated_1)
 ```
 
-## Sign tests - Lang comp
+### Sign tests - Lang comp
 ```{r echo=F}
 SIGN.test(control_1_r, md=41, alternative="t")
 SIGN.test(truncated_1_r, md=41, alternative="t")
 SIGN.test(logarithmic_1_r, md=41, alternative="t")
 
 SIGN.test(control_1_py, md=41, alternative="t")
-SIGN.test(truncated_1_py, md=41, alternative="t")
-SIGN.test(logarithmic_1_py, md=41, alternative="t")
 ```
 
-## Sign tests - Deg comp
-```{r echo=F}
-SIGN.test(control_1_stem, md=41, alternative="t")
-SIGN.test(control_1_socsci, md=41, alternative="t")
-SIGN.test(control_1_arts, md=41, alternative="t")
-
-SIGN.test(truncated_1_stem, md=41, alternative="t")
-SIGN.test(truncated_1_socsci, md=41, alternative="t")
-SIGN.test(truncated_1_arts, md=41, alternative="t")
-
-SIGN.test(logarithmic_1_stem, md=41, alternative="t")
-SIGN.test(logarithmic_1_socsci, md=41, alternative="t")
-SIGN.test(logarithmic_1_arts, md=41, alternative="t")
-SIGN.test(logarithmic_1_bus, md=41, alternative="t")
+### Wilcox tests - Py
+```{R}
+wilcox.test(truncated_1_py, mu=41, alternative="t")
+wilcox.test(logarithmic_1_py, mu=41, alternative="t")
 ```
 
+### First Plot Comp
+```{r}
+con_first_1 <- con_first$con_1
+trn_first_1 <- trn_first$trn_1
+log_first_1 <- log_first$log_1
 
-#Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?
+log_first_1[which(log_first_1 == "10^15")] <- 10e+15
+log_first_1 <- as.numeric(log_first_1)
 
+N <- c(length(con_first_1), length(trn_first_1), length(log_first_1))
+Var <- c(var(con_first_1), var(trn_first_1), var(log_first_1))
+sum_ysc1cfirst <- rbind(N, cbind(summary(con_first_1), summary(trn_first_1), summary(log_first_1)), Var)
+colnames(sum_ysc1cfirst) <- c("Control", "Truncated", "Logarithmic")
+sum_ysc1cfirst
+```
 
+## Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?
 ```{r echo=F}
 
 control_2 <- ctrl_y_scale$con_2
@@ -1052,6 +1091,7 @@ logarithmic_2 <- log_y_scale$log_2
 y_scale_2_all <- cbind(control_2, truncated_2, logarithmic_2)
 ```
 
+### Whole pop summary
 ```{r echo=F}
 N <- c(length(control_2), length(truncated_2), length(logarithmic_2))
 
@@ -1062,428 +1102,1536 @@ colnames(sum_ysc2all) <- c("Control", "Truncated", "Logarithmic")
 sum_ysc2all
 ```
 
+### Shapiro tests
+```{r}
+shapiro.test(control_2)
+shapiro.test(truncated_2)
+shapiro.test(logarithmic_2)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(control_2)
+symmetry.test(truncated_2)
+symmetry.test(logarithmic_2)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(control_2, truncated_2)
+SIGN.test(control_2, logarithmic_2)
+wilcox.test(logarithmic_2, truncated_2)
+```
+
+### Whole pop bars
 ```{r echo=F}
 y_scale_2_all <- as.data.frame(y_scale_2_all)
 resp <- c(control_2, truncated_2, logarithmic_2)
 type <- c(rep('Control', 70), rep('Truncated', 70), rep('Logarithmic', 70)) 
 stats_2 <- data.frame(resp, type)
+
+ggplot(stats_2)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the Whole Population")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+
+### Control - Lang comp
+```{r}
+control_2_r <- ctrl_y_scale_r$con_2
+truncated_2_r <- trnc_y_scale_r$trn_2
+logarithmic_2_r <- log_y_scale_r$log_2
+
+control_2_py <- ctrl_y_scale_py$con_2
+truncated_2_py <- trnc_y_scale_py$trn_2
+logarithmic_2_py <- log_y_scale_py$log_2
+
+y_scale_2_r <- cbind(control_2_r, truncated_2_r, logarithmic_2_r)
+y_scale_2_py <- cbind(control_2_py, truncated_2_py, logarithmic_2_py)
+```
+
+### Control - Lang comp
+```{r}
+N <- c(length(control_2), length(control_2_r), length(control_2_py))
+Var <- c(var(control_2), var(control_2_r), var(control_2_py))
+sum_ysc2lang_ctrl <- rbind(N, cbind(summary(control_2), summary(control_2_r), summary(control_2_py)), Var)
+colnames(sum_ysc1lang_ctrl) <- c("Whole Pop", "R", "Python")
+sum_ysc2lang_ctrl
+```
+
+### Truncated - Lang comp
+```{r}
+N <- c(length(truncated_2), length(truncated_2_r), length(truncated_2_py))
+Var <- c(var(truncated_2), var(truncated_2_r), var(truncated_2_py))
+sum_ysc2lang_trnc <- rbind(N, cbind(summary(truncated_2), summary(truncated_2_r), summary(truncated_2_py)), Var)
+colnames(sum_ysc2lang_trnc) <- c("Whole Pop", "R", "Python")
+sum_ysc2lang_trnc
+```
+
+### Logarithmic - Lang comp
+```{r}
+N <- c(length(logarithmic_2), length(logarithmic_2_r), length(logarithmic_2_py))
+Var <- c(var(logarithmic_2), var(logarithmic_2_r), var(logarithmic_2_py))
+sum_ysc2lang_log <- rbind(N, cbind(summary(logarithmic_2), summary(logarithmic_2_r), summary(logarithmic_2_py)), Var)
+colnames(sum_ysc2lang_log) <- c("Whole Pop", "R", "Python")
+sum_ysc2lang_log
+```
+
+### R bars
+```{r echo=F}
+y_scale_2_r <- as.data.frame(y_scale_2_r)
+resp <- c(control_2_r, truncated_2_r, logarithmic_2_r)
+type <- c(rep('Control', 38), rep('Truncated', 38), rep('Logarithmic', 38)) 
+stats_2_r <- data.frame(resp, type)
+
+ggplot(stats_2_r)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected by the R Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+
+### Py bars
+```{r echo=F}
+y_scale_2_py <- as.data.frame(y_scale_2_py)
+resp <- c(control_2_py, truncated_2_py, logarithmic_2_py)
+type <- c(rep('Control', 32), rep('Truncated', 32), rep('Logarithmic', 32)) 
+stats_2_py <- data.frame(resp, type)
+
+ggplot(stats_2_py)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected by the Python Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+
+### Control - Degree comparison
+```{r}
+control_2_stem <- as.numeric(stem_ctrl$con_2)
+control_2_hum <- as.numeric(hum_ctrl$con_2)
+
+control_2_socsci <- as.numeric(soc_sci_ctrl$con_2)
+control_2_socsci[which(control_2_socsci == "41/42")] <- 41.5
+control_2_socsci <- na.exclude(control_2_socsci)
+
+control_2_arts <- as.numeric(Arts_ctrl$con_2)
+control_2_bus <- as.numeric(Business_ctrl$con_2)
+
+control_2_none <- as.numeric(None_ctrl$con_2)
+
+N <- c(length(control_2_stem), length(control_2_hum), length(control_2_socsci), length(control_2_arts), length(control_2_bus), length(control_2_none))
+
+Var <- c(c(var(control_2_stem), var(control_2_hum), var(control_2_socsci), var(control_2_arts), var(control_2_bus), var(control_2_none)))
+
+sum_ysc2deg_ctrl <- rbind(N, cbind(summary(control_2_stem), summary(control_2_hum), summary(control_2_socsci), summary(control_2_arts), summary(control_2_bus), summary(control_2_none)), Var)
+
+colnames(sum_ysc2deg_ctrl) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
+sum_ysc2deg_ctrl
+```
+
+### Truncated - Degree comparison
+```{r}
+truncated_2_stem <- as.numeric(stem_trnc$trn_2)
+truncated_2_hum <- as.numeric(hum_trnc$trn_2)
+
+truncated_2_socsci <- as.numeric(soc_sci_trnc$trn_2)
+truncated_2_socsci[which(truncated_2_socsci == "41/42")] <- 41.5
+
+truncated_2_arts <- as.numeric(Arts_trnc$trn_2)
+truncated_2_bus <- as.numeric(Business_trnc$trn_2)
+
+truncated_2_none <- None_trnc$trn_2
+
+N <- c(length(truncated_2_stem), length(truncated_2_hum), length(truncated_2_socsci), length(truncated_2_arts), length(truncated_2_bus), length(truncated_2_none))
+
+Var <- c(c(var(truncated_2_stem), var(truncated_2_hum), var(truncated_2_socsci), var(truncated_2_arts), var(truncated_2_bus), var(truncated_2_none)))
+
+sum_ysc2deg_trnc <- rbind(N, cbind(summary(truncated_2_stem), summary(truncated_2_hum), summary(truncated_2_socsci), summary(truncated_2_arts), summary(truncated_2_bus), summary(truncated_2_none)), Var)
+colnames(sum_ysc2deg_trnc) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
+sum_ysc2deg_trnc
+```
+
+### Logarithmic - Degree comparison
+```{r}
+logarithmic_2_stem <- stem_log$log_2
+logarithmic_2_stem[which(logarithmic_2_stem == "Don't Know")] <- NA
+logarithmic_2_stem <- c(na.exclude(as.numeric(logarithmic_2_stem)))
+
+logarithmic_2_hum <- as.numeric(hum_log$log_2) 
+
+logarithmic_2_socsci <- soc_sci_log$log_2
+logarithmic_2_socsci[which(logarithmic_2_socsci == "10^15")] <- 1e+15
+logarithmic_2_socsci[which(logarithmic_2_socsci == "10^9")] <- 1e+9
+logarithmic_2_socsci <- c(na.exclude(as.numeric(logarithmic_2_socsci)))
+
+logarithmic_2_arts <- as.numeric(Arts_log$log_2)
+logarithmic_2_bus <- as.numeric(Business_log$log_2)
+
+logarithmic_2_none <- as.numeric(None_log$log_2)
+logarithmic_2_none[which(logarithmic_2_none == "Next to none.")] <- NA
+
+N <- c(length(logarithmic_2_stem), length(logarithmic_2_hum), length(logarithmic_2_socsci), length(logarithmic_2_arts), length(logarithmic_2_bus), length(logarithmic_2_none))
+
+Var <- c(c(var(logarithmic_2_stem), var(logarithmic_2_hum), var(logarithmic_2_socsci), var(logarithmic_2_arts), var(logarithmic_2_bus), var(logarithmic_2_none)))
+
+sum_ysc2deg_log <- rbind(N, cbind(summary(logarithmic_2_stem), summary(logarithmic_2_hum), summary(logarithmic_2_socsci), summary(logarithmic_2_arts), summary(logarithmic_2_bus), summary(logarithmic_2_none)), Var)
+
+colnames(sum_ysc2deg_log) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
+sum_ysc2deg_log
+```
+
+### First Plot Comp
+```{r}
+con_first_2 <- con_first$con_2
+trn_first_2 <- trn_first$trn_2
+log_first_2 <- log_first$log_2
+
+log_first_2[which(log_first_2 == "10^15")] <- 10e+15
+log_first_2 <- as.numeric(log_first_2)
+
+N <- c(length(con_first_2), length(trn_first_2), length(log_first_2))
+Var <- c(var(con_first_2), var(trn_first_2), var(log_first_2))
+sum_ysc2cfirst <- rbind(N, cbind(summary(con_first_2), summary(trn_first_2), summary(log_first_2)), Var)
+colnames(sum_ysc2cfirst) <- c("Control", "Truncated", "Logarithmic")
+sum_ysc2cfirst
+```
+
+## Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?
+```{r echo=F}
+
+control_3 <- ctrl_y_scale$con_3
+truncated_3 <- trnc_y_scale$trn_3
+logarithmic_3 <- log_y_scale$log_3
+
+y_scale_3_all <- cbind(control_3, truncated_3, logarithmic_3)
+```
+### Whole Population
+```{r echo=F}
+N <- c(length(control_3), length(truncated_3), length(logarithmic_3))
+
+Var <- c(var(control_3), var(truncated_3), var(logarithmic_3))
+
+sum_ysc3all <- rbind(N, cbind(summary(control_3), summary(truncated_3), summary(logarithmic_3)), Var)
+colnames(sum_ysc3all) <- c("Control", "Truncated", "Logarithmic")
+sum_ysc3all
+```
+
+```{r echo=F}
+y_scale_3_all <- as.data.frame(y_scale_3_all)
+resp <- c(control_3, truncated_3, logarithmic_3)
+type <- c(rep('Control', 70), rep('Truncated', 70), rep('Logarithmic', 70)) 
+stats_3 <- data.frame(resp, type)
+
+ggplot(stats_3)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the Whole Population")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+
+### Shapiro tests
+```{r}
+shapiro.test(control_3)
+shapiro.test(truncated_3)
+shapiro.test(logarithmic_3)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(control_3)
+symmetry.test(truncated_3)
+symmetry.test(logarithmic_3)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(control_3, truncated_3)
+wilcox.test(control_3, logarithmic_3)
+SIGN.test(logarithmic_3, truncated_3)
+```
+
+### R Population
+```{r}
+control_3_r <- ctrl_y_scale_r$con_3
+truncated_3_r <- trnc_y_scale_r$trn_3
+logarithmic_3_r <- log_y_scale_r$log_3
+
+control_3_py <- ctrl_y_scale_py$con_3
+truncated_3_py <- trnc_y_scale_py$trn_3
+logarithmic_3_py <- log_y_scale_py$log_3
+
+y_scale_3_r <- cbind(control_3_r, truncated_3_r, logarithmic_3_r)
+y_scale_3_py <- cbind(control_3_py, truncated_3_py, logarithmic_3_py)
+
+N <- c(length(control_3), length(control_3_r), length(control_3_py))
+
+Var <- c(var(control_3), var(control_3_r), var(control_3_py))
+
+sum_ysc3lang_ctrl <- rbind(N, cbind(summary(control_3), summary(control_3_r), summary(control_3_py)), Var)
+colnames(sum_ysc3lang_ctrl) <- c("Whole Pop", "R", "Python")
+sum_ysc3lang_ctrl
+```
+
+
+```{r echo=F}
+y_scale_3_r <- as.data.frame(y_scale_3_r)
+resp <- c(control_3_r, truncated_3_r, logarithmic_3_r)
+type <- c(rep('Control', 38), rep('Truncated', 38), rep('Logarithmic', 38)) 
+stats_3_r <- data.frame(resp, type)
+
+ggplot(stats_3_r)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected by the R Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+### Python Population
+```{r echo=F}
+y_scale_3_py <- as.data.frame(y_scale_3_py)
+resp <- c(control_3_py, truncated_3_py, logarithmic_3_py)
+type <- c(rep('Control', 32), rep('Truncated', 32), rep('Logarithmic', 32)) 
+stats_3_py <- data.frame(resp, type)
+
+ggplot(stats_3_py)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected by the Python Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+
+### First Plot Comp
+```{r}
+con_first_3 <- con_first$con_3
+trn_first_3 <- trn_first$trn_3
+log_first_3 <- log_first$log_3
+
+log_first_3[which(log_first_3 == "10^15")] <- 10e+15
+log_first_3 <- as.numeric(log_first_3)
+
+N <- c(length(con_first_3), length(trn_first_3), length(log_first_3))
+Var <- c(var(con_first_3), var(trn_first_3), var(log_first_3))
+sum_ysc3cfirst <- rbind(N, cbind(summary(con_first_3), summary(trn_first_3), summary(log_first_3)), Var)
+colnames(sum_ysc3cfirst) <- c("Control", "Truncated", "Logarithmic")
+sum_ysc3cfirst
+```
+
+## Differences in means for Q2 and Q3
+### All
+```{r}
+means_Q2 <- c(mean(control_2), mean(truncated_2), mean(logarithmic_2))
+
+diff_mat_Q2 <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q2[i, j] <- means_Q2[i] - means_Q2[j]
+  }
+}
+
+colnames(diff_mat_Q2) <- c("Control", "Truncated", "Logarithmic")
+rownames(diff_mat_Q2) <- c("Control", "Truncated", "Logarithmic")
+diff_mat_Q2
+```
+### Shapiro tests
+```{r}
+shapiro.test(control_2)
+shapiro.test(truncated_2)
+shapiro.test(logarithmic_2)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(control_2)
+symmetry.test(truncated_2)
+symmetry.test(logarithmic_2)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(control_2, truncated_2)
+SIGN.test(control_2, logarithmic_2)
+SIGN.test(logarithmic_2, truncated_2)
+```
+
+### Pairwise Wilcox Tests
+```{r}
+wilcox.test(control_2, truncated_2)
+wilcox.test(control_2, logarithmic_2)
+wilcox.test(logarithmic_2, truncated_2)
 ```
 
 
 ```{r}
-control_r <- ctrl_y_scale_r$con_2
-truncated_r <- trnc_y_scale_r$trn_2
-logarithmic_r <- log_y_scale_r$log_2
+means_Q3 <- c(mean(control_3), mean(truncated_3), mean(logarithmic_3))
 
-y_scale_2_r <- cbind(control_r, truncated_r, logarithmic_r)
+diff_mat_Q3 <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q3[i, j] <- means_Q3[i] - means_Q3[j]
+  }
+}
 
-
-noquote(paste('n (control) = ', length(control_r)))
-noquote(paste('n (truncated) = ', length(truncated_r)))
-noquote(paste('n (logarithmic) = ', length(logarithmic_r)))
-
-noquote(rbind(summary(y_scale_2_r), c(paste0('Var    :', round(var(control_r), 3)), paste0('Var    :', round(var(truncated_r), 3)), paste0('Var    :', round(var(logarithmic_r), 3)))))
-
+colnames(diff_mat_Q3) <- c("Control", "Truncated", "Logarithmic")
+rownames(diff_mat_Q3) <- c("Control", "Truncated", "Logarithmic")
+diff_mat_Q3
 ```
 
+### Shapiro tests
+```{r}
+shapiro.test(control_3_py)
+shapiro.test(truncated_3_py)
+shapiro.test(logarithmic_3_py)
+```
 
+### Symmetry tests
+```{r}
+symmetry.test(control_3_py)
+symmetry.test(truncated_3_py)
+symmetry.test(logarithmic_3_py)
+```
 
+### Pairwise Sign Tests
+```{r}
+SIGN.test(control_3_py, truncated_3_py)
+SIGN.test(control_3_py, logarithmic_3_py)
+SIGN.test(logarithmic_3_py, truncated_3_py)
+```
+
+### Pairwise Wilcox Tests
+```{r}
+wilcox.test(control_3_py, truncated_3_py)
+wilcox.test(control_3_py, logarithmic_3_py)
+wilcox.test(logarithmic_3_py, truncated_3_py)
+```
+
+### R
+```{r}
+means_Q2_r <- c(mean(control_2_r), mean(truncated_2_r), mean(logarithmic_2_r))
+
+diff_mat_Q2_r <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q2_r[i, j] <- means_Q2_r[i] - means_Q2_r[j]
+  }
+}
+
+colnames(diff_mat_Q2_r) <- c("Control", "Truncated", "Logarithmic")
+rownames(diff_mat_Q2_r) <- c("Control", "Truncated", "Logarithmic")
+diff_mat_Q2_r
+```
+### Shapiro tests
+```{r}
+shapiro.test(control_2_r)
+shapiro.test(truncated_2_r)
+shapiro.test(logarithmic_2_r)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(control_2_r)
+symmetry.test(truncated_2_r)
+symmetry.test(logarithmic_2_r)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(control_2_r, truncated_2_r)
+SIGN.test(control_2_r, logarithmic_2_r)
+SIGN.test(logarithmic_2_r, truncated_2_r)
+```
 
 
 ```{r}
-control_py <- ctrl_y_scale_py$con_2
-truncated_py <- trnc_y_scale_py$trn_2
-logarithmic_py <- log_y_scale_py$log_2
+means_Q3_r <- c(mean(control_3_r), mean(truncated_3_r), mean(logarithmic_3_r))
 
-y_scale_2_py <- cbind(control_py, truncated_py, logarithmic_py)
+diff_mat_Q3_r <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q3_r[i, j] <- means_Q3_r[i] - means_Q3_r[j]
+  }
+}
 
-noquote(paste('n (control) = ', length(control_py)))
-noquote(paste('n (truncated) = ', length(truncated_py)))
-noquote(paste('n (logarithmic) = ', length(logarithmic_py)))
-
-noquote(rbind(summary(y_scale_2_py), c(paste0('Var    :', round(var(control_py), 3)), paste0('Var    :', round(var(truncated_py), 3)), paste0('Var    :', round(var(logarithmic_py), 3)))))
-
-
+colnames(diff_mat_Q3_r) <- c("Control", "Truncated", "Logarithmic")
+rownames(diff_mat_Q3_r) <- c("Control", "Truncated", "Logarithmic")
+diff_mat_Q3_r
+```
+### Shapiro tests
+```{r}
+shapiro.test(control_3_r)
+shapiro.test(truncated_3_r)
+shapiro.test(logarithmic_3_r)
 ```
 
-```{r echo=F}
-#y_scale_2_py <- as.data.frame(y_scale_2_py)
-#resp <- c(control_py, truncated_py, logarithmic_py)
-#type <- c(rep('Control', 31), rep('Truncated', 31), rep('Logarithmic', 31)) 
-#stats_2 <- data.frame(resp, type)
-
-
+### Symmetry tests
+```{r}
+symmetry.test(control_3_r)
+symmetry.test(truncated_3_r)
+symmetry.test(logarithmic_3_r)
 ```
 
-**Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?**
-
-
-```{r echo=F}
-control <- ctrl_y_scale$con_3
-truncated <- trnc_y_scale$trn_3
-logarithmic <- log_y_scale$log_3
-
-y_scale_3_all <- cbind(control, logarithmic, truncated)
-
+### Pairwise Wilcox Tests
+```{r}
+wilcox.test(control_3_r, truncated_3_r)
+wilcox.test(control_3_r, logarithmic_3_r)
+wilcox.test(logarithmic_3_r, truncated_3_r)
 ```
 
-```{r, echo=F}
-summary(y_scale_3_all)
+### Py
+```{r}
+means_Q2_py <- c(mean(control_2_py), mean(truncated_2_py), mean(logarithmic_2_py))
 
+diff_mat_Q2_py <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q2_py[i, j] <- means_Q2_py[i] - means_Q2_py[j]
+  }
+}
+
+colnames(diff_mat_Q2_py) <- c("Control", "Truncated", "Logarithmic")
+rownames(diff_mat_Q2_py) <- c("Control", "Truncated", "Logarithmic")
+diff_mat_Q2_py
+```
+### Shapiro tests
+```{r}
+shapiro.test(control_2_py)
+shapiro.test(truncated_2_py)
+shapiro.test(logarithmic_2_py)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(control_2_py)
+symmetry.test(truncated_2_py)
+symmetry.test(logarithmic_2_py)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(control_2_py, truncated_2_py)
+SIGN.test(control_2_py, logarithmic_2_py)
+SIGN.test(logarithmic_2_py, truncated_2_py)
+```
+
+### Pairwise Wilcox Test
+```{r}
+wilcox.test(logarithmic_2_py, truncated_2_py)
+```
+
+### Pairwise T-Test
+```{r}
+t.test(logarithmic_2_py, truncated_2_py)
+```
+
+### Q3
+```{r}
+means_Q3_py <- c(mean(control_3_py), mean(truncated_3_py), mean(logarithmic_3_py))
+
+diff_mat_Q3_py <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q3_py[i, j] <- means_Q3_py[i] - means_Q3_py[j]
+  }
+}
+
+colnames(diff_mat_Q3_py) <- c("Control", "Truncated", "Logarithmic")
+rownames(diff_mat_Q3_py) <- c("Control", "Truncated", "Logarithmic")
+diff_mat_Q3_py
+```
+### Shapiro tests
+```{r}
+shapiro.test(control_3_py)
+shapiro.test(truncated_3_py)
+shapiro.test(logarithmic_3_py)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(control_3_py)
+symmetry.test(truncated_3_py)
+symmetry.test(logarithmic_3_py)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(control_3_py, truncated_3_py)
+SIGN.test(control_3_py, logarithmic_3_py)
+SIGN.test(logarithmic_3_py, truncated_3_py)
 ```
 
 
 
 \subsection{Ninja Warrior - Part 2}
 
+###How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?
+
+```{r echo=F}
+default_1 <- def_ratio$def_1
+narrow_1 <- nar_ratio$nar_1
+wide_1 <- wid_ratio$wid_1
+
+ratio_1_all <- cbind(default_1, narrow_1, wide_1)
+```
+
+```{r echo=F}
+N <- c(length(default_1), length(narrow_1), length(wide_1))
+
+Var <- c(var(default_1), var(narrow_1), var(wide_1))
+
+sum_ratio1all <- rbind(N, cbind(summary(default_1), summary(narrow_1), summary(wide_1)), Var)
+colnames(sum_ratio1all) <- c("Default", "Narrow", "Wide")
+sum_ratio1all
+```
+
+```{r echo=F}
+ratio_1_all <- as.data.frame(ratio_1_all)
+resp <- c(default_1, narrow_1, wide_1)
+type <- c(rep('Default', 70), rep('Narrow', 70), rep('Wide', 70)) 
+stats_1 <- data.frame(resp, type)
+
+ggplot(stats_1)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the Whole Population")+
+  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
 
 
-**How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?**
+### Shapiro tests
+```{r}
+shapiro.test(default_1)
+shapiro.test(narrow_1)
+shapiro.test(wide_1)
+```
 
+### Symmetry tests
+```{r}
+symmetry.test(default_1)
+symmetry.test(narrow_1)
+symmetry.test(wide_1)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(default_1, narrow_1)
+SIGN.test(default_1, wide_1)
+SIGN.test(wide_1, narrow_1)
+```
+
+### Lang comp - Default
+```{r}
+default_1_r <- def_ratio_r$def_1
+narrow_1_r <- nar_ratio_r$nar_1
+wide_1_r <- wid_ratio_r$wid_1
+
+default_1_py <- def_ratio_py$def_1
+narrow_1_py <- nar_ratio_py$nar_1
+wide_1_py <- wid_ratio_py$wid_1
+
+ratio_1_r <- cbind(default_1_r, narrow_1_r, wide_1_r)
+ratio_1_py <- cbind(default_1_py, narrow_1_py, wide_1_py)
+```
+
+
+```{r}
+N <- c(length(default_1), length(default_1_r), length(default_1_py))
+Var <- c(var(default_1), var(default_1_r), var(default_1_py))
+sum_ratio1lang_def <- rbind(N, cbind(summary(default_1), summary(default_1_r), summary(default_1_py)), Var)
+colnames(sum_ratio1lang_def) <- c("Whole Pop", "R", "Python")
+sum_ratio1lang_def
+```
+
+### Lang comp - Narrow
+```{r}
+N <- c(length(narrow_1), length(narrow_1_r), length(narrow_1_py))
+Var <- c(var(narrow_1), var(narrow_1_r), var(narrow_1_py))
+sum_ratio1lang_nar <- rbind(N, cbind(summary(narrow_1), summary(narrow_1_r), summary(narrow_1_py)), Var)
+colnames(sum_ratio1lang_nar) <- c("Whole Pop", "R", "Python")
+sum_ratio1lang_nar
+```
+### Lang comp - Wide
+```{r}
+N <- c(length(wide_1), length(wide_1_r), length(wide_1_py))
+Var <- c(var(wide_1), var(wide_1_r), var(wide_1_py))
+sum_ratio1lang_wid <- rbind(N, cbind(summary(wide_1), summary(wide_1_r), summary(wide_1_py)), Var)
+colnames(sum_ratio1lang_wid) <- c("Whole Pop", "R", "Python")
+sum_ratio1lang_wid
+```
 
 
 ```{r echo=F}
-default <- def_ratio$def_1
-narrower <- nar_ratio$nar_1
-wider <- wid_ratio$wid_1
-ratio_1_all <- cbind(default, wider, narrower)
+ratio_1_r <- as.data.frame(ratio_1_r)
+resp <- c(default_1_r, narrow_1_r, wide_1_r)
+type <- c(rep('Default', 38), rep('Narrow', 38), rep('Wide', 38)) 
+stats_1_r <- data.frame(resp, type)
+
+ggplot(stats_1_r)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected by the R Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+
+```{r echo=F}
+ratio_1_py <- as.data.frame(ratio_1_py)
+resp <- c(default_1_py, narrow_1_py, wide_1_py)
+type <- c(rep('Default', 32), rep('Narrow', 32), rep('Wide', 32)) 
+stats_1_py <- data.frame(resp, type)
+
+ggplot(stats_1_py)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected by the Python Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+
+### Shapiro tests
+```{r}
+shapiro.test(default_1_r)
+shapiro.test(narrow_1_r)
+shapiro.test(wide_1_r)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(default_1_r)
+symmetry.test(narrow_1_r)
+symmetry.test(wide_1_r)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(default_1_r, narrow_1_r)
+SIGN.test(default_1_r, wide_1_r)
+SIGN.test(wide_1_r, narrow_1_r)
+```
+
+### Shapiro tests
+```{r}
+shapiro.test(default_1_py)
+shapiro.test(narrow_1_py)
+shapiro.test(wide_1_py)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(default_1_py)
+symmetry.test(narrow_1_py)
+symmetry.test(wide_1_py)
+```
 
 
-noquote(paste('n (default) = ', length(default)))
-noquote(paste('n (narrower) = ', length(narrower)))
-noquote(paste('n (wider) = ', length(wider)))
-noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
+```{r}
+def_first_1 <- def_first$def_1
+nar_first_1 <- nar_first$nar_1
+wid_first_1 <- wid_first$wid_1
 
+N <- c(length(wid_first_1), length(nar_first_1), length(wid_first_1))
+Var <- c(var(wid_first_1), var(nar_first_1), var(wid_first_1))
+sum_ratio1first <- rbind(N, cbind(summary(wid_first_1), summary(nar_first_1), summary(wid_first_1)), Var)
+colnames(sum_ratio1first) <- c("Default", "Narrow", "Wide")
+sum_ratio1first
+```
+
+##How large would you say the difference between 'Log Grip' and 'Floating Steps' is?
+
+```{r echo=F}
+
+default_2 <- def_ratio$def_2
+narrow_2 <- nar_ratio$nar_2
+wide_2 <- wid_ratio$wid_2
+
+ratio_2_all <- cbind(default_2, narrow_2, wide_2)
+```
+
+```{r echo=F}
+N <- c(length(default_2), length(narrow_2), length(wide_2))
+
+Var <- c(var(default_2), var(narrow_2), var(wide_2))
+
+sum_ratio2all <- rbind(N, cbind(summary(default_2), summary(narrow_2), summary(wide_2)), Var)
+colnames(sum_ratio2all) <- c("Default", "Narrow", "Wide")
+sum_ratio2all
+```
+
+```{r echo=F}
+ratio_2_all <- as.data.frame(ratio_2_all)
+resp <- c(default_2, narrow_2, wide_2)
+type <- c(rep('Default', 70), rep('Narrow', 70), rep('Wide', 70)) 
+stats_2 <- data.frame(resp, type)
+
+ggplot(stats_2)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the Whole Population")+
+  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+
+### Shapiro tests
+```{r}
+shapiro.test(default_2)
+shapiro.test(narrow_2)
+shapiro.test(wide_2)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(default_2)
+symmetry.test(narrow_2)
+symmetry.test(wide_2)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(default_2, narrow_2)
+SIGN.test(default_2, wide_2)
+SIGN.test(wide_2, narrow_2)
+```
+
+### Pairwise Wilcox Tests
+```{r}
+wilcox.test(default_2, wide_2)
+```
+
+
+```{r}
+default_2_r <- def_ratio_r$def_2
+narrow_2_r <- nar_ratio_r$nar_2
+wide_2_r <- wid_ratio_r$wid_2
+
+default_2_py <- def_ratio_py$def_2
+narrow_2_py <- nar_ratio_py$nar_2
+wide_2_py <- wid_ratio_py$wid_2
+
+ratio_2_r <- cbind(default_2_r, narrow_2_r, wide_2_r)
+ratio_2_py <- cbind(default_2_py, narrow_2_py, wide_2_py)
+
+N <- c(length(default_2), length(default_2_r), length(default_2_py))
+
+Var <- c(var(default_2), var(default_2_r), var(default_2_py))
+
+sum_ratio2lang_def <- rbind(N, cbind(summary(default_2), summary(default_2_r), summary(default_2_py)), Var)
+colnames(sum_ratio2lang_def) <- c("Whole Pop", "R", "Python")
+sum_ratio2lang_def
 ```
 
 
 ```{r echo=F}
-default <- def_ratio$def_1
+ratio_2_r <- as.data.frame(ratio_2_r)
+resp <- c(default_2_r, narrow_2_r, wide_2_r)
+type <- c(rep('Default', 38), rep('Narrow', 38), rep('Wide', 38)) 
+stats_2_r <- data.frame(resp, type)
 
-narrower <- nar_ratio$nar_1[which(nar_ratio$nar_1 != 3)]
-narrower <- narrower[which(narrower != 4)]
+ggplot(stats_2_r)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected by the R Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
 
-wider <- wid_ratio$wid_1[which(wid_ratio$wid_1 != 2)]
-wider <- wider[which(wider != 3)]
+```{r echo=F}
+ratio_2_py <- as.data.frame(ratio_2_py)
+resp <- c(default_2_py, narrow_2_py, wide_2_py)
+type <- c(rep('Default', 32), rep('Narrow', 32), rep('Wide', 32)) 
+stats_2_py <- data.frame(resp, type)
 
-ratio_1_all <- cbind(default, wider, narrower)
+ggplot(stats_2_py)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected by the Python Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
 
+### Shapiro tests
+```{r}
+shapiro.test(default_2_r)
+shapiro.test(narrow_2_r)
+shapiro.test(wide_2_r)
+```
 
-noquote(paste('n (default) = ', length(default)))
-noquote(paste('n (narrower) = ', length(narrower)))
-noquote(paste('n (wider) = ', length(wider)))
-noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
+### Symmetry tests
+```{r}
+symmetry.test(default_2_r)
+symmetry.test(narrow_2_r)
+symmetry.test(wide_2_r)
+```
 
+### Pairwise Wilcox Tests
+```{r}
+wilcox.test(default_2_r, narrow_2_r)
+wilcox.test(narrow_2_r, wide_2_r)
+wilcox.test(wide_2_r, default_2_r)
+```
+
+### Shapiro tests
+```{r}
+shapiro.test(default_2_py)
+shapiro.test(narrow_2_py)
+shapiro.test(wide_2_py)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(default_2_py)
+symmetry.test(narrow_2_py)
+symmetry.test(wide_2_py)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(default_2_py, narrow_2_py)
+SIGN.test(default_2_py, wide_2_py)
+SIGN.test(wide_2_py, narrow_2_py)
+```
+
+### Pairwise Wilcox Tests
+```{r}
+wilcox.test(default_2_py, wide_2_py)
+```
+
+```{r}
+def_first_2 <- def_first$def_2
+nar_first_2 <- nar_first$nar_2
+wid_first_2 <- wid_first$wid_2
+
+N <- c(length(wid_first_2), length(nar_first_2), length(wid_first_2))
+Var <- c(var(wid_first_2), var(nar_first_2), var(wid_first_2))
+sum_ratio2first <- rbind(N, cbind(summary(wid_first_2), summary(nar_first_2), summary(wid_first_2)), Var)
+colnames(sum_ratio2first) <- c("Default", "Narrow", "Wide")
+sum_ratio2first
+```
+
+## Differences in means for Q1 and Q2
+### All
+```{r}
+means_Q1 <- c(mean(default_1), mean(narrow_1), mean(wide_1))
+
+diff_mat_Q1 <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q1[i, j] <- means_Q1[i] - means_Q1[j]
+  }
+}
+
+colnames(diff_mat_Q1) <- c("Default", "Narrow", "Wide")
+rownames(diff_mat_Q1) <- c("Default", "Narrow", "Wide")
+diff_mat_Q1
+```
+
+```{r}
+means_Q2 <- c(mean(default_2), mean(narrow_2), mean(wide_2))
+
+diff_mat_Q2 <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q2[i, j] <- means_Q2[i] - means_Q2[j]
+  }
+}
+
+colnames(diff_mat_Q2) <- c("Default", "Narrow", "Wide")
+rownames(diff_mat_Q2) <- c("Default", "Narrow", "Wide")
+diff_mat_Q2
+```
+
+### R
+```{r}
+means_Q1_r <- c(mean(default_1_r), mean(narrow_1_r), mean(wide_1_r))
+
+diff_mat_Q1_r <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q1_r[i, j] <- means_Q1_r[i] - means_Q1_r[j]
+  }
+}
+
+colnames(diff_mat_Q1_r) <- c("Default", "Narrow", "Wide")
+rownames(diff_mat_Q1_r) <- c("Default", "Narrow", "Wide")
+diff_mat_Q1_r
+```
+
+```{r}
+means_Q2_r <- c(mean(default_2_r), mean(narrow_2_r), mean(wide_2_r))
+
+diff_mat_Q2_r <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q2_r[i, j] <- means_Q2_r[i] - means_Q2_r[j]
+  }
+}
+
+colnames(diff_mat_Q2_r) <- c("Default", "Narrow", "Wide")
+rownames(diff_mat_Q2_r) <- c("Default", "Narrow", "Wide")
+diff_mat_Q2_r
+```
+
+### Py
+```{r}
+means_Q1_py <- c(mean(default_1_py), mean(narrow_1_py), mean(wide_1_py))
+
+diff_mat_Q1_py <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q1_py[i, j] <- means_Q1_py[i] - means_Q1_py[j]
+  }
+}
+
+colnames(diff_mat_Q1_py) <- c("Default", "Narrow", "Wide")
+rownames(diff_mat_Q1_py) <- c("Default", "Narrow", "Wide")
+diff_mat_Q1_py
+```
+
+```{r}
+means_Q2_py <- c(mean(default_2_py), mean(narrow_2_py), mean(wide_2_py))
+
+diff_mat_Q2_py <- matrix(NA, 3, 3)
+for(i in 1:3){
+  for(j in 1:3){
+    diff_mat_Q2_py[i, j] <- means_Q2_py[i] - means_Q2_py[j]
+  }
+}
+
+colnames(diff_mat_Q2_py) <- c("Default", "Narrow", "Wide")
+rownames(diff_mat_Q2_py) <- c("Default", "Narrow", "Wide")
+diff_mat_Q2_py
 ```
 
 
-
-
-
-**How large would you say the difference between 'Log Grip' and 'Floating Steps' is?**
+##How many times would you say 'Floating Steps' were used?
 
 
 ```{r echo=F}
-default <- def_ratio$def_2
-narrower <- nar_ratio$nar_2
-wider <- wid_ratio$wid_2
+default_3 <- def_ratio$def_3
+narrow_3 <- nar_ratio$nar_3
+wide_3 <- wid_ratio$wid_3
+ratio_3_all <- cbind(default_3, narrow_3, wide_3)
+```
 
-ratio_1_all <- cbind(default, wider, narrower)
+### Whole Population
+```{r}
+N <- c(length(default_3), length(narrow_3), length(wide_3))
+
+Var <- c(var(default_3), var(narrow_3), var(wide_3))
+
+sum_ratio3all <- rbind(N, cbind(summary(default_3), summary(narrow_3), summary(wide_3)), Var)
+colnames(sum_ratio3all) <- c("Default", "Narrow", "Wide")
+sum_ratio3all
+```
+### Shapiro tests
+```{r}
+shapiro.test(default_3)
+shapiro.test(narrow_3)
+shapiro.test(wide_3)
+```
+### Symmetry tests
+```{r}
+symmetry.test(default_3)
+symmetry.test(narrow_3)
+symmetry.test(wide_3)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(default_3, narrow_3)
+SIGN.test(default_3, wide_3)
+SIGN.test(wide_3, narrow_3)
+```
+
+### Pairwise Wilcox Tests
+```{r}
+wilcox.test(default_3, wide_3)
+```
+
+```{r}
+default_3_r <- def_ratio_r$def_3
+default_3_py <- def_ratio_py$def_3
+
+narrow_3_r <- as.numeric(nar_ratio_r$nar_3)
+narrow_3_py <- as.numeric(nar_ratio_py$nar_3)
+
+wide_3_r <- wid_ratio_r$wid_3
+wide_3_py <- wid_ratio_py$wid_3
+``` 
 
 
-noquote(paste('n (default) = ', length(default)))
-noquote(paste('n (narrower) = ', length(narrower)))
-noquote(paste('n (wider) = ', length(wider)))
-noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
+### Default - Language comparison
+```{r}
+N <- c(length(default_3), length(default_3_r), length(default_3_py))
 
+Var <- c(var(default_3), var(default_3_r), var(default_3_py))
+
+sum_ratio3lang_def <- rbind(N, cbind(summary(default_3), summary(default_3_r), summary(default_3_py)), Var)
+colnames(sum_ratio3lang_def) <- c("Whole Pop", "R", "Python")
+sum_ratio3lang_def
+```
+
+### Narrow - Language comparison
+```{r}
+N <- c(length(narrow_3), length(narrow_3_r), length(narrow_3_py))
+
+Var <- c(var(narrow_3), var(narrow_3_r), var(narrow_3_py))
+
+sum_ratio3lang_nar <- rbind(N, cbind(summary(narrow_3), summary(narrow_3_r), summary(narrow_3_py)), Var)
+colnames(sum_ratio3lang_nar) <- c("Whole Pop", "R", "Python")
+sum_ratio3lang_nar
+```
+
+### Wide - Language comparison
+```{r}
+
+N <- c(length(wide_3), length(wide_3_r), length(wide_3_py))
+
+Var <- c(var(wide_3), var(wide_3_r), var(wide_3_py))
+
+sum_ratio3lang_wid <- rbind(N, cbind(summary(wide_3), summary(wide_3_r), summary(wide_3_py)), Var)
+colnames(sum_ratio3lang_wid) <- c("Whole Pop", "R", "Python")
+sum_ratio3lang_wid
+```
+
+### Shapiro tests
+```{r}
+shapiro.test(default_3_r)
+shapiro.test(narrow_3_r)
+shapiro.test(wide_3_r)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(default_3_r)
+symmetry.test(narrow_3_r)
+symmetry.test(wide_3_r)
+```
+
+### Pairwise Wilcox Tests
+```{r}
+wilcox.test(default_3_r, narrow_3_r)
+wilcox.test(narrow_3_r, wide_3_r)
+wilcox.test(wide_3_r, default_3_r)
+```
+
+### Shapiro tests
+```{r}
+shapiro.test(default_3_py)
+shapiro.test(narrow_3_py)
+shapiro.test(wide_3_py)
+```
+
+### Symmetry tests
+```{r}
+symmetry.test(default_3_py)
+symmetry.test(narrow_3_py)
+symmetry.test(wide_3_py)
+```
+
+### Pairwise Sign Tests
+```{r}
+SIGN.test(default_3_py, narrow_3_py)
+SIGN.test(default_3_py, wide_3_py)
+SIGN.test(wide_3_py, narrow_3_py)
+```
+
+### Pairwise Wilcox Tests
+```{r}
+wilcox.test(default_3_py, wide_3_py)
 ```
 
 
 
+### Default - Degree comparison
+```{r}
+default_3_stem <- as.numeric(stem_ctrl$def_3)
+default_3_hum <- as.numeric(hum_ctrl$def_3)
 
-**How many times would you say 'Floating Steps' were used?**
+default_3_socsci <- as.numeric(soc_sci_ctrl$def_3)
+default_3_socsci[which(default_3_socsci == "41/42")] <- 41.5
+default_3_socsci <- na.exclude(default_3_socsci)
 
+default_3_arts <- as.numeric(Arts_ctrl$def_3)
+default_3_bus <- as.numeric(Business_ctrl$def_3)
+
+default_3_none <- as.numeric(None_ctrl$def_3)
+
+N <- c(length(default_3_stem), length(default_3_hum), length(default_3_socsci), length(default_3_arts), length(default_3_bus), length(default_3_none))
+
+Var <- c(c(var(default_3_stem), var(default_3_hum), var(default_3_socsci), var(default_3_arts), var(default_3_bus), var(default_3_none)))
+
+sum_ratio1deg_ctrl <- rbind(N, cbind(summary(default_3_stem), summary(default_3_hum), summary(default_3_socsci), summary(default_3_arts), summary(default_3_bus), summary(default_3_none)), Var)
+
+colnames(sum_ratio1deg_ctrl) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
+sum_ratio1deg_ctrl
+```
+
+### Narrow - Degree comparison
+```{r}
+narrow_3_stem <- as.numeric(stem_nar$nar_3)
+narrow_3_hum <- as.numeric(hum_nar$nar_3)
+
+narrow_3_socsci <- as.numeric(soc_sci_nar$nar_3)
+narrow_3_socsci[which(narrow_3_socsci == "41/42")] <- 41.5
+
+narrow_3_arts <- as.numeric(Arts_nar$nar_3)
+narrow_3_bus <- as.numeric(Business_nar$nar_3)
+
+narrow_3_none <- None_nar$nar_3
+
+N <- c(length(narrow_3_stem), length(narrow_3_hum), length(narrow_3_socsci), length(narrow_3_arts), length(narrow_3_bus), length(narrow_3_none))
+
+Var <- c(c(var(narrow_3_stem), var(narrow_3_hum), var(narrow_3_socsci), var(narrow_3_arts), var(narrow_3_bus), var(narrow_3_none)))
+
+sum_ratio1deg_nar <- rbind(N, cbind(summary(narrow_3_stem), summary(narrow_3_hum), summary(narrow_3_socsci), summary(narrow_3_arts), summary(narrow_3_bus), summary(narrow_3_none)), Var)
+colnames(sum_ratio1deg_nar) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
+sum_ratio1deg_nar
+```
+
+### Wide - Degree comparison
+```{r}
+wide_3_stem <- stem_log$log_3
+wide_3_stem[which(wide_3_stem == "Don't Know")] <- NA
+wide_3_stem <- c(na.exclude(as.numeric(wide_3_stem)))
+
+wide_3_hum <- as.numeric(hum_log$log_3) 
+
+wide_3_socsci <- soc_sci_log$log_3
+wide_3_socsci[which(wide_3_socsci == "10^15")] <- 1e+15
+wide_3_socsci[which(wide_3_socsci == "10^9")] <- 1e+9
+wide_3_socsci <- c(na.exclude(as.numeric(wide_3_socsci)))
+
+wide_3_arts <- as.numeric(Arts_log$log_3)
+wide_3_bus <- as.numeric(Business_log$log_3)
+
+wide_3_none <- as.numeric(None_log$log_3)
+wide_3_none[which(wide_3_none == "Next to none.")] <- NA
+
+N <- c(length(wide_3_stem), length(wide_3_hum), length(wide_3_socsci), length(wide_3_arts), length(wide_3_bus), length(wide_3_none))
+
+Var <- c(c(var(wide_3_stem), var(wide_3_hum), var(wide_3_socsci), var(wide_3_arts), var(wide_3_bus), var(wide_3_none)))
+
+sum_ratio3deg_log <- rbind(N, cbind(summary(wide_3_stem), summary(wide_3_hum), summary(wide_3_socsci), summary(wide_3_arts), summary(wide_3_bus), summary(wide_3_none)), Var)
+
+colnames(sum_ratio3deg_log) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
+sum_ratio3deg_log
+```
+
+```{r}
+def_first_3 <- def_first$def_3
+nar_first_3 <- nar_first$nar_3
+wid_first_3 <- wid_first$wid_3
+
+N <- c(length(wid_first_3), length(nar_first_3), length(wid_first_3))
+Var <- c(var(wid_first_3), var(nar_first_3), var(wid_first_3))
+sum_ratio3first <- rbind(N, cbind(summary(wid_first_3), summary(nar_first_3), summary(wid_first_3)), Var)
+colnames(sum_ratio3first) <- c("Default", "Narrow", "Wide")
+sum_ratio3first
+```
+
+
+### Ratio Comparison questions -  All
 ```{r echo=F}
-default <- def_ratio$def_3
-narrower <- nar_ratio$nar_3
-wider <- wid_ratio$wid_3
+comp_1 <- comp_ratio_all$all_1
+comp_1 <- comp_1[-which(comp_1 == "none")]
 
-ratio_1_all <- cbind(default, wider, narrower)
-
-
-noquote(paste('n (default) = ', length(default)))
-noquote(paste('n (narrower) = ', length(narrower)))
-noquote(paste('n (wider) = ', length(wider)))
-noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
-
+comp_2 <- comp_ratio_all$all_2
+comp_3 <- comp_ratio_all$all_3
+tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
+rownames(tab) <- c("Most aesthetically pleasing?", "Easiest to read and interpret?", "Hardest to read and interpret?")
+as.data.frame(tab)
 ```
 
-
+### Ratio Comparison questions -  R
 ```{r echo=F}
-default <- default[-which(default >= 30)]
-narrower <- narrower[-which(narrower <= 25)]
+comp_1 <- comp_ratio_r$all_1
+comp_1 <- comp_1[-which(is.na(comp_1))]
 
-ratio_1_all <- cbind(default, wider, narrower)
-
-
-noquote(paste('n (default) = ', length(default)))
-noquote(paste('n (narrower) = ', length(narrower)))
-noquote(paste('n (wider) = ', length(wider)))
-noquote(rbind(summary(ratio_1_all), c(paste0('Var    :', round(var(default), 3)), paste0('Var    :', round(var(wider), 3)), paste0('Var    :', round(var(narrower), 3)))))
-
+comp_2 <- comp_ratio_r$all_2
+comp_3 <- comp_ratio_r$all_3
+tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
+rownames(tab) <- c("Most aesthetically pleasing?", "Easiest to read and interpret?", "Hardest to read and interpret?")
+as.data.frame(tab)
 ```
 
-**Comparisons**
-
-
+### Ratio Comparison questions -  Py
 ```{r echo=F}
-#comp_1 <- comp_ratio$all_1
-#comp_1 <- comp_1[-which(comp_1 == "none")]
-#comp_2 <- comp_ratio$all_2
-#comp_3 <- comp_ratio$all_3
-#tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
-#rownames(tab) <- c("Most aesthetically pleasing?", "Easiest to read and interpret?", "Hardest to read and interpret?")
-#tab
+comp_1 <- comp_ratio_py$all_1
+comp_2 <- comp_ratio_py$all_2
+comp_3 <- comp_ratio_py$all_3
+tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
+rownames(tab) <- c("Most aesthetically pleasing?", "Easiest to read and interpret?", "Hardest to read and interpret?")
+as.data.frame(tab)
 ```
-
-```{r include=F}
-#cbind(comp_ratio$all_1, comp_ratio$all_2)
-#
-#count <- 0
-#
-#for(i in 1:length(comp_ratio$all_1)){
-#  if (comp_ratio$all_1[i] == "Default" && comp_ratio$all_2[i] == "Default"){
-#    count <- count + 1
-#  }
-#}
-#
-#count
-
-```
-
 
 \subsection{Ninja Warrior - Part 3}
 
+##How many times would you say 'Floating Steps' were used in the Finals (Regional/City) round?
 
-**How many times would you say 'Floating Steps' were used in the Finals (Regional/City) round?**
-
-
+### Whole pop summary
 ```{r echo=F}
 vir_stacked_1 <- vir_stacked$vir_sta_1
 def_stacked_1 <- def_stacked$def_sta_1
 gr_stacked_1 <- gr_stacked$gr_sta_1
 
-vir_grouped_1 <- vir_stacked$vir_grp_1
-def_grouped_1 <- def_stacked$def_grp_1
-gr_grouped_1 <- gr_stacked$gr_grp_1
+vir_grouped_1 <- vir_grouped$vir_grp_1
+def_grouped_1 <- def_grouped$def_grp_1
+gr_grouped_1 <- gr_grouped$gr_grp_1
 
 stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
 grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
 
-bars <- data.frame(stacked_1, grouped_1)
+N <- c(length(stacked_1), length(grouped_1))
+Var <- c(var(stacked_1), var(grouped_1))
+sum_stack_1 <- rbind(N, cbind(summary(stacked_1), summary(grouped_1)), Var)
+colnames(sum_stack_1) <- c("Stacked", "Grouped")
+sum_stack_1
+```
 
-noquote(paste('n (stacked) = ', length(stacked_1)))
-noquote(paste('n (grouped) = ', length(grouped_1)))
+### R population
+```{r echo=F}
+vir_stacked_1_r <- vir_stacked_r$vir_sta_1
+def_stacked_1_r <- def_stacked_r$def_sta_1
+gr_stacked_1_r <- gr_stacked_r$gr_sta_1
 
-sumy <- summary(bars)
-colnames(sumy) <- c("Stacked", "Grouped")
-noquote(rbind(sumy, c(paste0('Var    :', round(var(stacked_1), 2)), paste0('Var    :', round(var(grouped_1), 2)))))
+vir_grouped_1_r <- vir_grouped_r$vir_grp_1
+def_grouped_1_r <- def_grouped_r$def_grp_1
+gr_grouped_1_r <- gr_grouped_r$gr_grp_1
+
+stacked_1_r <- c(vir_stacked_1_r, def_stacked_1_r, gr_stacked_1_r)
+grouped_1_r <- c(vir_grouped_1_r, def_grouped_1_r, gr_grouped_1_r)
+
+N <- c(length(stacked_1_r), length(grouped_1_r))
+Var <- c(var(stacked_1_r), var(grouped_1_r))
+sum_stack_1_r <- rbind(N, cbind(summary(stacked_1_r), summary(grouped_1_r)), Var)
+colnames(sum_stack_1_r) <- c("Stacked", "Grouped")
+sum_stack_1_r
+```
+
+### Py population
+```{r echo=F}
+vir_stacked_1_py <- vir_stacked_py$vir_sta_1
+def_stacked_1_py <- def_stacked_py$def_sta_1
+gr_stacked_1_py <- gr_stacked_py$gr_sta_1
+
+vir_grouped_1_py <- vir_grouped_py$vir_grp_1
+def_grouped_1_py <- def_grouped_py$def_grp_1
+gr_grouped_1_py <- gr_grouped_py$gr_grp_1
+
+stacked_1_py<- c(vir_stacked_1_py, def_stacked_1_py, gr_stacked_1_py)
+grouped_1_py<- c(vir_grouped_1_py, def_grouped_1_py, gr_grouped_1_py)
+
+N <- c(length(stacked_1_py), length(grouped_1_py))
+Vapy <- c(var(stacked_1_py), var(grouped_1_py))
+sum_stack_1_py <- rbind(N, cbind(summary(stacked_1_py), summary(grouped_1_py)), Var)
+colnames(sum_stack_1_py) <- c("Stacked", "Grouped")
+sum_stack_1_py
 ```
 
 
-
-```{r}
-
-stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
-grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
-
-before_s <- length(stacked_1)
-stacked_1 <- stacked_1[-which(stacked_1 >= 25)] 
-after_s <- length(stacked_1)
-
-before_g <- length(grouped_1)
-grouped_1 <- grouped_1[-which(grouped_1 >= 20)] 
-after_g <- length(grouped_1)
-
-n.outliers_s <- before_s-after_s
-n.outliers_g <- before_g-after_g
-
-noquote(paste("Number of outliers (stacked):", n.outliers_s))
-noquote(paste("Number of outliers (grouped):", n.outliers_g))
-
-sumy <- noquote(rbind(cbind(summary(stacked_1), summary(grouped_1)), c(paste0('Var    :', round(var(stacked_1), 3)), paste0('Var    :', round(var(grouped_1), 3)))))
-colnames(sumy) <- c("Stacked", "Grouped")
-sumy
-```
-
-
-```{r}
-
-vir_stacked_1 <- vir_stacked$vir_sta_1
-def_stacked_1 <- def_stacked$def_sta_1
-gr_stacked_1 <- gr_stacked$gr_sta_1
-
-vir_grouped_1 <- vir_stacked$vir_grp_1
-def_grouped_1 <- def_stacked$def_grp_1
-gr_grouped_1 <- gr_stacked$gr_grp_1
-
-stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
-grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
-
-stacked_1 <- stacked_1[which(stacked_1 >= 25)] 
-
-summary(stacked_1)
-stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
-stacked_1 <- stacked_1[-which(stacked_1 >= 25)]
-grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1) 
-```
-
-\textbf{Shapiro test for the responses for the stacked bar plot}
+### Shapiro and symmetry tests for the responses for the stacked bar plot
 ```{r}
 shapiro.test(stacked_1)
+symmetry.test(stacked_1)
 ```
 
-\textbf{Shapiro test for the responses for the stacked bar plot}
+```{r}
+shapiro.test(stacked_1_r)
+symmetry.test(stacked_1_r)
+```
+
+```{r}
+shapiro.test(stacked_1_py)
+symmetry.test(stacked_1_py)
+```
+
+### Shapiro and symmetry tests for the responses for the grouped bar plot
 ```{r}
 shapiro.test(grouped_1)
+symmetry.test(grouped_1)
+```
+
+```{r}
+shapiro.test(grouped_1_r)
+symmetry.test(grouped_1_r)
+```
+
+```{r}
+shapiro.test(grouped_1_py)
+symmetry.test(grouped_1_py)
 ```
 
 
-\textbf{Sign test for the responses for the stacked bar plot}
+### Sign tests for the responses for the stacked bar plot
 ```{r}
 SIGN.test(stacked_1, md=11, alternative="t")
+SIGN.test(stacked_1_r, md=11, alternative="t")
+SIGN.test(stacked_1_py, md=11, alternative="t")
 ```
 
-\textbf{Sign test for the responses for the grouped bar plot}
+### Sign test for the responses for the grouped bar plot
 ```{r}
 SIGN.test(grouped_1, md=11, alternative="t")
+SIGN.test(grouped_1_r, md=11, alternative="t")
+SIGN.test(grouped_1_py, md=11, alternative="t")
 ```
 
-\textbf{T-test on samples from the distribution of responses for the stacked bar plot}
-```{r}
-means <- rep(NA, 100)
-for(i in 1:100){
-  samp <- rnorm(100, mean=mean(stacked_1), sd=sd(stacked_1))
-  means[i] <- mean(samp)
-}
-t.test(means, mu=11)
-```
-
-\textbf{T-test on samples from the distribution of responses for the grouped bar plot}
-```{r}
-means <- rep(NA, 100)
-for(i in 1:100){
-  samp <- rnorm(100, mean=mean(grouped_1), sd=sd(grouped_1))
-  means[i] <- mean(samp)
-}
-t.test(means, mu=11)
-
-```
-Running t-tests on the means, however, we see both sets of responses differ statistically significantly from the true value.
-
-**How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?**
 
 
+##How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?
+
+
+### Whole pop summary
 ```{r echo=F}
 vir_stacked_2 <- vir_stacked$vir_sta_2
 def_stacked_2 <- def_stacked$def_sta_2
 gr_stacked_2 <- gr_stacked$gr_sta_2
 
-vir_grouped_2 <- vir_stacked$vir_grp_2
-def_grouped_2 <- def_stacked$def_grp_2
-gr_grouped_2 <- gr_stacked$gr_grp_2
+vir_grouped_2 <- vir_grouped$vir_grp_2
+def_grouped_2 <- def_grouped$def_grp_2
+gr_grouped_2 <- gr_grouped$gr_grp_2
 
 stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
 grouped_2 <- c(vir_grouped_2, def_grouped_2, gr_grouped_2)
 
-bars <- data.frame(stacked_2, grouped_2)
+N <- c(length(stacked_2), length(grouped_2))
+Var <- c(var(stacked_2), var(grouped_2))
+sum_stack_2 <- rbind(N, cbind(summary(stacked_2), summary(grouped_2)), Var)
+colnames(sum_stack_2) <- c("Stacked", "Grouped")
+sum_stack_2
+```
 
-noquote(paste('n (stacked) = ', length(stacked_2)))
-noquote(paste('n (grouped) = ', length(grouped_2)))
+### R population
+```{r echo=F}
+vir_stacked_2_r <- vir_stacked_r$vir_sta_2
+def_stacked_2_r <- def_stacked_r$def_sta_2
+gr_stacked_2_r <- gr_stacked_r$gr_sta_2
 
-sumy <- summary(bars)
-colnames(sumy) <- c("Stacked", "Grouped")
-noquote(rbind(sumy, c(paste0('Var    :', round(var(stacked_2), 3)), paste0('Var    :', round(var(grouped_2), 3)))))
+vir_grouped_2_r <- vir_grouped_r$vir_grp_2
+def_grouped_2_r <- def_grouped_r$def_grp_2
+gr_grouped_2_r <- gr_grouped_r$gr_grp_2
+
+stacked_2_r <- c(vir_stacked_2_r, def_stacked_2_r, gr_stacked_2_r)
+grouped_2_r <- c(vir_grouped_2_r, def_grouped_2_r, gr_grouped_2_r)
+
+N <- c(length(stacked_2_r), length(grouped_2_r))
+Var <- c(var(stacked_2_r), var(grouped_2_r))
+sum_stack_2_r <- rbind(N, cbind(summary(stacked_2_r), summary(grouped_2_r)), Var)
+colnames(sum_stack_2_r) <- c("Stacked", "Grouped")
+sum_stack_2_r
+```
+
+### Py population
+```{r echo=F}
+vir_stacked_2_py <- vir_stacked_py$vir_sta_2
+def_stacked_2_py <- def_stacked_py$def_sta_2
+gr_stacked_2_py <- gr_stacked_py$gr_sta_2
+
+vir_grouped_2_py <- vir_grouped_py$vir_grp_2
+def_grouped_2_py <- def_grouped_py$def_grp_2
+gr_grouped_2_py <- gr_grouped_py$gr_grp_2
+
+stacked_2_py<- c(vir_stacked_2_py, def_stacked_2_py, gr_stacked_2_py)
+grouped_2_py<- c(vir_grouped_2_py, def_grouped_2_py, gr_grouped_2_py)
+
+N <- c(length(stacked_2_py), length(grouped_2_py))
+Vapy <- c(var(stacked_2_py), var(grouped_2_py))
+sum_stack_2_py <- rbind(N, cbind(summary(stacked_2_py), summary(grouped_2_py)), Var)
+colnames(sum_stack_2_py) <- c("Stacked", "Grouped")
+sum_stack_2_py
 ```
 
 
-```{r}
-
-stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
-grouped_2 <- c(vir_grouped_2, def_grouped_2, gr_grouped_2)
-
-before_s <- length(stacked_2)
-stacked_2 <- stacked_2[-which(stacked_2 >= 20)] 
-after_s <- length(stacked_2)
-
-n.outliers_s <- before_s-after_s
-n.outliers_g <- before_g-after_g
-
-noquote(paste("Number of outliers (stacked):", n.outliers_s))
-noquote(paste("Number of outliers (grouped):", n.outliers_g))
-
-sumy <- noquote(rbind(cbind(summary(stacked_2), summary(grouped_2)), c(paste0('Var    :', round(var(stacked_2), 3)), paste0('Var    :', round(var(grouped_2), 3)))))
-colnames(sumy) <- c("Stacked", "Grouped")
-sumy
-```
 
 
-\textbf{Shapiro test for the responses for the stacked bar plot}
+###Shapiro tests for the responses for the stacked bar plot
 ```{r}
 shapiro.test(stacked_2)
 symmetry.test(stacked_2)
 ```
 
-\textbf{Shapiro test for the responses for the stacked bar plot}
+```{r}
+shapiro.test(stacked_2_r)
+symmetry.test(stacked_2_r)
+```
+
+```{r}
+shapiro.test(stacked_2_py)
+symmetry.test(stacked_2_py)
+```
+
+###Shapiro test for the responses for the grouped bar plot
 ```{r}
 shapiro.test(grouped_2)
 symmetry.test(grouped_2)
 ```
 
-
-\textbf{Sign test for the responses for the stacked bar plot}
 ```{r}
-SIGN.test(stacked_2, md=9, alternative="t")
+shapiro.test(grouped_2_r)
+symmetry.test(grouped_2_r)
 ```
 
-\textbf{Sign test for the responses for the grouped bar plot}
 ```{r}
-SIGN.test(grouped_2, md=9, alternative="t")
-```
-
-
-\textbf{T-test on samples from the distribution of responses for the stacked bar plot}
-```{r}
-means <- rep(NA, 100)
-for(i in 1:100){
-  samp <- rnorm(100, mean=mean(stacked_2), sd=sd(stacked_2))
-  means[i] <- mean(samp)
-}
-t.test(means, mu=9)
-```
-
-\textbf{T-test on samples from the distribution of responses for the grouped bar plot}
-```{r}
-means <- rep(NA, 100)
-for(i in 1:100){
-  samp <- rnorm(100, mean=mean(grouped_2), sd=sd(grouped_2))
-  means[i] <- mean(samp)
-}
-t.test(means, mu=9)
-
+shapiro.test(grouped_2_py)
+symmetry.test(grouped_2_py)
 ```
 
 
-**Please select the statement you feel applies to the bar chart above.**
+###Sign tests for the responses for the stacked bar plot
+```{r}
+SIGN.test(stacked_2, md=11, alternative="t")
+SIGN.test(stacked_2_r, md=11, alternative="t")
+SIGN.test(stacked_2_py, md=11, alternative="t")
+```
 
+###Sign test for the responses for the grouped bar plot
+```{r}
+SIGN.test(grouped_2, md=11, alternative="t")
+SIGN.test(grouped_2_r, md=11, alternative="t")
+SIGN.test(grouped_2_py, md=11, alternative="t")
+```
+
+
+## Please select the statement you feel applies to the bar chart above.
+
+### Whole pop
 ```{r echo=F}
 vir_stacked_3 <- vir_stacked$vir_sta_3
 def_stacked_3 <- def_stacked$def_sta_3
 gr_stacked_3 <- gr_stacked$gr_sta_3
 
-vir_grouped_3 <- vir_stacked$vir_grp_3
-def_grouped_3 <- def_stacked$def_grp_3
-gr_grouped_3 <- gr_stacked$gr_grp_3
+vir_grouped_3 <- vir_grouped$vir_grp_3
+def_grouped_3 <- def_grouped$def_grp_3
+gr_grouped_3 <- gr_grouped$gr_grp_3
 
 stacked_3 <- c(vir_stacked_3, def_stacked_3, gr_stacked_3)
 grouped_3 <- c(vir_grouped_3, def_grouped_3, gr_grouped_3)
@@ -1491,19 +2639,58 @@ grouped_3 <- c(vir_grouped_3, def_grouped_3, gr_grouped_3)
 tab <- rbind(table(stacked_3), table(grouped_3))
 rownames(tab) <- c("Stacked", "Grouped")
 colnames(tab) <- c("Equal", "Less", "More")
-tab
+as.data.frame(tab)
 ```
 
-**Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?**
+### R pop
+```{r echo=F}
+vir_stacked_3_r <- vir_stacked_r$vir_sta_3
+def_stacked_3_r <- def_stacked_r$def_sta_3
+gr_stacked_3_r <- gr_stacked_r$gr_sta_3
 
+vir_grouped_3_r <- vir_grouped_r$vir_grp_3
+def_grouped_3_r <- def_grouped_r$def_grp_3
+gr_grouped_3_r <- gr_grouped_r$gr_grp_3
+
+stacked_3_r<- c(vir_stacked_3_r, def_stacked_3_r, gr_stacked_3_r)
+grouped_3_r <- c(vir_grouped_3_r, def_grouped_3_r, gr_grouped_3_r)
+
+tab <- rbind(table(stacked_3_r), table(grouped_3_r))
+rownames(tab) <- c("Stacked", "Grouped")
+colnames(tab) <- c("Equal", "Less", "More")
+as.data.frame(tab)
+```
+
+### Python pop
+```{r echo=F}
+vir_stacked_3_py <- vir_stacked_py$vir_sta_3
+def_stacked_3_py <- def_stacked_py$def_sta_3
+gr_stacked_3_py <- gr_stacked_py$gr_sta_3
+
+vir_grouped_3_py <- vir_grouped_py$vir_grp_3
+def_grouped_3_py <- def_grouped_py$def_grp_3
+gr_grouped_3_py <- gr_grouped_py$gr_grp_3
+
+stacked_3_py<- c(vir_stacked_3_py, def_stacked_3_py, gr_stacked_3_py)
+grouped_3_py <- c(vir_grouped_3_py, def_grouped_3_py, gr_grouped_3_py)
+
+tab <- rbind(table(stacked_3_py), table(grouped_3_py))
+rownames(tab) <- c("Stacked", "Grouped")
+colnames(tab) <- c("Equal", "Less", "More")
+as.data.frame(tab)
+```
+
+## Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?
+
+### Whole pop
 ```{r echo=F}
 vir_stacked_4 <- vir_stacked$vir_sta_4
 def_stacked_4 <- def_stacked$def_sta_4
 gr_stacked_4 <- gr_stacked$gr_sta_4
 
-vir_grouped_4 <- vir_stacked$vir_grp_4
-def_grouped_4 <- def_stacked$def_grp_4
-gr_grouped_4 <- gr_stacked$gr_grp_4
+vir_grouped_4 <- vir_grouped$vir_grp_4
+def_grouped_4 <- def_grouped$def_grp_4
+gr_grouped_4 <- gr_grouped$gr_grp_4
 
 stacked_4 <- c(vir_stacked_4, def_stacked_4, gr_stacked_4)
 grouped_4 <- c(vir_grouped_4, def_grouped_4, gr_grouped_4)
@@ -1514,65 +2701,116 @@ colnames(tab) <- c("Floating Steps", "Log Grip", "Both the same")
 tab
 ```
 
-**Which bar chart do you feel is easiest to read and interpret?**
-
+### R
 ```{r echo=F}
-a_1 <- set_a$sta_dge
-b_1 <- set_b$sta_dge
-c_1 <- set_c$sta_dge
-d_1 <- set_d$sta_dge
-e_1 <- set_e$sta_dge
-f_1 <- set_f$sta_dge
+vir_stacked_4_r <- vir_stacked_r$vir_sta_4
+def_stacked_4_r <- def_stacked_r$def_sta_4
+gr_stacked_4_r <- gr_stacked_r$gr_sta_4
 
-for(i in 1:length(a_1)){
-  if(a_1[i] == "A"){
-    a_1[i] <- "Stacked"
-  } else a_1[i] <- "Grouped"
-}
+vir_grouped_4_r <- vir_grouped_r$vir_grp_4
+def_grouped_4_r <- def_grouped_r$def_grp_4
+gr_grouped_4_r <- gr_grouped_r$gr_grp_4
 
-for(i in 1:length(b_1)){
-  if(b_1[i] == "A"){
-    b_1[i] <- "Stacked"
-  } else b_1[i] <- "Grouped"
-}
+stacked_4_r <- c(vir_stacked_4_r, def_stacked_4_r, gr_stacked_4_r)
+grouped_4_r <- c(vir_grouped_4_r, def_grouped_4_r, gr_grouped_4_r)
 
-for(i in 1:length(d_1)){ 
-  if(d_1[i] == "A"){
-    d_1[i] <- "Stacked"
-  } else d_1[i] <- "Grouped"
-}
+tab <- rbind(c(table(stacked_4_r), 0), table(grouped_4_r))
+rownames(tab) <- c("Stacked", "Grouped")
+colnames(tab) <- c("Floating Steps", "Log Grip", "Both the same")
+tab
+```
 
-for(i in 1:length(c_1)){
-  if(c_1[i] == "B"){
-    c_1[i] <- "Stacked"
-  } else c_1[i] <- "Grouped"
-}
+### Py
+```{r echo=F}
+vir_stacked_4_py <- vir_stacked_py$vir_sta_4
+def_stacked_4_py <- def_stacked_py$def_sta_4
+gr_stacked_4_py <- gr_stacked_py$gr_sta_4
 
-for(i in 1:length(e_1)){
-  if(e_1[i] == "B"){
-    e_1[i] <- "Stacked"
-  } else e_1[i] <- "Grouped"
-}
+vir_grouped_4_py <- vir_grouped_py$vir_grp_4
+def_grouped_4_py <- def_grouped_py$def_grp_4
+gr_grouped_4_py <- gr_grouped_py$gr_grp_4
 
-for(i in 1:length(f_1)){
-  if(f_1[i] == "B"){
-    f_1[i] <- "Stacked"
-  } else f_1[i] <- "Grouped"
-}
+stacked_4_py <- c(vir_stacked_4_py, def_stacked_4_py, gr_stacked_4_py)
+grouped_4_py <- c(vir_grouped_4_py, def_grouped_4_py, gr_grouped_4_py)
 
-tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
+tab <- rbind(table(stacked_4_py), table(grouped_4_py))
+rownames(tab) <- c("Stacked", "Grouped")
+colnames(tab) <- c("Floating Steps", "Log Grip", "Both the same")
 tab
 ```
 
 
-``` {r, echo=F}
-tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), table(e_1), table(f_1))
-rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
-tab
+## Which bar chart do you feel is easiest to read and interpret?**
+```{r echo=F}
+a_1 <- set_a$sta_grp
+b_1 <- set_b$sta_grp
+c_1 <- set_c$sta_grp
+d_1 <- set_d$sta_grp
+e_1 <- set_e$sta_grp
+f_1 <- set_f$sta_grp
+
+a_1_r <- set_a_r$sta_grp
+b_1_r <- set_b_r$sta_grp
+c_1_r <- set_c_r$sta_grp
+d_1_r <- set_d_r$sta_grp
+e_1_r <- set_e_r$sta_grp
+f_1_r <- set_f_r$sta_grp
+
+a_1_py <- set_a_py$sta_grp
+b_1_py <- set_b_py$sta_grp
+c_1_py <- set_c_py$sta_grp
+d_1_py <- set_d_py$sta_grp
+e_1_py <- set_e_py$sta_grp
+f_1_py <- set_f_py$sta_grp
+
+stack_first <- function(colset){
+  for(i in 1:length(colset)){
+    if(colset[i] == "A"){
+      colset[i] <- "Stacked"
+    } else colset[i] <- "Grouped"
+  }
+}
+
+stack_first(a_1)
+stack_first(a_1_r)
+stack_first(a_1_py)
+
+stack_first(b_1)
+stack_first(b_1_r)
+stack_first(b_1_py)
+
+stack_first(d_1)
+stack_first(d_1_r)
+stack_first(d_1_py)
+
+group_first <- function(colset){
+  for(i in 1:length(colset)){
+    if(colset[i] == "B"){
+      colset[i] <- "Stacked"
+    } else colset[i] <- "Grouped"
+  }
+}
+
+group_first(c_1)
+group_first(c_1_r)
+group_first(c_1_py)
+
+group_first(e_1)
+group_first(e_1_r)
+group_first(e_1_py)
+
+group_first(f_1)
+group_first(f_1_r)
+group_first(f_1_py)
+
+
+tab <- rbind(table(c(a_1, b_1, c_1, d_1, e_1, f_1)), 
+             table(c(a_1_r, b_1_r, c_1_r, d_1_r, e_1_r, f_1_r)), 
+             table(c(a_1_py, b_1_py, c_1_py, d_1_py, e_1_py, f_1_py))
+)
+rownames(tab) <- c("Whole Population", "R", "Python")
+as.data.frame(tab)
 ```
-
-
-**Which colour scheme do you find most aesthetically pleasing?**
 
 ```{r}
 
@@ -1581,88 +2819,157 @@ first_col <- c("Viridis", "Default", "Default", "Greyscale", "Viridis", "Greysca
 second_col <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viridis")
 
 df <- data.frame(set, first_col, second_col)
-names(df) <- c("Pairing ID", "Main Colour Palette", "Secondary Colour Pallette")
-knitr::kable(df)
+names(df) <- c("Colour Set", "Main Colour Palette", "Secondary Colour Pallette")
+df
 ```
 
-```{r echo=F}
-a_1 <- set_a$a_cols_1
-b_1 <- set_b$b_cols_1
-c_1 <- set_c$c_cols_1
-d_1 <- set_d$d_cols_1
-e_1 <- set_e$e_cols_1
-f_1 <- set_f$f_cols_1
+### By colours - Whole pop
+``` {r, echo=F}
+first_col <- c("Viridis", "Default", "Default", "Greyscale", "Viridis", "Greyscale")
+second_col <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viridis")
 
-tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), c(table(e_1), 0), table(f_1))
+tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), table(e_1), table(f_1))
+tab <- cbind(tab, first_col, second_col)
 rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
-tab
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+as.data.frame(tab)
 ```
 
-**Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.**
+### By colours - R
+``` {r, echo=F}
+tab <- rbind(table(a_1_r), table(b_1_r), table(c_1_r), table(d_1_r), table(e_1_r), table(f_1_r))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+as.data.frame(tab)
+```
+
+### By colours - Py
+``` {r, echo=F}
+tab <- rbind(table(a_1_py), table(b_1_py), table(c_1_py), table(d_1_py), table(e_1_py), table(f_1_py))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+as.data.frame(tab)
+```
+
+
+## Which colour scheme do you find most aesthetically pleasing?
+
+### Whole pop
+```{r echo=F}
+tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), table(e_1), table(f_1))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+as.data.frame(tab)
+```
+### R
+```{r echo=F}
+tab <- rbind(table(a_1_r), c(0, table(b_1_r)), table(c_1_r), table(d_1_r), table(e_1_r), table(f_1_r))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+as.data.frame(tab)
+```
+### Py
+```{r echo=F}
+tab <- rbind(table(a_1_py), table(b_1_py), c(table(c_1_py), 0), c(0, table(d_1_py)), table(e_1_py), table(f_1_py))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+as.data.frame(tab)
+```
+
+## Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.
 
 ```{r echo=F, fig.cap="Table showing which colour palettes respondents found easiest to read and interpret"}
-a_1 <- set_a$a_cols_2
-b_1 <- set_b$b_cols_2
-c_1 <- set_c$c_cols_2
-d_1 <- set_d$d_cols_2
-e_1 <- set_e$e_cols_2
-f_1 <- set_f$f_cols_2
+a_2 <- set_a$a_cols_2
+b_2 <- set_b$b_cols_2
+c_2 <- set_c$c_cols_2
+d_2 <- set_d$d_cols_2
+e_2 <- set_e$e_cols_2
+f_2 <- set_f$f_cols_2
 
-for(i in 1:length(a_1)){
-  if(a_1[i] == "Yes, A is easier"){
-    a_1[i] <- "A"
-  } else if(a_1[i] == "Yes, A is easier"){
-  a_1[i] <- "B"
-  } else a_1[i] <- "None"
+a_2_r <- set_a_r$a_cols_2
+b_2_r <- set_b_r$b_cols_2
+c_2_r <- set_c_r$c_cols_2
+d_2_r <- set_d_r$d_cols_2
+e_2_r <- set_e_r$e_cols_2
+f_2_r <- set_f_r$f_cols_2
+
+a_2_py <- set_a_py$a_cols_2
+b_2_py <- set_b_py$b_cols_2
+c_2_py <- set_c_py$c_cols_2
+d_2_py <- set_d_py$d_cols_2
+e_2_py <- set_e_py$e_cols_2
+f_2_py <- set_f_py$f_cols_2
+
+
+col_interp <- function(colset){
+  for(i in 1:length(colset)){
+    if(colset[i] == "Yes, A is easier"){
+      colset[i] <- "A"
+    }else if(colset[i] == "Yes, B is easier"){
+      colset[i] <- "B"
+    } else colset[i] <- "None"
+  }
 }
 
-for(i in 1:length(b_1)){
-  if(b_1[i] == "Yes, B is easier"){
-    b_1[i] <- "B"
-  } else if(b_1[i] == "Yes, A is easier"){ 
-    b_1[i] <- "A"
-    }else b_1[i] <- "None"
-}
+col_interp(a_2)
+col_interp(a_2_r)
+col_interp(a_2_py)
 
-for(i in 1:length(e_1)){
-  if(e_1[i] == "Yes, A is easier"){
-    e_1[i] <- "A"
-  } else if(e_1[i] == "Yes, B is easier"){
-    e_1[i] <- "B"
-  } else e_1[i] <- "None"
-}
+col_interp(b_2)
+col_interp(b_2_r)
+col_interp(b_2_py)
 
-for(i in 1:length(f_1)){
-  if(f_1[i] == "Yes, B is easier"){
-    f_1[i] <- "B"
-  } else if(f_1[i] == "Yes, A is easier"){
-    f_1[i] <- "A"
-  } else f_1[i] <- "None"
-}
+col_interp(d_2)
+col_interp(d_2_r)
+col_interp(d_2_py)
 
-for(i in 1:length(c_1)){
-  if(c_1[i] == "Yes, A is easier"){
-    c_1[i] <- "A"
-  } else if(c_1[i] == "Yes, B is easier"){ 
-    c_1[i] <- "B"
-  } else c_1[i] <- "None"
-}
+col_interp(c_2)
+col_interp(c_2_r)
+col_interp(c_2_py)
 
-for(i in 1:length(d_1)){
-  if(d_1[i] == "Yes, A is easier"){
-    d_1[i] <- "A"
-  } else if(d_1[i] == "Yes, B is easier"){ 
-    d_1[i] <- "B"
-  } else d_1[i] <- "None"
-}
+col_interp(e_2)
+col_interp(e_2_r)
+col_interp(e_2_py)
 
-tab <- rbind(c(table(a_1)[1], 0, table(a_1)[2]), c(table(b_1)[1], 0, table(b_1)[2]), c(table(c_1), 0), c(table(d_1), 0), c(table(e_1), 0, 0), table(f_1))
-colnames(tab) <- c("A", "B", "None")
-tab
+col_interp(f_2)
+col_interp(f_2_r)
+col_interp(f_2_py)
+```
+
+### Whole Pop
+```{r}
+tab <- rbind(table(a_2), table(b_2), table(c_2), table(d_2), table(e_2), table(f_2))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("None", "A", "B", "A Colour", "B Colour")
+as.data.frame(tab)
+```
+
+### R
+```{r}
+tab <- rbind(c(0, table(a_2_r)), c(table(b_2_r), 0), c(0, table(c_2_r)), c(0, table(d_2_r)), c(0, table(e_2_r), 0), table(f_2_r))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("None", "A", "B", "A Colour", "B Colour")
+as.data.frame(tab)
+```
+
+### Py
+```{r}
+tab <- rbind(c(table(a_2_py), 0), c(0, table(b_2_py), 0), c(0, table(c_2_py), 0), c(0, table(d_2_py)), c(0, table(e_2_py), 0), c(0, 0, table(f_2_py)))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("None", "A", "B", "A Colour", "B Colour")
+as.data.frame(tab)
 ```
 
 \subsection{Sales - Part 1}
-**How much would you say sales of each company increased between January and December? [Company A]**
+## How much would you say sales of each company increased between January and December? [Company A]
 
 ```{r echo=F}
 sep_1a <- na.exclude(ab_sep$sep_1a)
@@ -1708,7 +3015,7 @@ sumy
 ```
 
 
-**How much would you say sales of each company increased between January and December? [Company B]**
+## How much would you say sales of each company increased between January and December? [Company B]
 
 ```{r echo=F}
 sep_1b <- na.exclude(ab_sep$sep_1b)
@@ -1754,7 +3061,7 @@ sumy
 ```
 
 
-**How large would you say the drop in sales between April and July of Company A  is?**
+## How large would you say the drop in sales between April and July of Company A  is?
 
 ```{r echo=F}
 sep_2 <- na.exclude(ab_sep$sep_2)
@@ -1770,7 +3077,7 @@ sumy
 
 \subsection{Sales - Part 2}
 
-**Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?**
+## Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?
 
 
 ```{r echo=F}
