@@ -1057,6 +1057,10 @@ SIGN.test(truncated_1_r, md=41, alternative="t")
 SIGN.test(logarithmic_1_r, md=41, alternative="t")
 
 SIGN.test(control_1_py, md=41, alternative="t")
+
+wilcox.test(control_1_r, control_1_py)
+wilcox.test(truncated_1_r, truncated_1_py)
+wilcox.test(logarithmic_1_r, logarithmic_1_py)
 ```
 
 ### Wilcox tests - Py
@@ -1079,6 +1083,8 @@ Var <- c(var(con_first_1), var(trn_first_1), var(log_first_1))
 sum_ysc1cfirst <- rbind(N, cbind(summary(con_first_1), summary(trn_first_1), summary(log_first_1)), Var)
 colnames(sum_ysc1cfirst) <- c("Control", "Truncated", "Logarithmic")
 sum_ysc1cfirst
+
+wilcox.test(con_first_1, trn_first_1)
 ```
 
 ## Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?
@@ -1161,6 +1167,8 @@ Var <- c(var(control_2), var(control_2_r), var(control_2_py))
 sum_ysc2lang_ctrl <- rbind(N, cbind(summary(control_2), summary(control_2_r), summary(control_2_py)), Var)
 colnames(sum_ysc1lang_ctrl) <- c("Whole Pop", "R", "Python")
 sum_ysc2lang_ctrl
+
+wilcox.test(control_2_r, control_2_py)
 ```
 
 ### Truncated - Lang comp
@@ -1170,6 +1178,8 @@ Var <- c(var(truncated_2), var(truncated_2_r), var(truncated_2_py))
 sum_ysc2lang_trnc <- rbind(N, cbind(summary(truncated_2), summary(truncated_2_r), summary(truncated_2_py)), Var)
 colnames(sum_ysc2lang_trnc) <- c("Whole Pop", "R", "Python")
 sum_ysc2lang_trnc
+
+wilcox.test(truncated_2_r, truncated_2_py)
 ```
 
 ### Logarithmic - Lang comp
@@ -1179,6 +1189,8 @@ Var <- c(var(logarithmic_2), var(logarithmic_2_r), var(logarithmic_2_py))
 sum_ysc2lang_log <- rbind(N, cbind(summary(logarithmic_2), summary(logarithmic_2_r), summary(logarithmic_2_py)), Var)
 colnames(sum_ysc2lang_log) <- c("Whole Pop", "R", "Python")
 sum_ysc2lang_log
+
+wilcox.test(logarithmic_2_r, logarithmic_2_py)
 ```
 
 ### R bars
@@ -1304,6 +1316,10 @@ Var <- c(var(con_first_2), var(trn_first_2), var(log_first_2))
 sum_ysc2cfirst <- rbind(N, cbind(summary(con_first_2), summary(trn_first_2), summary(log_first_2)), Var)
 colnames(sum_ysc2cfirst) <- c("Control", "Truncated", "Logarithmic")
 sum_ysc2cfirst
+
+wilcox.test(con_first_2, trn_first_2)
+wilcox.test(con_first_2, log_first_2)
+wilcox.test(log_first_2, trn_first_2)
 ```
 
 ## Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?
@@ -1375,14 +1391,6 @@ logarithmic_3_py <- log_y_scale_py$log_3
 
 y_scale_3_r <- cbind(control_3_r, truncated_3_r, logarithmic_3_r)
 y_scale_3_py <- cbind(control_3_py, truncated_3_py, logarithmic_3_py)
-
-N <- c(length(control_3), length(control_3_r), length(control_3_py))
-
-Var <- c(var(control_3), var(control_3_r), var(control_3_py))
-
-sum_ysc3lang_ctrl <- rbind(N, cbind(summary(control_3), summary(control_3_r), summary(control_3_py)), Var)
-colnames(sum_ysc3lang_ctrl) <- c("Whole Pop", "R", "Python")
-sum_ysc3lang_ctrl
 ```
 
 
@@ -1401,6 +1409,7 @@ ggplot(stats_3_r)+
   scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
 ```
+
 ### Python Population
 ```{r echo=F}
 y_scale_3_py <- as.data.frame(y_scale_3_py)
@@ -1418,6 +1427,38 @@ ggplot(stats_3_py)+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
 ```
 
+### Control - Lang comp
+```{r}
+N <- c(length(control_3), length(control_3_r), length(control_3_py))
+Var <- c(var(control_3), var(control_3_r), var(control_3_py))
+sum_ysc3lang_ctrl <- rbind(N, cbind(summary(control_3), summary(control_3_r), summary(control_3_py)), Var)
+colnames(sum_ysc1lang_ctrl) <- c("Whole Pop", "R", "Python")
+sum_ysc3lang_ctrl
+
+wilcox.test(control_3_r, control_3_py)
+```
+
+### Truncated - Lang comp
+```{r}
+N <- c(length(truncated_3), length(truncated_3_r), length(truncated_3_py))
+Var <- c(var(truncated_3), var(truncated_3_r), var(truncated_3_py))
+sum_ysc3lang_trnc <- rbind(N, cbind(summary(truncated_3), summary(truncated_3_r), summary(truncated_3_py)), Var)
+colnames(sum_ysc3lang_trnc) <- c("Whole Pop", "R", "Python")
+sum_ysc3lang_trnc
+
+wilcox.test(truncated_3_r, truncated_3_py)
+```
+
+### Logarithmic - Lang comp
+```{r}
+N <- c(length(logarithmic_3), length(logarithmic_3_r), length(logarithmic_3_py))
+Var <- c(var(logarithmic_3), var(logarithmic_3_r), var(logarithmic_3_py))
+sum_ysc3lang_log <- rbind(N, cbind(summary(logarithmic_3), summary(logarithmic_3_r), summary(logarithmic_3_py)), Var)
+colnames(sum_ysc3lang_log) <- c("Whole Pop", "R", "Python")
+sum_ysc3lang_log
+
+wilcox.test(logarithmic_3_r, logarithmic_3_py)
+```
 ### First Plot Comp
 ```{r}
 con_first_3 <- con_first$con_3
