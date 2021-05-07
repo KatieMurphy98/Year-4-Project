@@ -1054,6 +1054,7 @@ SIGN.test(control_1, truncated_1)
 ```{r echo=F}
 SIGN.test(control_1_r, md=41, alternative="t")
 SIGN.test(truncated_1_r, md=41, alternative="t")
+SIGN.test(truncated_1_r, md=41, alternative="g")
 SIGN.test(logarithmic_1_r, md=41, alternative="t")
 
 SIGN.test(control_1_py, md=41, alternative="t")
@@ -1148,7 +1149,6 @@ ggplot(stats_2)+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
 ```
 
-### Control - Lang comp
 ```{r}
 control_2_r <- ctrl_y_scale_r$con_2
 truncated_2_r <- trnc_y_scale_r$trn_2
@@ -1374,7 +1374,7 @@ symmetry.test(truncated_3)
 symmetry.test(logarithmic_3)
 ```
 
-### Pairwise Sign Tests
+### Pairwise Tests
 ```{r}
 SIGN.test(control_3, truncated_3)
 wilcox.test(control_3, logarithmic_3)
@@ -1461,6 +1461,7 @@ sum_ysc3lang_log
 
 wilcox.test(logarithmic_3_r, logarithmic_3_py)
 ```
+
 ### First Plot Comp
 ```{r}
 con_first_3 <- con_first$con_3
