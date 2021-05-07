@@ -1130,6 +1130,8 @@ symmetry.test(logarithmic_2)
 SIGN.test(control_2, truncated_2)
 SIGN.test(control_2, logarithmic_2)
 wilcox.test(logarithmic_2, truncated_2)
+
+SIGN.test(truncated_2, control_2, alternative="g")
 ```
 
 ### Whole pop bars
@@ -1376,7 +1378,7 @@ symmetry.test(logarithmic_3)
 
 ### Pairwise Tests
 ```{r}
-SIGN.test(control_3, truncated_3)
+SIGN.test(truncated_3 ,control_3, alternative='g')
 wilcox.test(control_3, logarithmic_3)
 SIGN.test(logarithmic_3, truncated_3)
 ```
@@ -1536,6 +1538,16 @@ for(i in 1:3){
 colnames(diff_mat_Q3) <- c("Control", "Truncated", "Logarithmic")
 rownames(diff_mat_Q3) <- c("Control", "Truncated", "Logarithmic")
 diff_mat_Q3
+```
+
+### Compare Q2 and Q3
+
+```{r}
+con_trnc_2 <- (mean(control_2)-mean(truncated_2))
+con_trnc_3 <- (mean(control_3)-mean(truncated_3))
+
+con_trnc_2 <- (mean(control_2)-mean(truncated_2))
+con_trnc_3 <- (mean(control_3)-mean(truncated_3))
 ```
 
 ### Shapiro tests
