@@ -831,8 +831,18 @@ This chapter will discuss basic univariate analysis of the survey results, inclu
 
 In terms of testing, Shapiro-Wilk tests will be applied to gauge whether the data sets can be considered normally distributed and thus whether parametric T-Tests are suitable for either one-sample or paired comparisons. Failing he normality condition, a symmetry test will be administered, and providing there is sufficient evidence to say the data is symmetric, a Mann-Whitney-Wilcoxon (MWW) test will be used. If there is insufficient evidence that data proves either symmetric or normally distributed, sign tests will be applied. MWW will also be used for two sample testing where perhaps a sign test would be most appropriate, but cannot be used as the samples are of different sizes.
 
-\subsection{Ninja Warrior Part 1 - Y-axis Scaling}
-As a recap, the first part of the survey consisted of showing the respondents three differently scaled bar plots representing how many times four obstacles were used throughout 10 seasons of the television show American Ninja Warrior. The three presented visualisations all showed the same raw data, but each was produced with a different y-axis scaling, in order to assess whether changing the scale in these ways affects viewer interpretation of interpreting both differences and exact bar heights. 
+The final question in part 1 of the survey, \textit{'In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?'} will not be considered as it is similar to the previous questions, and responses ranged in form, between percentages and decimals, and it can not just be assumed that all the decimals can be converted to percentages; for example a value of 0.5 could be the decimal value for $50\%$, or the respondent could have meant this as $0.5\%$.
+
+In general, truncating the y-axis had less of an effect than anticipated. In question 1, \textit{"Approximately many times would you say the ‘Salmon Ladder’ was used?"}, the overall mean for the truncated plot responses ($\bar{x} = 41.35$) as compared to the mean of the control plot responses ($\bar{x}=41.21$) shows a small difference, with the average perceived value of the bar being slightly higher for the truncated plot. The median for both of these is 41. Performing a dependent-samples sign test comparing these two sets of responses confirms that there is no significant difference ($p = 0.1877$). However, the one sample sign tests show that there is not sufficient evidence to suggest the control plot responses differ from the true value of 41 ($p = 0.1214$), but there is evidence to accept the hypothesis that the truncated plot responses differ from the true value ($p = 0.0026$). Considering now the R and Python subgroups, comparing the two by eye, there appears to be no significant difference in average values for the truncated plot, with means of $\bar{x}=41.57$ and $\bar{x}=41.14$, respectively. A sign test shows sufficient evidence that the R responses differ from the true value ($p = 0.0004$), whereas there is insufficient evidence when applying a MWW test to the Python responses ($p = 0.718).
+
+
+
+
+
+
+
+
+
 
 ```{r}
 control_1 <- ctrl_y_scale$con_1
@@ -852,6 +862,7 @@ logarithmic_1 <- as.numeric(na.exclude(logarithmic_1))
 
 y_scale_1_all <- cbind(control_1, truncated_1, logarithmic_1)
 ```
+
 
 The first question of the survey, \textit{"Approximately many times would you
 say the ‘Salmon Ladder’ was used?"} asked participants to type the how many times Salmon Ladder was used, based on the bar plot. The `correct' answer, or rather the true height of the corresponding bar, was 41. There were three invalid answers in these responses; one for the R versions of '41/42', and two for the Python versions, given as 'Don't know' and 'Next to none.'. These will be considered as 'NA' responses and discounted from the quantitative analysis, however they do provide useful qualitative insights into how the respondents reacted to the plots, particularly as both were entered for the logarithmically scaled plot made in Python. 
@@ -920,7 +931,7 @@ Overall, it appears that the use of the truncated scale had little impact on jud
 
 Now considering the logarithmic-scale plot, The Python default of standard form notation appears to have confused certain respondents, who are perhaps not as used to seeing this notation, and there was a very large range in the responses along with one person not even entering a number, but rather stating that they "Don't know", and another stating they believed the value was "Next to none". The "Next to none" entry is very subjective, but could potentially be be assumed as a value close to 0, once again maybe as a result of standard form being less well known to this respondent.
 
-Finally, comparing the distributions between the three sets of responses, for which we only consider responses for the first shown plots, we see similar distributions to the whole population, showing that the plot order has mininmal impact here. 
+Finally, comparing the distributions between the three sets of responses, for which we only consider responses for the first shown plots, we see similar distributions to the whole population, showing that the plot order has minimal impact here. 
 
 **Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?**
 
@@ -957,7 +968,42 @@ The interquartile range for the control plot is smallest of the three at 1.75, f
 
 Using sign tests, the difference in the control and truncated, and control and logarithmic responses are significant ($p=0.00019$ and $p=2.047e-11$), but this is much more significant for the logarithmic. An MWW test shows that the difference in location for the logarithmic and truncated is also highly significant ($p=6.669e-13$). 
 
-A comparison between languages for each plot type reveals that the language has limited effect on the responses for the control and truncated plots ($ $ and $ $), but the location for the 
+A comparison between languages for each plot type reveals that the language has limited effect on the responses for the control and truncated plots, with MWW showing the difference between the two languages to be insignificant ($p=0.9105$ and $p=0.9105$), in fact the means for the truncated plot are 5.89 and 5.84, respectively for R and Python; very close. There is evidence to show that the difference between the R and Python versions of the logarithmic plot is significant ($p=0.00096$, $\text{mean}_R = 4.263$, $\text{mean}_{Py} = 2.969$). The distributions for the two language subsets are shown below. 
+
+
+```{r echo=F}
+y_scale_2_r <- as.data.frame(y_scale_2_r)
+resp <- c(control_2_r, truncated_2_r, logarithmic_2_r)
+type <- c(rep('Control', 38), rep('Truncated', 38), rep('Logarithmic', 38)) 
+stats_2_r <- data.frame(resp, type)
+
+ggplot(stats_2_r)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected by the R Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+
+
+```{r echo=F}
+y_scale_2_py <- as.data.frame(y_scale_2_py)
+resp <- c(control_2_py, truncated_2_py, logarithmic_2_py)
+type <- c(rep('Control', 32), rep('Truncated', 32), rep('Logarithmic', 32)) 
+stats_2_py <- data.frame(resp, type)
+
+ggplot(stats_2_py)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected by the Python Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+```
+To conclude, it appears again that truncating the bars doesn't have a particularly significant difference, conversely to the hypothesis that it would cause overestimation of differences. The logarithmic scale, however, does result in respondents perceiving the difference between the two bars as smaller than for the control. 
 
 **Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?**
 
@@ -965,44 +1011,27 @@ This is a similar question to the one prior, but the purpose was to see if there
 
 
 ```{r}
-control <- ctrl_y_scale$con_3
-truncated <- trnc_y_scale$trn_3
-logarithmic <- log_y_scale$log_3
-
-y_scale_3_all <- cbind(control, logarithmic, truncated)
-
-ggplot() +
-  geom_density(data = as.data.frame(control), aes(x=control, col = "Control"))+
-  geom_density(data = as.data.frame(logarithmic), aes(x=logarithmic, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(truncated), aes(x=truncated, col = "Truncated"))+
-  labs(x="Response", y="Density")+
-  scale_colour_manual(name = " ", breaks = brks, values = vals)+
-  theme_classic()
-```
-
-The distributions here appear more regular than for the previous question, with the truncated plot appearing almost normal, with the control plot skewed slightly more to the left, and then the logarithmic skewed once again more to the left. The means for these three, in the same order, are 3.771, 3.129 and 2.229, respectively, with medians of 4, 3 and 2. The ranges for these are all similar, with the truncated plot responses sitting in $[2, 7]$, the control responses in $[1, 7]$, and the logarithmic in $[1, 6]$, with variances of 1.309, 1.157 and 1.599. All of this points towards the respondents perceiving the differences in the truncated plot as lower than the control plot, and the logarithmic plot higher. This is again confirmed in the below box plots.
-```{r, echo=F}
 y_scale_3_all <- as.data.frame(y_scale_3_all)
-resp <- c(y_scale_3_all$control, y_scale_3_all$logarithmic, y_scale_3_all$truncated)
+resp <- c(control_3, truncated_3, logarithmic_3)
 type <- c(rep('Control', 70), rep('Truncated', 70), rep('Logarithmic', 70)) 
 stats_3 <- data.frame(resp, type)
 
-ggplot(data = stats_3, aes(x=type, y=resp, fill=type))+
-geom_boxplot(outlier.colour="black", outlier.shape=1,
-             outlier.size=2, notch=F)+
-  theme_classic()+
-  stat_summary(fun=mean, geom="point", shape=15, size=4)+
-  scale_fill_manual(breaks = brks, values = vals)+
-  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
-  ylab("Value")+
-  xlab("Plot Type")
-
+ggplot(stats_3)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the Whole Population")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
+  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
 ```
 
-This is similar to the conclusions from the previous question.
+The distribution of the truncated plot appears almost normal, with the control plot skewed slightly more to the left, and then the logarithmic skewed further to the left than this. The means for these three are 3.129, 3.3.77 and 2.229 with medians of 3, 4 and 2, respectively for the control, truncated and logarithmic. The ranges for these are all similar, with the truncated plot responses sitting in $[2, 7]$, the control responses in $[1, 7]$, and the logarithmic in $[1, 6]$, with variances of 1.309, 1.157 and 1.599. All of this points towards the respondents perceiving the differences in the truncated plot as lower than the control plot and the logarithmic plot higher, confirmed by sign tests for the control and truncated comparison ($p=9.248e-06$) and logarithmic and truncated comparison ($1.17e-10$). MMW is used for the control and logarithmic comparison ($p = 2.633e-06$). This is similar to the conclusions from the previous question, but with the difference in responses from the control to the truncated plot being more significant.
 
-Now consider at the means for both of the two questions regarding bar height difference perception, and compare the mean responses for the logarithmic and truncated plots with to the mean of the control plot responses. This will be in the form of taking the difference between the mean control response and mean of the truncated or logarithmic responses, respectively. This will give an idea of how much of a impact each scaling makes has on perception as compared to the control plot, depending on if the bars are next to each other or further apart. The table below gives these differences, alongside a bar plot giving a visual representation of these.
 
+
+
+Now for the previous two questions, consider the difference in means for 
 ```{r}
 control <- ctrl_y_scale$con_2
 truncated <- trnc_y_scale$trn_2
