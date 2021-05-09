@@ -845,12 +845,22 @@ logarithmic_1[which(logarithmic_1 == "Next to none.")] <- NA
 logarithmic_1[which(logarithmic_1 == "10^15")] <- 1e+15
 logarithmic_1[which(logarithmic_1 == "10^9")] <- 1e+9
 logarithmic_1 <- as.numeric(na.exclude(logarithmic_1))
-
-y_scale_1_all <- cbind(control_1, truncated_1, logarithmic_1)
 ```
 
 ### Whole Population
 ```{r}
+N <- c(length(control_1), length(truncated_1), length(logarithmic_1))
+
+Var <- c(var(control_1), var(truncated_1), var(logarithmic_1, na.rm = T))
+
+sum_ysc1all <- rbind(N, cbind(summary(control_1), summary(truncated_1), summary(logarithmic_1)), Var)
+
+colnames(sum_ysc1all) <- c("Control", "Truncated", "Logarithmic")
+sum_ysc1all
+
+logarithmic_1 <- logarithmic_1[which(logarithmic_1 >= 14.25)]
+logarithmic_1 <- logarithmic_1[which(logarithmic_1 <= 60.75)]
+
 N <- c(length(control_1), length(truncated_1), length(logarithmic_1))
 
 Var <- c(var(control_1), var(truncated_1), var(logarithmic_1))
@@ -870,13 +880,17 @@ control_1_py <- ctrl_y_scale_py$con_1
 truncated_1_r <- as.numeric(trnc_y_scale_r$trn_1)
 truncated_1_py <- as.numeric(trnc_y_scale_py$trn_1)
 
-logarithmic_1_r <- log_y_scale_r$log_1
 logarithmic_1_py <- log_y_scale_py$log_1
 logarithmic_1_py[which(logarithmic_1_py == "Don't know")] <- NA
 logarithmic_1_py[which(logarithmic_1_py == "Next to none.")] <- NA
-logarithmic_1_py[which(logarithmic_1_py == "10^15")] <- 1e+15
-logarithmic_1_py[which(logarithmic_1_py == "10^9")] <- 1e+9
+logarithmic_1_py[which(logarithmic_1_py == "10^15")] <- NA
+logarithmic_1_py[which(logarithmic_1_py == "10^9")] <- NA
 logarithmic_1_py <- as.numeric(na.exclude(logarithmic_1_py))
+logarithmic_1_py <- logarithmic_1_py[which(logarithmic_1_py >= 14.25)]
+logarithmic_1_py <- logarithmic_1[which(logarithmic_1_py <= 60.75)]
+
+logarithmic_1_r <- log_y_scale_r$log_1
+logarithmic_1_r <- as.numeric(na.exclude(logarithmic_1_r))
 ``` 
 
 ### Control - Language comparison
@@ -903,7 +917,6 @@ sum_ysc1lang_trnc
 
 ### Logarithmic - Language comparison
 ```{r}
-
 N <- c(length(logarithmic_1), length(logarithmic_1_r), length(logarithmic_1_py))
 
 Var <- c(var(logarithmic_1), var(logarithmic_1_r), var(logarithmic_1_py))
@@ -911,52 +924,8 @@ Var <- c(var(logarithmic_1), var(logarithmic_1_r), var(logarithmic_1_py))
 sum_ysc1lang_log <- rbind(N, cbind(summary(logarithmic_1), summary(logarithmic_1_r), summary(logarithmic_1_py)), Var)
 colnames(sum_ysc1lang_log) <- c("Whole Pop", "R", "Python")
 sum_ysc1lang_log
-```
 
-### Control - Degree comparison
-```{r}
-control_1_stem <- as.numeric(stem_ctrl$con_1)
-control_1_hum <- as.numeric(hum_ctrl$con_1)
 
-control_1_socsci <- as.numeric(soc_sci_ctrl$con_1)
-control_1_socsci[which(control_1_socsci == "41/42")] <- 41.5
-control_1_socsci <- na.exclude(control_1_socsci)
-
-control_1_arts <- as.numeric(Arts_ctrl$con_1)
-control_1_bus <- as.numeric(Business_ctrl$con_1)
-
-control_1_none <- as.numeric(None_ctrl$con_1)
-
-N <- c(length(control_1_stem), length(control_1_hum), length(control_1_socsci), length(control_1_arts), length(control_1_bus), length(control_1_none))
-
-Var <- c(c(var(control_1_stem), var(control_1_hum), var(control_1_socsci), var(control_1_arts), var(control_1_bus), var(control_1_none)))
-
-sum_ysc1deg_ctrl <- rbind(N, cbind(summary(control_1_stem), summary(control_1_hum), summary(control_1_socsci), summary(control_1_arts), summary(control_1_bus), summary(control_1_none)), Var)
-
-colnames(sum_ysc1deg_ctrl) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
-sum_ysc1deg_ctrl
-```
-
-### Truncated - Degree comparison
-```{r}
-truncated_1_stem <- as.numeric(stem_trnc$trn_1)
-truncated_1_hum <- as.numeric(hum_trnc$trn_1)
-
-truncated_1_socsci <- as.numeric(soc_sci_trnc$trn_1)
-truncated_1_socsci[which(truncated_1_socsci == "41/42")] <- 41.5
-
-truncated_1_arts <- as.numeric(Arts_trnc$trn_1)
-truncated_1_bus <- as.numeric(Business_trnc$trn_1)
-
-truncated_1_none <- None_trnc$trn_1
-
-N <- c(length(truncated_1_stem), length(truncated_1_hum), length(truncated_1_socsci), length(truncated_1_arts), length(truncated_1_bus), length(truncated_1_none))
-
-Var <- c(c(var(truncated_1_stem), var(truncated_1_hum), var(truncated_1_socsci), var(truncated_1_arts), var(truncated_1_bus), var(truncated_1_none)))
-
-sum_ysc1deg_trnc <- rbind(N, cbind(summary(truncated_1_stem), summary(truncated_1_hum), summary(truncated_1_socsci), summary(truncated_1_arts), summary(truncated_1_bus), summary(truncated_1_none)), Var)
-colnames(sum_ysc1deg_trnc) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
-sum_ysc1deg_trnc
 ```
 
 ### Logarithmic - Degree comparison
@@ -1078,8 +1047,8 @@ con_first_1 <- con_first$con_1
 trn_first_1 <- trn_first$trn_1
 log_first_1 <- log_first$log_1
 
-log_first_1[which(log_first_1 == "10^15")] <- 10e+15
-log_first_1 <- as.numeric(log_first_1)
+log_first_1[which(log_first_1 == "10^15")] <- NA
+
 
 N <- c(length(con_first_1), length(trn_first_1), length(log_first_1))
 Var <- c(var(con_first_1), var(trn_first_1), var(log_first_1))
@@ -1087,7 +1056,14 @@ sum_ysc1cfirst <- rbind(N, cbind(summary(con_first_1), summary(trn_first_1), sum
 colnames(sum_ysc1cfirst) <- c("Control", "Truncated", "Logarithmic")
 sum_ysc1cfirst
 
+N <- c(length(logarithmic_1), length(log_first_1))
+Var <- c(var(logarithmic_1), var(log_first_1))
+sum_ysc1cfirst <- rbind(N, cbind(summary(logarithmic_1), summary(log_first_1)), Var)
+colnames(sum_ysc1cfirst) <- c("Log Overall", "Log First")
+sum_ysc1cfirst
+
 wilcox.test(con_first_1, trn_first_1)
+wilcox.test(trn_first_1, truncated_1)
 ```
 
 ## Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?
@@ -1132,23 +1108,7 @@ SIGN.test(control_2, logarithmic_2)
 wilcox.test(logarithmic_2, truncated_2)
 
 SIGN.test(truncated_2, control_2, alternative="g")
-```
-
-### Whole pop bars
-```{r echo=F}
-y_scale_2_all <- as.data.frame(y_scale_2_all)
-resp <- c(control_2, truncated_2, logarithmic_2)
-type <- c(rep('Control', 70), rep('Truncated', 70), rep('Logarithmic', 70)) 
-stats_2 <- data.frame(resp, type)
-
-ggplot(stats_2)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected Over the Whole Population")+
-  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
+SIGN.test(logarithmic_2, control_2, alternative="l")
 ```
 
 ```{r}
@@ -1170,7 +1130,7 @@ N <- c(length(control_2), length(control_2_r), length(control_2_py))
 Var <- c(var(control_2), var(control_2_r), var(control_2_py))
 sum_ysc2lang_ctrl <- rbind(N, cbind(summary(control_2), summary(control_2_r), summary(control_2_py)), Var)
 colnames(sum_ysc1lang_ctrl) <- c("Whole Pop", "R", "Python")
-sum_ysc2lang_ctrl
+sum_ysc1lang_ctrl
 
 wilcox.test(control_2_r, control_2_py)
 ```
@@ -1183,6 +1143,7 @@ sum_ysc2lang_trnc <- rbind(N, cbind(summary(truncated_2), summary(truncated_2_r)
 colnames(sum_ysc2lang_trnc) <- c("Whole Pop", "R", "Python")
 sum_ysc2lang_trnc
 
+wilcox.test(control_2_r, control_2_py)
 wilcox.test(truncated_2_r, truncated_2_py)
 ```
 
@@ -1195,115 +1156,6 @@ colnames(sum_ysc2lang_log) <- c("Whole Pop", "R", "Python")
 sum_ysc2lang_log
 
 wilcox.test(logarithmic_2_r, logarithmic_2_py)
-```
-
-### R bars
-```{r echo=F}
-y_scale_2_r <- as.data.frame(y_scale_2_r)
-resp <- c(control_2_r, truncated_2_r, logarithmic_2_r)
-type <- c(rep('Control', 38), rep('Truncated', 38), rep('Logarithmic', 38)) 
-stats_2_r <- data.frame(resp, type)
-
-ggplot(stats_2_r)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected by the R Subgroup")+
-  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
-
-### Py bars
-```{r echo=F}
-y_scale_2_py <- as.data.frame(y_scale_2_py)
-resp <- c(control_2_py, truncated_2_py, logarithmic_2_py)
-type <- c(rep('Control', 32), rep('Truncated', 32), rep('Logarithmic', 32)) 
-stats_2_py <- data.frame(resp, type)
-
-ggplot(stats_2_py)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected by the Python Subgroup")+
-  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
-
-### Control - Degree comparison
-```{r}
-control_2_stem <- as.numeric(stem_ctrl$con_2)
-control_2_hum <- as.numeric(hum_ctrl$con_2)
-
-control_2_socsci <- as.numeric(soc_sci_ctrl$con_2)
-control_2_socsci[which(control_2_socsci == "41/42")] <- 41.5
-control_2_socsci <- na.exclude(control_2_socsci)
-
-control_2_arts <- as.numeric(Arts_ctrl$con_2)
-control_2_bus <- as.numeric(Business_ctrl$con_2)
-
-control_2_none <- as.numeric(None_ctrl$con_2)
-
-N <- c(length(control_2_stem), length(control_2_hum), length(control_2_socsci), length(control_2_arts), length(control_2_bus), length(control_2_none))
-
-Var <- c(c(var(control_2_stem), var(control_2_hum), var(control_2_socsci), var(control_2_arts), var(control_2_bus), var(control_2_none)))
-
-sum_ysc2deg_ctrl <- rbind(N, cbind(summary(control_2_stem), summary(control_2_hum), summary(control_2_socsci), summary(control_2_arts), summary(control_2_bus), summary(control_2_none)), Var)
-
-colnames(sum_ysc2deg_ctrl) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
-sum_ysc2deg_ctrl
-```
-
-### Truncated - Degree comparison
-```{r}
-truncated_2_stem <- as.numeric(stem_trnc$trn_2)
-truncated_2_hum <- as.numeric(hum_trnc$trn_2)
-
-truncated_2_socsci <- as.numeric(soc_sci_trnc$trn_2)
-truncated_2_socsci[which(truncated_2_socsci == "41/42")] <- 41.5
-
-truncated_2_arts <- as.numeric(Arts_trnc$trn_2)
-truncated_2_bus <- as.numeric(Business_trnc$trn_2)
-
-truncated_2_none <- None_trnc$trn_2
-
-N <- c(length(truncated_2_stem), length(truncated_2_hum), length(truncated_2_socsci), length(truncated_2_arts), length(truncated_2_bus), length(truncated_2_none))
-
-Var <- c(c(var(truncated_2_stem), var(truncated_2_hum), var(truncated_2_socsci), var(truncated_2_arts), var(truncated_2_bus), var(truncated_2_none)))
-
-sum_ysc2deg_trnc <- rbind(N, cbind(summary(truncated_2_stem), summary(truncated_2_hum), summary(truncated_2_socsci), summary(truncated_2_arts), summary(truncated_2_bus), summary(truncated_2_none)), Var)
-colnames(sum_ysc2deg_trnc) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
-sum_ysc2deg_trnc
-```
-
-### Logarithmic - Degree comparison
-```{r}
-logarithmic_2_stem <- stem_log$log_2
-logarithmic_2_stem[which(logarithmic_2_stem == "Don't Know")] <- NA
-logarithmic_2_stem <- c(na.exclude(as.numeric(logarithmic_2_stem)))
-
-logarithmic_2_hum <- as.numeric(hum_log$log_2) 
-
-logarithmic_2_socsci <- soc_sci_log$log_2
-logarithmic_2_socsci[which(logarithmic_2_socsci == "10^15")] <- 1e+15
-logarithmic_2_socsci[which(logarithmic_2_socsci == "10^9")] <- 1e+9
-logarithmic_2_socsci <- c(na.exclude(as.numeric(logarithmic_2_socsci)))
-
-logarithmic_2_arts <- as.numeric(Arts_log$log_2)
-logarithmic_2_bus <- as.numeric(Business_log$log_2)
-
-logarithmic_2_none <- as.numeric(None_log$log_2)
-logarithmic_2_none[which(logarithmic_2_none == "Next to none.")] <- NA
-
-N <- c(length(logarithmic_2_stem), length(logarithmic_2_hum), length(logarithmic_2_socsci), length(logarithmic_2_arts), length(logarithmic_2_bus), length(logarithmic_2_none))
-
-Var <- c(c(var(logarithmic_2_stem), var(logarithmic_2_hum), var(logarithmic_2_socsci), var(logarithmic_2_arts), var(logarithmic_2_bus), var(logarithmic_2_none)))
-
-sum_ysc2deg_log <- rbind(N, cbind(summary(logarithmic_2_stem), summary(logarithmic_2_hum), summary(logarithmic_2_socsci), summary(logarithmic_2_arts), summary(logarithmic_2_bus), summary(logarithmic_2_none)), Var)
-
-colnames(sum_ysc2deg_log) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
-sum_ysc2deg_log
 ```
 
 ### First Plot Comp
@@ -1324,6 +1176,8 @@ sum_ysc2cfirst
 wilcox.test(con_first_2, trn_first_2)
 wilcox.test(con_first_2, log_first_2)
 wilcox.test(log_first_2, trn_first_2)
+
+wilcox.test(trn_first_2, truncated_2)
 ```
 
 ## Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?
@@ -1346,21 +1200,6 @@ colnames(sum_ysc3all) <- c("Control", "Truncated", "Logarithmic")
 sum_ysc3all
 ```
 
-```{r echo=F}
-y_scale_3_all <- as.data.frame(y_scale_3_all)
-resp <- c(control_3, truncated_3, logarithmic_3)
-type <- c(rep('Control', 70), rep('Truncated', 70), rep('Logarithmic', 70)) 
-stats_3 <- data.frame(resp, type)
-
-ggplot(stats_3)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected Over the Whole Population")+
-  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
 
 ### Shapiro tests
 ```{r}
@@ -1379,11 +1218,10 @@ symmetry.test(logarithmic_3)
 ### Pairwise Tests
 ```{r}
 SIGN.test(truncated_3 ,control_3, alternative='g')
-wilcox.test(control_3, logarithmic_3)
+wilcox.test(logarithmic_3, control_3, alternative = 'l')
 SIGN.test(logarithmic_3, truncated_3)
 ```
 
-### R Population
 ```{r}
 control_3_r <- ctrl_y_scale_r$con_3
 truncated_3_r <- trnc_y_scale_r$trn_3
@@ -1398,45 +1236,12 @@ y_scale_3_py <- cbind(control_3_py, truncated_3_py, logarithmic_3_py)
 ```
 
 
-```{r echo=F}
-y_scale_3_r <- as.data.frame(y_scale_3_r)
-resp <- c(control_3_r, truncated_3_r, logarithmic_3_r)
-type <- c(rep('Control', 38), rep('Truncated', 38), rep('Logarithmic', 38)) 
-stats_3_r <- data.frame(resp, type)
-
-ggplot(stats_3_r)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected by the R Subgroup")+
-  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
-
-### Python Population
-```{r echo=F}
-y_scale_3_py <- as.data.frame(y_scale_3_py)
-resp <- c(control_3_py, truncated_3_py, logarithmic_3_py)
-type <- c(rep('Control', 32), rep('Truncated', 32), rep('Logarithmic', 32)) 
-stats_3_py <- data.frame(resp, type)
-
-ggplot(stats_3_py)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected by the Python Subgroup")+
-  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
-
 ### Control - Lang comp
 ```{r}
 N <- c(length(control_3), length(control_3_r), length(control_3_py))
 Var <- c(var(control_3), var(control_3_r), var(control_3_py))
 sum_ysc3lang_ctrl <- rbind(N, cbind(summary(control_3), summary(control_3_r), summary(control_3_py)), Var)
-colnames(sum_ysc1lang_ctrl) <- c("Whole Pop", "R", "Python")
+colnames(sum_ysc3lang_ctrl) <- c("Whole Pop", "R", "Python")
 sum_ysc3lang_ctrl
 
 wilcox.test(control_3_r, control_3_py)
@@ -1462,6 +1267,7 @@ colnames(sum_ysc3lang_log) <- c("Whole Pop", "R", "Python")
 sum_ysc3lang_log
 
 wilcox.test(logarithmic_3_r, logarithmic_3_py)
+wilcox.test(logarithmic_3_r, logarithmic_3_py, alt='g')
 ```
 
 ### First Plot Comp
@@ -1478,6 +1284,9 @@ Var <- c(var(con_first_3), var(trn_first_3), var(log_first_3))
 sum_ysc3cfirst <- rbind(N, cbind(summary(con_first_3), summary(trn_first_3), summary(log_first_3)), Var)
 colnames(sum_ysc3cfirst) <- c("Control", "Truncated", "Logarithmic")
 sum_ysc3cfirst
+
+wilcox.test(trn_first_3, truncated_3)
+wilcox.test(log_first_3, logarithmic_3)
 ```
 
 ## Differences in means for Q2 and Q3
@@ -1756,21 +1565,6 @@ colnames(sum_ratio1all) <- c("Default", "Narrow", "Wide")
 sum_ratio1all
 ```
 
-```{r echo=F}
-ratio_1_all <- as.data.frame(ratio_1_all)
-resp <- c(default_1, narrow_1, wide_1)
-type <- c(rep('Default', 70), rep('Narrow', 70), rep('Wide', 70)) 
-stats_1 <- data.frame(resp, type)
-
-ggplot(stats_1)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected Over the Whole Population")+
-  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
 
 
 ### Shapiro tests
@@ -1835,37 +1629,7 @@ sum_ratio1lang_wid
 ```
 
 
-```{r echo=F}
-ratio_1_r <- as.data.frame(ratio_1_r)
-resp <- c(default_1_r, narrow_1_r, wide_1_r)
-type <- c(rep('Default', 38), rep('Narrow', 38), rep('Wide', 38)) 
-stats_1_r <- data.frame(resp, type)
 
-ggplot(stats_1_r)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected by the R Subgroup")+
-  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
-
-```{r echo=F}
-ratio_1_py <- as.data.frame(ratio_1_py)
-resp <- c(default_1_py, narrow_1_py, wide_1_py)
-type <- c(rep('Default', 32), rep('Narrow', 32), rep('Wide', 32)) 
-stats_1_py <- data.frame(resp, type)
-
-ggplot(stats_1_py)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected by the Python Subgroup")+
-  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
 
 ### Shapiro tests
 ```{r}
@@ -1908,8 +1672,8 @@ def_first_1 <- def_first$def_1
 nar_first_1 <- nar_first$nar_1
 wid_first_1 <- wid_first$wid_1
 
-N <- c(length(wid_first_1), length(nar_first_1), length(wid_first_1))
-Var <- c(var(wid_first_1), var(nar_first_1), var(wid_first_1))
+N <- c(length(def_first_1), length(nar_first_1), length(wid_first_1))
+Var <- c(var(def_first_1), var(nar_first_1), var(wid_first_1))
 sum_ratio1first <- rbind(N, cbind(summary(wid_first_1), summary(nar_first_1), summary(wid_first_1)), Var)
 colnames(sum_ratio1first) <- c("Default", "Narrow", "Wide")
 sum_ratio1first
@@ -1936,21 +1700,6 @@ colnames(sum_ratio2all) <- c("Default", "Narrow", "Wide")
 sum_ratio2all
 ```
 
-```{r echo=F}
-ratio_2_all <- as.data.frame(ratio_2_all)
-resp <- c(default_2, narrow_2, wide_2)
-type <- c(rep('Default', 70), rep('Narrow', 70), rep('Wide', 70)) 
-stats_2 <- data.frame(resp, type)
-
-ggplot(stats_2)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected Over the Whole Population")+
-  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
 
 ### Shapiro tests
 ```{r}
@@ -2001,37 +1750,7 @@ sum_ratio2lang_def
 ```
 
 
-```{r echo=F}
-ratio_2_r <- as.data.frame(ratio_2_r)
-resp <- c(default_2_r, narrow_2_r, wide_2_r)
-type <- c(rep('Default', 38), rep('Narrow', 38), rep('Wide', 38)) 
-stats_2_r <- data.frame(resp, type)
 
-ggplot(stats_2_r)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected by the R Subgroup")+
-  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
-
-```{r echo=F}
-ratio_2_py <- as.data.frame(ratio_2_py)
-resp <- c(default_2_py, narrow_2_py, wide_2_py)
-type <- c(rep('Default', 32), rep('Narrow', 32), rep('Wide', 32)) 
-stats_2_py <- data.frame(resp, type)
-
-ggplot(stats_2_py)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
-  ylab("Number of Respondents")+
-  xlab("Response")+
-  labs(title = "Responses selected by the Python Subgroup")+
-  scale_fill_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
-  scale_y_continuous(breaks = seq(0, 15, 3), labels = seq(0, 15, 3))+
-  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))
-```
 
 ### Shapiro tests
 ```{r}
@@ -2326,81 +2045,6 @@ wilcox.test(default_3_py, wide_3_py)
 ```
 
 
-
-### Default - Degree comparison
-```{r}
-default_3_stem <- as.numeric(stem_ctrl$def_3)
-default_3_hum <- as.numeric(hum_ctrl$def_3)
-
-default_3_socsci <- as.numeric(soc_sci_ctrl$def_3)
-default_3_socsci[which(default_3_socsci == "41/42")] <- 41.5
-default_3_socsci <- na.exclude(default_3_socsci)
-
-default_3_arts <- as.numeric(Arts_ctrl$def_3)
-default_3_bus <- as.numeric(Business_ctrl$def_3)
-
-default_3_none <- as.numeric(None_ctrl$def_3)
-
-N <- c(length(default_3_stem), length(default_3_hum), length(default_3_socsci), length(default_3_arts), length(default_3_bus), length(default_3_none))
-
-Var <- c(c(var(default_3_stem), var(default_3_hum), var(default_3_socsci), var(default_3_arts), var(default_3_bus), var(default_3_none)))
-
-sum_ratio1deg_ctrl <- rbind(N, cbind(summary(default_3_stem), summary(default_3_hum), summary(default_3_socsci), summary(default_3_arts), summary(default_3_bus), summary(default_3_none)), Var)
-
-colnames(sum_ratio1deg_ctrl) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
-sum_ratio1deg_ctrl
-```
-
-### Narrow - Degree comparison
-```{r}
-narrow_3_stem <- as.numeric(stem_nar$nar_3)
-narrow_3_hum <- as.numeric(hum_nar$nar_3)
-
-narrow_3_socsci <- as.numeric(soc_sci_nar$nar_3)
-narrow_3_socsci[which(narrow_3_socsci == "41/42")] <- 41.5
-
-narrow_3_arts <- as.numeric(Arts_nar$nar_3)
-narrow_3_bus <- as.numeric(Business_nar$nar_3)
-
-narrow_3_none <- None_nar$nar_3
-
-N <- c(length(narrow_3_stem), length(narrow_3_hum), length(narrow_3_socsci), length(narrow_3_arts), length(narrow_3_bus), length(narrow_3_none))
-
-Var <- c(c(var(narrow_3_stem), var(narrow_3_hum), var(narrow_3_socsci), var(narrow_3_arts), var(narrow_3_bus), var(narrow_3_none)))
-
-sum_ratio1deg_nar <- rbind(N, cbind(summary(narrow_3_stem), summary(narrow_3_hum), summary(narrow_3_socsci), summary(narrow_3_arts), summary(narrow_3_bus), summary(narrow_3_none)), Var)
-colnames(sum_ratio1deg_nar) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
-sum_ratio1deg_nar
-```
-
-### Wide - Degree comparison
-```{r}
-wide_3_stem <- stem_log$log_3
-wide_3_stem[which(wide_3_stem == "Don't Know")] <- NA
-wide_3_stem <- c(na.exclude(as.numeric(wide_3_stem)))
-
-wide_3_hum <- as.numeric(hum_log$log_3) 
-
-wide_3_socsci <- soc_sci_log$log_3
-wide_3_socsci[which(wide_3_socsci == "10^15")] <- 1e+15
-wide_3_socsci[which(wide_3_socsci == "10^9")] <- 1e+9
-wide_3_socsci <- c(na.exclude(as.numeric(wide_3_socsci)))
-
-wide_3_arts <- as.numeric(Arts_log$log_3)
-wide_3_bus <- as.numeric(Business_log$log_3)
-
-wide_3_none <- as.numeric(None_log$log_3)
-wide_3_none[which(wide_3_none == "Next to none.")] <- NA
-
-N <- c(length(wide_3_stem), length(wide_3_hum), length(wide_3_socsci), length(wide_3_arts), length(wide_3_bus), length(wide_3_none))
-
-Var <- c(c(var(wide_3_stem), var(wide_3_hum), var(wide_3_socsci), var(wide_3_arts), var(wide_3_bus), var(wide_3_none)))
-
-sum_ratio3deg_log <- rbind(N, cbind(summary(wide_3_stem), summary(wide_3_hum), summary(wide_3_socsci), summary(wide_3_arts), summary(wide_3_bus), summary(wide_3_none)), Var)
-
-colnames(sum_ratio3deg_log) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
-sum_ratio3deg_log
-```
 
 ```{r}
 def_first_3 <- def_first$def_3
