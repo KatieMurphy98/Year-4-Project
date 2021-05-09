@@ -4,7 +4,6 @@ output:
     extra_dependencies: ["float"]
 fontsize: 11pt
 geometry: margin=1in
-documentclass: book
 header-includes:
   \setlength{\parskip}{1em}
   \linespread {1.25}
@@ -896,7 +895,7 @@ ggplot(stats_2)+
 
 The spread for the truncated and control plot responses are slightly skewed to the right, depicting that the subjective view on the difference between the bar heights was that it was in general on the larger side. Looking at the bar heights, for the responses of 4 and 5 the control plot bars are higher, and vice versa for the truncated plot response bars. This again emphasises the evidence to support the hypothesis that truncation leads to larger perceived difference.
 
-Question 3 of part 1, \textit{'Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?'}, asks a similar question to question 2, but asks respondents to judge the difference for bars on opposite ends of the plot as opposed to next to each. Again, the by eye comparison shows not a massive difference between distributions of responses for the control ($\bar{x}=3.12$, $\tilde{x}=3$) and truncated ($\bar{x}=3.12$, $\tilde{x}=3$) plots, although the sign test shows that the there is evidence to suggest that the truncated plot responses are in fact on average greater than for the control plot ($p=4.624e-06$). The bar plot below shows the distribution of responses.
+Question 3 of part 1, \textit{'Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?'}, asks a similar question to question 2, but asks respondents to judge the difference for bars on opposite ends of the plot as opposed to next to each. Again, the by eye comparison shows not a massive difference between distributions of responses for the control ($\bar{x}=3.12$, $\tilde{x}=3$) and truncated ($\bar{x}=3.12$, $\tilde{x}=3$) plots, although the sign test shows that the there is evidence to suggest that the truncated plot responses are in fact on average greater than for the control plot ($p=4.624e-06$). figure[?] shows the distribution of responses.
 
 ```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3"}
 control_3 <- ctrl_y_scale$con_3
@@ -918,7 +917,7 @@ The response distributions, conversely to question 2, now seem skewed more to th
 
 Overall, it seems that the use of truncation has a small but statistically significant effect on perception of height difference between bars, with respondents tending to judge the difference as slightly larger than for the control plot, although this effect is smaller than initially anticipated, and larger for bars that are further apart. In terms of reading values from bars, the truncation did not have a statistically significant effect when comparing the two distributions, however in one sample testing the truncated plot responses did differ significantly from the true value.
 
-When considering the language subgroups, note that there is a discrepancy here between languages in terms of the axis tick breaks and labeling, with the R plot being incremented in steps of 10 for both the control and truncated plots and the Python being more granular in steps of 5 for the control and steps of 2.5 for the truncated, although here this doesn't appear to have had too much of an impact since, as discussed before, the distributions are fairly similar by eye despite the significant result of testing, shown in the bar plots below.
+When considering the language subgroups, note that there is a discrepancy here between languages in terms of the axis tick breaks and labeling, with the R plot being incremented in steps of 10 for both the control and truncated plots and the Python being more granular in steps of 5 for the control and steps of 2.5 for the truncated, although here this doesn't appear to have had too much of an impact since, as discussed before, the distributions are fairly similar by eye despite the significant result of testing, shown in figure[?].
 
 ```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 2, for the R and Python subgroups"}
 control_2_r <- ctrl_y_scale_r$con_2
@@ -958,13 +957,50 @@ plot_grid(p, q)
 
 Comparing the two language subgroups, the distributions for both the R ($\bar{x} = 41.56$, $\tilde{x} = 41$) and Python ($\bar{x} = 41.01$, $\tilde{x} = 41$) responses to question 1 appear similar to those of both each other and the whole population. Comparisons via MWW testing show that the responses related to the control plot differ statistically significantly between the two language cohorts ($p=0.00012$), and similar for the truncated plot responses ($p=0.02163$). 
 
-comparing the two by eye there appears to be no significant difference in average values for the truncated plot, with means of $\bar{x}=41.57$ and $\bar{x}=41.14$, respectively and medians of $41$ and $41.25$. A sign test shows sufficient evidence that the R subgroup responses relating to the truncated plot differ from the true value ($p = 0.0004$), whereas there is insufficient evidence when applying a MWW test to the Python responses ($p = 0.718$). Similarly, the R subgroup's responses in relation to the control plot statistically significantly differ from the true value ($7.629e-05$), but the Python subgroup's do not ($p=0.1185$). This be a result of the less granulated R plot scaling.
+comparing the two by eye there appears to be no significant difference in average values for the truncated plot, with means of $\bar{x}=41.57$ and $\bar{x}=41.14$, respectively and medians of $41$ and $41.25$. A sign test shows sufficient evidence that the R subgroup responses relating to the truncated plot differ from the true value ($p = 0.0004$), whereas there is insufficient evidence when applying a MWW test to the Python responses ($p = 0.718$). Similarly, the R subgroup's responses in relation to the control plot statistically significantly differ from the true value ($p=7.629e-05$), but the Python subgroup's do not ($p=0.1185$). This be a result of the less granulated R plot scaling.
 
-For question 2 it is similarly seen that the language used does not have a statistically significant impact on the response, with means $5.500$ and $5.187$, and medians $6$ and $5$ respectively for R and Python for the control plot, and means $5.98$ and $5.84$ both with median $6$ for the truncated. Comparative testing with MWW gives $p=0.2199$ for the control plot and $0.9105$ for the truncated. Thus, the scale granulation or any other differing aspect of the plots does not have a significant effect.
+For question 2 it is similarly seen that the language used does not have a statistically significant impact on the response for the truncated plot, with means $5.500$ and $5.187$, and medians $6$ and $5$ respectively for R and Python for the control plot, and means $5.98$ and $5.84$ both with median $6$ for the truncated. Comparative testing with MWW gives $p=0.2199$ for the control plot and $0.9105$ for the truncated. Thus, the scale granulation or any other differing aspect of the plots does not have a significant effect. For question 3 (see figure [?]), it is again seen that the responses in relation to the R version of truncated plot ($\bar{x} = 3.76$, $\tilde{x} = 4$) do not differ significantly to those related to the Python version ($\bar{x} = 3.78$, $\tilde{x} = 4$), with a two sample MWW p-value of 0.9708. Similarly the control plot, there is little difference between the R ($\bar{x} = 3.342$, $\tilde{x} = 3$) and the Python ($\bar{x} = 2.87$, $\tilde{x} = 3$) versions of the plot, again with am MWW p-value 0f 0.1465.
+
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3, for the R and Python subgroups"}
+control_3_r <- ctrl_y_scale_r$con_3
+truncated_3_r <- trnc_y_scale_r$trn_3
+resp <- c(control_3_r, truncated_3_r)
+type <- c(rep('Control', 38), rep('Truncated', 38)) 
+stats_3_r <- data.frame(resp, type)
+
+control_3_py <- ctrl_y_scale_py$con_3
+truncated_3_py <- trnc_y_scale_py$trn_3
+resp <- c(control_3_py, truncated_3_py)
+type <- c(rep('Control', 32), rep('Truncated', 32)) 
+stats_3_py <- data.frame(resp, type)
+
+p <- ggplot(stats_3_r)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "R Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Truncated'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme(plot.title = element_text(size=10))+
+  theme_classic()
+
+q <- ggplot(stats_3_py)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Python Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Truncated'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme(plot.title = element_text(size=10))+
+  theme_classic()
+
+plot_grid(p, q)
+```
+Figure[?] shows both distributions looking very similar.
 
 Now considering subsetting for the respondents that saw the truncated plot first out of the three. Note that 25 saw the control plot first and 23 saw the truncated plot first.
 
-The distribution of responses for the truncated plot here shows a slightly higher mean ($41.696$) and median ($41.25$) than for the whole population, but a MWW test shows that the difference is not significant ($p=0.1379$). Similarly for questions 2 and 3, performing tests on the truncated plot for respondents who saw this first as compared to the truncated plot responses for the whole population result in p-values of $0.2614$ and $0.3145$, providing evidence that the plot order doesn't have much of an impact on perception for the truncated plot.
+The distribution of responses for the truncated plot in question 1 shows a slightly higher mean ($41.696$) and median ($41.25$) than for the whole population, but a MWW test shows that the difference is not significant ($p=0.1379$). Similarly for questions 2 and 3, performing tests on the truncated plot for respondents who saw this first as compared to the truncated plot responses for the whole population result in p-values of $0.2614$ and $0.3145$, providing evidence that the plot order doesn't have much of an impact on perception for the truncated plot.
 
 The conclusions appear to be consistent with results from the @YANG2021 paper, in which the researchers, similar to this survey, showed participants a series of control bar plots alongside those with a truncated axis, and concluded that the difference in values for the truncated axis were perceived to be larger than those of the control plots.
 
@@ -1007,7 +1043,7 @@ The variance in the responses for the logarithmic plot is also high, with value 
 The distribution of responses in the R subgroup also shows on average a slight underestimation ($\bar{x}= 39.73$, $\tilde{x} = 35$) and, as expected, vast overestimation for the Python version ($\bar{x}= 39.73$, $\tilde{x} = 35$). This shows that, with a linearly notated logarithmic scale, the scale may cause underestimation, but this is counteracted by using a standard form notation. 
 
 
-It can be considered to follow the convention of values that have value outside the range $[Q1 - 1.5 \times IQR, Q3 + 1.5 \times IQR]$, where $Q1$ and $Q3$ are the first and third quartiles, which here would be the range $[14.25, 60.75]$ and results in a sample size of 59. Consider now the response distribution for the logarithmically-scaled plot, after removing these responses, for which the density plot is displayed below. Both plots show the response distribution of the outlier-removed set of responses, with the providing a comparison with the distribution of responses relating to the control plot.
+It can be considered to follow the convention of values that have value outside the range $[Q1 - 1.5 \times IQR, Q3 + 1.5 \times IQR]$, where $Q1$ and $Q3$ are the first and third quartiles, which here would be the range $[14.25, 60.75]$ and results in a sample size of 59. Consider now the response distribution for the logarithmically-scaled plot, after removing these responses, for which figure[?] gives the density plot. Both plots show the response distribution of the outlier-removed set of responses, with the providing a comparison with the distribution of responses relating to the control plot.
 ```{r, fig.cap = "Density plot showing distributions of responses regarding the control and logarithmic scaled plot, after removing values of greater or equal to 1000"}
 brks <- c("Control", "Logarithmic")
 vals <- c("#1c9e77",  "#7570b3")
@@ -1031,9 +1067,9 @@ plot_grid(p, q)
 
 ```
 
-The Python default of standard form notation appears to have confused certain respondents, who are perhaps not as used to seeing this notation, and there was a very large range in the responses along with one person not even entering a number, but rather stating that they "Don't know", and another stating they believed the value was "Next to none". The "Next to none" entry is very subjective, but could potentially be be assumed as a value close to 0, once again maybe as a result of standard form being less well known to this respondent.
+The Python default of standard form notation appears to have confused certain respondents, who are perhaps not as used to seeing this notation, and there was a large range in the responses along with one person not even entering a number, but rather stating that they "Don't know", and another stating they believed the value was "Next to none". The "Next to none" entry is subjective, but could potentially be be assumed as a value close to 0, once again maybe as a result of standard form being less well known to this respondent.
 
-The distribution of responses for question 2 is displayed below.
+The distribution of responses for question 2 is displayed in figure[?].
 
 ```{r fig.cap = "Bar plot showing distributions of responses regarding the control and logarithmic plots for question 2"}
 
@@ -1061,7 +1097,7 @@ ggplot(stats_2)+
 ```
 The spread of logarithmic plot values is fairly wide, with at least one response for each option, and the control is the same as stated before. The plot depicts how there is a wider spread of values, with some respondents having very different subjective views of the size of the difference to others. On average, the subjective perceived difference in bar heights was significantly lower for the logarithmic plot responses ($\bar{x}=3.67$, $\tilde{x}=3.5$) than for the control ($\bar{x}=3.35$, $\tilde{x}=5$). This is evidenced by a one-sided sign test with the alternative hypothesis that the logarithmic plot responses are on average lower than the control plot responses.
 
-There is evidence to show that the difference between the R and Python versions of the logarithmic plot is significant ($p=0.00096$, $\bar{x}_R = 4.263$, $\bar{x}_{Py} = 2.969$). The distributions for the two language subsets are shown below. 
+There is evidence to show that the difference between the R and Python versions of the logarithmic plot is significant ($p=0.00096$, $\bar{x}_R = 4.263$, $\bar{x}_{Py} = 2.969$). The distributions for the two language subsets are shown in figure[?]. 
 
 ```{r}
 brks <- c("Control", "Logarithmic")
@@ -1076,7 +1112,7 @@ resp <- c(control_2, logarithmic_2)
 type <- c(rep('Control', 38), rep('Logarithmic', 38)) 
 stats_2 <- data.frame(resp, type)
 
-ggplot(stats_2)+
+p <- ggplot(stats_2)+
   geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
   ylab("Number of Respondents")+
   xlab("Response")+
@@ -1084,12 +1120,6 @@ ggplot(stats_2)+
   scale_fill_manual(values=vals, breaks = c('Control', 'Logarithmic'))+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
   theme_classic()
-
-```
-
-```{r}
-brks <- c("Control", "Logarithmic")
-vals <- c("#1c9e77",  "#7570b3")
 
 control_2 <- ctrl_y_scale_py$con_2
 logarithmic_2 <- log_y_scale_py$log_2
@@ -1100,7 +1130,7 @@ resp <- c(control_2, logarithmic_2)
 type <- c(rep('Control', 32), rep('Logarithmic', 32)) 
 stats_2 <- data.frame(resp, type)
 
-ggplot(stats_2)+
+q <- ggplot(stats_2)+
   geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
   ylab("Number of Respondents")+
   xlab("Response")+
@@ -1109,9 +1139,11 @@ ggplot(stats_2)+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
   theme_classic()
 
+plot_grid(p, q)
 ```
 
-In regard to question 3, see again below for the plotted distributions.
+
+In regard to question 3, see again figure[?] for the plotted distributions.
 
 ```{r}
 brks <- c("Control", "Logarithmic")
@@ -1138,8 +1170,8 @@ ggplot(stats_2)+
 ```
 The responses for the logarithmically scaled plot are skewed towards the lower end of the scale, similar to the control and truncated responses, and there does not appear to be much difference between distributions of the two populations. Looking at the numbers, however, the averages for the logarithmic plot ($\bar{x}=2.22$, $\tilde{x}=2$) seem lower than that of the control plot ($\bar{x}=3.77$, $\tilde{x}=4$). Indeed, a one sided MWW test comparing the logarithmic and control plot responses elicits a p-value of $1.317e-06$, showing evidence that the logarithmic scale resulted in lower rating in difference of bar height.
 
+Figure [?] shows the distributions for R and Python subgroups.
 
-The plots below show the distributions for R and Python subgroups.
 ```{r}
 brks <- c("Control", "Logarithmic")
 vals <- c("#1c9e77",  "#7570b3")
@@ -1180,16 +1212,14 @@ q <- ggplot(stats_3_py)+
 
 plot_grid(p, q)
 ```
-The distributions of the logarithmic plot responses for the R ($\bar{x}=2.5$, $\tilde{x}=2$) and Python ($\bar{x}=1.9$, $\tilde{x}=2$) subgroups appear fairly similar, with the same median albeit with the mean for the R subgroup being slightly higher. The plots to appear to show the R subgroup responses being slightly positively skewed and the Python responses more centered around 3. A one sided MWW test provides sufficient evidence that the R responses appear in average greater than the Python ($p=0.03689$)
 
+The distributions of the logarithmic plot responses for the R ($\bar{x}=2.5$, $\tilde{x}=2$) and Python ($\bar{x}=1.9$, $\tilde{x}=2$) subgroups appear fairly similar, with the same median albeit with the mean for the R subgroup being slightly higher. The plots to appear to show the R subgroup responses being slightly positively skewed and the Python responses more centered around 3. A two sample, one sided MWW test provides sufficient evidence that the R responses appear in average greater than the Python ($p=0.03689$).
 
-
-
-
+Looking at the responses from the respondents who saw the logarithmic plot first of the three, the average responses from this group for question 1 ($\bar{x}=40$, $\tilde{x}=40$) were closer to the true value of 41 than for the whole population ($\bar{x}=36.277$, $\tilde{x}=35$), although the former still differs significantly from the true value ($p=6.104e-05$), and there is not significant evidence to state that the two distributions differ ($p=0.1705$). Comparing the response statistics for the whole population and for those who saw the logarithmic plot first, the log first group perhaps show the bar height difference being perceived slightly higher than for the whole population ($\bar{x}_{overall}=3.67$, $\bar{x}_{logfirst} = 4.13$), however a two-sample MWW test gives an insignificant p-value of 0.2614 when comparing them. Similarly, the difference between the responses for the whole population and for those who saw the logarithmic plot first for question 3 is also statistically insignificant, with means of 3.08 and 2.68 for and a p-value of 0.1889.
 
 
 \subsection{Differences Between Question 2 and 3 Responses}
-Now take the $\bar{x}_{control} - \bar{x}_{truncated}$ for each of questions 2 and 3, which is shown in the table below. 
+Now take $\bar{x}_{control} - \bar{x}_{truncated}$ and $\bar{x}_{control} - \bar{x}_{logarithmic}$ for each of questions 2 and 3, which is shown in figure[?]. 
 ```{r}
 control <- ctrl_y_scale$con_2
 truncated <- trnc_y_scale$trn_2
@@ -1228,7 +1258,7 @@ rownames(diff_mat) <- c("Q2", "Q3")
 kable(diff_mat, caption = "Table showing difference in the percieved difference for the logarithmic-scaled and truncated plots as compared to the control, for questions 2 and 3") %>%
   kable_styling(latex_options = "hold_position")
 ```
-This again shows that the responses for the truncated plot were in general rated higher than the control plot responses, and also that the effect was more significant for the bars on opposite ends of the plot as compared to the bars next to each other. The opposite is true for the logarithmic plot responses; on average they were rated lower than the control plot, but this was greatly more significant for the bars bext to each other, as opposed to the truncated plot. This is visualised below.
+This again shows that the responses for the truncated plot were in general rated higher than the control plot responses, and also that the effect was more significant for the bars on opposite ends of the plot as compared to the bars next to each other. The opposite is true for the logarithmic plot responses; on average they were rated lower than the control plot, but this was greatly more significant for the bars next to each other, as opposed to the truncated plot. Figure[?] shows this visually.
 
 
 ```{r fig.cap= "Bar plot giving a visual representation of the table"}
@@ -1251,10 +1281,9 @@ On average, truncating the scale had a similar effect for both questions, albeit
 
 \subsection{Ninja Warrior - Part 2}
 
+This part of the survey assessed whether different aspect ratios would have an impact on perception of bar height differences as well as reading of true values. This part will be analysed question by question.
 
-**How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?**
-
-This question once again uses the 7-point scale to gain a subjective view on the degree to which respondents felt the heights between the two bars corresponding to 'Jumping Spider' and 'Salmon Ladder' differed for three bar plots of 7 obstacles, where 'Salmon Ladder' is furthest to the left, and 'Jumping Spider' furthest to the right.
+Question 1 asked \textit{'How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?'}. This question once again uses the 7-point scale to gain a subjective view on the degree to which respondents felt the heights between the two bars corresponding to 'Jumping Spider' and 'Salmon Ladder' differed for three bar plots of 7 obstacles, where 'Salmon Ladder' is furthest to the left, and 'Jumping Spider' furthest to the right.
 
 ```{r}
 default <- def_ratio$def_1
@@ -1264,7 +1293,6 @@ ratio_1_all <- cbind(default, wider, narrower)
 ```
 Looking at the means and medians here, it doesn't seem like there is that much of a difference in perception of the differences between the three aspect ratios. With means of 5.914, 5.357 and 6.129 for the default narrower and wider plots respectively, where 'narrower' is defined as the plot with the aspect ratio of smaller width to greater height, and vice versa for the 'wider' plot, and all have a median of 6. The means show marginal differences, whereby the default plot mean is in the middle-valued mean, with the mean perceived difference for the wider plot being slightly smaller than this and the mean perceived difference for the narrower plot is slightly larger. This result, although marginal, follows the hypothesis that the wider plot would cause differences to be perceived as smaller and narrower bars to cause differences to be perceived to be greater.
 
-To discuss the ranges, see the box plot below. 
 
 ```{r, echo=F}
 
@@ -1287,7 +1315,7 @@ ggplot(data = stats, aes(x=type, y=resp, fill=type))+
   xlab("Plot Type")
 
 ```
-From these box plots, it appears that the IQRs for the two plots with altered aspect ratios have very little, if any, overlap, despite the means being similar and medians being identical. The narrower plot shows a tendency for the responses to lie more towards the upper end of the scale than the wider plot, which also ranges over the upper half of the scale but between roughly 5 and 6 rather than 6 and 7. The default plot covers the entire IQR of both of the other plots, and the box plots then show that, even though the means and medians are very similar, the center bulk of the values for the narrower plot tended to be more towards the upper end of the default's IQR, whereas the central points of the wider plot sat on the lower half of this IQR. Additionally, we see that there are two outliers each for the narrower and wider plots, with values 2, 3 and 4. Perhaps excluding these from the data and re-analysing the summary statistics we will see a more marked difference.
+From these box plots, it appears that the IQRs for the two plots with altered aspect ratios have very little, if any, overlap, despite the means being similar and medians being identical. The narrower plot shows a tendency for the responses to lie more towards the upper end of the scale than the wider plot, which also ranges over the upper half of the scale but between roughly 5 and 6 rather than 6 and 7. The default plot covers the entire IQR of both of the other plots, and the box plots then show that, even though the means and medians are very similar, the center bulk of the values for the narrower plot tended to be more towards the upper end of the default's IQR, whereas the central points of the wider plot sat on the lower half of this IQR. Additionally, there are two outliers each for the narrower and wider plots, with values 2, 3 and 4. Perhaps excluding these from the data and re-analysing the summary statistics will produce a more marked difference.
 
 
 
@@ -1303,7 +1331,7 @@ wider <- wider[which(wider != 3)]
 ratio_1_all <- cbind(default, wider, narrower)
 ```
 
-After performing the univariate analysis excluding these values, the means and medians didn't change that much, with the medians still at 6 for all the plots, and the mean response for the wider plot increasing from 5.357 to 5.543, and the mean response for the narrower plot from 6.129 to 6.257. Although as expected, the ranges and variances are lower, meaning the spread over values over the range is smaller, however this only furthers the point that altering the axis ratio appears to have minimal effect.This is again confirmed by looking at the distributions of the three plot types, which are very similar to one another. We can however see that the plot with the density for the wider plot is highest of the three for the values of 4 and 5, but is the lowest of the three for upper end of the distributions, and vice versa for the densities narrower plot. The default mostly stays in between the other two curves. For a third time, this gives way to the observation that the wider bars have a small lessening effect on gauging differences in height, and using narrower bars has a mild increasing effect on difference perception.
+After performing the univariate analysis excluding these values, the means and medians didn't change that much, with the medians still at 6 for all the plots, and the mean response for the wider plot increasing from 5.357 to 5.543, and the mean response for the narrower plot from 6.129 to 6.257. Although as expected, the ranges and variances are lower, meaning the spread over values over the range is smaller, however this only furthers the point that altering the axis ratio appears to have minimal effect.This is again confirmed by looking at the distributions of the three plot types, which are very similar to one another. It can however be seen that the plot with the density for the wider plot is highest of the three for the values of 4 and 5, but is the lowest of the three for upper end of the distributions, and vice versa for the densities narrower plot. The default mostly stays in between the other two curves. For a third time, this gives way to the observation that the wider bars have a small lessening effect on gauging differences in height, and using narrower bars has a mild increasing effect on difference perception.
 
 ```{r}
 
@@ -1318,9 +1346,7 @@ ggplot() +
 ```
 
 
-**How large would you say the difference between 'Log Grip' and 'Floating Steps' is?**
-
-Similar to part 1, we have two questions for gauging differences between bars, for which one asks about bars far away from each other, and one about bars next to each other. In the case of this section, the first question contained bars on opposite ends of the x-axis, and this question asks about two bars that sit adjacent to one another. 
+Question 2 then went on to ask \textit{'How large would you say the difference between 'Log Grip' and 'Floating Steps' is?'}. Similar to part 1, there are two questions for gauging differences between bars, for which one asks about bars far away from each other, and one about bars next to each other. In the case of this section, the first question contained bars on opposite ends of the x-axis, and this question asks about two bars that sit adjacent to one another. 
 
 
 ```{r}
@@ -1330,7 +1356,7 @@ wider <- wid_ratio$wid_2
 
 ratio_2_all <- cbind(default, wider, narrower)
 ```
-The analysis results here show that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wider plots being identical at 3.057, with the mean of the narrower plot responses only 0.157 greater at3.214. The median for all three is 3, and the IQRs are all $[2, 7]$. The variances, however, do differ from one another, with values 1.301, 0.866 and 1.214 for the default, wider and narrower bars, respectively. The distribution of values are shown in the below box plots.
+The analysis results here show that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wider plots being identical at 3.057, with the mean of the narrower plot responses only 0.157 greater at3.214. The median for all three is 3, and the IQRs are all $[2, 7]$. The variances, however, do differ from one another, with values 1.301, 0.866 and 1.214 for the default, wider and narrower bars, respectively. The distribution of values are shown in figure[?].
 
 ```{r, echo=F}
 
@@ -1353,7 +1379,7 @@ ggplot(data = stats, aes(x=type, y=resp, fill=type))+
   xlab("Plot Type")
 
 ```
-We see that at least $50/%$ of respondents placed the difference in the range $[2, 4]$ for all three plots, showing that they believed the difference was small to moderate, and this didn't change depending on the plot type, and thus for the bars further apart from each other, changing the aspect ratio does not appear to make much of a difference. The overall distributions are shown in the below density plots   
+At least $50/%$ of respondents placed the difference in the range $[2, 4]$ for all three plots, showing that they believed the difference was small to moderate, and this didn't change depending on the plot type, and thus for the bars further apart from each other, changing the aspect ratio does not appear to make much of a difference. The overall distributions are shown in the figure[?]
 
 
 ```{r}
@@ -1369,9 +1395,9 @@ ggplot() +
 
 ```
 
-We see all three distributions are very similar, and almost appear to form bell curve shaped distributions, albeit with some irregularities and very slight negative skew.
+All three distributions are very similar, and almost appear to form bell curve shaped distributions, albeit with some irregularities and very slight negative skew.
 
-Once again, we can analyse the distance from the perceived bar height difference for the default aspect ratio to those of the wider and narrower ratios, for each of the two height difference questions
+As in part 1, the two height difference perception questions will be compared, calculating 
 
 ```{r}
 default <- def_ratio$def_1
@@ -1426,7 +1452,7 @@ ggplot()+
 
 **How many times would you say 'Floating Steps' were used?**
 
-This is again similar to question 1 of part 1, where participants were asked to state what they believed to be the height of the bar for 'Salmon Ladder', however this time we choose the third bar from the axis. This is to ascertain whether the distance of the bar from the axis may have an effect alongside any potential perceived distortion of values. Note that the true value was 28.
+This is again similar to question 1 of part 1, where participants were asked to state what they believed to be the height of the bar for 'Salmon Ladder', however this time the third bar from the axis is chosen. This is to ascertain whether the distance of the bar from the axis may have an effect alongside any potential perceived distortion of values. Note that the true value was 28.
 
 ```{r}
 default <- def_ratio$def_3
@@ -1457,7 +1483,7 @@ ggplot(data = stats, aes(x=type, y=resp, fill=type))+
 
 ```
 
-Looking at the box plots, we see very small ranges in the values, signifying that there was a large consensus between respondents in terms of what they perceived the height to be. It can also be seen that there are three outliers below the box plot for the narrower plot responses, and two above for the default plot responses. There is very little overlap between the boxes, and it appears again that there altering the aspect ratio of the bar plot has little to no impact on reading the height of the bar. Additionally, there was less agreement between respondents for the wider plot than for the other two, although this doesn't seem to be too significant.  
+Looking at the box plots, there are very small ranges in the values, signifying that there was a large consensus between respondents in terms of what they perceived the height to be. It can also be seen that there are three outliers below the box plot for the narrower plot responses, and two above for the default plot responses. There is very little overlap between the boxes, and it appears again that there altering the aspect ratio of the bar plot has little to no impact on reading the height of the bar. Additionally, there was less agreement between respondents for the wider plot than for the other two, although this doesn't seem to be too significant.  
 
 
 ```{r}
@@ -1470,7 +1496,7 @@ ggplot() +
   scale_colour_manual(name = " ", breaks = brks, values = vals)+
   theme_classic()
 ```
-The distributions for the default and narrower plot responses are very similar, both seeming to be fairly centred on the mean with a steep decrease in density on either side of the mean to very shallow tails within the range $[25, 30]$. The responses for the wider plot appear to be more spread with lower density function values, with a slight negative skew.
+The distributions for the default and narrower plot responses are similar, both seeming to be fairly centred on the mean with a steep decrease in density on either side of the mean to shallow tails within the range $[25, 30]$. The responses for the wider plot appear to be more spread with lower density function values, with a slight negative skew.
 
 ```{r}
 default <- default[-which(default >= 30)]
@@ -1482,7 +1508,7 @@ After removing the outliers the medians have stayed the same, and the mean has o
 
 **Comparisons**
 
-The last set of questions in part 2 show respondents all three of the bar plots presented in this section and ask them to select which they find most aesthetically pleasing, and which they find easiest and hardest to interpret. Below a table is laid out giving the number of respondents that selected each plot for each of the three questions.
+The last set of questions in part 2 show respondents all three of the bar plots presented in this section and ask them to select which they find most aesthetically pleasing, and which they find easiest and hardest to interpret. Table[?] gives the number of respondents that selected each plot for each of the three questions.
 
 ```{r echo=F}
 comp_1 <- comp_ratio_all$all_1
@@ -1491,23 +1517,23 @@ comp_2 <- comp_ratio_all$all_2
 comp_3 <- comp_ratio_all$all_3
 tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
 rownames(tab) <- c("Most aesthetically pleasing?", "Easiest to read and interpret?", "Hardest to read and interpret?")
-kable(tab)
+kable(tab) %>%
+  kable_styling(latex_options = "hold_position")
 ```
 
 For the first question, relating to how aesthetically pleasing respondents found each plot, just over half of the respondents chose the default aspect ratio as the most aesthetically pleasing, with 37 out of the 69 who responded selecting this. 
 
-Similarly, 37 out of the 70 that responded to the second question found the plot with the default aspect ratio easiest to read and interpret. Perhaps the people that preferred this aspect ratio aesthetically did so because they found it easiest to interpret. Investigating this, we find that 27 who chose the default for question 1 also chose this for question 2.
+Similarly, 37 out of the 70 that responded to the second question found the plot with the default aspect ratio easiest to read and interpret. Perhaps the people that preferred this aspect ratio aesthetically did so because they found it easiest to interpret. Investigating this, 27 respondents who chose the default for question 1 also chose this for question 2.
 
-The plot judged hardest to read and interpret by the most respondents was the one with the wider bars, with 30 selecting this and 20 selecting each of the other two. While a significant number chose the default and narrower bars, the slightly higher amount selecting the plot with wider bars matches the previously stated hypothesis formulated from following the Stephen Few paper, which discusses that an ratio of greater width to length could suffer from perceptual imbalance. While we don't see this imbalance in the numbers from the previous questions, the result here does give some indication that the aspect ratio producing wider bars may impact on ease of interpretation.
+The plot judged hardest to read and interpret by the most respondents was the one with the wider bars, with 30 selecting this and 20 selecting each of the other two. While a significant number chose the default and narrower bars, the slightly higher amount selecting the plot with wider bars matches the previously stated hypothesis formulated from following the Stephen Few paper, which discusses that an ratio of greater width to length could suffer from perceptual imbalance. While this imbalance isn't seen in the numbers from the previous questions, the result here does give some indication that the aspect ratio producing wider bars may impact on ease of interpretation.
 
 
 \subsection{Ninja Warrior - Part 3}
 
-The third and final part of the questions about the American Ninja Warrior data discusses stacked bars and colour schemes. The questions asked in this part are used to decipher how data with multiple categories may be best represented in a bar plot. The plots presented use the same bars as in part 1, but this time we highlight the number of times each obstacle was used in each stage of the competition for each bar.  Each participant was shown both a stacked and a grouped bar plot in one of three colour schemes; the default for the language, viridis, and greyscale. For three versions of the survey, the stacked bars were shown first, and for the other three versions the first shown was the grouped bars. The final question of this part also asked respondents to compare two colour schemes, and through the 6 surveys we have comparisons of every colour scheme against every other colour scheme.
+The third and final part of the questions about the American Ninja Warrior data discusses stacked bars and colour schemes. The questions asked in this part are used to decipher how data with multiple categories may be best represented in a bar plot. The plots presented use the same bars as in part 1, but this time the number of times each obstacle was used in each stage of the competition for each bar is highlighted.  Each participant was shown both a stacked and a grouped bar plot in one of three colour schemes; the default for the language, viridis, and greyscale. For three versions of the survey, the stacked bars were shown first, and for the other three versions the first shown was the grouped bars. The final question of this part also asked respondents to compare two colour schemes, and through the 6 surveys there are comparisons of every colour scheme against every other colour scheme.
 
-**How many times would you say 'Floating Steps' were used in the Finals (Regional/City) round?**
 
-Again we start with the less subjective question regarding the reading of a numerical value off the axis. In this question we ask about 'Floating Steps', which is the bar third along from the y-axis. The question asks respondents to view the bar plot, where the bars will either be grouped of stacked, and decipher how many times this obstacle was used in the specified round of the competition. The true value for this was 11. The hypothesis for this question is that the respondents will more accurately gauge the value for the grouped bar than the stacked, which as we see below appears to be the case.
+The question \textit{"How many times would you say 'Floating Steps' were used in the Finals (Regional/City) round?"} is the first here, and is regarding the reading of a numerical value off the axis. In this question respondents were asked about 'Floating Steps', which is the bar third along from the y-axis. The question asks respondents to view the bar plot, where the bars will either be grouped of stacked, and decipher how many times this obstacle was used in the specified round of the competition. The true value for this was 11. The hypothesis for this question is that the respondents will more accurately gauge the value for the grouped bar than the stacked, which as seen below appears to be the case.
 
 ```{r}
 vir_stacked_1 <- vir_stacked$vir_sta_1
@@ -1523,7 +1549,7 @@ grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
 
 bars <- data.frame(stacked_1, grouped_1)
 ```
-The mean for the values estimated by respondents using the stacked bars is 14.32, a fair bit larger than the true value of 11, and the mean estimated value for the grouped bars was closer to the true value, at 11.8. The IQR for the grouped bars is also smaller than for the stacked, and comprises of the range $[11, 12]$, insinuating that the estimated values tended to be fairly accurate but with some respondents perhaps slightly overestimating. The IQR for the stacked bars on the other hand covers the interval $[10, 14]$, which does contain the true value, but shows a tendency for both over and underestimation of respondents. Additionally to this, there is a very large variance in the responses to this question, at 54.8 compared to the variance of 13.1 for the responses regarding the grouped bar plots. This adds to the picture that there was much less agreement between respondents, with many straying away from the mean of 14.3. We do see however that the median for both the stacked and grouped bars is 11, showing that the higher mean of the stacked bars may be a result of an influential value at the upper end of the distribution, and that many observations do actually sit around 11. The fact that many values actually sit around 11 could be contributing to the higher variance, as variance is simply the sum of the squared distances from the mean, and so will be elevated if there are many values that sit some distance away from the mean. The higher mean could be reflected in the maximum of the stacked responses being 35, although the maximum of the grouped responses is 40, so there may be more than one influential point in the stacked responses. We can check for outliers by looking at the box plots for this data.
+The mean for the values estimated by respondents using the stacked bars is 14.32, a fair bit larger than the true value of 11, and the mean estimated value for the grouped bars was closer to the true value, at 11.8. The IQR for the grouped bars is also smaller than for the stacked, and comprises of the range $[11, 12]$, insinuating that the estimated values tended to be fairly accurate but with some respondents perhaps slightly overestimating. The IQR for the stacked bars on the other hand covers the interval $[10, 14]$, which does contain the true value, but shows a tendency for both over and underestimation of respondents. Additionally to this, there is a large variance in the responses to this question, at 54.8 compared to the variance of 13.1 for the responses regarding the grouped bar plots. This adds to the picture that there was much less agreement between respondents, with many straying away from the mean of 14.3. It is seen however that the median for both the stacked and grouped bars is 11, showing that the higher mean of the stacked bars may be a result of an influential value at the upper end of the distribution, and that many observations do actually sit around 11. The fact that many values actually sit around 11 could be contributing to the higher variance, as variance is simply the sum of the squared distances from the mean, and so will be elevated if there are many values that sit some distance away from the mean. The higher mean could be reflected in the maximum of the stacked responses being 35, although the maximum of the grouped responses is 40, so there may be more than one influential point in the stacked responses. Outliers can be checked for by looking at the box plots for this data.
 
 ```{r}
 brks <- c("Stacked", "Grouped")
@@ -1533,21 +1559,24 @@ resp <- c(stacked_1, grouped_1)
 type <- c(rep('Stacked', 70), rep('Grouped', 70)) 
 stats_1 <- data.frame(resp, type)
 
-ggplot(data = stats_1)+
-  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge')+
+ggplot(data = stats_1, aes(x=type, y=resp, fill=type))+
+  geom_boxplot(outlier.colour="black", outlier.shape=1,
+             outlier.size=2, notch=F)+
   theme_classic()+
+  stat_summary(fun=mean, geom="point", shape=15, size=4)+
   scale_fill_manual(breaks = brks, values = vals)+
+  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
   ylab("Value")+
   xlab("Plot Type")
 ```
-We do in fact see that the box for the grouped responses is very short and centered around 11. The box for the stacked responses shows many high valued outliers that could be causing the mean to be higher, although the IQR is still a fair bit larger than that of the responses for the grouped bars. The mean for this also sits above the IQR, and thus the outliers may be having a significant influence. Now we will remove the outliers assuming, from the box plot, that outliers are any values above or equal to 25 for the stacked responses and above or equal to 20 for the grouped. 
+It can in fact be seen that the box for the grouped responses is short and centered around 11. The box for the stacked responses shows many high valued outliers that could be causing the mean to be higher, although the IQR is still a fair bit larger than that of the responses for the grouped bars. The mean for this also sits above the IQR, and thus the outliers may be having a significant influence. Now the outliers will be removed, assuming, from the box plot, that outliers are any values above or equal to 25 for the stacked responses and above or equal to 20 for the grouped. 
 
 ```{r}
 
 stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
 grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
 ```
-We see that removing the outliers as specified by the box plot, the mean of the stacked responses is now just above 11, and actually closer to the true value than the mean of the other set of responses, and the median has decreased to 10. From this one could infer that there is no difference between each type of bar plot in terms of gauging the size of the bars. However, we see that there are 12 outliers in the stacked responses, which leads to the idea that these are not in fact all outliers and may be valid responses that just sit on the upper end of the distribution. However, it seems the cause of the high values could be respondents taking the whole height of the bar, which has an actual height of 28, rather than the section of interest. Many of the potentially influential values fall around the range $[25, 30]$, with all but 2 of the 12 potential outliers sitting in this interval, with the remaining two both being 35. Looking below at the summary statistics for only the values picked up as outliers, we see a mean of 29.83, which is higher than the true value of 28, and interestingly goes against the analysis from part 1, question 2 whereby respondents were asked to judge the height of this bar and on average underestimated. The fact that so many participants misinterpreted this plot and signify that stacked bar plots may not be the best way to present data to general public, as there may be the potential to misread the height of the whole bar as the size of the top category.
+Removing the outliers as specified by the box plot, the mean of the stacked responses is now just above 11, and actually closer to the true value than the mean of the other set of responses, and the median has decreased to 10. From this one could infer that there is no difference between each type of bar plot in terms of gauging the size of the bars. However, there are 12 outliers in the stacked responses, which leads to the idea that these are not in fact all outliers and may be valid responses that just sit on the upper end of the distribution. However, it seems the cause of the high values could be respondents taking the whole height of the bar, which has an actual height of 28, rather than the section of interest. Many of the potentially influential values fall around the range $[25, 30]$, with all but 2 of the 12 potential outliers sitting in this interval, with the remaining two both being 35. Looking below at the summary statistics for only the values picked up as outliers, there is a mean of 29.83, which is higher than the true value of 28, and interestingly goes against the analysis from part 1, question 2 whereby respondents were asked to judge the height of this bar and on average underestimated. The fact that so many participants misinterpreted this plot and signify that stacked bar plots may not be the best way to present data to general public, as there may be the potential to misread the height of the whole bar as the size of the top category.
 
 
 ```{r}
@@ -1565,17 +1594,11 @@ grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
 
 stacked_1 <- stacked_1[which(stacked_1 >= 25)] 
 ```
-As a result of this, we will discount this set of 12 values from the analysis, and thus come to the conclusion that, for the respondents that appear to have judged the height of the correct section, there was little to no impact when using stacked vs grouped bar charts, and most of the difference comes from misinterpretation of the plot itself, as opposed to a poorer judgment of size.
+As a result of this, this set of 12 values will be discounted from the analysis, and thus come to the conclusion that, for the respondents that appear to have judged the height of the correct section, there was little to no impact when using stacked vs grouped bar charts, and most of the difference comes from misinterpretation of the plot itself, as opposed to a poorer judgment of size.
 
-To see if either of these values are significantly far from the true value, we once again run tests. Firstly, running Shapiro tests and symmetry tests to check for violations, we see that this data is not normal and is asymmetric. Thus, as in question 1, we run sign tests, alongside the t-tests on samples from a normal distribution with mean and variance equal to out data. We will test against a median of 11 for the sign tests, and a mean of 11 for the t-tests. 
+To see if either of these values are significantly far from the true value, tests are once again run. A sign test on the stacked bar plot responses gives a high p-value of 0.5258, showing that for the stacked bar plot responses (after removing the values as priorly specified), the participant estimated values do not differ significantly from the true value. For the grouped bar plot the obtained p-value is 0.009 < 0.05, and thus these responses are statistically significantly different from the true value. Running t-tests on the means, however, sees both sets of responses differing statistically significantly from the true value.
 
-The sign test on the stacked bar plot responses gives a high p-value of 0.5258, showing that for the stacked bar plot responses (after removing the values as priorly specified), the participant estimated values do not differ significantly from the true value. For the grouped bar plot we have a p value of 0.009 < 0.05, and thus these responses are statistically significantly different from the true value. 
-
-Running t-tests on the means, however, we see both sets of responses differ statistically significantly from the true value.
-
-**How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?**
-
-This question is similar the above, but for the next bar to the right. The purpose of this question was to test the same hypothesis as the previous question, and also to lead into the following question, where respondents were asked to compare the 'Floating Steps' and 'Log Grip'. Additionally, the bar in the previous question had only two categories, of which the respondents were asked to judge the size of the category on the top of the bar in the stacked plot, whereas the bar for 'Log Grip' has 5 categories, of which the category of interest sits above 4. The true value of this was 9.
+The next question, \textit{'How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?'}, is similar the above, but for the next bar to the right. The purpose of this question was to test the same hypothesis as the previous question, and also to lead into the following question, where respondents were asked to compare the 'Floating Steps' and 'Log Grip'. Additionally, the bar in the previous question had only two categories, of which the respondents were asked to judge the size of the category on the top of the bar in the stacked plot, whereas the bar for 'Log Grip' has 5 categories, of which the category of interest sits above 4. The true value of this was 9.
 
 ```{r}
 vir_stacked_2 <- vir_stacked$vir_sta_2
@@ -1591,7 +1614,7 @@ grouped_2 <- c(vir_grouped_2, def_grouped_2, gr_grouped_2)
 
 bars <- data.frame(stacked_2, grouped_2)
 ```
-Similarly to the previous question, the mean response for the stacked bar plots are higher than that of the grouped, and the mean of the stacked also slightly overestimates the value. Once again however, we appear to see a selection of respondents judging the full height of the bar rather than the category as asked. 
+Similarly to the previous question, the mean response for the stacked bar plots are higher than that of the grouped, and the mean of the stacked also slightly overestimates the value. Once again however, a selection of respondents appeared to judge the full height of the bar rather than the category as asked. 
 
 ```{r}
 brks <- c("Stacked", "Grouped")
@@ -1608,22 +1631,21 @@ ggplot(data = stats_2)+
   ylab("Value")+
   xlab("Plot Type")
 ```
-We indeed see that the distribution of values for each of the two response sets appears to be almost identical with the exception of outliers at and above 20 for the box plot of responses for the stacked bar plot. Thus we view the sets of summary statistics for the two but with these values removed. 
+Indeed, the distribution of values for each of the two response sets appears to be almost identical with the exception of outliers at and above 20 for the box plot of responses for the stacked bar plot.
 
 ```{r}
 stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
 grouped_2 <- c(vir_grouped_2, def_grouped_2, gr_grouped_2)
 ```
-Here we see that there tended to be a slight underestimation in the value for the stacked bar plot, however this is approximately 0.46 away from the true value, and unlikely to be significant. This can again be tested as above, where it is less clear whether the data are symmetric, so we will also run symmetry test.
+After removing the outlying values, there tended to be a slight underestimation in the value for the stacked bar plot, however this is approximately 0.46 away from the true value, and unlikely to be significant. 
 
-Once again the response sets are non-normally distributed and asymmetric, and so sign tests are applicable. The response set for the stacked bar plots produces a p-value of around 0.04, which shows a statistically significant difference in the responses from the true value of 9 at the 0.05 level of significance. However, this would very easily become insignificant by slightly lowering the significance level to, say, 0.035. The p-value for the grouped bar responses, however, is >> 0.05, as expected given that the median of the data sits at the true value.
+Once again the response sets are non-normally distributed and asymmetric, and so sign tests are applicable. The response set for the stacked bar plots produces a p-value of around 0.04, which shows a statistically significant difference in the responses from the true value of 9 at the 0.05 level of significance. However, this would easily become insignificant by slightly lowering the significance level to, say, 0.035. The p-value for the grouped bar responses, however, is >> 0.05, as expected given that the median of the data sits at the true value.
 
-The t-tests show that the differences in the means from the true value are statistically significant, although not considering the tests we can see by eye that the means are relatively close to 9.
+The t-tests show that the differences in the means from the true value are statistically significant, although not considering the tests it can be seen by eye that the means are relatively close to 9.
 
 
-**Please select the statement you feel applies to the bar chart above.**
-
-This question asked respondents to judge whether log grip was used more, less, or an equal amount in the Finals (Regional/City) and Qualifying(Regional/City) rounds. This was to see how well differences between sizes of categories are judged when relating to the same variable, and are in the same bar. The results for this are given in the table below.
+The respondents were then asked to \textit{'
+How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?'}. This question asked respondents to judge whether log grip was used more, less, or an equal amount in the Finals (Regional/City) and Qualifying(Regional/City) rounds. This was to see how well differences between sizes of categories are judged when relating to the same variable, and are in the same bar. The results for this are given in the table below.
 
 ```{r}
 vir_stacked_3 <- vir_stacked$vir_sta_3
@@ -1639,10 +1661,7 @@ grouped_3 <- c(vir_grouped_3, def_grouped_3, gr_grouped_3)
 ```
 The table shows overwhelmingly that significantly more people accurately judged that the two values were the same for the grouped bars than for the stacked bars. This was the hypothesised result, and has presented to an  even greater extent than previously anticipated. All but 7 of the respondents who responded to this question correctly judged from the grouped bars that the obstacle was used an equal number of times in each of the two rounds, whereas the responses for the grouped bar seemed fairly well split between the three options. It may be interesting in the multivariate analysis section to compare responses depending on whether respondents were shown the stacked or grouped bars first. Perhaps a reason for the incorrect judging with the stacked
 
-
-**Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?**
-
-Similar to the previous question, this asks for a comparison between the size of two categories, but this time about how many times two different obstacles were used in the round Finals (Regional/City), where these two obstacles are those discussed at the start of this part of the survey.
+Respondents were then asked \textit{'Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?'}Similar to the previous question, this asks for a comparison between the size of two categories, but this time about how many times two different obstacles were used in the round Finals (Regional/City), where these two obstacles are those discussed at the start of this part of the survey.
 
 ```{r}
 vir_stacked_4 <- vir_stacked$vir_sta_4
@@ -1658,9 +1677,7 @@ grouped_4 <- c(vir_grouped_4, def_grouped_4, gr_grouped_4)
 ```
 This was a potentially poorly formulated question, as the respondents had already been asked to specify how many times each of these obstacle was used in this round and respondents mostly judged this accurately with regard to both plots, but this could have been impacted by the previous questions. However, this does follow from the results from the past questions showing that respondents mostly accurately judged the values correctly, aside from those who instead judged the height of the whole bar.
 
-**Which bar chart do you feel is easiest to read and interpret?**
-
-Here was simply assess the perceived ease of interpretation of both bar plots. This is to gain an understanding in how data may best be presented in an easily understandable, easily readable manner. This is an important factor in visualisation, as a main aim in creating visuals is to provide an aid for the viewer to simply and quickly see the message. The opposite may be beneficial in certain applications however; based on the misreadings in the question regarding judging the number of times 'Log Grip' was used in the specific round, viewers of the visualisations could be easily mislead by incorrectly interpreting the plot. The people being shown the plot in, for example, an advert, may only take a fleeting look and not go beyond to analyse the plot to see accurate differences between values, and thus it is important to produce a plot that gives the easiest interpretation.
+The aim of the question \textit{'Which bar chart do you feel is easiest to read and interpret?'} was to assess the perceived ease of interpretation of both bar plots. This is to gain an understanding in how data may best be presented in an easily understandable, easily readable manner. This is an important factor in visualisation, as a main aim in creating visuals is to provide an aid for the viewer to simply and quickly see the message. The opposite may be beneficial in certain applications however; based on the misreadings in the question regarding judging the number of times 'Log Grip' was used in the specific round, viewers of the visualisations could be easily mislead by incorrectly interpreting the plot. The people being shown the plot in, for example, an advert, may only take a fleeting look and not go beyond to analyse the plot to see accurate differences between values, and thus it is important to produce a plot that gives the easiest interpretation.
 
 ```{r}
 a_1 <- set_a$sta_grp
@@ -1707,14 +1724,13 @@ for(i in 1:length(f_1)){
 }
 
 tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
-kable(tab)
+kable(tab)%>%
+  kable_styling(latex_options = "hold_position")
 ```
 The large majority of participants found the grouped bar chart easier to read and interpret, as predicted.
 
 
-**Which colour scheme do you find most aesthetically pleasing?**
-
-This question and the one following it are asked with the purpose of assessing the colour scheme that gives the greatest aesthetic pleasure, or effectively which colour palette the respondents feel is subjectively the 'prettiest' or 'nicest'. It is important to note here that aesthetics and readability do not always go hand-in-hand; a plot that is made to look very aesthetically pleasing may sacrifice readability, and vice versa. For each of the two languages we created six pairings of three different colour palettes, whereby the first colour was the one displayed for the main questions, and the second used only for the comparison questions. As previously discussed, the three colour schemes considered are viridis, greyscale, and each language's default plotting colour palette. The colour palette pairings are outlined below.
+The questions \textit{'Which bar chart do you feel is easiest to read and interpret?'} and the one following \textit{'Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.'} are asked with the purpose of assessing the colour scheme that gives the greatest aesthetic pleasure, or effectively which colour palette the respondents feel is subjectively the 'prettiest' or 'nicest'. It is important to note here that aesthetics and readability do not always go hand-in-hand; a plot that is made to look very aesthetically pleasing may sacrifice readability, and vice versa. For each of the two languages, six pairings of three different colour palettes were created, whereby the first colour was the one displayed for the main questions, and the second used only for the comparison questions. As previously discussed, the three colour schemes considered are viridis, greyscale, and each language's default plotting colour palette. The colour palette pairings are outlined below.
 
 ```{r}
 
@@ -1724,7 +1740,8 @@ second_col <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viri
 
 df <- data.frame(set, first_col, second_col)
 names(df) <- c("Pairing", "Main Palette", "Secondary Pallette")
-knitr::kable(df)
+knitr::kable(df)%>%
+  kable_styling(latex_options = "hold_position")
 ```
 
 
@@ -1738,13 +1755,12 @@ f_1 <- set_f$f_cols_1
 
 tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), c(table(e_1), 0), table(f_1))
 rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
-kable(tab)
+kable(tab)%>%
+  kable_styling(latex_options = "hold_position")
 ```
-This table shows that when it came to the default/viridis pairings, displayed in the first two rows, the respondents tended to have no preference overall, although this may differ between languages, which will be explored later on. Comparing this to the bottom two rows, in which we put viridis against greyscale, only 1 respondent out of the 23, a proportion of 0.04, found the grey more aesthetically pleasing, as hypothesised. When considering greyscale/default, there was still a majority preferring the non-greyscale palette, but a higher proportion preferred this as compared to the viridis/greyscale, with 4 out of the 22, or a proportion of 0.18, preferring the grey.
+This table shows that when it came to the default/viridis pairings, displayed in the first two rows, the respondents tended to have no preference overall, although this may differ between languages, which will be explored later on. Comparing this to the bottom two rows, in which viridis is put against greyscale, only 1 respondent out of the 23, a proportion of 0.04, found the grey more aesthetically pleasing, as hypothesised. When considering greyscale/default, there was still a majority preferring the non-greyscale palette, but a higher proportion preferred this as compared to the viridis/greyscale, with 4 out of the 22, or a proportion of 0.18, preferring the grey.
 
-**Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.**
-
-Complementing the aesthetic preferences, this question assesses the colour preference with regard to readability and ease of interpretation. As mentioned before, this will be used to test both the colour palette preference itself alongside whether this preference matches up with aesthetic preference.
+Complementing the aesthetic preferences, the second question assesses the colour preference with regard to readability and ease of interpretation. As mentioned before, this will be used to test both the colour palette preference itself alongside whether this preference matches up with aesthetic preference.
 
 ```{r, fig.cap="Table showing which colour palettes respondents found easiest to read and interpret"}
 a_1 <- set_a$a_cols_2
@@ -1803,12 +1819,13 @@ for(i in 1:length(d_1)){
 }
 
 tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
-tab
+kable(tab)%>%
+  kable_styling(latex_options = "hold_position")
 ```
-Interestingly here, we see that the top two rows appear to give opposing results; the respondents who were presented with viridis for the main questions and the default as a secondary palette stated that they found either viridis easier to interpret or had no preference, whereas those presented with the default first and viridis second tended to find the default easier. Once again looking at the comparisons with the greyscale, there were some respondents that found this easier to read, but the majority chose the alternative, whether this is viridis or the default.
+Interestingly here, the top two rows appear to give opposing results; the respondents who were presented with viridis for the main questions and the default as a secondary palette stated that they found either viridis easier to interpret or had no preference, whereas those presented with the default first and viridis second tended to find the default easier. Once again looking at the comparisons with the greyscale, there were some respondents that found this easier to read, but the majority chose the alternative, whether this is viridis or the default.
 
 \subsection{Sales - Part 1}
-Now we move on to the sales part of the survey. In this section data was taken from a the `BJsales` data set in R, which is a time series data set containing 150 observations. This data set constitutes a single vector of values with no specified timings, and the visualisation data was formed by taking subsets of size 12 this and setting a month between each point to give a year of fictional sales data.
+Now consider the sales part of the survey. In this section data was taken from a the `BJsales` data set in R, which is a time series data set containing 150 observations. This data set constitutes a single vector of values with no specified timings, and the visualisation data was formed by taking subsets of size 12 this and setting a month between each point to give a year of fictional sales data.
 
 **How much would you say sales of each company increased between January and December? [Company A]**
 
@@ -1912,9 +1929,6 @@ trn_cd <- na.exclude(cd_trn$cd_trn)
 zro_cd <- na.exclude(cd_zro$cd_zro)
 ```
 
-
-
-\subsection{Conclusions}
 
 
 
