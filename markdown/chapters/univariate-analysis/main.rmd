@@ -919,7 +919,7 @@ Overall, it seems that the use of truncation has a small but statistically signi
 
 When considering the language subgroups, note that there is a discrepancy here between languages in terms of the axis tick breaks and labeling, with the R plot being incremented in steps of 10 for both the control and truncated plots and the Python being more granular in steps of 5 for the control and steps of 2.5 for the truncated.
 
-Comparing the two language subgroups for the truncated plot, the distributions for both the R ($\bar{x} = 41.56$, $\tilde{x} = 41$) and Python ($\bar{x} = 41.01$, $\tilde{x} = 41$) responses to question 1 appear similar in location to those of both each other and the whole population  ($\bar{x} = 41.35$, $\tilde{x} = 41$).
+Consider question 1. Comparing the two language subgroups for the truncated plot, the distributions for both the R ($\bar{x} = 41.56$, $\tilde{x} = 41$) and Python ($\bar{x} = 41.01$, $\tilde{x} = 41$) responses to question 1 appear similar in location to those of both each other and the whole population  ($\bar{x} = 41.35$, $\tilde{x} = 41$).
 
 Comparisons via MWW testing show that the responses related to the control plot differ statistically significantly between the two language cohorts ($p=0.00012$), and similar for the truncated plot responses ($p=0.02163$), where the tests were performed comparing first the R and Python responses for the control plot, and then for the truncated. 
 
@@ -927,6 +927,17 @@ A sign test shows sufficient evidence that the R subgroup responses relating to 
 
 
 ```{r fig.cap = "Density plot showing distributions of responses regarding the control and truncated plots for the question 1"}
+control_1_r <- ctrl_y_scale_r$con_1
+control_1_r[which(control_1_r == "41/42")] <- 41.5
+control_1_r <- na.exclude(as.numeric(control_1_r))
+
+truncated_1_r <- as.numeric(trnc_y_scale_r$trn_1)
+
+control_1_py <- ctrl_y_scale_py$con_1
+control_1_py[which(control_1_py == "41/42")] <- 41.5
+control_1_py <- na.exclude(as.numeric(control_1_py))
+
+truncated_1_py <- as.numeric(trnc_y_scale_py$trn_1)
 
 brks <- c("Control", "Truncated")
 vals <- c("#1c9e77", "#d95f02")
@@ -950,8 +961,7 @@ q<-ggplot() +
 
 plot_grid(p, q)
 ```
-The distributions for the control and truncated plot responses for the R subgroup are fairly similar to the whole population,  
-
+The distributions for the control and truncated plot responses for the R subgroup are fairly similar to the whole population, although the peaks for the logarithmic plot responses are marginally lower. The distribution of the truncated plots is unexpected from lokking at the numbers, and more 'chaotic'. This shows potentially more variation in the responses.
 
 
 For question 2 it is similarly seen that the language used does not have a statistically significant impact on the response for the truncated plot, with means $5.500$ and $5.187$, and medians $6$ and $5$ respectively for R and Python for the control plot, and means $5.98$ and $5.84$ both with median $6$ for the truncated. Comparative testing with MWW gives $p=0.2199$ for the control plot and $0.9105$ for the truncated. Thus, the scale granulation or any other differing aspect of the plots does not seem to have a significant effect. See figure[?] for the distributions.
@@ -1337,7 +1347,7 @@ kable(tab, digits=3) %>%
 ```
 
 
-Note that 'narrow' is defined as the plot with the aspect ratio of smaller width to greater height, and vice versa for the 'wide' plot. The means show marginal differences, whereby the default plot mean is in the middle-valued mean, with the mean perceived difference for the wide plot being slightly smaller than this and the mean perceived difference for the narrow plot is slightly larger. This result, although marginal, follows the hypothesis that the wide plot would cause differences to be perceived as smaller and narrow bars to cause differences to be perceived to be greater. 
+Note that 'narrow' is defined as the plot with the aspect ratio of smaller width to greater height, and vice versa for the 'wide' plot. The means show marginal differences, whereby the default plot mean is the middle-valued mean of the three, with the mean perceived difference for the wide plot being slightly smaller than this and the mean perceived difference for the narrow plot is slightly larger. This result, although at first glance marginal, follows the hypothesis that the wide plot would cause differences to be perceived as smaller and narrow bars to cause differences to be perceived to be greater. 
 
 Now looking at figure[?], showing the three distributions. There isn't an immediately obvious difference in distributions, but on closer inspection it can be seen that the orange "Wide" bars dominate over the three for the range [2, 5], and the purple "Narrow" dominated for the response of 7, following the above analysis of summary statistics. There was a fairly strong consensus that in general that a rating of 6 was applicable to all three plots.
 
@@ -1359,9 +1369,10 @@ ggplot(data = stats)+
   xlab("Response")+
   ylab("Number of Respondents")
 
+SIGN.test(default, wide, alt="g")
 ```
 
-Running one-sided sign tests to compare the responses for default plot to the narrow plot, and then the default to the wide plot, it is confirmed that there is evidence to suggest that using an aspect ratio such that the height is greater than the width causes the perceived difference to be greater ($p=0.008062$) and that a ratio such that the opposite is true causes the perceived difference to be smaller ($p=6.457e-06$).
+Running a one-sided MWW test to compare the responses for default plot to the narrow plot, it is confirmed that there is evidence to suggest that using a 'narrow' aspect ratio causes the perceived difference to be greater ($p=0.0468$). Then applying a one-sided sign test to compare the default to the wide plot, the perceived difference is shown to be smaller ($p=6.457e-06$).
 
 
 ```{r}
@@ -1387,7 +1398,7 @@ wide <- wid_ratio$wid_2
 
 ratio_2_all <- cbind(default, wide, narrow)
 ```
-The analysis results here show that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wide plots being identical at 3.057, with the mean of the narrow plot responses only 0.157 greater at3.214. The median for all three is 3, and the IQRs are all $[2, 7]$. The variances, however, do differ from one another, with values 1.301, 0.866 and 1.214 for the default, wide and narrow bars, respectively. The distribution of values are shown in figure[?].
+The analysis results here show that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wide plots being identical at 3.057, with the mean of the narrow plot responses only 0.157 greater at3.214. The median for all three is 3, and the IQRs are all $[2, 7]$. The variances, however, do differ from one another, with values 1.301, 0.866 and 1.214 for the default, wide and narrow bars, respectively. The distribution of values are shown in figure[?]. The results of two-sided MWW tests show that neither aspect ratio appears to have a significant effect on the rating of the perceived difference ($p=0.2446$ and $p=0.5688$).
 
 ```{r, echo=F}
 
@@ -1428,7 +1439,7 @@ ggplot() +
 
 All three distributions are very similar, and almost appear to form bell curve shaped distributions, albeit with some irregularities and very slight negative skew.
 
-As in part 1, the two height difference perception questions will be compared, calculating 
+As in part 1, the two height difference perception questions will be compared, calculating $\bar{x}_{default} - \bar{x}_{narrow}$ and $\bar{x}_{default} - \bar{x}_{wide}$.
 
 ```{r}
 default <- def_ratio$def_1
@@ -1466,7 +1477,7 @@ kable(diff_mat, caption = "Table showing difference in the percieved difference 
   kable_styling(latex_options = "hold_position")
 ```
 
-
+As before, the table below gives a visual representation.
 
 ```{r fig.cap= "Bar plot giving a visual representation of the table"}
 df <- data.frame("narrow"=c(diff_mat[,1]), "wide"=c(diff_mat[,2]), "Question" = c("Jumping Spider vs Salmon Ladder", "Log Grip vs Floating Steps"))
@@ -1480,8 +1491,9 @@ ggplot()+
   scale_y_continuous(name = "Average difference from default plot", limits = c(-0.25, 0.6), breaks = seq(-0.25, 0.6, 0.1))+
   theme_classic()
 ```
+Both by eye comparisons of values and statistical testing show that the language used has negligible effect on the perceived difference, as does the order in which the plots were shown. See tables 51 - 61 in the appendix for more details.
 
-**How many times would you say 'Floating Steps' were used?**
+\subsection{How many times would you say 'Floating Steps' were used?}
 
 This is again similar to question 1 of part 1, where participants were asked to state what they believed to be the height of the bar for 'Salmon Ladder', however this time the third bar from the axis is chosen. This is to ascertain whether the distance of the bar from the axis may have an effect alongside any potential perceived distortion of values. Note that the true value was 28.
 
@@ -1537,7 +1549,11 @@ ratio_1_all <- cbind(default, wide, narrow)
 ```
 After removing the outliers the medians have stayed the same, and the mean has obviously decreased for the default and increased for the narrow, however, these means are all still fairly similar to each other and at a first glance prior to testing it again seems that changing the aspect ratio, at least to the degree tested here, is inconsequential to interpretation of the actual value. As expected as well, the variances for the outlier-removed sets have decreased.
 
-**Comparisons**
+However, statistical tests do actually show that while the default responses did not differ significantly from the true value of 28 ($p=0.5667$), the responses for the narrow plot did ($p=2.0955e-09$), but the wide didn't ($p=0.5067$).
+
+Changing the language and plot order was once again inconsequential here.
+
+\subsection{Differences Between Question 1 and 2 Responses}
 
 The last set of questions in part 2 show respondents all three of the bar plots presented in this section and ask them to select which they find most aesthetically pleasing, and which they find easiest and hardest to interpret. Table[?] gives the number of respondents that selected each plot for each of the three questions.
 
@@ -1662,7 +1678,7 @@ ggplot(data = stats_2)+
   ylab("Value")+
   xlab("Plot Type")
 ```
-Indeed, the distribution of values for each of the two response sets appears to be almost identical with the exception of outliers at and above 20 for the box plot of responses for the stacked bar plot.
+Indeed, the distributions of values for each of the two response sets appear to be almost identical 
 
 ```{r}
 stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
@@ -1675,8 +1691,7 @@ Once again the response sets are non-normally distributed and asymmetric, and so
 The t-tests show that the differences in the means from the true value are statistically significant, although not considering the tests it can be seen by eye that the means are relatively close to 9.
 
 
-The respondents were then asked to \textit{'
-How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?'}. This question asked respondents to judge whether log grip was used more, less, or an equal amount in the Finals (Regional/City) and Qualifying(Regional/City) rounds. This was to see how well differences between sizes of categories are judged when relating to the same variable, and are in the same bar. The results for this are given in the table below.
+The respondents were then asked to \textit{'How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?'}. This question asked respondents to judge whether log grip was used more, less, or an equal amount in the Finals (Regional/City) and Qualifying(Regional/City) rounds. This was to see how well differences between sizes of categories are judged when relating to the same variable, and are in the same bar. The results for this are given in the table below.
 
 ```{r}
 vir_stacked_3 <- vir_stacked$vir_sta_3
@@ -1755,7 +1770,6 @@ for(i in 1:length(f_1)){
 }
 
 tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
-colnames(tab) <- c("Bar Type", "Number of Respondents")
 kable(tab)%>%
   kable_styling(latex_options = "hold_position")
 ```
@@ -1859,51 +1873,13 @@ Interestingly here, the top two rows appear to give opposing results; the respon
 \subsection{Sales - Part 1}
 Now consider the sales part of the survey. In this section data was taken from a the `BJsales` data set in R, which is a time series data set containing 150 observations. This data set constitutes a single vector of values with no specified timings, and the visualisation data was formed by taking subsets of size 12 this and setting a month between each point to give a year of fictional sales data.
 
-**How much would you say sales of each company increased between January and December? [Company A]**
+\subsection{How much would you say sales of each company increased between January and December? [Company A]}
 
 This question was included for the purpose of testing whether, again, axis scaling impacts the perceived differences between values, but this time with time series line plots as opposed to bar plots. Respondents were asked to assess how much the sales of company A increased over the course of the year, or in other words to look at and compare each end of the line. 
 
-```{r}
-sep_1a <- na.exclude(ab_sep$sep_1a)
-trn_1a <- ab_trn$ab_trn_1a
-zro_1a <- ab_zero$ab_zro_1
-
-for(i in 1:length(sep_1a)){
-  if(sep_1a[i] == "1 (A little)"){
-    sep_1a[i] <- "1"
-  }
-  if(sep_1a[i] == "7 (A lot)"){
-    sep_1a[i] <- "7"
-  }
-}
-
-for(i in 1:length(trn_1a)){
-  if(trn_1a[i] == "1 (A little)"){
-    trn_1a[i] <- "1"
-  }
-  if(trn_1a[i] == "7 (A lot)"){
-    trn_1a[i] <- "7"
-  }
-}
-
-for(i in 1:length(zro_1a)){
-  if(zro_1a[i] == "1 (A little)"){
-    zro_1a[i] <- "1"
-  }
-  if(zro_1a[i] == "7 (A lot)"){
-    zro_1a[i] <- "7"
-  }
-}
-
-sep_1a <- as.numeric(sep_1a)
-trn_1a <- as.numeric(trn_1a)
-zro_1a <- as.numeric(zro_1a)
-```
-
-
 The plot for which the respondents, on average, found the difference to be smallest was the zeroed, followed by the truncated, and then the separated, with means of 1.371, 2.414 and 3.043 respectively. Furthermore, the zeroed plot has a small overall range, spanning $[1, 3]$ of the scale. The other two plots have range $[1, 7]$, but IQRs of $[2, 4]$ and $[2, 3]$.
 
-**How much would you say sales of each company increased between January and December? [Company B]**
+\subsection{How much would you say sales of each company increased between January and December? [Company B]}
 
 ```{r}
 sep_1b <- na.exclude(ab_sep$sep_1b)
@@ -1943,7 +1919,7 @@ zro_1b <- as.numeric(zro_1b)
 ```
 
 
-**How large would you say the drop in sales between April and July of Company A  is?**
+\subsection{How large would you say the drop in sales between April and July of Company A  is?}
 
 ```{r}
 sep_2 <- na.exclude(ab_sep$sep_2)
@@ -1951,9 +1927,9 @@ trn_2 <- na.exclude(ab_trn$ab_trn_2)
 zro_2 <- na.exclude(ab_zero$ab_zro_2)
 ```
 
-\subsection{Sales - Part 2}
+\section{Sales - Part 2}
 
-**Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?**
+\subsection{Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?}
 
 
 ```{r}
