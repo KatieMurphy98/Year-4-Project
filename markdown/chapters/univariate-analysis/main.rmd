@@ -826,9 +826,9 @@ cd_trn <- rbind(ver1[,c(4:7, 54)], ver2[,c(4:7, 54)], ver3[,c(4:7, 55)], ver4[,c
 cd_zro <- rbind(ver1[,c(4:7, 55)], ver2[,c(4:7, 55)], ver3[,c(4:7, 54)], ver4[,c(4:7, 55)], ver5[,c(4:7, 54)], ver6[,c(4:7, 54)])
 ```
 
-This chapter will discuss basic univariate analysis of the survey results, including summary statistics and univariate testing for the whole population as well as the subsetting for the programming language used and degree type. Additionally, subsets will be created considering only the first plot shown for each question, drawing comparisons between responses for these plots themselves without influence of the others. 
+This chapter will discuss basic univariate analysis of the survey results, including summary statistics and univariate testing for the whole population as well as the subsetting for the programming language used and degree type. Additionally, subsets will be created considering only the first plot shown for each question, drawing comparisons between responses for these plots themselves without influence of the others. The analysis will be performed in R version R version 4.0.2 [@R].
 
-In terms of testing, Shapiro-Wilk tests will be applied to gauge whether the data sets can be considered normally distributed and thus whether parametric T-Tests are suitable for either one-sample or paired comparisons. Failing he normality condition, a symmetry test will be administered, and providing there is sufficient evidence to say the data is symmetric, a Mann-Whitney-Wilcoxon (MWW) test will be used. If there is insufficient evidence that data proves either symmetric or normally distributed, sign tests will be applied. MWW will also be used for two sample testing where perhaps a sign test would be most appropriate, but cannot be used as the samples are of different sizes.
+In terms of testing, Shapiro-Wilk tests will be applied with the `shapiro.test()` function to gauge whether the data sets can be considered normally distributed and thus whether parametric T-Tests are suitable for either one-sample or paired comparisons, for the Shapiro-Wilk test, the alternative hypothesis is that the data is not normally distributed. Failing he normality condition, a symmetry test will be administered via the `symmetry.test()` function from the package `lawstat` [@lawstat], and providing there is insufficient evidence to reject the null hypothesis that the data is symmetric, a Mann-Whitney-Wilcoxon (MWW) test will be used. If there is sufficient evidence that data proves neither symmetric nor normally distributed, sign tests will be applied. MWW will also be used for two sample testing where perhaps a sign test would be most appropriate, but cannot be used as the samples are of different sizes.
 
 The sample sizes are 70, 38 and 32 for the whole population, R subgroup and Python subgroup, respectively before removing NA of invalid values. The sample means and medians will be notated as $\bar{x}$ and $\tilde{x}$, respectively.
 
@@ -917,7 +917,44 @@ The response distributions, conversely to question 2, now seem skewed more to th
 
 Overall, it seems that the use of truncation has a small but statistically significant effect on perception of height difference between bars, with respondents tending to judge the difference as slightly larger than for the control plot, although this effect is smaller than initially anticipated, and larger for bars that are further apart. In terms of reading values from bars, the truncation did not have a statistically significant effect when comparing the two distributions, however in one sample testing the truncated plot responses did differ significantly from the true value.
 
-When considering the language subgroups, note that there is a discrepancy here between languages in terms of the axis tick breaks and labeling, with the R plot being incremented in steps of 10 for both the control and truncated plots and the Python being more granular in steps of 5 for the control and steps of 2.5 for the truncated, although here this doesn't appear to have had too much of an impact since, as discussed before, the distributions are fairly similar by eye despite the significant result of testing, shown in figure[?].
+When considering the language subgroups, note that there is a discrepancy here between languages in terms of the axis tick breaks and labeling, with the R plot being incremented in steps of 10 for both the control and truncated plots and the Python being more granular in steps of 5 for the control and steps of 2.5 for the truncated.
+
+Comparing the two language subgroups for the truncated plot, the distributions for both the R ($\bar{x} = 41.56$, $\tilde{x} = 41$) and Python ($\bar{x} = 41.01$, $\tilde{x} = 41$) responses to question 1 appear similar in location to those of both each other and the whole population  ($\bar{x} = 41.35$, $\tilde{x} = 41$).
+
+Comparisons via MWW testing show that the responses related to the control plot differ statistically significantly between the two language cohorts ($p=0.00012$), and similar for the truncated plot responses ($p=0.02163$), where the tests were performed comparing first the R and Python responses for the control plot, and then for the truncated. 
+
+A sign test shows sufficient evidence that the R subgroup responses relating to the truncated plot differ from the true value ($p = 0.0004$), whereas there is insufficient evidence when applying a MWW test to the Python responses ($p = 0.718$). Similarly, the R subgroup's responses in relation to the control plot statistically significantly differ from the true value ($p=7.629e-05$), but the Python subgroup's do not ($p=0.1185$). This could potentially be a result of the less granulated R plot scaling, due to the reduced precision.
+
+
+```{r fig.cap = "Density plot showing distributions of responses regarding the control and truncated plots for the question 1"}
+
+brks <- c("Control", "Truncated")
+vals <- c("#1c9e77", "#d95f02")
+
+p<-ggplot() +
+  geom_density(data = as.data.frame(control_1_r), aes(x=control_1_r, col = "Control"))+
+  geom_density(data = as.data.frame(truncated_1_r), aes(x=truncated_1_r, col = "Truncated"))+
+  labs(x="Response", y="Density")+
+  scale_colour_manual(name = " ", breaks = brks, values = vals)+
+  theme(title = "R Subgroup")+
+  theme_classic()
+
+
+q<-ggplot() +
+  geom_density(data = as.data.frame(control_1_py), aes(x=control_1_py, col = "Control"))+
+  geom_density(data = as.data.frame(truncated_1_py), aes(x=truncated_1_py, col = "Truncated"))+
+  labs(x="Response", y="Density")+
+  scale_colour_manual(name = " ", breaks = brks, values = vals)+
+  theme(title = "Python Subgroup")+
+  theme_classic()
+
+plot_grid(p, q)
+```
+The distributions for the control and truncated plot responses for the R subgroup are fairly similar to the whole population,  
+
+
+
+For question 2 it is similarly seen that the language used does not have a statistically significant impact on the response for the truncated plot, with means $5.500$ and $5.187$, and medians $6$ and $5$ respectively for R and Python for the control plot, and means $5.98$ and $5.84$ both with median $6$ for the truncated. Comparative testing with MWW gives $p=0.2199$ for the control plot and $0.9105$ for the truncated. Thus, the scale granulation or any other differing aspect of the plots does not seem to have a significant effect. See figure[?] for the distributions.
 
 ```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 2, for the R and Python subgroups"}
 control_2_r <- ctrl_y_scale_r$con_2
@@ -955,11 +992,7 @@ q <- ggplot(stats_2_py)+
 plot_grid(p, q)
 ```
 
-Comparing the two language subgroups, the distributions for both the R ($\bar{x} = 41.56$, $\tilde{x} = 41$) and Python ($\bar{x} = 41.01$, $\tilde{x} = 41$) responses to question 1 appear similar to those of both each other and the whole population. Comparisons via MWW testing show that the responses related to the control plot differ statistically significantly between the two language cohorts ($p=0.00012$), and similar for the truncated plot responses ($p=0.02163$). 
-
-comparing the two by eye there appears to be no significant difference in average values for the truncated plot, with means of $\bar{x}=41.57$ and $\bar{x}=41.14$, respectively and medians of $41$ and $41.25$. A sign test shows sufficient evidence that the R subgroup responses relating to the truncated plot differ from the true value ($p = 0.0004$), whereas there is insufficient evidence when applying a MWW test to the Python responses ($p = 0.718$). Similarly, the R subgroup's responses in relation to the control plot statistically significantly differ from the true value ($p=7.629e-05$), but the Python subgroup's do not ($p=0.1185$). This be a result of the less granulated R plot scaling.
-
-For question 2 it is similarly seen that the language used does not have a statistically significant impact on the response for the truncated plot, with means $5.500$ and $5.187$, and medians $6$ and $5$ respectively for R and Python for the control plot, and means $5.98$ and $5.84$ both with median $6$ for the truncated. Comparative testing with MWW gives $p=0.2199$ for the control plot and $0.9105$ for the truncated. Thus, the scale granulation or any other differing aspect of the plots does not have a significant effect. For question 3 (see figure [?]), it is again seen that the responses in relation to the R version of truncated plot ($\bar{x} = 3.76$, $\tilde{x} = 4$) do not differ significantly to those related to the Python version ($\bar{x} = 3.78$, $\tilde{x} = 4$), with a two sample MWW p-value of 0.9708. Similarly the control plot, there is little difference between the R ($\bar{x} = 3.342$, $\tilde{x} = 3$) and the Python ($\bar{x} = 2.87$, $\tilde{x} = 3$) versions of the plot, again with am MWW p-value 0f 0.1465.
+For question 3 (see figure [?]), it is again seen that the responses in relation to the R version of truncated plot ($\bar{x} = 3.76$, $\tilde{x} = 4$) do not differ significantly to those related to the Python version ($\bar{x} = 3.78$, $\tilde{x} = 4$), with a two sample MWW p-value of 0.9708. Similarly the control plot, there is little difference between the R ($\bar{x} = 3.342$, $\tilde{x} = 3$) and the Python ($\bar{x} = 2.87$, $\tilde{x} = 3$) versions of the plot, again with am MWW p-value 0f 0.1465.
 
 ```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3, for the R and Python subgroups"}
 control_3_r <- ctrl_y_scale_r$con_3
@@ -996,7 +1029,7 @@ q <- ggplot(stats_3_py)+
 
 plot_grid(p, q)
 ```
-Figure[?] shows both distributions looking very similar.
+Figure[?] shows both distributions, with the R appearing more positively skewed and the python looking fairly symmetric for both plot types, which was also found when performing symmetry tests. For the Python it can also easily be seen that the bars for the truncated plot responses seems 'shifted' to the right slightly as compared to the control.
 
 Now considering subsetting for the respondents that saw the truncated plot first out of the three. Note that 25 saw the control plot first and 23 saw the truncated plot first.
 
@@ -1095,7 +1128,7 @@ ggplot(stats_2)+
   theme_classic()
 
 ```
-The spread of logarithmic plot values is fairly wide, with at least one response for each option, and the control is the same as stated before. The plot depicts how there is a wider spread of values, with some respondents having very different subjective views of the size of the difference to others. On average, the subjective perceived difference in bar heights was significantly lower for the logarithmic plot responses ($\bar{x}=3.67$, $\tilde{x}=3.5$) than for the control ($\bar{x}=3.35$, $\tilde{x}=5$). This is evidenced by a one-sided sign test with the alternative hypothesis that the logarithmic plot responses are on average lower than the control plot responses.
+The spread of logarithmic plot values is fairly wide, with at least one response for each option, and the control is the same as stated before. The plot depicts how there is a wide spread of values, with some respondents having very different subjective views of the size of the difference to others. On average, the subjective perceived difference in bar heights was significantly lower for the logarithmic plot responses ($\bar{x}=3.67$, $\tilde{x}=3.5$) than for the control ($\bar{x}=3.35$, $\tilde{x}=5$). This is evidenced by a one-sided sign test with the alternative hypothesis that the logarithmic plot responses are on average lower than the control plot responses.
 
 There is evidence to show that the difference between the R and Python versions of the logarithmic plot is significant ($p=0.00096$, $\bar{x}_R = 4.263$, $\bar{x}_{Py} = 2.969$). The distributions for the two language subsets are shown in figure[?]. 
 
@@ -1287,58 +1320,56 @@ Question 1 asked \textit{'How large would you say the difference between 'Jumpin
 
 ```{r}
 default <- def_ratio$def_1
-narrower <- nar_ratio$nar_1
-wider <- wid_ratio$wid_1
-ratio_1_all <- cbind(default, wider, narrower)
+narrow <- nar_ratio$nar_1
+wide <- wid_ratio$wid_1
+ratio_1_all <- cbind(default, wide, narrow)
 ```
-Looking at the means and medians here, it doesn't seem like there is that much of a difference in perception of the differences between the three aspect ratios. With means of 5.914, 5.357 and 6.129 for the default narrower and wider plots respectively, where 'narrower' is defined as the plot with the aspect ratio of smaller width to greater height, and vice versa for the 'wider' plot, and all have a median of 6. The means show marginal differences, whereby the default plot mean is in the middle-valued mean, with the mean perceived difference for the wider plot being slightly smaller than this and the mean perceived difference for the narrower plot is slightly larger. This result, although marginal, follows the hypothesis that the wider plot would cause differences to be perceived as smaller and narrower bars to cause differences to be perceived to be greater.
+Looking at the means and medians here, it doesn't seem like there is that much of a difference in perception of the differences between the three aspect ratios, as displayed in table[?].
 
+```{r}
+means <- c(mean(default), mean(narrow), mean(wide))
+meds <- c(median(default), median(narrow), median(wide))
+tab <- rbind(means, meds)
+colnames(tab) <- c("Default", "Narrow", "Wide")
+rownames(tab) <- c("Mean", "Median")
+kable(tab, digits=3) %>%
+  kable_styling(latex_options = "hold_position")
+```
+
+
+Note that 'narrow' is defined as the plot with the aspect ratio of smaller width to greater height, and vice versa for the 'wide' plot. The means show marginal differences, whereby the default plot mean is in the middle-valued mean, with the mean perceived difference for the wide plot being slightly smaller than this and the mean perceived difference for the narrow plot is slightly larger. This result, although marginal, follows the hypothesis that the wide plot would cause differences to be perceived as smaller and narrow bars to cause differences to be perceived to be greater. 
+
+Now looking at figure[?], showing the three distributions. There isn't an immediately obvious difference in distributions, but on closer inspection it can be seen that the orange "Wide" bars dominate over the three for the range [2, 5], and the purple "Narrow" dominated for the response of 7, following the above analysis of summary statistics. There was a fairly strong consensus that in general that a rating of 6 was applicable to all three plots.
 
 ```{r, echo=F}
 
-brks <- c("Default", "Wider", "Narrower")
+brks <- c("Default", "wide", "narrow")
 vals <- c("#1c9e77", "#d95f02", "#7570b3")
 
 ratio_1_all <- as.data.frame(ratio_1_all)
-resp <- c(default, wider, narrower)
-type <- c(rep('Default', 70), rep('Wider', 70), rep('Narrower', 70)) 
+resp <- c(default, wide, narrow)
+type <- c(rep('Default', 70), rep('wide', 70), rep('narrow', 70)) 
 stats <- data.frame(resp, type)
 
-ggplot(data = stats, aes(x=type, y=resp, fill=type))+
-  geom_boxplot(outlier.colour="black", outlier.shape=1,
-             outlier.size=2, notch=F)+
+ggplot(data = stats)+
+  geom_bar(aes(x=resp, group=type, fill=type), position = 'dodge')+
   theme_classic()+
-  stat_summary(fun=mean, geom="point", shape=15, size=4)+
   scale_fill_manual(breaks = brks, values = vals)+
-  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
-  ylab("Value")+
-  xlab("Plot Type")
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"))+
+  xlab("Response")+
+  ylab("Number of Respondents")
 
 ```
-From these box plots, it appears that the IQRs for the two plots with altered aspect ratios have very little, if any, overlap, despite the means being similar and medians being identical. The narrower plot shows a tendency for the responses to lie more towards the upper end of the scale than the wider plot, which also ranges over the upper half of the scale but between roughly 5 and 6 rather than 6 and 7. The default plot covers the entire IQR of both of the other plots, and the box plots then show that, even though the means and medians are very similar, the center bulk of the values for the narrower plot tended to be more towards the upper end of the default's IQR, whereas the central points of the wider plot sat on the lower half of this IQR. Additionally, there are two outliers each for the narrower and wider plots, with values 2, 3 and 4. Perhaps excluding these from the data and re-analysing the summary statistics will produce a more marked difference.
 
+Running one-sided sign tests to compare the responses for default plot to the narrow plot, and then the default to the wide plot, it is confirmed that there is evidence to suggest that using an aspect ratio such that the height is greater than the width causes the perceived difference to be greater ($p=0.008062$) and that a ratio such that the opposite is true causes the perceived difference to be smaller ($p=6.457e-06$).
 
-
-```{r}
-default <- def_ratio$def_1
-
-narrower <- nar_ratio$nar_1[which(nar_ratio$nar_1 != 3)]
-narrower <- narrower[which(narrower != 4)]
-
-wider <- wid_ratio$wid_1[which(wid_ratio$wid_1 != 2)]
-wider <- wider[which(wider != 3)]
-
-ratio_1_all <- cbind(default, wider, narrower)
-```
-
-After performing the univariate analysis excluding these values, the means and medians didn't change that much, with the medians still at 6 for all the plots, and the mean response for the wider plot increasing from 5.357 to 5.543, and the mean response for the narrower plot from 6.129 to 6.257. Although as expected, the ranges and variances are lower, meaning the spread over values over the range is smaller, however this only furthers the point that altering the axis ratio appears to have minimal effect.This is again confirmed by looking at the distributions of the three plot types, which are very similar to one another. It can however be seen that the plot with the density for the wider plot is highest of the three for the values of 4 and 5, but is the lowest of the three for upper end of the distributions, and vice versa for the densities narrower plot. The default mostly stays in between the other two curves. For a third time, this gives way to the observation that the wider bars have a small lessening effect on gauging differences in height, and using narrower bars has a mild increasing effect on difference perception.
 
 ```{r}
 
 ggplot() +
   geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
-  geom_density(data = as.data.frame(wider   ), aes(x=wider   , col = "Wider"))+
-  geom_density(data = as.data.frame(narrower), aes(x=narrower, col = "Narrower"))+
+  geom_density(data = as.data.frame(wide   ), aes(x=wide   , col = "wide"))+
+  geom_density(data = as.data.frame(narrow), aes(x=narrow, col = "narrow"))+
   labs(x="Response", y="Density")+
   scale_colour_manual(name = " ", breaks = brks, values = vals)+
   theme_classic()
@@ -1351,21 +1382,21 @@ Question 2 then went on to ask \textit{'How large would you say the difference b
 
 ```{r}
 default <- def_ratio$def_2
-narrower <- nar_ratio$nar_2
-wider <- wid_ratio$wid_2
+narrow <- nar_ratio$nar_2
+wide <- wid_ratio$wid_2
 
-ratio_2_all <- cbind(default, wider, narrower)
+ratio_2_all <- cbind(default, wide, narrow)
 ```
-The analysis results here show that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wider plots being identical at 3.057, with the mean of the narrower plot responses only 0.157 greater at3.214. The median for all three is 3, and the IQRs are all $[2, 7]$. The variances, however, do differ from one another, with values 1.301, 0.866 and 1.214 for the default, wider and narrower bars, respectively. The distribution of values are shown in figure[?].
+The analysis results here show that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wide plots being identical at 3.057, with the mean of the narrow plot responses only 0.157 greater at3.214. The median for all three is 3, and the IQRs are all $[2, 7]$. The variances, however, do differ from one another, with values 1.301, 0.866 and 1.214 for the default, wide and narrow bars, respectively. The distribution of values are shown in figure[?].
 
 ```{r, echo=F}
 
-brks <- c("Default", "Wider", "Narrower")
+brks <- c("Default", "wide", "narrow")
 vals <- c("#1c9e77", "#d95f02", "#7570b3")
 
 ratio_1_all <- as.data.frame(ratio_2_all)
-resp <- c(default, wider, narrower)
-type <- c(rep('Default', 70), rep('Wider', 70), rep('Narrower', 70)) 
+resp <- c(default, wide, narrow)
+type <- c(rep('Default', 70), rep('wide', 70), rep('narrow', 70)) 
 stats <- data.frame(resp, type)
 
 ggplot(data = stats, aes(x=type, y=resp, fill=type))+
@@ -1386,8 +1417,8 @@ At least $50/%$ of respondents placed the difference in the range $[2, 4]$ for a
 
 ggplot() +
   geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
-  geom_density(data = as.data.frame(wider   ), aes(x=wider   , col = "Wider"))+
-  geom_density(data = as.data.frame(narrower), aes(x=narrower, col = "Narrower"))+
+  geom_density(data = as.data.frame(wide   ), aes(x=wide   , col = "wide"))+
+  geom_density(data = as.data.frame(narrow), aes(x=narrow, col = "narrow"))+
   labs(x="Response", y="Density")+
   scale_x_continuous(limits=c(0, 7))+
   scale_colour_manual(name = " ", breaks = brks, values = vals)+
@@ -1401,23 +1432,23 @@ As in part 1, the two height difference perception questions will be compared, c
 
 ```{r}
 default <- def_ratio$def_1
-narrower <- nar_ratio$nar_1
-wider <- wid_ratio$wid_1
-ratio_1_all <- cbind(default, wider, narrower)
+narrow <- nar_ratio$nar_1
+wide <- wid_ratio$wid_1
+ratio_1_all <- cbind(default, wide, narrow)
 
 def_mean_1 <-  mean(default)
-nar_mean_1 <- mean(narrower)
-wid_mean_1 <- mean(wider)
+nar_mean_1 <- mean(narrow)
+wid_mean_1 <- mean(wide)
 means_1 <- c(nar_mean_1, wid_mean_1)
 
 default <- def_ratio$def_2
-narrower <- nar_ratio$nar_2
-wider <- wid_ratio$wid_2
-ratio_2_all <- cbind(default, wider, narrower)
+narrow <- nar_ratio$nar_2
+wide <- wid_ratio$wid_2
+ratio_2_all <- cbind(default, wide, narrow)
 
 def_mean_2 <-  mean(default)
-nar_mean_2 <- mean(narrower)
-wid_mean_2 <- mean(wider)
+nar_mean_2 <- mean(narrow)
+wid_mean_2 <- mean(wide)
 means_2 <- c(nar_mean_2, wid_mean_2)
 
 diff_mat <- matrix(NA, 2, 2)
@@ -1431,19 +1462,19 @@ for(i in 1:2){
 ```{r}
 colnames(diff_mat) <- c("Def - Narrow", "Def - Wide")
 rownames(diff_mat) <- c("Q1", "Q2")
-kable(diff_mat, caption = "Table showing difference in the percieved difference for plots with narrower and wider bars as compared to the default, for questions 1 and 2") %>%
+kable(diff_mat, caption = "Table showing difference in the percieved difference for plots with narrow and wide bars as compared to the default, for questions 1 and 2") %>%
   kable_styling(latex_options = "hold_position")
 ```
 
 
 
 ```{r fig.cap= "Bar plot giving a visual representation of the table"}
-df <- data.frame("Narrower"=c(diff_mat[,1]), "Wider"=c(diff_mat[,2]), "Question" = c("Jumping Spider vs Salmon Ladder", "Log Grip vs Floating Steps"))
+df <- data.frame("narrow"=c(diff_mat[,1]), "wide"=c(diff_mat[,2]), "Question" = c("Jumping Spider vs Salmon Ladder", "Log Grip vs Floating Steps"))
 
 
 ggplot()+
-  geom_bar(data=df, aes(x = Question, y=Narrower, fill = brks[2]), stat="identity")+
-  geom_bar(data=df, aes(x = Question, y=Wider, fill = brks[3]), stat="identity")+
+  geom_bar(data=df, aes(x = Question, y=narrow, fill = brks[2]), stat="identity")+
+  geom_bar(data=df, aes(x = Question, y=wide, fill = brks[3]), stat="identity")+
   geom_hline(yintercept = 0)+
   scale_fill_manual(name="Scale" ,breaks=brks[2:3], values=vals[2:3])+
   scale_y_continuous(name = "Average difference from default plot", limits = c(-0.25, 0.6), breaks = seq(-0.25, 0.6, 0.1))+
@@ -1456,20 +1487,20 @@ This is again similar to question 1 of part 1, where participants were asked to 
 
 ```{r}
 default <- def_ratio$def_3
-narrower <- nar_ratio$nar_3
-wider <- wid_ratio$wid_3
+narrow <- nar_ratio$nar_3
+wide <- wid_ratio$wid_3
 
-ratio_1_all <- cbind(default, wider, narrower)
+ratio_1_all <- cbind(default, wide, narrow)
 ```
-The means of each of the three sets of responses were very close to the true value, at 27.97, 28.04 and 27.39, respectively for the default, wider and narrower, and the medians are exactly equal to the true value. Based on the means and medians it appears that, once again, altering the aspect ratio had minimal, if any, effect on interpretation of the data value. The value for the default plot also appears to be closer to the true value than the control plot in part 1, question 1.
+The means of each of the three sets of responses were very close to the true value, at 27.97, 28.04 and 27.39, respectively for the default, wide and narrow, and the medians are exactly equal to the true value. Based on the means and medians it appears that, once again, altering the aspect ratio had minimal, if any, effect on interpretation of the data value. The value for the default plot also appears to be closer to the true value than the control plot in part 1, question 1.
 
 ```{r, echo=F}
 
-brks <- c("Default", "Wider", "Narrower")
+brks <- c("Default", "wide", "narrow")
 vals <- c("#1c9e77", "#d95f02", "#7570b3")
 
-resp <- c(default, wider, narrower)
-type <- c(rep('Default', 70), rep('Wider', 70), rep('Narrower', 70)) 
+resp <- c(default, wide, narrow)
+type <- c(rep('Default', 70), rep('wide', 70), rep('narrow', 70)) 
 stats <- data.frame(resp, type)
 
 ggplot(data = stats, aes(x=type, y=resp, fill=type))+
@@ -1483,28 +1514,28 @@ ggplot(data = stats, aes(x=type, y=resp, fill=type))+
 
 ```
 
-Looking at the box plots, there are very small ranges in the values, signifying that there was a large consensus between respondents in terms of what they perceived the height to be. It can also be seen that there are three outliers below the box plot for the narrower plot responses, and two above for the default plot responses. There is very little overlap between the boxes, and it appears again that there altering the aspect ratio of the bar plot has little to no impact on reading the height of the bar. Additionally, there was less agreement between respondents for the wider plot than for the other two, although this doesn't seem to be too significant.  
+Looking at the box plots, there are very small ranges in the values, signifying that there was a large consensus between respondents in terms of what they perceived the height to be. It can also be seen that there are three outliers below the box plot for the narrow plot responses, and two above for the default plot responses. There is very little overlap between the boxes, and it appears again that there altering the aspect ratio of the bar plot has little to no impact on reading the height of the bar. Additionally, there was less agreement between respondents for the wide plot than for the other two, although this doesn't seem to be too significant.  
 
 
 ```{r}
 
 ggplot() +
   geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
-  geom_density(data = as.data.frame(wider   ), aes(x=wider   , col = "Wider"))+
-  geom_density(data = as.data.frame(narrower), aes(x=narrower, col = "Narrower"))+
+  geom_density(data = as.data.frame(wide   ), aes(x=wide   , col = "wide"))+
+  geom_density(data = as.data.frame(narrow), aes(x=narrow, col = "narrow"))+
   labs(x="Response", y="Density")+
   scale_colour_manual(name = " ", breaks = brks, values = vals)+
   theme_classic()
 ```
-The distributions for the default and narrower plot responses are similar, both seeming to be fairly centred on the mean with a steep decrease in density on either side of the mean to shallow tails within the range $[25, 30]$. The responses for the wider plot appear to be more spread with lower density function values, with a slight negative skew.
+The distributions for the default and narrow plot responses are similar, both seeming to be fairly centred on the mean with a steep decrease in density on either side of the mean to shallow tails within the range $[25, 30]$. The responses for the wide plot appear to be more spread with lower density function values, with a slight negative skew.
 
 ```{r}
 default <- default[-which(default >= 30)]
-narrower <- narrower[-which(narrower <= 25)]
+narrow <- narrow[-which(narrow <= 25)]
 
-ratio_1_all <- cbind(default, wider, narrower)
+ratio_1_all <- cbind(default, wide, narrow)
 ```
-After removing the outliers the medians have stayed the same, and the mean has obviously decreased for the default and increased for the narrower, however, these means are all still fairly similar to each other and at a first glance prior to testing it again seems that changing the aspect ratio, at least to the degree tested here, is inconsequential to interpretation of the actual value. As expected as well, the variances for the outlier-removed sets have decreased.
+After removing the outliers the medians have stayed the same, and the mean has obviously decreased for the default and increased for the narrow, however, these means are all still fairly similar to each other and at a first glance prior to testing it again seems that changing the aspect ratio, at least to the degree tested here, is inconsequential to interpretation of the actual value. As expected as well, the variances for the outlier-removed sets have decreased.
 
 **Comparisons**
 
@@ -1525,7 +1556,7 @@ For the first question, relating to how aesthetically pleasing respondents found
 
 Similarly, 37 out of the 70 that responded to the second question found the plot with the default aspect ratio easiest to read and interpret. Perhaps the people that preferred this aspect ratio aesthetically did so because they found it easiest to interpret. Investigating this, 27 respondents who chose the default for question 1 also chose this for question 2.
 
-The plot judged hardest to read and interpret by the most respondents was the one with the wider bars, with 30 selecting this and 20 selecting each of the other two. While a significant number chose the default and narrower bars, the slightly higher amount selecting the plot with wider bars matches the previously stated hypothesis formulated from following the Stephen Few paper, which discusses that an ratio of greater width to length could suffer from perceptual imbalance. While this imbalance isn't seen in the numbers from the previous questions, the result here does give some indication that the aspect ratio producing wider bars may impact on ease of interpretation.
+The plot judged hardest to read and interpret by the most respondents was the one with the wide bars, with 30 selecting this and 20 selecting each of the other two. While a significant number chose the default and narrow bars, the slightly higher amount selecting the plot with wide bars matches the previously stated hypothesis formulated from following the Stephen Few paper, which discusses that an ratio of greater width to length could suffer from perceptual imbalance. While this imbalance isn't seen in the numbers from the previous questions, the result here does give some indication that the aspect ratio producing wide bars may impact on ease of interpretation.
 
 
 \subsection{Ninja Warrior - Part 3}
@@ -1724,13 +1755,14 @@ for(i in 1:length(f_1)){
 }
 
 tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
+colnames(tab) <- c("Bar Type", "Number of Respondents")
 kable(tab)%>%
   kable_styling(latex_options = "hold_position")
 ```
 The large majority of participants found the grouped bar chart easier to read and interpret, as predicted.
 
 
-The questions \textit{'Which bar chart do you feel is easiest to read and interpret?'} and the one following \textit{'Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.'} are asked with the purpose of assessing the colour scheme that gives the greatest aesthetic pleasure, or effectively which colour palette the respondents feel is subjectively the 'prettiest' or 'nicest'. It is important to note here that aesthetics and readability do not always go hand-in-hand; a plot that is made to look very aesthetically pleasing may sacrifice readability, and vice versa. For each of the two languages, six pairings of three different colour palettes were created, whereby the first colour was the one displayed for the main questions, and the second used only for the comparison questions. As previously discussed, the three colour schemes considered are viridis, greyscale, and each language's default plotting colour palette. The colour palette pairings are outlined below.
+The questions \textit{'Which bar chart do you feel is easiest to read and interpret?'} and the one following \textit{'Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.'} are asked with the purpose of assessing the colour scheme that gives the greatest aesthetic pleasure, or effectively which colour palette the respondents feel is subjectively the 'prettiest' or 'nicest'. It is important to note here that aesthetics and readability do not always go hand-in-hand; a plot that is made to look very aesthetically pleasing may sacrifice readability, and vice versa. For each of the two languages, six pairings of three different colour palettes were created, whereby the first colour was the one displayed for the main questions, and the second used only for the comparison questions. As previously discussed, the three colour schemes considered are viridis, greyscale, and each language's default plotting colour palette. The colour palette pairings are outlined below, where each set of two colours is assigned a 'Pairing ID' from A to F.
 
 ```{r}
 
@@ -1739,7 +1771,7 @@ first_col <- c("Viridis", "Default", "Default", "Greyscale", "Viridis", "Greysca
 second_col <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viridis")
 
 df <- data.frame(set, first_col, second_col)
-names(df) <- c("Pairing", "Main Palette", "Secondary Pallette")
+names(df) <- c("Pairing ID", "Main Palette", "Secondary Pallette")
 knitr::kable(df)%>%
   kable_styling(latex_options = "hold_position")
 ```
