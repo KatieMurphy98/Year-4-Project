@@ -11,7 +11,7 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE, warning=F}
-knitr::opts_chunk$set(echo = F, warning=T, comment = NA)
+knitr::opts_chunk$set(echo = F, warning=F, comment = NA)
 ```
 
 ```{r Data manipulation, include = FALSE}
@@ -3334,11 +3334,6 @@ for(i in 1:length(zero_ab_1a_r)){
 }
 zero_ab_1a_r <- as.numeric(zero_ab_1a_r)
 
-sumy <- cbind(summary(sep_ab_1a_r), summary(trn_ab_1a_r), summary(zero_ab_1a_r))
-colnames(sumy) <- c("Separate","Truncated", "Zeroed")
-
-kable(sumy, caption="Statistics over the whole population") %>%
-  kable_styling("bordered", position="center", latex_options = "hold_position")
 
 ```
 \clearpage
@@ -3379,12 +3374,29 @@ for(i in 1:length(zero_ab_1a_py)){
 }
 zero_ab_1a_py <- as.numeric(zero_ab_1a_py)
 
-sumy <- cbind(summary(sep_ab_1a_py), summary(trn_ab_1a_py), summary(zero_ab_1a_py))
-colnames(sumy) <- c("Separate","Truncated", "Zeroed")
+```
 
-kable(sumy, caption="Statistics over the whole population") %>%
+```{r}
+
+sumy <- cbind(summary(sep_ab_1a), summary(sep_ab_1a_r), summary(sep_ab_1a_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the separated plot responses for comparison between
+languages") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
 
+
+sumy <- cbind(summary(trn_ab_1a), summary(trn_ab_1a_r), summary(trn_ab_1a_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the truncated plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+sumy <- cbind(summary(zero_ab_1a), summary(zero_ab_1a_r), summary(zero_ab_1a_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the zeroed plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
 ```
 
 ```{r echo=F}
@@ -3400,7 +3412,13 @@ for(i in 1:length(sep_first_ab)){
 }
 sep_first_ab <- as.numeric(sep_first_ab)
 
-trn_first_ab <- na.exclude(ab_trn_r$ab_trn_1a)
+sumy <- cbind(summary(sep_ab_1a), summary(sep_first_ab))
+colnames(sumy) <- c("Separated - Whole Population", "Separated First")
+
+kable(sumy, caption="Statistics for the subgroup that saw the separated plots first compared to the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+trn_first_ab <- na.exclude(ab_trn_first$ab_trn_1a)
 
 for(i in 1:length(trn_first_ab)){
   if(trn_first_ab[i] == "1 (A little)"){
@@ -3411,8 +3429,14 @@ for(i in 1:length(trn_first_ab)){
   }
 }
 trn_first_ab <- as.numeric(trn_first_ab)
+sumy <- cbind(summary(trn_ab_1a), summary(trn_first_ab))
+colnames(sumy) <- c("Truncated - Whole Population", "Truncated First")
 
-zero_first_ab <- na.exclude(ab_zero_r$ab_zero_1)
+kable(sumy, caption="Statistics for the subgroup that saw the Truncated plot first compared to the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+zero_first_ab <- na.exclude(ab_zero_first$ab_zero_1)
 
 for(i in 1:length(zero_first_ab)){
   if(zero_first_ab[i] == "1 (A little)"){
@@ -3424,10 +3448,10 @@ for(i in 1:length(zero_first_ab)){
 }
 zero_first_ab <- as.numeric(zero_first_ab)
 
-sumy <- cbind(summary(sep_first_ab), summary(trn_first_ab), summary(zero_first_ab))
-colnames(sumy) <- c("Separate","Truncated", "Zeroed")
+sumy <- cbind(summary(zero_ab_1a), summary(zero_first_ab))
+colnames(sumy) <- c("Zeroed - Whole Population", "Zeroed First")
 
-kable(sumy, caption="Statistics over the whole population") %>%
+kable(sumy, caption="Statistics for the subgroup that saw the zeroed plot first compared to the whole population") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
 
 ```
@@ -3472,7 +3496,7 @@ sym_2 <- rbind(
   
 ) %>% noquote()
 colnames(sym_2) <- c("Variable", "P-Value")
-kable(sym_2, caption="symiro-Wilk test results to test for normality") %>%
+kable(sym_2, caption="Shapiro-Wilk test results to test for normality") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
 
 ```
@@ -3644,13 +3668,6 @@ for(i in 1:length(zero_ab_1b_r)){
   }
 }
 zero_ab_1b_r <- as.numeric(zero_ab_1b_r)
-
-sumy <- cbind(summary(sep_ab_1b_r), summary(trn_ab_1b_r), summary(zero_ab_1b_r))
-colnames(sumy) <- c("Separate","Truncated", "Zeroed")
-
-kable(sumy, caption="Statistics over the whole population") %>%
-  kable_styling("bordered", position="center", latex_options = "hold_position")
-
 ```
 
 ```{r echo=F}
@@ -3690,13 +3707,31 @@ for(i in 1:length(zero_ab_1b_py)){
 }
 zero_ab_1b_py <- as.numeric(zero_ab_1b_py)
 
-sumy <- cbind(summary(sep_ab_1b_py), summary(trn_ab_1b_py), summary(zero_ab_1b_py))
-colnames(sumy) <- c("Separate","Truncated", "Zeroed")
+```
 
-kable(sumy, caption="Statistics over the whole population") %>%
+```{r}
+
+sumy <- cbind(summary(sep_ab_1b), summary(sep_ab_1b_r), summary(sep_ab_1b_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the separated plot responses for comparison between
+languages") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
 
+
+sumy <- cbind(summary(trn_ab_1b), summary(trn_ab_1b_r), summary(trn_ab_1b_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the truncated plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+sumy <- cbind(summary(zero_ab_1b), summary(zero_ab_1b_r), summary(zero_ab_1b_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the zeroed plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
 ```
+
 
 ```{r echo=F}
 sep_first_ab <- na.exclude(ab_sep_first$sep_1b)
@@ -3783,7 +3818,7 @@ sym_2 <- rbind(
   
 ) %>% noquote()
 colnames(sym_2) <- c("Variable", "P-Value")
-kable(sym_2, caption="symiro-Wilk test results to test for normality") %>%
+kable(sym_2, caption="Shapiro-Wilk test results to test for normality") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
 
 ```
@@ -3945,13 +3980,6 @@ for(i in 1:length(zero_ab_2_r)){
   }
 }
 zero_ab_2_r <- as.numeric(zero_ab_2_r)
-
-sumy <- cbind(summary(sep_ab_2_r), summary(trn_ab_2_r), summary(zero_ab_2_r))
-colnames(sumy) <- c("Separate","Truncated", "Zeroed")
-
-kable(sumy, caption="Statistics over the whole population") %>%
-  kable_styling("bordered", position="center", latex_options = "hold_position")
-
 ```
 \clearpage
 ```{r echo=F}
@@ -3991,12 +4019,29 @@ for(i in 1:length(zero_ab_2_py)){
 }
 zero_ab_2_py <- as.numeric(zero_ab_2_py)
 
-sumy <- cbind(summary(sep_ab_2_py), summary(trn_ab_2_py), summary(zero_ab_2_py))
-colnames(sumy) <- c("Separate","Truncated", "Zeroed")
+```
 
-kable(sumy, caption="Statistics over the whole population") %>%
+```{r}
+
+sumy <- cbind(summary(sep_ab_2), summary(sep_ab_2_r), summary(sep_ab_2_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the separated plot responses for comparison between
+languages") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
 
+
+sumy <- cbind(summary(trn_ab_2), summary(trn_ab_2_r), summary(trn_ab_2_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the truncated plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+sumy <- cbind(summary(zero_ab_2), summary(zero_ab_2_r), summary(zero_ab_2_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the zeroed plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
 ```
 
 ```{r echo=F}
@@ -4012,7 +4057,10 @@ for(i in 1:length(sep_first_ab)){
 }
 sep_first_ab <- as.numeric(sep_first_ab)
 
-trn_first_ab <- na.exclude(ab_trn_r$ab_trn_2)
+sumy <- cbind(summary(sep_ab_2), summary(sep_first_ab))
+colnames(sumy) <- c("Separate- Whole Population", "Separate First")
+
+trn_first_ab <- na.exclude(ab_trn_first$ab_trn_2)
 
 for(i in 1:length(trn_first_ab)){
   if(trn_first_ab[i] == "1 (A little)"){
@@ -4024,7 +4072,10 @@ for(i in 1:length(trn_first_ab)){
 }
 trn_first_ab <- as.numeric(trn_first_ab)
 
-zero_first_ab <- na.exclude(ab_zero_r$ab_zero_1)
+sumy <- cbind(summary(trn_ab_2), summary(trn_first_ab))
+colnames(sumy) <- c("Truncated- Whole Population", "Truncated First")
+
+zero_first_ab <- na.exclude(ab_zero_first$ab_zero_1)
 
 for(i in 1:length(zero_first_ab)){
   if(zero_first_ab[i] == "1 (A little)"){
@@ -4036,11 +4087,9 @@ for(i in 1:length(zero_first_ab)){
 }
 zero_first_ab <- as.numeric(zero_first_ab)
 
-sumy <- cbind(summary(sep_first_ab), summary(trn_first_ab), summary(zero_first_ab))
-colnames(sumy) <- c("Separate","Truncated", "Zeroed")
+sumy <- cbind(summary(zero_ab_2), summary(zero_first_ab))
+colnames(sumy) <- c("Zeroed- Whole Population", "Zeroed First")
 
-kable(sumy, caption="Statistics over the whole population") %>%
-  kable_styling("bordered", position="center", latex_options = "hold_position")
 
 ```
 
@@ -4084,7 +4133,7 @@ sym_2 <- rbind(
   
 ) %>% noquote()
 colnames(sym_2) <- c("Variable", "P-Value")
-kable(sym_2, caption="symiro-Wilk test results to test for normality") %>%
+kable(sym_2, caption="Shapiro-Wilk test results to test for normality") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
 
 ```
@@ -4207,7 +4256,7 @@ zero_cd_py <- na.exclude(cd_zero_py$cd_zero)
 sumy <- cbind(summary(trn_cd_py), summary(zero_cd_py))
 colnames(sumy) <- c("Truncated", "Zeroed")
 
-kable(sumy, caption="Statistics for the R subgroup") %>%
+kable(sumy, caption="Statistics for the Python subgroup") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
 
 ```
@@ -4218,15 +4267,14 @@ zero_first_cd <- na.exclude(cd_zero_first$cd_zero)
 
 sumy <- cbind(summary(trn_cd), summary(trn_first_cd))
 colnames(sumy) <- c("Truncated - Whole Population", "Truncated First")
-
-kable(sumy, caption="Statistics over the whole population") %>%
+kable(sumy, caption="Statistics for the subgroup that saw the truncated plot first compared to the whole population") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
 
 sumy <- cbind(summary(zero_cd), summary(zero_first_cd))
 colnames(sumy) <- c("Zeroed - Whole Population", "Zeroed First")
-
-kable(sumy, caption="Statistics over the whole population") %>%
+kable(sumy, caption="Statistics for the subgroup that saw the zeroed plot first compared to the whole population") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
+
 ```
 
 ```{r echo=F}
