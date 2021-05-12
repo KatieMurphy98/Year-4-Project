@@ -22,9 +22,6 @@ for(i in 1:6){
   assign(paste0("ver",i), rbind(r, py))
 }
 
-ver1 <- ver1[-1,]
-r1 <- r1[-1,]
-
 names(ver1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
                  "con_1", "con_2", "con_3", "con_4", 
@@ -811,6 +808,8 @@ cd_trn <- rbind(ver1[,c(4:7, 54)], ver2[,c(4:7, 54)], ver3[,c(4:7, 55)], ver4[,c
 
 cd_zro <- rbind(ver1[,c(4:7, 55)], ver2[,c(4:7, 55)], ver3[,c(4:7, 54)], ver4[,c(4:7, 55)], ver5[,c(4:7, 54)], ver6[,c(4:7, 54)])
 ```
+
+\chapter{Univariate Analysis}
 
 This chapter will discuss basic univariate analysis of the survey results, including summary statistics and univariate testing for the whole population as well as the subsetting for the programming language used and degree type. Additionally, subsets will be created considering only the first plot shown for each question, drawing comparisons between responses for these plots themselves without influence of the others. The analysis will be performed in R version R version 4.0.2 [@R].
 
