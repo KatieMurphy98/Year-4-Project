@@ -1,4 +1,3 @@
----
 title: An Empirical Study of Data Visualisation
 author: Katie Murphy - 1632254
 output:
@@ -8,14 +7,21 @@ output:
      pandoc_args: --top-level-division=chapter
 fontsize: 12pt
 documentclass: book
+geometry: margin=1in
+header-includes:
+  \setlength{\parskip}{1em}
+  \linespread {1.25}
+bibliography: main.bib  
 ---
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = F, warning = F, comment = NA, fig.pos = "!H", fig.width = 7, fig.height = 3)
+library(knitr)
+library(kableExtra)
 ```
 
-# Survey
+# The Survey
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/survey/main.rmd'}
 ```
 
