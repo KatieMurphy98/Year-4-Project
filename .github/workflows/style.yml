@@ -40,3 +40,26 @@ jobs:
     - name: Check that document compiles
       run: |
         cd tex; pdflatex main.tex
+    - name: Run black check on Python files
+      run: |
+        python -m black . --check
+    - uses: actions/checkout@v2
+    - name: Install node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    - name: Install prettier
+      run: |
+          npm install --save-dev --save-exact prettier
+    - name: Check prettier formatting of .js files
+      run: |
+          npx prettier --check '*/**/*.js'
+    - name: Check prettier formatting of .css files
+      run: |
+          npx prettier --check '*/**/*.css'
+    - name: Check prettier formatting of .html files
+      run: |
+          npx prettier --check '*/**/*.html'
+          
+          
+

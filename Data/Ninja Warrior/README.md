@@ -1,0 +1,1 @@
+Data giving the history of all obstacles used in seasons 1-10 of American Ninja Warrior. Includes location, the round each obstacle was used in, and the order that each appeared in.
