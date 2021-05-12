@@ -6,5 +6,10 @@ words = set(
     "plotly",
     "powerpoint", 
     "vis", 
-    "Visualizations")
+    "Visualizations",
+    "OneDrive", 
+    "docx",
+    "src",
+    "univariate",
+    "Univariate")
 )

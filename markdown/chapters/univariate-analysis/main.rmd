@@ -1,93 +1,115 @@
+---
+output:
+  pdf_document: 
+    extra_dependencies: ["float"]
+fontsize: 11pt
+geometry: margin=1in
+header-includes:
+  \setlength{\parskip}{1em}
+  \linespread {1.25}
+---
 
-```{r include = FALSE}
+```{r setup, include=FALSE, warning=F}
+knitr::opts_chunk$set(echo = F, warning = F, comment = NA, fig.pos = "!H", fig.width = 7, fig.height = 3)
+```
+
+```{r Data manipulation, include = FALSE}
 rm(list=ls())
 library(readxl)
 library(dplyr)
 library(ggplot2)
 library(rstatix)
+library(BSDA)
+library(gridExtra)
+library(kableExtra)
+library(lawstat)
+library(cowplot)
 
+require(pander)
+panderOptions('round', 2)
+
+
+###### SET UP DATA ######
 for(i in 1:6){
-    r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
-    py <- assign(paste0("py",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("Py - v",i)))))
-    assign(paste0("ver",i), rbind(r, py))
+  r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
+  py <- assign(paste0("py",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("Py - v",i)))))
+  assign(paste0("ver",i), rbind(r, py))
 }
 
 ver1 <- ver1[-1,]
 r1 <- r1[-1,]
-py1 <- py1[-1,]
 
 names(ver1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
                  "con_1", "con_2", "con_3", "con_4", 
                  "log_1", "log_2", "log_3", "log_4",
                  "trn_1", "trn_2", "trn_3", "trn_4",
-  
+                 
                  "def_1", "def_2", "def_3", 
                  "nar_1", "nar_2", "nar_3", 
                  "wid_1", "wid_2", "wid_3",
                  "all_1", "all_2", "all_3",
-  
+                 
                  "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
-                 "sta_dge",
+                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+                 "sta_grp",
                  "a_cols_1", "a_cols_2", 
-  
+                 
                  "sep_1a", "sep_1b", "sep_2",
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-  
+                 
                  "cd_trn",
                  "cd_zro"
-                 )
+)
 
 names(r1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-  
-                 "def_1", "def_2", "def_3", 
-                 "nar_1", "nar_2", "nar_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "all_1", "all_2", "all_3",
-  
-                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
-                 "sta_dge",
-                 "a_cols_1", "a_cols_2", 
-  
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-  
-                 "cd_trn",
-                 "cd_zro"
-                 )
+               
+               "con_1", "con_2", "con_3", "con_4", 
+               "log_1", "log_2", "log_3", "log_4",
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               
+               "def_1", "def_2", "def_3", 
+               "nar_1", "nar_2", "nar_3", 
+               "wid_1", "wid_2", "wid_3",
+               "all_1", "all_2", "all_3",
+               
+               "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+               "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+               "sta_grp",
+               "a_cols_1", "a_cols_2", 
+               
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+               
+               "cd_trn",
+               "cd_zro"
+)
 
 names(py1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-  
-                 "def_1", "def_2", "def_3", 
-                 "nar_1", "nar_2", "nar_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "all_1", "all_2", "all_3",
-  
-                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
-                 "sta_dge",
-                 "a_cols_1", "a_cols_2", 
-  
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-  
-                 "cd_trn",
-                 "cd_zro"
-                 )
-###
+                
+                "con_1", "con_2", "con_3", "con_4", 
+                "log_1", "log_2", "log_3", "log_4",
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                
+                "def_1", "def_2", "def_3", 
+                "nar_1", "nar_2", "nar_3", 
+                "wid_1", "wid_2", "wid_3",
+                "all_1", "all_2", "all_3",
+                
+                "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+                "sta_grp",
+                "a_cols_1", "a_cols_2", 
+                
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                
+                "cd_trn",
+                "cd_zro")
+
 
 names(ver2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -101,66 +123,66 @@ names(ver2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "all_1", "all_2", "all_3",
                  
                  "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
-                 "sta_dge",
+                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+                 "sta_grp",
                  "b_cols_1", "b_cols_2", 
-  
+                 
                  "sep_1a", "sep_1b", "sep_2",
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-  
+                 
                  "cd_trn",
                  "cd_zro"
-                 )
+)
 
 names(r2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "log_1", "log_2", "log_3", "log_4",
-                 
-                 "def_1", "def_2", "def_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "nar_1", "nar_2", "nar_3", 
-                 "all_1", "all_2", "all_3",
-                 
-                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
-                 "sta_dge",
-                 "b_cols_1", "b_cols_2", 
-  
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-  
-                 "cd_trn",
-                 "cd_zro"
-                 )
+               
+               "con_1", "con_2", "con_3", "con_4", 
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "log_1", "log_2", "log_3", "log_4",
+               
+               "def_1", "def_2", "def_3", 
+               "wid_1", "wid_2", "wid_3",
+               "nar_1", "nar_2", "nar_3", 
+               "all_1", "all_2", "all_3",
+               
+               "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+               "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+               "sta_grp",
+               "b_cols_1", "b_cols_2", 
+               
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               
+               "cd_trn",
+               "cd_zro"
+)
 
 names(py2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "log_1", "log_2", "log_3", "log_4",
-                 
-                 "def_1", "def_2", "def_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "nar_1", "nar_2", "nar_3", 
-                 "all_1", "all_2", "all_3",
-                 
-                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
-                 "sta_dge",
-                 "b_cols_1", "b_cols_2", 
-  
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-  
-                 "cd_trn",
-                 "cd_zro"
-                 )
-###
+                
+                "con_1", "con_2", "con_3", "con_4", 
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "log_1", "log_2", "log_3", "log_4",
+                
+                "def_1", "def_2", "def_3", 
+                "wid_1", "wid_2", "wid_3",
+                "nar_1", "nar_2", "nar_3", 
+                "all_1", "all_2", "all_3",
+                
+                "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+                "sta_grp",
+                "b_cols_1", "b_cols_2", 
+                
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                
+                "cd_trn",
+                "cd_zro"
+)
+
 
 names(ver3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -173,140 +195,139 @@ names(ver3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "wid_1", "wid_2", "wid_3",  
                  "all_1", "all_2", "all_3",
                  
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
+                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
                  "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "sta_dge",
+                 "sta_grp",
                  "c_cols_1", "c_cols_2", 
-  
+                 
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
                  "sep_1a", "sep_1b", "sep_2",
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
-  
+                 
                  "cd_zro",
                  "cd_trn"
-                 )
+)
 
 names(r3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 
-                 "nar_1", "nar_2", "nar_3", 
-                 "def_1", "def_2", "def_3", 
-                 "wid_1", "wid_2", "wid_3",  
-                 "all_1", "all_2", "all_3",
-                 
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
-                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "sta_dge",
-                 "c_cols_1", "c_cols_2", 
-  
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
-  
-                 "cd_zro",
-                 "cd_trn"
-                 )
+               
+               "log_1", "log_2", "log_3", "log_4",
+               "con_1", "con_2", "con_3", "con_4", 
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               
+               "nar_1", "nar_2", "nar_3", 
+               "def_1", "def_2", "def_3", 
+               "wid_1", "wid_2", "wid_3",  
+               "all_1", "all_2", "all_3",
+               
+               "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+               "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+               "sta_grp",
+               "c_cols_1", "c_cols_2", 
+               
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
+               
+               "cd_zro",
+               "cd_trn"
+)
 
-names(py3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "con_1", "con_2", "con_3", "con_4", 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 
-                 "nar_1", "nar_2", "nar_3", 
-                 "def_1", "def_2", "def_3", 
-                 "wid_1", "wid_2", "wid_3",  
-                 "all_1", "all_2", "all_3",
-                 
-                 "def_dge_1", "def_dge_2", "def_dge_3", "def_dge_4",
-                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
-                 "sta_dge",
-                 "c_cols_1", "c_cols_2", 
-  
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
-  
-                 "cd_zro",
-                 "cd_trn"
-                 )
-###
+names(py3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro", 
+                "log_1", "log_2", "log_3", "log_4",
+                "con_1", "con_2", "con_3", "con_4", 
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                
+                "nar_1", "nar_2", "nar_3", 
+                "def_1", "def_2", "def_3", 
+                "wid_1", "wid_2", "wid_3",  
+                "all_1", "all_2", "all_3",
+                
+                "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+                "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                "sta_grp",
+                "c_cols_1", "c_cols_2", 
+                
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",                
+                
+                "cd_zro",
+                "cd_trn"
+)
+
 
 names(ver4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
                  "log_1", "log_2", "log_3", "log_4",
                  "trn_1", "trn_2", "trn_3", "trn_4",
                  "con_1", "con_2", "con_3", "con_4", 
-  
+                 
                  "nar_1", "nar_2", "nar_3", 
                  "wid_1", "wid_2", "wid_3",
                  "def_1", "def_2", "def_3", 
                  "all_1", "all_2", "all_3",
-  
+                 
                  "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",  
-                 "sta_dge",
+                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
+                 "sta_grp",
                  "d_cols_1", "d_cols_2", 
-  
+                 
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
                  "sep_1a", "sep_1b", "sep_2",
-
+                 
                  "cd_trn",
                  "cd_zro"
-                 )
+)
 
 names(r4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "con_1", "con_2", "con_3", "con_4", 
-  
-                 "nar_1", "nar_2", "nar_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "def_1", "def_2", "def_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",  
-                 "sta_dge",
-                 "d_cols_1", "d_cols_2", 
-  
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "sep_1a", "sep_1b", "sep_2",
-
-                 "cd_trn",
-                 "cd_zro"
-                 )
+               
+               "log_1", "log_2", "log_3", "log_4",
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "con_1", "con_2", "con_3", "con_4", 
+               
+               "nar_1", "nar_2", "nar_3", 
+               "wid_1", "wid_2", "wid_3",
+               "def_1", "def_2", "def_3", 
+               "all_1", "all_2", "all_3",
+               
+               "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
+               "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
+               "sta_grp",
+               "d_cols_1", "d_cols_2", 
+               
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+               "sep_1a", "sep_1b", "sep_2",
+               
+               "cd_trn",
+               "cd_zro"
+)
 
 names(py4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "log_1", "log_2", "log_3", "log_4",
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "con_1", "con_2", "con_3", "con_4", 
-  
-                 "nar_1", "nar_2", "nar_3", 
-                 "wid_1", "wid_2", "wid_3",
-                 "def_1", "def_2", "def_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",  
-                 "sta_dge",
-                 "d_cols_1", "d_cols_2", 
-  
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "sep_1a", "sep_1b", "sep_2",
+                
+                "log_1", "log_2", "log_3", "log_4",
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "con_1", "con_2", "con_3", "con_4", 
+                
+                "nar_1", "nar_2", "nar_3", 
+                "wid_1", "wid_2", "wid_3",
+                "def_1", "def_2", "def_3", 
+                "all_1", "all_2", "all_3",
+                
+                "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
+                "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
+                "sta_grp",
+                "d_cols_1", "d_cols_2", 
+                
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                "sep_1a", "sep_1b", "sep_2",
+                
+                "cd_trn",
+                "cd_zro"
+)
 
-                 "cd_trn",
-                 "cd_zro"
-                 )
-###
 
 names(ver5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -318,68 +339,67 @@ names(ver5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "def_1", "def_2", "def_3", 
                  "nar_1", "nar_2", "nar_3", 
                  "all_1", "all_2", "all_3",
-  
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
+                 
+                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
                  "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "sta_dge",
+                 "sta_grp",
                  "e_cols_1", "e_cols_2", 
-  
+                 
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
                  "sep_1a", "sep_1b", "sep_2",
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
                  
                  "cd_zro",
                  "cd_trn"
-                 )
+)
 
 names(r5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "con_1", "con_2", "con_3", "con_4",
-                 "log_1", "log_2", "log_3", "log_4", 
-                 
-                 "wid_1", "wid_2", "wid_3",
-                 "def_1", "def_2", "def_3", 
-                 "nar_1", "nar_2", "nar_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
-                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "sta_dge",
-                 "e_cols_1", "e_cols_2", 
-  
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 
-                 "cd_zro",
-                 "cd_trn"
-                 )
+               
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "con_1", "con_2", "con_3", "con_4",
+               "log_1", "log_2", "log_3", "log_4", 
+               
+               "wid_1", "wid_2", "wid_3",
+               "def_1", "def_2", "def_3", 
+               "nar_1", "nar_2", "nar_3", 
+               "all_1", "all_2", "all_3",
+               
+               "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+               "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+               "sta_grp",
+               "e_cols_1", "e_cols_2", 
+               
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               
+               "cd_zro",
+               "cd_trn"
+)
 
 names(py5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "con_1", "con_2", "con_3", "con_4",
-                 "log_1", "log_2", "log_3", "log_4", 
-                 
-                 "wid_1", "wid_2", "wid_3",
-                 "def_1", "def_2", "def_3", 
-                 "nar_1", "nar_2", "nar_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "vir_dge_1", "vir_dge_2", "vir_dge_3", "vir_dge_4",
-                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
-                 "sta_dge",
-                 "e_cols_1", "e_cols_2", 
-  
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "sep_1a", "sep_1b", "sep_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 
-                 "cd_zro",
-                 "cd_trn"
-                 )
-###
+                
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "con_1", "con_2", "con_3", "con_4",
+                "log_1", "log_2", "log_3", "log_4", 
+                
+                "wid_1", "wid_2", "wid_3",
+                "def_1", "def_2", "def_3", 
+                "nar_1", "nar_2", "nar_3", 
+                "all_1", "all_2", "all_3",
+                
+                "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+                "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                "sta_grp",
+                "e_cols_1", "e_cols_2", 
+                
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                
+                "cd_zro",
+                "cd_trn"
+)
 
 names(ver6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
                  
@@ -391,93 +411,408 @@ names(ver6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "n
                  "nar_1", "nar_2", "nar_3", 
                  "def_1", "def_2", "def_3", 
                  "all_1", "all_2", "all_3",
-  
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",
+                 
+                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
                  "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
-                 "sta_dge",
+                 "sta_grp",
                  "f_cols_1", "f_cols_2", 
-  
+                 
                  "ab_zro_1", "ab_zro_1b", "ab_zro_2",
                  "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
                  "sep_1a", "sep_1b", "sep_2",
                  
                  "cd_zro",
                  "cd_trn"
-                 )
-                 
+)
+
 names(r6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "log_1", "log_2", "log_3", "log_4", 
-                 "con_1", "con_2", "con_3", "con_4",
-                 
-                 "wid_1", "wid_2", "wid_3",
-                 "nar_1", "nar_2", "nar_3", 
-                 "def_1", "def_2", "def_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",
-                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
-                 "sta_dge",
-                 "f_cols_1", "f_cols_2", 
-  
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "sep_1a", "sep_1b", "sep_2",
-                 
-                 "cd_zro",
-                 "cd_trn"
-                 )
+               
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "log_1", "log_2", "log_3", "log_4", 
+               "con_1", "con_2", "con_3", "con_4",
+               
+               "wid_1", "wid_2", "wid_3",
+               "nar_1", "nar_2", "nar_3", 
+               "def_1", "def_2", "def_3", 
+               "all_1", "all_2", "all_3",
+               
+               "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
+               "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
+               "sta_grp",
+               "f_cols_1", "f_cols_2", 
+               
+               "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "sep_1a", "sep_1b", "sep_2",
+               
+               "cd_zro",
+               "cd_trn"
+)
 
 names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
-                 
-                 "trn_1", "trn_2", "trn_3", "trn_4",
-                 "log_1", "log_2", "log_3", "log_4", 
-                 "con_1", "con_2", "con_3", "con_4",
-                 
-                 "wid_1", "wid_2", "wid_3",
-                 "nar_1", "nar_2", "nar_3", 
-                 "def_1", "def_2", "def_3", 
-                 "all_1", "all_2", "all_3",
-  
-                 "gr_dge_1", "gr_dge_2", "gr_dge_3", "gr_dge_4",
-                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
-                 "sta_dge",
-                 "f_cols_1", "f_cols_2", 
-  
-                 "ab_zro_1", "ab_zro_1b", "ab_zro_2",
-                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
-                 "sep_1a", "sep_1b", "sep_2",
-                 
-                 "cd_zro",
-                 "cd_trn"
-                 )
-### Y SCALES 
+                
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "log_1", "log_2", "log_3", "log_4", 
+                "con_1", "con_2", "con_3", "con_4",
+                
+                "wid_1", "wid_2", "wid_3",
+                "nar_1", "nar_2", "nar_3", 
+                "def_1", "def_2", "def_3", 
+                "all_1", "all_2", "all_3",
+                
+                "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
+                "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
+                "sta_grp",
+                "f_cols_1", "f_cols_2", 
+                
+                "ab_zro_1", "ab_zro_1b", "ab_zro_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "sep_1a", "sep_1b", "sep_2",
+                
+                "cd_zro",
+                "cd_trn"
+)
+
+ver2$uni[which(is.na(ver2$uni))] <- "None"
+
+###### Y SCALES ######
 ctrl_y_scale <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)], ver3[,c(4:7, 14:17)], ver4[,c(4:7, 18:21)], ver5[,c(4:7, 14:17)], ver6[,c(4:7, 18:21)])
 log_y_scale <- rbind(ver1[,c(4:7, 14:17)], ver2[,c(4:7, 18:21)], ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)], ver5[,c(4:7, 18:21)], ver6[,c(4:7, 14:17)])
 trnc_y_scale <- rbind(ver1[,c(4:7, 18:21)], ver2[,c(4:7, 14:17)], ver3[,c(4:7, 18:21)], ver4[,c(4:7, 14:17)], ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
 
+ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17)], r4[,c(4:7, 18:21)], r5[,c(4:7, 14:17)], r6[,c(4:7, 18:21)])
+log_y_scale_r<- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
+trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
 
-### ASPECT RATIO
+ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
+
+log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
+
+trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
+
+for(i in c(unique(ctrl_y_scale$uni), unique(trnc_y_scale$uni), unique(log_y_scale$uni))){
+  assign(paste0(i, "_ctrl"), ctrl_y_scale[which(ctrl_y_scale$uni==i),])
+  assign(paste0(i, "_trnc"), trnc_y_scale[which(trnc_y_scale$uni==i),])
+  assign(paste0(i, "_log"), log_y_scale[which(log_y_scale$uni==i),])
+}
+
+Soc_sci_ctrl <- `Social Sciences_ctrl`
+Soc_sci_trnc <- `Social Sciences_trnc`
+Soc_sci_log <- `Social Sciences_log`
+
+Sus_geog_ctrl <- `Sustainability/geological science_ctrl`
+Sus_geog_trnc <- `Sustainability/geological science_trnc`
+Sus_geog_log <- `Sustainability/geological science_log`
+
+stem_ctrl <- rbind(Science_ctrl, Technology_ctrl, Engineering_ctrl, Maths_ctrl, Medicine_ctrl, Architecture_ctrl)
+soc_sci_ctrl <- rbind(psychology_ctrl, Soc_sci_ctrl, Sus_geog_ctrl, Criminology_ctrl)
+hum_ctrl <- rbind(Humanities_ctrl, Geography_ctrl)
+
+stem_trnc <- rbind(Science_trnc, Technology_trnc, Engineering_trnc, Maths_trnc, Medicine_trnc, Architecture_trnc)
+soc_sci_trnc <- rbind(psychology_trnc, Soc_sci_trnc, Sus_geog_trnc, Criminology_trnc)
+hum_trnc <- rbind(Humanities_trnc, Geography_trnc)
+
+stem_log <- rbind(Science_log, Technology_log, Engineering_log, Maths_log, Medicine_log, Architecture_log)
+soc_sci_log <- rbind(psychology_log, Soc_sci_log, Sus_geog_log, Criminology_log)
+hum_log <- rbind(Humanities_log, Geography_log)
+
+con_first <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)])
+log_first <- rbind(ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)])
+trn_first <- rbind(ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
+
+###### ASPECT RATIO ######
 def_ratio <- rbind(ver1[,c(4:7, 22:24)], ver2[,c(4:7, 22:24)], ver3[,c(4:7, 25:27)], ver4[,c(4:7, 28:30)], ver5[,c(4:7, 25:27)], ver6[,c(4:7, 28:30)])
 nar_ratio <- rbind(ver1[,c(4:7, 25:27)], ver2[,c(4:7, 28:30)], ver3[,c(4:7, 22:24)], ver4[,c(4:7, 22:24)], ver5[,c(4:7, 28:30)], ver6[,c(4:7, 25:27)])
 wid_ratio <- rbind(ver1[,c(4:7, 28:30)], ver2[,c(4:7, 25:27)], ver3[,c(4:7, 28:30)], ver4[,c(4:7, 25:27)], ver5[,c(4:7, 22:24)], ver6[,c(4:7, 22:24)])
-comp_ratio <- rbind(ver1[,c(4:7, 31:33)], ver2[,c(4:7, 31:33)], ver3[,c(4:7, 31:33)], ver4[,c(4:7, 31:33)], ver5[,c(4:7, 31:33)], ver6[,c(4:7, 31:33)])
+
+def_ratio_r <- rbind(r1[,c(4:7, 22:24)], r2[,c(4:7, 22:24)], r3[,c(4:7, 25:27)], r4[,c(4:7, 28:30)], r5[,c(4:7, 25:27)], r6[,c(4:7, 28:30)])
+nar_ratio_r <- rbind(r1[,c(4:7, 25:27)], r2[,c(4:7, 28:30)], r3[,c(4:7, 22:24)], r4[,c(4:7, 22:24)], r5[,c(4:7, 28:30)], r6[,c(4:7, 25:27)])
+wid_ratio_r <- rbind(r1[,c(4:7, 28:30)], r2[,c(4:7, 25:27)], r3[,c(4:7, 28:30)], r4[,c(4:7, 25:27)], r5[,c(4:7, 22:24)], r6[,c(4:7, 22:24)])
+
+def_ratio_py <- rbind(py1[,c(4:7, 22:24)], py2[,c(4:7, 22:24)], py3[,c(4:7, 25:27)], py4[,c(4:7, 28:30)], py5[,c(4:7, 25:27)], py6[,c(4:7, 28:30)])
+nar_ratio_py <- rbind(py1[,c(4:7, 25:27)], py2[,c(4:7, 28:30)], py3[,c(4:7, 22:24)], py4[,c(4:7, 22:24)], py5[,c(4:7, 28:30)], py6[,c(4:7, 25:27)])
+wid_ratio_py <- rbind(py1[,c(4:7, 28:30)], py2[,c(4:7, 25:27)], py3[,c(4:7, 28:30)], py4[,c(4:7, 25:27)], py5[,c(4:7, 22:24)], py6[,c(4:7, 22:24)])
 
 
-### STACKED
-vir_stacked <- rbind(ver1[,c(4:7, 34:41)], ver5[,c(4:7, 34:41)])
-def_stacked <- rbind(ver2[,c(4:7, 34:41)], ver3[,c(4:7, 34:41)])
-gr_stacked <- rbind(ver4[,c(4:7, 34:41)], ver6[,c(4:7, 34:41)])
+for(i in 1:dim(ver1)[1]){
+  if(ver1$all_1[i]=="A"){
+    ver1$all_1[i] <- "Default"
+  }
+  if(ver1$all_1[i]=="B"){
+    ver1$all_1[i] <- "Narrow"
+  }
+  if(ver1$all_1[i]=="C"){
+    ver1$all_1[i] <- "Wide"
+  }
+  
+  if(ver1$all_2[i]=="A"){
+    ver1$all_2[i] <- "Default"
+  }
+  if(ver1$all_2[i]=="B"){
+    ver1$all_2[i] <- "Narrow"
+  }
+  if(ver1$all_2[i]=="C"){
+    ver1$all_2[i] <- "Wide"
+  }
+  
+  if(ver1$all_3[i]=="A"){
+    ver1$all_3[i] <- "Default"
+  }
+  if(ver1$all_3[i]=="B"){
+    ver1$all_3[i] <- "Narrow"
+  }
+  if(ver1$all_3[i]=="C"){
+    ver1$all_3[i] <- "Wide"
+  }
+}
 
-set_a <- ver1[,c(4:7, 42:44)]
-set_b <- ver2[,c(4:7, 42:44)]
-set_c <- ver3[,c(4:7, 42:44)]
-set_d <- ver4[,c(4:7, 42:44)]
-set_e <- ver5[,c(4:7, 42:44)]
-set_f <- ver6[,c(4:7, 42:44)]
+for(i in 1:dim(ver2)[1]){
+  if(ver2$all_1[i]=="A"){
+    ver2$all_1[i] <- "Default"
+  }
+  if(ver2$all_1[i]=="C"){
+    ver2$all_1[i] <- "Narrow"
+  }
+  if(ver2$all_1[i]=="B"){
+    ver2$all_1[i] <- "Wide"
+  }
+  
+  if(ver2$all_2[i]=="A"){
+    ver2$all_2[i] <- "Default"
+  }
+  if(ver2$all_2[i]=="C"){
+    ver2$all_2[i] <- "Narrow"
+  }
+  if(ver2$all_2[i]=="B"){
+    ver2$all_2[i] <- "Wide"
+  }
+  
+  if(ver2$all_3[i]=="A"){
+    ver2$all_3[i] <- "Default"
+  }
+  if(ver2$all_3[i]=="C"){
+    ver2$all_3[i] <- "Narrow"
+  }
+  if(ver2$all_3[i]=="B"){
+    ver2$all_3[i] <- "Wide"
+  }
+}
 
-### SALES_AB
+for(i in 1:dim(ver3)[1]){
+  if(ver3$all_1[i]=="B"){
+    ver3$all_1[i] <- "Default"
+  }
+  if(ver3$all_1[i]=="A"){
+    ver3$all_1[i] <- "Narrow"
+  }
+  if(ver3$all_1[i]=="C"){
+    ver3$all_1[i] <- "Wide"
+  }
+  
+  if(ver3$all_2[i]=="B"){
+    ver3$all_2[i] <- "Default"
+  }
+  if(ver3$all_2[i]=="A"){
+    ver3$all_2[i] <- "Narrow"
+  }
+  if(ver3$all_2[i]=="C"){
+    ver3$all_2[i] <- "Wide"
+  }
+  
+  if(ver3$all_3[i]=="B"){
+    ver3$all_3[i] <- "Default"
+  }
+  if(ver3$all_3[i]=="A"){
+    ver3$all_3[i] <- "Narrow"
+  }
+  if(ver3$all_3[i]=="C"){
+    ver3$all_3[i] <- "Wide"
+  }
+}
+
+for(i in 1:dim(ver4)[1]){
+  if(ver4$all_1[i]=="B"){
+    ver4$all_1[i] <- "Default"
+  }
+  if(ver4$all_1[i]=="C"){
+    ver4$all_1[i] <- "Narrow"
+  }
+  if(ver4$all_1[i]=="A"){
+    ver4$all_1[i] <- "Wide"
+  }
+  
+  if(ver4$all_2[i]=="B"){
+    ver4$all_2[i] <- "Default"
+  }
+  if(ver4$all_2[i]=="C"){
+    ver4$all_2[i] <- "Narrow"
+  }
+  if(ver4$all_2[i]=="A"){
+    ver4$all_2[i] <- "Wide"
+  }
+  
+  if(ver4$all_3[i]=="B"){
+    ver4$all_3[i] <- "Default"
+  }
+  if(ver4$all_3[i]=="C"){
+    ver4$all_3[i] <- "Narrow"
+  }
+  if(ver4$all_3[i]=="A"){
+    ver4$all_3[i] <- "Wide"
+  }
+}
+
+ver5$all_1[is.na(ver5$all_1)] <- "none"
+
+for(i in 1:dim(ver5)[1]){
+  
+  if(ver5$all_1[i]=="C"){
+    ver5$all_1[i] <- "Default"
+  }
+  if(ver5$all_1[i]=="A"){
+    ver5$all_1[i] <- "Narrow"
+  }
+  if(ver5$all_1[i]=="B"){
+    ver5$all_1[i] <- "Wide"
+  }
+  
+  if(ver5$all_2[i]=="C"){
+    ver5$all_2[i] <- "Default"
+  }
+  if(ver5$all_2[i]=="A"){
+    ver5$all_2[i] <- "Narrow"
+  }
+  if(ver5$all_2[i]=="B"){
+    ver5$all_2[i] <- "Wide"
+  }
+  
+  if(ver5$all_3[i]=="C"){
+    ver5$all_3[i] <- "Default"
+  }
+  if(ver5$all_3[i]=="A"){
+    ver5$all_3[i] <- "Narrow"
+  }
+  if(ver5$all_3[i]=="B"){
+    ver5$all_3[i] <- "Wide"
+  }
+}
+
+for(i in 1:dim(ver6)[1]){
+  if(ver6$all_1[i]=="C"){
+    ver6$all_1[i] <- "Default"
+  }
+  if(ver6$all_1[i]=="B"){
+    ver6$all_1[i] <- "Narrow"
+  }
+  if(ver6$all_1[i]=="A"){
+    ver6$all_1[i] <- "Wide"
+  }
+  
+  if(ver6$all_2[i]=="C"){
+    ver6$all_2[i] <- "Default"
+  }
+  if(ver6$all_2[i]=="B"){
+    ver6$all_2[i] <- "Narrow"
+  }
+  if(ver6$all_2[i]=="A"){
+    ver6$all_2[i] <- "Wide"
+  }
+  
+  if(ver6$all_3[i]=="C"){
+    ver6$all_3[i] <- "Default"
+  }
+  if(ver6$all_3[i]=="B"){
+    ver6$all_3[i] <- "Narrow"
+  }
+  if(ver6$all_3[i]=="A"){
+    ver6$all_3[i] <- "Wide"
+  }
+}
+
+for(i in c(unique(def_ratio$uni), unique(nar_ratio$uni), unique(wid_ratio$uni))){
+  assign(paste0(i, "_def"), def_ratio[which(def_ratio$uni==i),])
+  assign(paste0(i, "_nar"), nar_ratio[which(nar_ratio$uni==i),])
+  assign(paste0(i, "_wid"), wid_ratio[which(wid_ratio$uni==i),])
+}
+
+Soc_sci_def <- `Social Sciences_def`
+Soc_sci_nar <- `Social Sciences_nar`
+Soc_sci_wid <- `Social Sciences_wid`
+
+Sus_geog_def <- `Sustainability/geological science_def`
+Sus_geog_nar <- `Sustainability/geological science_nar`
+Sus_geog_wid <- `Sustainability/geological science_wid`
+
+stem_def <- rbind(Science_def, Technology_def, Engineering_def, Maths_def, Medicine_def, Architecture_def)
+soc_sci_def <- rbind(psychology_def, Soc_sci_def, Sus_geog_def, Criminology_def)
+hum_def <- rbind(Humanities_def, Geography_def)
+
+stem_nar <- rbind(Science_nar, Technology_nar, Engineering_nar, Maths_nar, Medicine_nar, Architecture_nar)
+soc_sci_nar <- rbind(psychology_nar, Soc_sci_nar, Sus_geog_nar, Criminology_nar)
+hum_nar <- rbind(Humanities_nar, Geography_nar)
+
+stem_wid <- rbind(Science_wid, Technology_wid, Engineering_wid, Maths_wid, Medicine_wid, Architecture_wid)
+soc_sci_wid <- rbind(psychology_wid, Soc_sci_wid, Sus_geog_wid, Criminology_wid)
+hum_wid <- rbind(Humanities_wid, Geography_wid)
+
+
+comp_ratio_all <- rbind(ver1[,c(4:7, 31:33)], ver2[,c(4:7, 31:33)], ver3[,c(4:7, 31:33)], ver4[,c(4:7, 31:33)], ver5[,c(4:7, 31:33)], ver6[,c(4:7, 31:33)])
+
+comp_ratio_r <- rbind(r1[,c(4:7, 31:33)], r2[,c(4:7, 31:33)], r3[,c(4:7, 31:33)], r4[,c(4:7, 31:33)], r5[,c(4:7, 31:33)], r6[,c(4:7, 31:33)])
+
+comp_ratio_py <- rbind(py1[,c(4:7, 31:33)], py2[,c(4:7, 31:33)], py3[,c(4:7, 31:33)], py4[,c(4:7, 31:33)], py5[,c(4:7, 31:33)], py6[,c(4:7, 31:33)])
+ 
+def_first <- rbind(ver1[,c(4:7, 22:24)], ver2[,c(4:7, 22:24)])
+nar_first <- rbind(ver3[,c(4:7, 22:24)], ver4[,c(4:7, 22:24)])
+wid_first <- rbind(ver5[,c(4:7, 22:24)], ver6[,c(4:7, 22:24)])
+
+###### STACKED ######
+vir_stacked <- rbind(ver1[,c(4:7, 34:37)], ver5[,c(4:7, 38:41)])
+def_stacked <- rbind(ver2[,c(4:7, 34:37)], ver3[,c(4:7, 38:41)])
+gr_stacked <- rbind(ver4[,c(4:7, 34:37)], ver6[,c(4:7, 38:41)])
+
+vir_grouped <- rbind(ver1[,c(4:7, 38:41)], ver5[,c(4:7, 34:37)])
+def_grouped <- rbind(ver2[,c(4:7, 38:41)], ver3[,c(4:7, 34:37)])
+gr_grouped <- rbind(ver4[,c(4:7, 38:41)], ver6[,c(4:7, 34:37)])
+
+vir_stacked_r <- rbind(r1[,c(4:7, 34:37)], r5[,c(4:7, 38:41)])
+def_stacked_r <- rbind(r2[,c(4:7, 34:37)], r3[,c(4:7, 38:41)])
+gr_stacked_r <- rbind(r4[,c(4:7, 34:37)], r6[,c(4:7, 38:41)])
+
+vir_grouped_r <- rbind(r1[,c(4:7, 38:41)], r5[,c(4:7, 34:37)])
+def_grouped_r <- rbind(r2[,c(4:7, 38:41)], r3[,c(4:7, 34:37)])
+gr_grouped_r <- rbind(r4[,c(4:7, 38:41)], r6[,c(4:7, 34:37)])
+
+vir_stacked_py <- rbind(py1[,c(4:7, 34:37)], py5[,c(4:7, 38:41)])
+def_stacked_py <- rbind(py2[,c(4:7, 34:37)], py3[,c(4:7, 38:41)])
+gr_stacked_py <- rbind(py4[,c(4:7, 34:37)], py6[,c(4:7, 38:41)])
+
+vir_grouped_py <- rbind(py1[,c(4:7, 38:41)], py5[,c(4:7, 34:37)])
+def_grouped_py <- rbind(py2[,c(4:7, 38:41)], py3[,c(4:7, 34:37)])
+gr_grouped_py <- rbind(py4[,c(4:7, 38:41)], py6[,c(4:7, 34:37)])
+
+set_a <- ver1[,c(4:9, 42:44)]
+set_b <- ver2[,c(4:9, 42:44)]
+set_c <- ver3[,c(4:9, 42:44)]
+set_d <- ver4[,c(4:9, 42:44)]
+set_e <- ver5[,c(4:9, 42:44)]
+set_f <- ver6[,c(4:9, 42:44)]
+
+set_a_r <- r1[,c(4:9, 42:44)]
+set_b_r <- r2[,c(4:9, 42:44)]
+set_c_r <- r3[,c(4:9, 42:44)]
+set_d_r <- r4[,c(4:9, 42:44)]
+set_e_r <- r5[,c(4:9, 42:44)]
+set_f_r <- r6[,c(4:9, 42:44)]
+
+set_a_py <- py1[,c(4:9, 42:44)]
+set_b_py <- py2[,c(4:9, 42:44)]
+set_c_py <- py3[,c(4:9, 42:44)]
+set_d_py <- py4[,c(4:9, 42:44)]
+set_e_py <- py5[,c(4:9, 42:44)]
+set_f_py <- py6[,c(4:9, 42:44)]
+
+###### SALES_AB ######
 ab_sep <- rbind(ver1[,c(4:7, 45:47)], ver2[,c(4:7, 45:47)], ver3[,c(4:7, 48:50)], ver4[,c(4:7, 51:53)], ver5[,c(4:7, 48:50)], ver6[,c(4:7, 51:53)])
 
 ab_trn <- rbind(ver1[,c(4:7, 48:50)], ver2[,c(4:7, 51:53)], ver3[,c(4:7, 45:47)], ver4[,c(4:7, 45:47)], ver5[,c(4:7, 51:53)], ver6[,c(4:7, 48:50)])
@@ -485,691 +820,976 @@ ab_trn <- rbind(ver1[,c(4:7, 48:50)], ver2[,c(4:7, 51:53)], ver3[,c(4:7, 45:47)]
 ab_zero <- rbind(ver1[,c(4:7, 51:53)], ver2[,c(4:7, 48:50)], ver3[,c(4:7, 51:53)], ver4[,c(4:7, 48:50)], ver5[,c(4:7, 45:47)], ver6[,c(4:7, 45:47)])
 
 
-### SALES_CD
+###### SALES_CD ######
 cd_trn <- rbind(ver1[,c(4:7, 54)], ver2[,c(4:7, 54)], ver3[,c(4:7, 55)], ver4[,c(4:7, 54)], ver5[,c(4:7, 55)], ver6[,c(4:7, 55)])
 
 cd_zro <- rbind(ver1[,c(4:7, 55)], ver2[,c(4:7, 55)], ver3[,c(4:7, 54)], ver4[,c(4:7, 55)], ver5[,c(4:7, 54)], ver6[,c(4:7, 54)])
+```
 
+This chapter will discuss basic univariate analysis of the survey results, including summary statistics and univariate testing for the whole population as well as the subsetting for the programming language used and degree type. Additionally, subsets will be created considering only the first plot shown for each question, drawing comparisons between responses for these plots themselves without influence of the others. The analysis will be performed in R version R version 4.0.2 [@R].
 
+In terms of testing, Shapiro-Wilk tests will be applied with the `shapiro.test()` function to gauge whether the data sets can be considered normally distributed and thus whether parametric T-Tests are suitable for either one-sample or paired comparisons, for the Shapiro-Wilk test, the alternative hypothesis is that the data is not normally distributed. Failing he normality condition, a symmetry test will be administered via the `symmetry.test()` function from the package `lawstat` [@lawstat], and providing there is insufficient evidence to reject the null hypothesis that the data is symmetric, a Mann-Whitney-Wilcoxon (MWW) test will be used. If there is sufficient evidence that data proves neither symmetric nor normally distributed, sign tests will be applied. MWW will also be used for two sample testing where perhaps a sign test would be most appropriate, but cannot be used as the samples are of different sizes.
+
+The sample sizes are 70, 38 and 32 for the whole population, R subgroup and Python subgroup, respectively before removing NA of invalid values. The sample means and medians will be notated as $\bar{x}$ and $\tilde{x}$, respectively.
+
+\section{American Ninja Warrior - Part 1}
+This part of the survey assess the effect of truncated and logarithmic scaling on bar plots perception and interpretation.
+
+The final question in part 1 of the survey, \textit{'In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?'} will not be considered as it is similar to the previous questions, and responses ranged in form, between percentages and decimals, and it can not just be assumed that all the decimals can be converted to percentages; for example a value of 0.5 could be the decimal value for $50\%$, or the respondent could have meant this as $0.5\%$.
+
+\subsection{Effect of Y-Axis Truncation}
+In general, truncating the y-axis had less of an effect than anticipated. In question 1, \textit{"Approximately many times would you say the ‘Salmon Ladder’ was used?"}, for which the true value was 41, the distribution of responses for the truncated plot ($\bar{x} = 41.35$) as compared to that of the control plot responses ($\bar{x}=41.21$) shows a small difference, with the mean perceived value of the bar being slightly higher for the truncated plot. The median for both of these is 41, showing that both distributions are centered around the true value of 41. The control and truncated plots have contextually fairly small variances of 0.752 and 0.753 respectively, depicting both that there is limited variation in the responses and most of the observations lie fairly close to the respective means. The variances are also quite similar, showing that the distributions appear fairly similar, as emphasised by observing the below density plot.
+
+```{r echo=F}
+control_1 <- ctrl_y_scale$con_1
+control_1[which(control_1 == "41/42")] <- 41.5
+control_1 <- na.exclude(as.numeric(control_1))
+
+truncated_1 <- as.numeric(trnc_y_scale$trn_1)
+
+logarithmic_1 <- log_y_scale$log_1
+logarithmic_1[which(logarithmic_1 == "Don't know")] <- NA
+logarithmic_1[which(logarithmic_1 == "Next to none.")] <- NA
+logarithmic_1[which(logarithmic_1 == "10^15")] <- 1e+15
+logarithmic_1[which(logarithmic_1 == "10^9")] <- 1e+9
+logarithmic_1 <- as.numeric(na.exclude(logarithmic_1))
+
+y_scale_1_all <- cbind(control_1, truncated_1, logarithmic_1)
+```
+
+```{r fig.cap = "Density plot showing distributions of responses regarding the control and truncated plots for the question 1"}
+
+brks <- c("Control", "Truncated")
+vals <- c("#1c9e77", "#d95f02")
+
+ggplot() +
+  geom_density(data = as.data.frame(control_1), aes(x=control_1, col = "Control"))+
+  geom_density(data = as.data.frame(truncated_1), aes(x=truncated_1, col = "Truncated"))+
+  labs(x="Response", y="Density")+
+  scale_colour_manual(name = " ", breaks = brks, values = vals)+
+  theme_classic()
+```
+
+Performing a dependent-samples sign test comparing these two sets of responses confirms that there is no significant difference ($p = 0.1877$) in the response distributions. However, the one sample sign tests show that there is not sufficient evidence to suggest the control plot responses differ from the true value of 41 ($p = 0.1214$), but there is evidence to accept the hypothesis that the truncated plot responses differ from the true value ($p = 0.0026$). This shows that, while there is insufficient evidence from sign testing to suggest a statistically difference in the responses for the two plots, the location of the truncated plot responses may be slightly further from the true value than the control, and it is confirmed by a one sided sign test with an alternative hypothesis that the true median of truncated responses is greater than 41 ($p=0.0002$). This gives evidence that the truncated plot results in a slight overestimation in reading of the bar height as compared to the true value of 41. Note that in the responses for the control plot for question 1, there was a response of "41/41", which was taken to be 41.5. 
+
+In question 2, \textit{'Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?'}, the set of responses for the truncated plot ($\bar{x} = 5.87$, $\tilde{x} = 6$) is considered significantly different by a dependent-samples sign test from the control plot responses ($\bar{x} = 5.36$, $\tilde{x} = 5$). By eye, the average values do not seem too different between the two plot types, although the p-value of the sign test ($p = 0.00019$) shows that there is in fact a statistically significant difference. The perceived difference for the truncated plot being rated higher on average than for the control plot provides evidence to accept the hypothesis that using a truncated scale can cause differences in bar height to appear larger, once again this is confirmed by a one-sided sign test ($p=9.554e-05$), with the alternative hypothesis that the true median of truncated responses is greater than that of the control responses. 
+
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 2"}
+control_2 <- ctrl_y_scale$con_2
+truncated_2 <- trnc_y_scale$trn_2
+resp <- c(control_2, truncated_2)
+type <- c(rep('Control', 70), rep('Truncated', 70)) 
+stats_2 <- data.frame(resp, type)
+
+ggplot(stats_2)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the Whole Population")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Truncated'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme_classic()
 
 ```
 
-This chapter will discuss basic univariate analysis and summary statistics from the survey results, alongside what could be inferred from these. We will look at each section individually and perform multiple initial comparisons whereby we subset for various factors, such as the language used to make the plots, and the order in which plots have been presented.
+
+The spread for the truncated and control plot responses are slightly skewed to the right, depicting that the subjective view on the difference between the bar heights was that it was in general on the larger side. Looking at the bar heights, for the responses of 4 and 5 the control plot bars are higher, and vice versa for the truncated plot response bars. This again emphasises the evidence to support the hypothesis that truncation leads to larger perceived difference.
+
+Question 3 of part 1, \textit{'Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?'}, asks a similar question to question 2, but asks respondents to judge the difference for bars on opposite ends of the plot as opposed to next to each. Again, the by eye comparison shows not a massive difference between distributions of responses for the control ($\bar{x}=3.12$, $\tilde{x}=3$) and truncated ($\bar{x}=3.12$, $\tilde{x}=3$) plots, although the sign test shows that the there is evidence to suggest that the truncated plot responses are in fact on average greater than for the control plot ($p=4.624e-06$). figure[?] shows the distribution of responses.
+
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3"}
+control_3 <- ctrl_y_scale$con_3
+truncated_3 <- trnc_y_scale$trn_3
+resp <- c(control_3, truncated_3)
+type <- c(rep('Control', 70), rep('Truncated', 70)) 
+stats_3 <- data.frame(resp, type)
+
+ggplot(stats_3)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the Whole Population")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Truncated'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme_classic()
+```
+The response distributions, conversely to question 2, now seem skewed more to the left. However there is a similarity in the way that for the lower ratings of 2 and 3, the control plot response bars dominate, and for the responses of 4 and 5 the opposite is true.
+
+Overall, it seems that the use of truncation has a small but statistically significant effect on perception of height difference between bars, with respondents tending to judge the difference as slightly larger than for the control plot, although this effect is smaller than initially anticipated, and larger for bars that are further apart. In terms of reading values from bars, the truncation did not have a statistically significant effect when comparing the two distributions, however in one sample testing the truncated plot responses did differ significantly from the true value.
+
+When considering the language subgroups, note that there is a discrepancy here between languages in terms of the axis tick breaks and labeling, with the R plot being incremented in steps of 10 for both the control and truncated plots and the Python being more granular in steps of 5 for the control and steps of 2.5 for the truncated.
+
+Consider question 1. Comparing the two language subgroups for the truncated plot, the distributions for both the R ($\bar{x} = 41.56$, $\tilde{x} = 41$) and Python ($\bar{x} = 41.01$, $\tilde{x} = 41$) responses to question 1 appear similar in location to those of both each other and the whole population  ($\bar{x} = 41.35$, $\tilde{x} = 41$).
+
+Comparisons via MWW testing show that the responses related to the control plot differ statistically significantly between the two language cohorts ($p=0.00012$), and similar for the truncated plot responses ($p=0.02163$), where the tests were performed comparing first the R and Python responses for the control plot, and then for the truncated. 
+
+A sign test shows sufficient evidence that the R subgroup responses relating to the truncated plot differ from the true value ($p = 0.0004$), whereas there is insufficient evidence when applying a MWW test to the Python responses ($p = 0.718$). Similarly, the R subgroup's responses in relation to the control plot statistically significantly differ from the true value ($p=7.629e-05$), but the Python subgroup's do not ($p=0.1185$). This could potentially be a result of the less granulated R plot scaling, due to the reduced precision.
 
 
-\subsection{2.1.1  Ninja Warrior - Part 1}
+```{r fig.cap = "Density plot showing distributions of responses regarding the control and truncated plots for the question 1"}
+control_1_r <- ctrl_y_scale_r$con_1
+control_1_r[which(control_1_r == "41/42")] <- 41.5
+control_1_r <- na.exclude(as.numeric(control_1_r))
 
-The first part of the survey consisted of showing the respondents three bar plots representing data regarding how many times four obstacles were used throughout 10 seasons of American Ninja Warrior. The three presented visualisations all showed the same raw data, but used three different y-axis scalings in order to assess whether changing this scale in these ways affects viewer interpretation. The questions asked were designed to test the effect of scale on both reading off exact values and gauging differences in values. Each respondent was asked four questions; two free form answer and two multiple choice. The use of free form answers did result in occasional non-valid answers, such as statements along the lines of "Don't know" when a number was required. Many people also opted to write a number between 0 and 1 when a percentage was required, but these will not be considered invalid, as there were a large number of responses of this type, but rather we will assume that any number between 0 and 1 is considered as the corresponding percentage. Ie. an answer of 0.5 will be considered as 50%. 
+truncated_1_r <- as.numeric(trnc_y_scale_r$trn_1)
 
-First we will look at the summary statistics for each of the four questions laid out above for the whole population, before sub-setting for language and survey version number. Each table of summary statistics presents columns for the three plot types; the control plot, the logarithmic plot, and the truncated plot, respectively in that order.
+control_1_py <- ctrl_y_scale_py$con_1
+control_1_py[which(control_1_py == "41/42")] <- 41.5
+control_1_py <- na.exclude(as.numeric(control_1_py))
 
-**Approximately many times would you say the 'Salmon Ladder' was used?**
-\thispagestyle{headings}
+truncated_1_py <- as.numeric(trnc_y_scale_py$trn_1)
 
-This question, the first of the survey, asked participants to type the how many times Salmon Ladder was used, based on the bar plot. The `correct' answer, or rather the true height of the corresponding bar, was 42. There were three invalid answers in these responses; one for the R versions of the survey and two for the Python versions. The invalid response in the R survey was '41/42', which we will take to be 41.5, and the invalid Python responses were given as 'Don't know' and 'Next to none.'. These two will be considered as 'NA' responses and thus discounted from the analysis of this question. These responses will. however, still be useful in our investigation; both were entered for the logarithmically scaled plot made in Python. The default log scaling in Python uses standard form notation, which perhaps these two participants were less familiar with. Similarly, there were two answers of '10^15' and '10^9', again potentially pointing towards the respondents being less familiar with this notation. 
+brks <- c("Control", "Truncated")
+vals <- c("#1c9e77", "#d95f02")
 
-Below we see the summary statistics for the overall population, where we have taken the '41/42' response as 41.5 and omitted the two invalid text answers as well as an additional NA response and thus obtain a sample size of 67.
+p<-ggplot() +
+  geom_density(data = as.data.frame(control_1_r), aes(x=control_1_r, col = "Control"))+
+  geom_density(data = as.data.frame(truncated_1_r), aes(x=truncated_1_r, col = "Truncated"))+
+  labs(x="Response", y="Density")+
+  scale_colour_manual(name = " ", breaks = brks, values = vals)+
+  theme(title = "R Subgroup")+
+  theme_classic()
 
-```{r echo=F}
-con_1_all <- ctrl_y_scale$con_1
-con_1_all[which(con_1_all == "41/42")] <- 41.5 # take midpoint of two values
-con_1_all <- as.numeric(con_1_all)
+
+q<-ggplot() +
+  geom_density(data = as.data.frame(control_1_py), aes(x=control_1_py, col = "Control"))+
+  geom_density(data = as.data.frame(truncated_1_py), aes(x=truncated_1_py, col = "Truncated"))+
+  labs(x="Response", y="Density")+
+  scale_colour_manual(name = " ", breaks = brks, values = vals)+
+  theme(title = "Python Subgroup")+
+  theme_classic()
+
+plot_grid(p, q)
+```
+The distributions for the control and truncated plot responses for the R subgroup are fairly similar to the whole population, although the peaks for the logarithmic plot responses are marginally lower. The distribution of the truncated plots is unexpected from lokking at the numbers, and more 'chaotic'. This shows potentially more variation in the responses.
+
+
+For question 2 it is similarly seen that the language used does not have a statistically significant impact on the response for the truncated plot, with means $5.500$ and $5.187$, and medians $6$ and $5$ respectively for R and Python for the control plot, and means $5.98$ and $5.84$ both with median $6$ for the truncated. Comparative testing with MWW gives $p=0.2199$ for the control plot and $0.9105$ for the truncated. Thus, the scale granulation or any other differing aspect of the plots does not seem to have a significant effect. See figure[?] for the distributions.
+
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 2, for the R and Python subgroups"}
+control_2_r <- ctrl_y_scale_r$con_2
+truncated_2_r <- trnc_y_scale_r$trn_2
+resp <- c(control_2_r, truncated_2_r)
+type <- c(rep('Control', 38), rep('Truncated', 38)) 
+stats_2_r <- data.frame(resp, type)
+
+control_2_py <- ctrl_y_scale_py$con_2
+truncated_2_py <- trnc_y_scale_py$trn_2
+resp <- c(control_2_py, truncated_2_py)
+type <- c(rep('Control', 32), rep('Truncated', 32)) 
+stats_2_py <- data.frame(resp, type)
+
+p <- ggplot(stats_2_r)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "R Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Truncated'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme(plot.title = element_text(size=10))+
+  theme_classic()
+
+q <- ggplot(stats_2_py)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Python Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Truncated'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme(plot.title = element_text(size=10))+
+  theme_classic()
+
+plot_grid(p, q)
+```
+
+For question 3 (see figure [?]), it is again seen that the responses in relation to the R version of truncated plot ($\bar{x} = 3.76$, $\tilde{x} = 4$) do not differ significantly to those related to the Python version ($\bar{x} = 3.78$, $\tilde{x} = 4$), with a two sample MWW p-value of 0.9708. Similarly the control plot, there is little difference between the R ($\bar{x} = 3.342$, $\tilde{x} = 3$) and the Python ($\bar{x} = 2.87$, $\tilde{x} = 3$) versions of the plot, again with am MWW p-value 0f 0.1465.
+
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3, for the R and Python subgroups"}
+control_3_r <- ctrl_y_scale_r$con_3
+truncated_3_r <- trnc_y_scale_r$trn_3
+resp <- c(control_3_r, truncated_3_r)
+type <- c(rep('Control', 38), rep('Truncated', 38)) 
+stats_3_r <- data.frame(resp, type)
+
+control_3_py <- ctrl_y_scale_py$con_3
+truncated_3_py <- trnc_y_scale_py$trn_3
+resp <- c(control_3_py, truncated_3_py)
+type <- c(rep('Control', 32), rep('Truncated', 32)) 
+stats_3_py <- data.frame(resp, type)
+
+p <- ggplot(stats_3_r)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "R Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Truncated'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme(plot.title = element_text(size=10))+
+  theme_classic()
+
+q <- ggplot(stats_3_py)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Python Subgroup")+
+  scale_fill_brewer(palette="Dark2", labels = c('Control', 'Truncated'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme(plot.title = element_text(size=10))+
+  theme_classic()
+
+plot_grid(p, q)
+```
+Figure[?] shows both distributions, with the R appearing more positively skewed and the python looking fairly symmetric for both plot types, which was also found when performing symmetry tests. For the Python it can also easily be seen that the bars for the truncated plot responses seems 'shifted' to the right slightly as compared to the control.
+
+Now considering subsetting for the respondents that saw the truncated plot first out of the three. Note that 25 saw the control plot first and 23 saw the truncated plot first.
+
+The distribution of responses for the truncated plot in question 1 shows a slightly higher mean ($41.696$) and median ($41.25$) than for the whole population, but a MWW test shows that the difference is not significant ($p=0.1379$). Similarly for questions 2 and 3, performing tests on the truncated plot for respondents who saw this first as compared to the truncated plot responses for the whole population result in p-values of $0.2614$ and $0.3145$, providing evidence that the plot order doesn't have much of an impact on perception for the truncated plot.
+
+The conclusions appear to be consistent with results from the @YANG2021 paper, in which the researchers, similar to this survey, showed participants a series of control bar plots alongside those with a truncated axis, and concluded that the difference in values for the truncated axis were perceived to be larger than those of the control plots.
+
+
+\subsection{Effect of Logarithmic Scaling}
+
+
+
+
+```{r}
+control_1 <- ctrl_y_scale$con_1
+control_1[which(control_1 == "41/42")] <- # take midpoint of two values
+control_1 <- na.exclude(as.numeric(control_1))
+
+truncated_1 <- as.numeric(trnc_y_scale$trn_1)
+
+logarithmic_1 <- log_y_scale$log_1
+logarithmic_1[which(logarithmic_1 == "Don't know")] <- NA
+logarithmic_1[which(logarithmic_1 == "Next to none.")] <- NA
+logarithmic_1[which(logarithmic_1 == "10^15")] <- NA
+logarithmic_1[which(logarithmic_1 == "10^9")] <- NA
+logarithmic_1 <- as.numeric(na.exclude(logarithmic_1))
+logarithmic_1 <- logarithmic_1[which(logarithmic_1 >= 14.25)]
+logarithmic_1 <- logarithmic_1[which(logarithmic_1 <= 60.75)]
+
+y_scale_1_all <- cbind(control_1, truncated_1, logarithmic_1)
+```
+
+
+Within the logarithmic responses, there were two invalid responses, given as 'Don't know' and 'Next to none.'. These will be considered as 'NA' responses and discounted from the quantitative analysis, however they do provide useful qualitative insights into how the respondents reacted to the plots, particularly as both were entered for the logarithmically scaled plot made in Python. 
+
+The mean of the responses for the logarithmically-scaled plot, on the other hand, was magnitudes higher than the true value at 1.493e+13, although with a median of 35; lower than the median response of the control and truncated plots responses. The high magnitude is the result of two answers of '10^15' and '10^9', both again for the python version of the plot.
+
+The default logarithmic scaling in Python uses standard form notation, which perhaps the two participants who entered the high magnitude answers were less exposed to and not as familiar with. Looking at the degree subjects for these respondents, it is observed that they study Social Sciences and Psychology, respectively. This could add to the idea that they are less familiar with this notation as it is more commonly used in mathematical and physical science disciplines. One of the respondents also rated their numerical skills at 1/5, showing they feel that numerical skill is not their specialty. The other rated their numeric skills at 4/5, showing that even with a good self-perceived level of numerical skill, standard form could be considered misleading.
+
+This should perhaps be considered when designing visualisations; the creator of the visualisations may find the logarithmic scale or standard form more effective in showing the data, but they should consider the target audience. Are the audience going to be familiar with this? If, for example, visualisations are being published in a paper targeted at academics in a subject likely to use such scalings often and understand them, this may be a good way to depict the data. However, using this in something such as an advertising campaign could mislead the public, causing them to either over or under estimate values. As previously discussed, however, this is often done deliberately in order to push the message the creator wishes to sell. 
+
+The variance in the responses for the logarithmic plot is also high, with value $1.492 \times 10^{28}$, showing that a large amount of the observations differ from the very high mean, and considering this alongside the lower median may point towards many of the respondents either giving an accurate response or even underestimating. Furthering this point, the IQR for the logarithmic responses is the interval $[30, 40.5]$, which sits below the true value, displaying that over 50% of the observations in the total population actually underestimate the value.
+
+The distribution of responses in the R subgroup also shows on average a slight underestimation ($\bar{x}= 39.73$, $\tilde{x} = 35$) and, as expected, vast overestimation for the Python version ($\bar{x}= 39.73$, $\tilde{x} = 35$). This shows that, with a linearly notated logarithmic scale, the scale may cause underestimation, but this is counteracted by using a standard form notation. 
+
+
+It can be considered to follow the convention of values that have value outside the range $[Q1 - 1.5 \times IQR, Q3 + 1.5 \times IQR]$, where $Q1$ and $Q3$ are the first and third quartiles, which here would be the range $[14.25, 60.75]$ and results in a sample size of 59. Consider now the response distribution for the logarithmically-scaled plot, after removing these responses, for which figure[?] gives the density plot. Both plots show the response distribution of the outlier-removed set of responses, with the providing a comparison with the distribution of responses relating to the control plot.
+```{r, fig.cap = "Density plot showing distributions of responses regarding the control and logarithmic scaled plot, after removing values of greater or equal to 1000"}
+brks <- c("Control", "Logarithmic")
+vals <- c("#1c9e77",  "#7570b3")
+y_scale_1_all <- cbind(control_1, logarithmic_1)
+y_scale_1_all <- as.data.frame(y_scale_1_all)
+
+ p <- ggplot() +
+  geom_density(data = as.data.frame(logarithmic_1), aes(x=logarithmic_1, col = "Logarithmic"))+
+  geom_density(data = as.data.frame(control_1), aes(x=control_1, col = "Control"))+
+  labs(x="Response", y="Density")+
+  scale_colour_manual(name = " ", breaks = brks, values = vals)+
+  theme_classic()
  
-trn_1_all <- as.numeric(trnc_y_scale$trn_1)
-
-log_1_all <- log_y_scale$log_1
-log_1_all[which(log_1_all == "Don't know")] <- NA
-log_1_all[which(log_1_all == "Next to none.")] <- NA
-log_1_all[which(log_1_all == "10^15")] <- 1e+15
-log_1_all[which(log_1_all == "10^9")] <- 1e+9
-log_1_all <- as.numeric(log_1_all)
-
-y_scale_1_all <- na.exclude(cbind(con_1_all, log_1_all, trn_1_all))
-```
-
-The table below presents the summary statistics for the total population for the first question. 
-
-```{r echo=F}
-noquote(paste("n = ", dim(y_scale_1_all)[1]))
-summary(y_scale_1_all)
-```
-
-We can see that for the control and truncated plots we have means 41.21 and 41.35 respectively and both have median 41, which at first glance do not appear significantly different from the true value of 42. To investigate this further we will run some statistical tests. To decide if z-tests are applicable here we will first look at the distribution of these variables before running Shapiro-Wilk tests of normality. Below we can see a density plot depicting the distributions of the values for the control and truncated plots.
-
-```{r echo=F}
-ggplot() +
-  geom_density(data = as.data.frame(con_1_all), aes(x=con_1_all, col = "Control"))+
-  geom_density(data = as.data.frame(trn_1_all), aes(x=trn_1_all, col = "Truncated"))+
+q <- ggplot() +
+  geom_density(data = as.data.frame(logarithmic_1), aes(x=logarithmic_1, col = "Logarithmic"))+
   labs(x="Response", y="Density")+
-  annotate("text", x=44, y = 0.66, label="Approximately many times would you say the", size = 5)+
-  annotate("text", x=43.7, y = 0.62, label="'Salmon Ladder' was used?", size = 5)+
-  annotate("text", x=43.7, y = 0.58, label="Whole population (n=70)", size = 4)+
-  scale_colour_brewer(palette="Dark2", labels = c('Control','Truncated'))+
+  scale_colour_manual(name = " ", breaks = brks, values = vals)+
   theme_classic()
 
-```
-The two distributions are very similarly shaped, and neither appears similar to a Gaussian curve, hence it is likely that they will violate the normality condition of a z-test. To confirm this hypothesis, Shapiro-Wilk tests for normality are performed. 
-\textbf{Control Plot}
-```{r echo=F}
-shapiro.test(con_1_all)
-```
-
-\textbf{Truncated Plot}
-```{r echo=F}
-shapiro.test(trn_1_all)
-```
-
-For both the control plot and truncated plot responses, the Shapiro-Wilk tests give p << 0.05, and thus we reject the hypothesis that these data are normal, and so they do, in fact, violate the normality condition required for a one-sample z-test. However, we can also calculate whether the sample size of 70 dictates that we may still use the z-test as an approximation. 
-
-One alternative to using a t-test is to use a Wilcoxon-Mann-Whitney (WMW) test. Note however that this test requires a symmetric distribution with even spread of values about the median. We see below, and from the density plot, that this isn't the case.
-
-\textbf{Control Plot}
-```{r}
-noquote(paste("Median:", median(con_1_all)))
-noquote(paste("Number of observations below median:", length(con_1_all[which(con_1_all < median(con_1_all))])))
-noquote(paste("Number of observations above median:", length(con_1_all[which(con_1_all > median(con_1_all))])))
-noquote(paste("Number of observations at median:", length(con_1_all[which(con_1_all == median(con_1_all))])))
-```
-
-
-\textbf{Control Plot}
-```{r}
-noquote(paste("Median:", median(trn_1_all)))
-noquote(paste("Number of observations below median:", length(trn_1_all[which(trn_1_all < median(trn_1_all))])))
-noquote(paste("Number of observations above median:", length(trn_1_all[which(trn_1_all > median(trn_1_all))])))
-noquote(paste("Number of observations at median:", length(trn_1_all[which(trn_1_all == median(trn_1_all))])))
-```
-
-
-We now move on to consider the one-sample sign test. This is less powerful than the t-test and WMW test, but is required as the data violates the conditions for these two test.
-
-
-However using a two-sided Wilcoxon test with \(\mu = 42\) we achieve \(p << 0.05\) for both of the sets of responses, signifying that we do in fact see a statistically significant difference in the location of these responses from the true value. Furthermore, applying one sided one sided tests, we see that the sample value is likely to be less than the true value, meaning respondents tended to underestimate. It does, however, appear that there is not much difference between the average values of responses for each of the two plots, but this comparison will be discussed in a later chapter.
-
-
-\textbf{Sign tests for the control Plot}
-```{r echo=F}
-
-less <- length(con_1_all[which(con_1_all < median(con_1_all))])
-greater <- length(con_1_all[which(con_1_all > median(con_1_all))])
-
-binom.test(42, n=length(con_1_all), 0.5)
-
-binom.test(greater, n=length(con_1_all), 0.5)
-
-
-wilcox.test(con_1_all, mu=42, alt="l")
-wilcox.test(con_1_all, mu=42, alt="g")
-```
-
-\textbf{Wilcoxon tests for the truncated Plot}
-```{r echo=F}
-wilcox.test(trn_1_all, mu=42, alt="t")
-wilcox.test(trn_1_all, mu=42, alt="l")
-wilcox.test(trn_1_all, mu=42, alt="g")
-```
-
-
-
-
-```{r echo=F}
-ggplot() +
-  geom_density(data = as.data.frame(con_1_all), aes(x=con_1_all, col = "Control"))+  
-  geom_density(data = as.data.frame(log_1_all), aes(x=log_1_all, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(trn_1_all), aes(x=trn_1_all, col = "Truncated"))+
-
-  labs(x="Response", y="Density")+
-  annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
-  annotate("text", x=5e+14, y = 1.4, label="'Salmon Ladder' was used?", size = 5)+
-  annotate("text", x=5e+14, y = 1.3, label="Whole population (n=70)", size = 4)+
-  scale_colour_brewer(palette="Dark2", labels = c('Control','Truncated', 'Logarithmic'))+
-  theme_classic()
+plot_grid(p, q)
 
 ```
 
-For both of these we also have a minimum of 40 and maximum of 45, giving a range of 5. 
+The Python default of standard form notation appears to have confused certain respondents, who are perhaps not as used to seeing this notation, and there was a large range in the responses along with one person not even entering a number, but rather stating that they "Don't know", and another stating they believed the value was "Next to none". The "Next to none" entry is subjective, but could potentially be be assumed as a value close to 0, once again maybe as a result of standard form being less well known to this respondent.
 
-Now consider the values for the log plot. We see a much higher mean of 1.493e+13 which, on closer inspection of the languages (below), is attributed fully to the python versions of the plot. 
+The distribution of responses for question 2 is displayed in figure[?].
 
-\textbf{Summary statistics of the R versions}
-```{r echo=F}
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and logarithmic plots for question 2"}
 
-ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17)], r4[,c(4:7, 18:21)], r5[,c(4:7, 14:17)], r6[,c(4:7, 18:21)])
-log_y_scale_r <- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
-trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
+brks <- c("Control", "Logarithmic")
+vals <- c("#1c9e77",  "#7570b3")
 
-con_1_r <- ctrl_y_scale_r$con_1
-con_1_r[15] <- 41.5 # take midpoint of two values
-con_1_r <- as.numeric(con_1_r)
+control_2 <- ctrl_y_scale$con_2
+logarithmic_2 <- log_y_scale$log_2
 
-trn_1_r <- as.numeric(trnc_y_scale_r$trn_1)
-
-log_1_r <- log_y_scale_r$log_1
-
-y_scale_r <- cbind(con_1_r, log_1_r, trn_1_r)
-summary(y_scale_r)
-```
-
-```{r echo=F}
-ggplot() +
-  geom_density(data = as.data.frame(con_1_r), aes(x=con_1_r, col = "Control"))+  
-  geom_density(data = as.data.frame(log_1_r), aes(x=log_1_r, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(trn_1_r), aes(x=trn_1_r, col = "Truncated"))+
-
-  labs(x="Response", y="Density")+
-  #annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
-  #annotate("text", x=5e+14, y = 1.4, label="'Salmon Ladder' was used?", size = 5)+
-  #annotate("text", x=5e+14, y = 1.3, label="Whole population (n=70)", size = 4)+
-  scale_colour_brewer(palette="Dark2", labels = c('Control', 'Logarithmic', 'Truncated'))+
-  theme_classic()
-
-```
-
-```{r echo=F}
-
-log_1_r <- log_1_r[-which(log_1_r == 120)]
-
-ggplot() +
-  geom_density(data = as.data.frame(con_1_r), aes(x=con_1_r, col = "Control"))+  
-  geom_density(data = as.data.frame(log_1_r), aes(x=log_1_r, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(trn_1_r), aes(x=trn_1_r, col = "Truncated"))+
-
-  labs(x="Response", y="Density")+
-  #annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
-  #annotate("text", x=5e+14, y = 1.4, label="'Salmon Ladder' was used?", size = 5)+
-  #annotate("text", x=5e+14, y = 1.3, label="Whole population (n=70)", size = 4)+
-  scale_colour_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
-  theme_classic()
-
-```
-
-\textbf{Summary statistics of the Python versions}
-```{r echo=F}
-
-ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
-log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
-trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
-
-con_1_py <- ctrl_y_scale_py$con_1
-
-trn_1_py <- as.numeric(trnc_y_scale_py$trn_1)
-
-log_1_py <- log_y_scale_py$log_1
-log_1_py[which(log_1_py == "Don't know")] <- NA
-log_1_py[which(log_1_py == "Next to none.")] <- NA
-log_1_py[which(log_1_py == "10^15")] <- 1e+15
-log_1_py[which(log_1_py == "10^9")] <- 1e+9
-log_1_py <- as.numeric(log_1_py)
-
-
-y_scale_py <- cbind(con_1_py, log_1_py, trn_1_py)
-summary(y_scale_py)
-```
-
-The responses contributing very heavily to this very large mean were written as 10^15 and 10^9, alongside two responses of 1000 one of 100. This lends to the idea that using matplotlib's default standard form notation for the log scale may have misled some participants who perhaps are less familiar with standard form. Adding to this conclusion are the NA values, two of which were responses of "Don't know" and "Next to None.". Looking at the R version, we have a mean of 39.74 and median 35 which, after once again applying the Wilcoxon tests, shows statistically significant under-estimation of the value, but are much closer to the true value than that of the Python plot.
-
-
-```{r echo=F}
-ggplot() +
-  geom_density(data = as.data.frame(con_1_py), aes(x=con_1_py, col = "Control"))+  
-  geom_density(data = as.data.frame(log_1_py), aes(x=log_1_py, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(trn_1_py), aes(x=trn_1_py, col = "Truncated"))+
-
-  labs(x="Response", y="Density")+
-  #annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
-  #annotate("text", x=5e+14, y = 1.4, label="'Salmon Ladder' was used?", size = 5)+
-  #annotate("text", x=5e+14, y = 1.3, label="Whole population (n=70)", size = 4)+
-  scale_colour_brewer(palette="Dark2", labels = c('Control', 'Logarithmic','Truncated'))+
-  theme_classic()
-
-```
-```{r echo=F}
-
-log_1_py <- log_1_py[-which(log_1_py == 1e+15)]
-log_1_py <- log_1_py[-which(log_1_py == 1e+9)]
-
-
-ggplot() +
-  geom_density(data = as.data.frame(con_1_py), aes(x=con_1_py, col = "Control"))+  
-  geom_density(data = as.data.frame(log_1_py), aes(x=log_1_py, col = "Logarithmic"))+
-  geom_density(data = as.data.frame(trn_1_py), aes(x=trn_1_py, col = "Truncated"))+
-
-  labs(x="Response", y="Density")+
-  #annotate("text", x=5e+14, y = 1.5, label="Approximately many times would you say the", size = 5)+
-  #annotate("text", x=5e+14, y = 1.4, label="'Salmon Ladder' was used?", size = 5)+
-  #annotate("text", x=5e+14, y = 1.3, label="Whole population (n=70)", size = 4)+
-  scale_colour_brewer(palette="Dark2", labels = c('Control','Truncated', 'Logarithmic'))+
-  theme_classic()
-
-```
-
-
-\textbf{Wilcoxon tests for the R log Plot}
-```{r echo=F }
-wilcox.test(log_1_r, mu=42, alt="t")
-wilcox.test(log_1_r, mu=42, alt="l")
-wilcox.test(log_1_r, mu=42, alt="g")
-```
-
-
-\textbf{NA values for log plot data}
-```{r echo=F}
-index <- which(is.na(log_1_all))
-value <- log_y_scale$log_1[index]
-cbind(index, value)
-```
-
-```{r}
-
-con_first <- ver1[]
-
-```
-
-**Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?**
-Now we consider the results from the second question, in which the participants were asked to respond on a scale from 1-5. The density plot below depicts the distribution of results for each of the three plot types. We see that the distributions appear to once again be non-normal. 
-
-
-```{r echo=F}
-
-con_2_all <- ctrl_y_scale$con_2
-trn_2_all <- trnc_y_scale$trn_2
-log_2_all <- log_y_scale$log_2
-
-y_scale_2_all <- cbind(con_2_all, log_2_all, trn_2_all)
-
-ggplot() +
-  geom_density(data = as.data.frame(con_2_all), aes(x=con_2_all, col = "Control"))+
-  geom_density(data = as.data.frame(trn_2_all), aes(x=trn_2_all, col = "Truncated"))+ 
-  geom_density(data = as.data.frame(log_2_all), aes(x=log_2_all, col = "Log"))+
-  
-  annotate("text", x=4, y = 0.5, label="Approximately how much more than 'Log Grip'", size = 5)+
-  annotate("text", x=4, y = 0.47, label="would you say 'Salmon Ladder' was used?", size = 5)+
-  annotate("text", x=4, y = 0.44, label="Whole population (n=70)", size = 4)+
-  
-  labs(x="Response", y="Density")+
-  scale_colour_brewer(palette="Dark2", labels = c('Control', 'Truncated', 'Log'))+
-  theme_classic()
-
-```
-
-
-```{r echo=F}
-
-summary(y_scale_2_all)
-```
-An initial look at the table of summary statistics reveal means of 5.375, 3.671 and 5.871 respectively for the control, log and truncated plots, meaning that for the 'baseline' control plot participants, on average, judged the difference to be moderately significant, with the perceived difference being smaller for the log plot and larger for the truncated plot. This is consistent with results from [[[CITE chrome-extension://cbnaodkpfinfiipjblikofhlhlcickei/src/pdfviewer/web/viewer.html?file=file:///C:/Users/Katie/Downloads/YangVargasRestrepoStanleyMarsh%20(2020).pdf]]], in which the researchers, similar to this survey, showed participants a series of control bar plots alongside those with a truncated axis, and concluded that the difference in values for the truncated axis were perceived to be larger than those of the control plots. 
-
-
-The box plot shows these results for each plot type.
-
-```{r echo=F}
+y_scale_2_all <- cbind(control_2, logarithmic_2)
 y_scale_2_all <- as.data.frame(y_scale_2_all)
-vals <- c(y_scale_2_all$con_2_all, y_scale_2_all$log_2_all, y_scale_2_all$trn_2_all)
-type <- c(rep('Control', 70), rep('Log', 70), rep('Truncated', 70)) 
-stats_2 <- data.frame(vals, type)
+resp <- c(control_2, logarithmic_2)
+type <- c(rep('Control', 70), rep('Logarithmic', 70)) 
+stats_2 <- data.frame(resp, type)
 
-ggplot(data = stats_2, aes(x=type, y=vals, fill=type))+
-geom_boxplot(outlier.colour="black", outlier.shape=1,
-             outlier.size=2, notch=F)+
-  theme_classic()+
-  stat_summary(fun=mean, geom="point", shape=15, size=4)+
-  scale_fill_brewer(palette="Dark2")+
-  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
-  ylab("Value")+
-  xlab("Plot Type")
-```
-We see that the interquartile range for the control plot is smallest of the three at 1.75, followed by the truncated plot at 2, and then the log plot at 2.75. This depicts that overall, there was more of a consensus in the subjective perception of the difference for the control plot than the other two, and less agreement between participants for the logarithmic scale. This could be once again hypothesised to  be due to misunderstanding of the standard form notation as well as the logarithmic scaling itself. The black squares represent the means here, and we can see that for the first two boxes, the mean is higher than the median, perhaps signifying a positive skew, with a slightly negative skew for the truncated plot. 
-
-
-
-
-**Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?**
-```{r echo=F}
-con_3_all <- ctrl_y_scale$con_3
-trn_3_all <- trnc_y_scale$trn_3
-log_3_all <- log_y_scale$log_3
-
-y_scale_3_all <- cbind(con_3_all, log_3_all, trn_3_all)
-
-ggplot() +
-  geom_density(data = as.data.frame(con_3_all), aes(x=con_3_all, col = "Control"))+
-  geom_density(data = as.data.frame(log_3_all), aes(x=log_3_all, col = "Log"))+
-  geom_density(data = as.data.frame(trn_3_all), aes(x=trn_3_all, col = "Truncated"))+
-  annotate("text", x=4, y = 0.5, label="Approximately how much more than 'Quintuple Steps'", size = 5)+
-  annotate("text", x=4, y = 0.47, label="would you say 'Salmon Ladder' was used?", size = 5)+
-  labs(x="Response", y="Density")+
-  scale_colour_brewer(palette="Dark2", labels = c('Control', 'Log','Truncated'))+
+ggplot(stats_2)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the Whole Population")+
+  scale_fill_manual(values=vals, breaks = c('Control', 'Logarithmic'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
   theme_classic()
+
+```
+The spread of logarithmic plot values is fairly wide, with at least one response for each option, and the control is the same as stated before. The plot depicts how there is a wide spread of values, with some respondents having very different subjective views of the size of the difference to others. On average, the subjective perceived difference in bar heights was significantly lower for the logarithmic plot responses ($\bar{x}=3.67$, $\tilde{x}=3.5$) than for the control ($\bar{x}=3.35$, $\tilde{x}=5$). This is evidenced by a one-sided sign test with the alternative hypothesis that the logarithmic plot responses are on average lower than the control plot responses.
+
+There is evidence to show that the difference between the R and Python versions of the logarithmic plot is significant ($p=0.00096$, $\bar{x}_R = 4.263$, $\bar{x}_{Py} = 2.969$). The distributions for the two language subsets are shown in figure[?]. 
+
+```{r}
+brks <- c("Control", "Logarithmic")
+vals <- c("#1c9e77",  "#7570b3")
+
+control_2 <- ctrl_y_scale_r$con_2
+logarithmic_2 <- log_y_scale_r$log_2
+
+y_scale_2_all <- cbind(control_2, logarithmic_2)
+y_scale_2_all <- as.data.frame(y_scale_2_all)
+resp <- c(control_2, logarithmic_2)
+type <- c(rep('Control', 38), rep('Logarithmic', 38)) 
+stats_2 <- data.frame(resp, type)
+
+p <- ggplot(stats_2)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the R Subgroup")+
+  scale_fill_manual(values=vals, breaks = c('Control', 'Logarithmic'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme_classic()
+
+control_2 <- ctrl_y_scale_py$con_2
+logarithmic_2 <- log_y_scale_py$log_2
+
+y_scale_2_all <- cbind(control_2, logarithmic_2)
+y_scale_2_all <- as.data.frame(y_scale_2_all)
+resp <- c(control_2, logarithmic_2)
+type <- c(rep('Control', 32), rep('Logarithmic', 32)) 
+stats_2 <- data.frame(resp, type)
+
+q <- ggplot(stats_2)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the Python Subgroup")+
+  scale_fill_manual(values=vals, breaks = c('Control', 'Logarithmic'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme_classic()
+
+plot_grid(p, q)
 ```
 
-```{r, echo=F}
-summary(y_scale_3_all)
-```
 
-```{r, echo=F}
+In regard to question 3, see again figure[?] for the plotted distributions.
+
+```{r}
+brks <- c("Control", "Logarithmic")
+vals <- c("#1c9e77",  "#7570b3")
+
+control_3 <- ctrl_y_scale$con_3
+logarithmic_3 <- log_y_scale$log_3
+
+y_scale_3_all <- cbind(control_3, logarithmic_3)
 y_scale_3_all <- as.data.frame(y_scale_3_all)
+resp <- c(control_3, logarithmic_3)
+type <- c(rep('Control', 70), rep('Logarithmic', 70)) 
+stats_2 <- data.frame(resp, type)
 
-vals <- c(y_scale_3_all$con_3_all, y_scale_3_all$log_3_all, y_scale_3_all$trn_3_all)
-type <- c(rep('Control', 70), rep('Log', 70), rep('Truncated', 70)) 
-stats_3 <- data.frame(vals, type)
+ggplot(stats_2)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Responses selected Over the Whole Population")+
+  scale_fill_manual(values=vals, breaks = c('Control', 'Logarithmic'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme_classic()
 
-ggplot(data = stats_3, aes(x=type, y=vals, fill=type))+
-geom_boxplot(outlier.colour="black", outlier.shape=1,
+```
+The responses for the logarithmically scaled plot are skewed towards the lower end of the scale, similar to the control and truncated responses, and there does not appear to be much difference between distributions of the two populations. Looking at the numbers, however, the averages for the logarithmic plot ($\bar{x}=2.22$, $\tilde{x}=2$) seem lower than that of the control plot ($\bar{x}=3.77$, $\tilde{x}=4$). Indeed, a one sided MWW test comparing the logarithmic and control plot responses elicits a p-value of $1.317e-06$, showing evidence that the logarithmic scale resulted in lower rating in difference of bar height.
+
+Figure [?] shows the distributions for R and Python subgroups.
+
+```{r}
+brks <- c("Control", "Logarithmic")
+vals <- c("#1c9e77",  "#7570b3")
+
+control_3_r <- ctrl_y_scale_r$con_3
+logarithmic_3_r <- log_y_scale_r$log_3
+y_scale_3_r <- cbind(control_3, logarithmic_3)
+y_scale_3_r <- as.data.frame(y_scale_3_all)
+resp <- c(control_3_r, logarithmic_3_r)
+type <- c(rep('Control', 38), rep('Logarithmic', 38)) 
+stats_3_r <- data.frame(resp, type)
+
+control_3_py <- ctrl_y_scale_py$con_3
+logarithmic_3_py <- log_y_scale_py$log_3
+y_scale_3_py <- cbind(control_3, logarithmic_3)
+y_scale_3_py <- as.data.frame(y_scale_3_all)
+resp <- c(control_3_py, logarithmic_3_py)
+type <- c(rep('Control', 32), rep('Logarithmic', 32)) 
+stats_3_py <- data.frame(resp, type)
+
+p <- ggplot(stats_3_r)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "R Subgroup")+
+  scale_fill_manual(values=vals, breaks = c('Control', 'Logarithmic'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme_classic()
+
+q <- ggplot(stats_3_py)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
+  ylab("Number of Respondents")+
+  xlab("Response")+
+  labs(title = "Py Subgroup")+
+  scale_fill_manual(values=vals, breaks = c('Control', 'Logarithmic'))+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
+  theme_classic()
+
+plot_grid(p, q)
+```
+
+The distributions of the logarithmic plot responses for the R ($\bar{x}=2.5$, $\tilde{x}=2$) and Python ($\bar{x}=1.9$, $\tilde{x}=2$) subgroups appear fairly similar, with the same median albeit with the mean for the R subgroup being slightly higher. The plots to appear to show the R subgroup responses being slightly positively skewed and the Python responses more centered around 3. A two sample, one sided MWW test provides sufficient evidence that the R responses appear in average greater than the Python ($p=0.03689$).
+
+Looking at the responses from the respondents who saw the logarithmic plot first of the three, the average responses from this group for question 1 ($\bar{x}=40$, $\tilde{x}=40$) were closer to the true value of 41 than for the whole population ($\bar{x}=36.277$, $\tilde{x}=35$), although the former still differs significantly from the true value ($p=6.104e-05$), and there is not significant evidence to state that the two distributions differ ($p=0.1705$). Comparing the response statistics for the whole population and for those who saw the logarithmic plot first, the log first group perhaps show the bar height difference being perceived slightly higher than for the whole population ($\bar{x}_{overall}=3.67$, $\bar{x}_{logfirst} = 4.13$), however a two-sample MWW test gives an insignificant p-value of 0.2614 when comparing them. Similarly, the difference between the responses for the whole population and for those who saw the logarithmic plot first for question 3 is also statistically insignificant, with means of 3.08 and 2.68 for and a p-value of 0.1889.
+
+
+\subsection{Differences Between Question 2 and 3 Responses}
+Now take $\bar{x}_{control} - \bar{x}_{truncated}$ and $\bar{x}_{control} - \bar{x}_{logarithmic}$ for each of questions 2 and 3, which is shown in figure[?]. 
+```{r}
+control <- ctrl_y_scale$con_2
+truncated <- trnc_y_scale$trn_2
+logarithmic <- log_y_scale$log_2
+
+y_scale_2_all <- cbind(control, truncated, logarithmic)
+
+con_mean_2 <-  mean(control)
+trn_mean_2 <- mean(truncated)
+log_mean_2 <- mean(logarithmic)
+means_2 <- c(trn_mean_2, log_mean_2)
+
+control <- ctrl_y_scale$con_3
+truncated <- trnc_y_scale$trn_3
+logarithmic <- log_y_scale$log_3
+
+y_scale_3_all <- cbind(control, truncated, logarithmic)
+
+con_mean_3 <-  mean(control)
+trn_mean_3 <- mean(truncated)
+log_mean_3 <- mean(logarithmic)
+means_3 <- c(trn_mean_3, log_mean_3)
+
+
+diff_mat <- matrix(NA, 2, 2)
+
+for(i in 1:2){
+  diff_mat[1, i] <- con_mean_2-means_2[i]
+  diff_mat[2, i] <- con_mean_3-means_3[i]
+}
+```
+
+```{r}
+colnames(diff_mat) <- c("Con - Trnc", "Con - Log")
+rownames(diff_mat) <- c("Q2", "Q3")
+kable(diff_mat, caption = "Table showing difference in the percieved difference for the logarithmic-scaled and truncated plots as compared to the control, for questions 2 and 3") %>%
+  kable_styling(latex_options = "hold_position")
+```
+This again shows that the responses for the truncated plot were in general rated higher than the control plot responses, and also that the effect was more significant for the bars on opposite ends of the plot as compared to the bars next to each other. The opposite is true for the logarithmic plot responses; on average they were rated lower than the control plot, but this was greatly more significant for the bars next to each other, as opposed to the truncated plot. Figure[?] shows this visually.
+
+
+```{r fig.cap= "Bar plot giving a visual representation of the table"}
+brks <- c("Truncated", "Logarithmic")
+vals <- c("#d95f02",  "#7570b3")
+
+df <- data.frame("Trnc"=c(diff_mat[,1]), "Log"=c(diff_mat[,2]), "Question" = c("Log Grip vs Salmon Ladder", "Quintuple Steps vs Salmon Ladder"))
+
+
+ggplot()+
+  geom_bar(data=df, aes(x = Question, y=Trnc, fill = brks[1]), stat="identity")+
+  geom_bar(data=df, aes(x = Question, y=Log, fill = brks[2]), stat="identity")+
+  geom_hline(yintercept = 0)+
+  scale_fill_manual(name="Scale", breaks=brks, values=vals)+
+  scale_y_continuous(name = "Average difference from control plot", limits = c(-1, 2), breaks = seq(-1, 2, 0.5))+
+  theme_classic()
+```
+
+On average, truncating the scale had a similar effect for both questions, albeit with slightly more effect for when comparing 'Salmon Ladder' with 'Quintuple Steps' as opposed to 'Log Grip'. For the logarithmically scaled plots, however, the re-scaling appears to have had a significantly greater effect when considering the bars directly next to each other, with respondents on average judging the difference in bar height to be greater by 1.68 on the 7-point scale, whereas this is 0.9 for the bars further apart. It can be concluded from this that truncating the scale had more of an impact when bars were on opposite ends of the plot as opposed to next to each other, and the way round for the bars close to each other; the logarithmic scaling had more of an impact.
+
+\subsection{Ninja Warrior - Part 2}
+
+This part of the survey assessed whether different aspect ratios would have an impact on perception of bar height differences as well as reading of true values. This part will be analysed question by question.
+
+Question 1 asked \textit{'How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?'}. This question once again uses the 7-point scale to gain a subjective view on the degree to which respondents felt the heights between the two bars corresponding to 'Jumping Spider' and 'Salmon Ladder' differed for three bar plots of 7 obstacles, where 'Salmon Ladder' is furthest to the left, and 'Jumping Spider' furthest to the right.
+
+```{r}
+default <- def_ratio$def_1
+narrow <- nar_ratio$nar_1
+wide <- wid_ratio$wid_1
+ratio_1_all <- cbind(default, wide, narrow)
+```
+Looking at the means and medians here, it doesn't seem like there is that much of a difference in perception of the differences between the three aspect ratios, as displayed in table[?].
+
+```{r}
+means <- c(mean(default), mean(narrow), mean(wide))
+meds <- c(median(default), median(narrow), median(wide))
+tab <- rbind(means, meds)
+colnames(tab) <- c("Default", "Narrow", "Wide")
+rownames(tab) <- c("Mean", "Median")
+kable(tab, digits=3) %>%
+  kable_styling(latex_options = "hold_position")
+```
+
+
+Note that 'narrow' is defined as the plot with the aspect ratio of smaller width to greater height, and vice versa for the 'wide' plot. The means show marginal differences, whereby the default plot mean is the middle-valued mean of the three, with the mean perceived difference for the wide plot being slightly smaller than this and the mean perceived difference for the narrow plot is slightly larger. This result, although at first glance marginal, follows the hypothesis that the wide plot would cause differences to be perceived as smaller and narrow bars to cause differences to be perceived to be greater. 
+
+Now looking at figure[?], showing the three distributions. There isn't an immediately obvious difference in distributions, but on closer inspection it can be seen that the orange "Wide" bars dominate over the three for the range [2, 5], and the purple "Narrow" dominated for the response of 7, following the above analysis of summary statistics. There was a fairly strong consensus that in general that a rating of 6 was applicable to all three plots.
+
+```{r, echo=F}
+
+brks <- c("Default", "wide", "narrow")
+vals <- c("#1c9e77", "#d95f02", "#7570b3")
+
+ratio_1_all <- as.data.frame(ratio_1_all)
+resp <- c(default, wide, narrow)
+type <- c(rep('Default', 70), rep('wide', 70), rep('narrow', 70)) 
+stats <- data.frame(resp, type)
+
+ggplot(data = stats)+
+  geom_bar(aes(x=resp, group=type, fill=type), position = 'dodge')+
+  theme_classic()+
+  scale_fill_manual(breaks = brks, values = vals)+
+  scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"))+
+  xlab("Response")+
+  ylab("Number of Respondents")
+
+SIGN.test(default, wide, alt="g")
+```
+
+Running a one-sided MWW test to compare the responses for default plot to the narrow plot, it is confirmed that there is evidence to suggest that using a 'narrow' aspect ratio causes the perceived difference to be greater ($p=0.0468$). Then applying a one-sided sign test to compare the default to the wide plot, the perceived difference is shown to be smaller ($p=6.457e-06$).
+
+
+```{r}
+
+ggplot() +
+  geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
+  geom_density(data = as.data.frame(wide   ), aes(x=wide   , col = "wide"))+
+  geom_density(data = as.data.frame(narrow), aes(x=narrow, col = "narrow"))+
+  labs(x="Response", y="Density")+
+  scale_colour_manual(name = " ", breaks = brks, values = vals)+
+  theme_classic()
+
+```
+
+
+Question 2 then went on to ask \textit{'How large would you say the difference between 'Log Grip' and 'Floating Steps' is?'}. Similar to part 1, there are two questions for gauging differences between bars, for which one asks about bars far away from each other, and one about bars next to each other. In the case of this section, the first question contained bars on opposite ends of the x-axis, and this question asks about two bars that sit adjacent to one another. 
+
+
+```{r}
+default <- def_ratio$def_2
+narrow <- nar_ratio$nar_2
+wide <- wid_ratio$wid_2
+
+ratio_2_all <- cbind(default, wide, narrow)
+```
+The analysis results here show that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wide plots being identical at 3.057, with the mean of the narrow plot responses only 0.157 greater at3.214. The median for all three is 3, and the IQRs are all $[2, 7]$. The variances, however, do differ from one another, with values 1.301, 0.866 and 1.214 for the default, wide and narrow bars, respectively. The distribution of values are shown in figure[?]. The results of two-sided MWW tests show that neither aspect ratio appears to have a significant effect on the rating of the perceived difference ($p=0.2446$ and $p=0.5688$).
+
+```{r, echo=F}
+
+brks <- c("Default", "wide", "narrow")
+vals <- c("#1c9e77", "#d95f02", "#7570b3")
+
+ratio_1_all <- as.data.frame(ratio_2_all)
+resp <- c(default, wide, narrow)
+type <- c(rep('Default', 70), rep('wide', 70), rep('narrow', 70)) 
+stats <- data.frame(resp, type)
+
+ggplot(data = stats, aes(x=type, y=resp, fill=type))+
+  geom_boxplot(outlier.colour="black", outlier.shape=1,
              outlier.size=2, notch=F)+
   theme_classic()+
   stat_summary(fun=mean, geom="point", shape=15, size=4)+
-  scale_fill_brewer(palette="Dark2")+
+  scale_fill_manual(breaks = brks, values = vals)+
   scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
   ylab("Value")+
   xlab("Plot Type")
 
 ```
-
-**In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?**
-```{r echo=F}
-con_4_all <- ctrl_y_scale$con_4
-con_4_all[which(con_4_all == '12.5 %')] <- 12.5
-con_4_all <- as.numeric(con_4_all)
-for(i in 1:length(con_4_all)){
-    if(con_4_all[i] < 1 && is.na(con_4_all[i])==FALSE){
-       con_4_all[i] <- con_4_all[i]*100
-    }
-}
+At least $50/%$ of respondents placed the difference in the range $[2, 4]$ for all three plots, showing that they believed the difference was small to moderate, and this didn't change depending on the plot type, and thus for the bars further apart from each other, changing the aspect ratio does not appear to make much of a difference. The overall distributions are shown in the figure[?]
 
 
-trn_4_all <- trnc_y_scale$trn_4
-for(i in 1:length(trn_4_all)){
-    if(trn_4_all[i] < 1 && is.na(trn_4_all[i])==FALSE){
-       trn_4_all[i] <- trn_4_all[i]*100
-    }
-}
-
-log_4_all <- log_y_scale$log_4
-log_4_all[which(log_4_all == '3 %')] <- 3
-log_4_all <- as.numeric(log_4_all)
-
-for(i in 1:length(log_4_all)){
-    if(log_4_all[i] < 1 && is.na(log_4_all[i])==FALSE){
-       log_4_all[i] <- log_4_all[i]*100
-    }
-}
-
-y_scale_4_all <- cbind(con_4_all, log_4_all, trn_4_all)
-summary(y_scale_4_all)
-
-
-```
-
-```{r echo=F}
+```{r}
 
 ggplot() +
-  geom_density(data = as.data.frame(con_4_all), aes(x=con_4_all, col = "Control"))+
-  geom_density(data = as.data.frame(trn_4_all), aes(x=trn_4_all, col = "Truncated"))+ 
-  geom_density(data = as.data.frame(log_4_all), aes(x=log_4_all, col = "Log"))+
-  
-  annotate("text", x=52, y = 0.089, label="In your opinion, approximately how many times would you say ", size = 4)+
-  annotate("text", x=52, y = 0.084, label="'Log Grip' was used, as a percentage of the number of times", size = 4)+
-  annotate("text", x=52, y = 0.08, label="'Salmon Ladder' was used?", size = 4)+
-  annotate("text", x=52, y = 0.075, label="Whole population (n=70)", size = 3)+
-  
+  geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
+  geom_density(data = as.data.frame(wide   ), aes(x=wide   , col = "wide"))+
+  geom_density(data = as.data.frame(narrow), aes(x=narrow, col = "narrow"))+
   labs(x="Response", y="Density")+
-  scale_colour_brewer(palette="Dark2", labels = c('Control', 'Truncated', 'Log'))+
+  scale_x_continuous(limits=c(0, 7))+
+  scale_colour_manual(name = " ", breaks = brks, values = vals)+
   theme_classic()
 
 ```
-#### NAs
-```{r echo=F}
-index <- which(is.na(log_4_all))
-cbind(index, y_scale_4_all[which(is.na(log_4_all)),])
 
-rbind(ver1[4:9], ver2[4:9], ver3[4:9], ver4[4:9], ver5[4:9], ver6[4:9])[index,]
+All three distributions are very similar, and almost appear to form bell curve shaped distributions, albeit with some irregularities and very slight negative skew.
+
+As in part 1, the two height difference perception questions will be compared, calculating $\bar{x}_{default} - \bar{x}_{narrow}$ and $\bar{x}_{default} - \bar{x}_{wide}$.
+
+```{r}
+default <- def_ratio$def_1
+narrow <- nar_ratio$nar_1
+wide <- wid_ratio$wid_1
+ratio_1_all <- cbind(default, wide, narrow)
+
+def_mean_1 <-  mean(default)
+nar_mean_1 <- mean(narrow)
+wid_mean_1 <- mean(wide)
+means_1 <- c(nar_mean_1, wid_mean_1)
+
+default <- def_ratio$def_2
+narrow <- nar_ratio$nar_2
+wide <- wid_ratio$wid_2
+ratio_2_all <- cbind(default, wide, narrow)
+
+def_mean_2 <-  mean(default)
+nar_mean_2 <- mean(narrow)
+wid_mean_2 <- mean(wide)
+means_2 <- c(nar_mean_2, wid_mean_2)
+
+diff_mat <- matrix(NA, 2, 2)
+
+for(i in 1:2){
+  diff_mat[1, i] <- def_mean_1-means_1[i]
+  diff_mat[2, i] <- def_mean_2-means_2[i]
+}
 ```
 
+```{r}
+colnames(diff_mat) <- c("Def - Narrow", "Def - Wide")
+rownames(diff_mat) <- c("Q1", "Q2")
+kable(diff_mat, caption = "Table showing difference in the percieved difference for plots with narrow and wide bars as compared to the default, for questions 1 and 2") %>%
+  kable_styling(latex_options = "hold_position")
+```
+
+As before, the table below gives a visual representation.
+
+```{r fig.cap= "Bar plot giving a visual representation of the table"}
+df <- data.frame("narrow"=c(diff_mat[,1]), "wide"=c(diff_mat[,2]), "Question" = c("Jumping Spider vs Salmon Ladder", "Log Grip vs Floating Steps"))
+
+
+ggplot()+
+  geom_bar(data=df, aes(x = Question, y=narrow, fill = brks[2]), stat="identity")+
+  geom_bar(data=df, aes(x = Question, y=wide, fill = brks[3]), stat="identity")+
+  geom_hline(yintercept = 0)+
+  scale_fill_manual(name="Scale" ,breaks=brks[2:3], values=vals[2:3])+
+  scale_y_continuous(name = "Average difference from default plot", limits = c(-0.25, 0.6), breaks = seq(-0.25, 0.6, 0.1))+
+  theme_classic()
+```
+Both by eye comparisons of values and statistical testing show that the language used has negligible effect on the perceived difference, as does the order in which the plots were shown. See tables 51 - 61 in the appendix for more details.
+
+\subsection{How many times would you say 'Floating Steps' were used?}
+
+This is again similar to question 1 of part 1, where participants were asked to state what they believed to be the height of the bar for 'Salmon Ladder', however this time the third bar from the axis is chosen. This is to ascertain whether the distance of the bar from the axis may have an effect alongside any potential perceived distortion of values. Note that the true value was 28.
+
+```{r}
+default <- def_ratio$def_3
+narrow <- nar_ratio$nar_3
+wide <- wid_ratio$wid_3
+
+ratio_1_all <- cbind(default, wide, narrow)
+```
+The means of each of the three sets of responses were very close to the true value, at 27.97, 28.04 and 27.39, respectively for the default, wide and narrow, and the medians are exactly equal to the true value. Based on the means and medians it appears that, once again, altering the aspect ratio had minimal, if any, effect on interpretation of the data value. The value for the default plot also appears to be closer to the true value than the control plot in part 1, question 1.
 
 ```{r, echo=F}
-y_scale_4_all <- as.data.frame(na.exclude(y_scale_4_all))
 
-vals <- c(y_scale_4_all$con_4_all, y_scale_4_all$log_4_all, y_scale_4_all$trn_4_all)
-type <- c(rep('Control', 66), rep('Log', 66), rep('Truncated', 66)) 
-stats_4 <- data.frame(vals, type)
+brks <- c("Default", "wide", "narrow")
+vals <- c("#1c9e77", "#d95f02", "#7570b3")
 
-ggplot(data = stats_4, aes(x=type, y=vals, fill=type))+
-geom_boxplot(outlier.colour="black", outlier.shape=1,
+resp <- c(default, wide, narrow)
+type <- c(rep('Default', 70), rep('wide', 70), rep('narrow', 70)) 
+stats <- data.frame(resp, type)
+
+ggplot(data = stats, aes(x=type, y=resp, fill=type))+
+  geom_boxplot(outlier.colour="black", outlier.shape=1,
              outlier.size=2, notch=F)+
   theme_classic()+
   stat_summary(fun=mean, geom="point", shape=15, size=4)+
-  scale_fill_brewer(palette="Dark2")+
-  scale_y_continuous()+
+  scale_fill_manual(breaks = brks, values = vals)+
   ylab("Value")+
   xlab("Plot Type")
 
 ```
 
-\subsection{2.1.2  Ninja Warrior - Part 2}
+Looking at the box plots, there are very small ranges in the values, signifying that there was a large consensus between respondents in terms of what they perceived the height to be. It can also be seen that there are three outliers below the box plot for the narrow plot responses, and two above for the default plot responses. There is very little overlap between the boxes, and it appears again that there altering the aspect ratio of the bar plot has little to no impact on reading the height of the bar. Additionally, there was less agreement between respondents for the wide plot than for the other two, although this doesn't seem to be too significant.  
 
 
-
-
-
-**How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?**
-
-
-```{r echo=F}
-def_1_all <- def_ratio$def_1
-nar_1_all <- nar_ratio$nar_1
-wid_1_all <- wid_ratio$wid_1
-ratio_1_all <- cbind(def_1_all, wid_1_all, nar_1_all)
-
-summary(ratio_1_all)
-```
-
-```{r echo=F}
+```{r}
 
 ggplot() +
-  geom_density(data = as.data.frame(def_1_all), aes(x=def_1_all, col = "Default"))+
-  geom_density(data = as.data.frame(wid_1_all), aes(x=wid_1_all, col = "Wide"))+
-  geom_density(data = as.data.frame(nar_1_all), aes(x=nar_1_all, col = "Narrow"))+
-  
-  labs(x="Response", y="Density", title = "How large would you say the difference between 'Jumping spider' and 'Salmon Ladder' is?")+
-  scale_colour_brewer(palette="Dark2", labels = c('Default', 'Wide','Narrow'))+
-
+  geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
+  geom_density(data = as.data.frame(wide   ), aes(x=wide   , col = "wide"))+
+  geom_density(data = as.data.frame(narrow), aes(x=narrow, col = "narrow"))+
+  labs(x="Response", y="Density")+
+  scale_colour_manual(name = " ", breaks = brks, values = vals)+
   theme_classic()
-
 ```
+The distributions for the default and narrow plot responses are similar, both seeming to be fairly centred on the mean with a steep decrease in density on either side of the mean to shallow tails within the range $[25, 30]$. The responses for the wide plot appear to be more spread with lower density function values, with a slight negative skew.
 
+```{r}
+default <- default[-which(default >= 30)]
+narrow <- narrow[-which(narrow <= 25)]
 
-**How large would you say the difference between 'Log Grip' and 'Floating Steps' is?**
-```{r echo=F}
-def_2_all <- def_ratio$def_2
-nar_2_all <- nar_ratio$nar_2
-wid_2_all <- wid_ratio$wid_2
-ratio_2_all <- cbind(def_2_all, wid_2_all, nar_2_all)
-
-summary(ratio_2_all)
+ratio_1_all <- cbind(default, wide, narrow)
 ```
+After removing the outliers the medians have stayed the same, and the mean has obviously decreased for the default and increased for the narrow, however, these means are all still fairly similar to each other and at a first glance prior to testing it again seems that changing the aspect ratio, at least to the degree tested here, is inconsequential to interpretation of the actual value. As expected as well, the variances for the outlier-removed sets have decreased.
 
+However, statistical tests do actually show that while the default responses did not differ significantly from the true value of 28 ($p=0.5667$), the responses for the narrow plot did ($p=2.0955e-09$), but the wide didn't ($p=0.5067$).
 
-**How many times would you say 'Floating Steps' were used?**
+Changing the language and plot order was once again inconsequential here.
+
+\subsection{Differences Between Question 1 and 2 Responses}
+
+The last set of questions in part 2 show respondents all three of the bar plots presented in this section and ask them to select which they find most aesthetically pleasing, and which they find easiest and hardest to interpret. Table[?] gives the number of respondents that selected each plot for each of the three questions.
+
 ```{r echo=F}
-def_3_all <- def_ratio$def_3
-nar_3_all <- nar_ratio$nar_3
-wid_3_all <- wid_ratio$wid_3
-ratio_3_all <- cbind(def_3_all, wid_3_all, nar_3_all)
-
-summary(ratio_3_all)
-```
-
-
-**Comparisons**
-```{r echo=F}
-comp_1 <- comp_ratio$all_1
-comp_2 <- comp_ratio$all_2
-comp_3 <- comp_ratio$all_3
+comp_1 <- comp_ratio_all$all_1
+comp_1 <- comp_1[-which(comp_1 == "none")]
+comp_2 <- comp_ratio_all$all_2
+comp_3 <- comp_ratio_all$all_3
 tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
-rownames(tab) <- c("Which of the three bar charts do you find most aesthetically pleasing?", "Which bar chart do you feel is easiest to read and interpret?", "Which bar chart do you find hardest to read and interpret?")
-
-knitr::kable(tab)
+rownames(tab) <- c("Most aesthetically pleasing?", "Easiest to read and interpret?", "Hardest to read and interpret?")
+kable(tab) %>%
+  kable_styling(latex_options = "hold_position")
 ```
 
+For the first question, relating to how aesthetically pleasing respondents found each plot, just over half of the respondents chose the default aspect ratio as the most aesthetically pleasing, with 37 out of the 69 who responded selecting this. 
+
+Similarly, 37 out of the 70 that responded to the second question found the plot with the default aspect ratio easiest to read and interpret. Perhaps the people that preferred this aspect ratio aesthetically did so because they found it easiest to interpret. Investigating this, 27 respondents who chose the default for question 1 also chose this for question 2.
+
+The plot judged hardest to read and interpret by the most respondents was the one with the wide bars, with 30 selecting this and 20 selecting each of the other two. While a significant number chose the default and narrow bars, the slightly higher amount selecting the plot with wide bars matches the previously stated hypothesis formulated from following the Stephen Few paper, which discusses that an ratio of greater width to length could suffer from perceptual imbalance. While this imbalance isn't seen in the numbers from the previous questions, the result here does give some indication that the aspect ratio producing wide bars may impact on ease of interpretation.
 
 
+\subsection{Ninja Warrior - Part 3}
 
-\subsection{2.1.3  Ninja Warrior - Part 3}
+The third and final part of the questions about the American Ninja Warrior data discusses stacked bars and colour schemes. The questions asked in this part are used to decipher how data with multiple categories may be best represented in a bar plot. The plots presented use the same bars as in part 1, but this time the number of times each obstacle was used in each stage of the competition for each bar is highlighted.  Each participant was shown both a stacked and a grouped bar plot in one of three colour schemes; the default for the language, viridis, and greyscale. For three versions of the survey, the stacked bars were shown first, and for the other three versions the first shown was the grouped bars. The final question of this part also asked respondents to compare two colour schemes, and through the 6 surveys there are comparisons of every colour scheme against every other colour scheme.
 
-**How many times would you say 'Floating Steps' were used in the Finals (Regional/City) round?**
 
-```{r echo=F}
+The question \textit{"How many times would you say 'Floating Steps' were used in the Finals (Regional/City) round?"} is the first here, and is regarding the reading of a numerical value off the axis. In this question respondents were asked about 'Floating Steps', which is the bar third along from the y-axis. The question asks respondents to view the bar plot, where the bars will either be grouped of stacked, and decipher how many times this obstacle was used in the specified round of the competition. The true value for this was 11. The hypothesis for this question is that the respondents will more accurately gauge the value for the grouped bar than the stacked, which as seen below appears to be the case.
+
+```{r}
 vir_stacked_1 <- vir_stacked$vir_sta_1
 def_stacked_1 <- def_stacked$def_sta_1
 gr_stacked_1 <- gr_stacked$gr_sta_1
 
-vir_dodged_1 <- vir_stacked$vir_dge_1
-def_dodged_1 <- def_stacked$def_dge_1
-gr_dodged_1 <- gr_stacked$gr_dge_1
+vir_grouped_1 <- vir_grouped$vir_grp_1
+def_grouped_1 <- def_grouped$def_grp_1
+gr_grouped_1 <- gr_grouped$gr_grp_1
 
 stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
-dodged_1 <- c(vir_dodged_1, def_dodged_1, gr_dodged_1)
+grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
 
-sumy <- rbind(summary(stacked_1), summary(dodged_1))
-rownames(sumy) <- c("Stacked", "Side by side")
-sumy
+bars <- data.frame(stacked_1, grouped_1)
 ```
+The mean for the values estimated by respondents using the stacked bars is 14.32, a fair bit larger than the true value of 11, and the mean estimated value for the grouped bars was closer to the true value, at 11.8. The IQR for the grouped bars is also smaller than for the stacked, and comprises of the range $[11, 12]$, insinuating that the estimated values tended to be fairly accurate but with some respondents perhaps slightly overestimating. The IQR for the stacked bars on the other hand covers the interval $[10, 14]$, which does contain the true value, but shows a tendency for both over and underestimation of respondents. Additionally to this, there is a large variance in the responses to this question, at 54.8 compared to the variance of 13.1 for the responses regarding the grouped bar plots. This adds to the picture that there was much less agreement between respondents, with many straying away from the mean of 14.3. It is seen however that the median for both the stacked and grouped bars is 11, showing that the higher mean of the stacked bars may be a result of an influential value at the upper end of the distribution, and that many observations do actually sit around 11. The fact that many values actually sit around 11 could be contributing to the higher variance, as variance is simply the sum of the squared distances from the mean, and so will be elevated if there are many values that sit some distance away from the mean. The higher mean could be reflected in the maximum of the stacked responses being 35, although the maximum of the grouped responses is 40, so there may be more than one influential point in the stacked responses. Outliers can be checked for by looking at the box plots for this data.
 
-**How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?**
+```{r}
+brks <- c("Stacked", "Grouped")
+vals <- c("#1c9e77", "#d95f02")
 
-```{r echo=F}
+resp <- c(stacked_1, grouped_1)
+type <- c(rep('Stacked', 70), rep('Grouped', 70)) 
+stats_1 <- data.frame(resp, type)
+
+ggplot(data = stats_1, aes(x=type, y=resp, fill=type))+
+  geom_boxplot(outlier.colour="black", outlier.shape=1,
+             outlier.size=2, notch=F)+
+  theme_classic()+
+  stat_summary(fun=mean, geom="point", shape=15, size=4)+
+  scale_fill_manual(breaks = brks, values = vals)+
+  scale_y_continuous(labels = seq(1, 7, 1), breaks = seq(1, 7, 1))+
+  ylab("Value")+
+  xlab("Plot Type")
+```
+It can in fact be seen that the box for the grouped responses is short and centered around 11. The box for the stacked responses shows many high valued outliers that could be causing the mean to be higher, although the IQR is still a fair bit larger than that of the responses for the grouped bars. The mean for this also sits above the IQR, and thus the outliers may be having a significant influence. Now the outliers will be removed, assuming, from the box plot, that outliers are any values above or equal to 25 for the stacked responses and above or equal to 20 for the grouped. 
+
+```{r}
+
+stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
+grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
+```
+Removing the outliers as specified by the box plot, the mean of the stacked responses is now just above 11, and actually closer to the true value than the mean of the other set of responses, and the median has decreased to 10. From this one could infer that there is no difference between each type of bar plot in terms of gauging the size of the bars. However, there are 12 outliers in the stacked responses, which leads to the idea that these are not in fact all outliers and may be valid responses that just sit on the upper end of the distribution. However, it seems the cause of the high values could be respondents taking the whole height of the bar, which has an actual height of 28, rather than the section of interest. Many of the potentially influential values fall around the range $[25, 30]$, with all but 2 of the 12 potential outliers sitting in this interval, with the remaining two both being 35. Looking below at the summary statistics for only the values picked up as outliers, there is a mean of 29.83, which is higher than the true value of 28, and interestingly goes against the analysis from part 1, question 2 whereby respondents were asked to judge the height of this bar and on average underestimated. The fact that so many participants misinterpreted this plot and signify that stacked bar plots may not be the best way to present data to general public, as there may be the potential to misread the height of the whole bar as the size of the top category.
+
+
+```{r}
+
+vir_stacked_1 <- vir_stacked$vir_sta_1
+def_stacked_1 <- def_stacked$def_sta_1
+gr_stacked_1 <- gr_stacked$gr_sta_1
+
+vir_grouped_1 <- vir_stacked$vir_grp_1
+def_grouped_1 <- def_stacked$def_grp_1
+gr_grouped_1 <- gr_stacked$gr_grp_1
+
+stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
+grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
+
+stacked_1 <- stacked_1[which(stacked_1 >= 25)] 
+```
+As a result of this, this set of 12 values will be discounted from the analysis, and thus come to the conclusion that, for the respondents that appear to have judged the height of the correct section, there was little to no impact when using stacked vs grouped bar charts, and most of the difference comes from misinterpretation of the plot itself, as opposed to a poorer judgment of size.
+
+To see if either of these values are significantly far from the true value, tests are once again run. A sign test on the stacked bar plot responses gives a high p-value of 0.5258, showing that for the stacked bar plot responses (after removing the values as priorly specified), the participant estimated values do not differ significantly from the true value. For the grouped bar plot the obtained p-value is 0.009 < 0.05, and thus these responses are statistically significantly different from the true value. Running t-tests on the means, however, sees both sets of responses differing statistically significantly from the true value.
+
+The next question, \textit{'How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?'}, is similar the above, but for the next bar to the right. The purpose of this question was to test the same hypothesis as the previous question, and also to lead into the following question, where respondents were asked to compare the 'Floating Steps' and 'Log Grip'. Additionally, the bar in the previous question had only two categories, of which the respondents were asked to judge the size of the category on the top of the bar in the stacked plot, whereas the bar for 'Log Grip' has 5 categories, of which the category of interest sits above 4. The true value of this was 9.
+
+```{r}
 vir_stacked_2 <- vir_stacked$vir_sta_2
 def_stacked_2 <- def_stacked$def_sta_2
 gr_stacked_2 <- gr_stacked$gr_sta_2
 
-vir_dodged_2 <- vir_stacked$vir_dge_2
-def_dodged_2 <- def_stacked$def_dge_2
-gr_dodged_2 <- gr_stacked$gr_dge_2
+vir_grouped_2 <- vir_grouped$vir_grp_2
+def_grouped_2 <- def_grouped$def_grp_2
+gr_grouped_2 <- gr_grouped$gr_grp_2
 
 stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
-dodged_2 <- c(vir_dodged_2, def_dodged_2, gr_dodged_2)
+grouped_2 <- c(vir_grouped_2, def_grouped_2, gr_grouped_2)
 
-sumy <- rbind(summary(stacked_2), summary(dodged_2))
-rownames(sumy) <- c("Stacked", "Side by side")
-sumy
+bars <- data.frame(stacked_2, grouped_2)
 ```
+Similarly to the previous question, the mean response for the stacked bar plots are higher than that of the grouped, and the mean of the stacked also slightly overestimates the value. Once again however, a selection of respondents appeared to judge the full height of the bar rather than the category as asked. 
+
+```{r}
+brks <- c("Stacked", "Grouped")
+vals <- c("#1c9e77", "#d95f02")
+
+resp <- c(stacked_2, grouped_2)
+type <- c(rep('Stacked', 70), rep('Grouped', 70)) 
+stats_2 <- data.frame(resp, type)
+
+ggplot(data = stats_2)+
+  geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge')+
+  theme_classic()+
+  scale_fill_manual(breaks = brks, values = vals)+
+  ylab("Value")+
+  xlab("Plot Type")
+```
+Indeed, the distributions of values for each of the two response sets appear to be almost identical 
+
+```{r}
+stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
+grouped_2 <- c(vir_grouped_2, def_grouped_2, gr_grouped_2)
+```
+After removing the outlying values, there tended to be a slight underestimation in the value for the stacked bar plot, however this is approximately 0.46 away from the true value, and unlikely to be significant. 
+
+Once again the response sets are non-normally distributed and asymmetric, and so sign tests are applicable. The response set for the stacked bar plots produces a p-value of around 0.04, which shows a statistically significant difference in the responses from the true value of 9 at the 0.05 level of significance. However, this would easily become insignificant by slightly lowering the significance level to, say, 0.035. The p-value for the grouped bar responses, however, is >> 0.05, as expected given that the median of the data sits at the true value.
+
+The t-tests show that the differences in the means from the true value are statistically significant, although not considering the tests it can be seen by eye that the means are relatively close to 9.
 
 
-**Please select the statement you feel applies to the bar chart above.**
+The respondents were then asked to \textit{'How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?'}. This question asked respondents to judge whether log grip was used more, less, or an equal amount in the Finals (Regional/City) and Qualifying(Regional/City) rounds. This was to see how well differences between sizes of categories are judged when relating to the same variable, and are in the same bar. The results for this are given in the table below.
 
-```{r echo=F}
+```{r}
 vir_stacked_3 <- vir_stacked$vir_sta_3
 def_stacked_3 <- def_stacked$def_sta_3
 gr_stacked_3 <- gr_stacked$gr_sta_3
 
-vir_dodged_3 <- vir_stacked$vir_dge_3
-def_dodged_3 <- def_stacked$def_dge_3
-gr_dodged_3 <- gr_stacked$gr_dge_3
+vir_grouped_3 <- vir_stacked$vir_grp_3
+def_grouped_3 <- def_stacked$def_grp_3
+gr_grouped_3 <- gr_stacked$gr_grp_3
 
 stacked_3 <- c(vir_stacked_3, def_stacked_3, gr_stacked_3)
-dodged_3 <- c(vir_dodged_3, def_dodged_3, gr_dodged_3)
-
-tab <- rbind(table(stacked_3), table(dodged_3))
-rownames(tab) <- c("Stacked", "Side by side")
-colnames(tab) <- c("Equal", "Less", "More")
-tab
+grouped_3 <- c(vir_grouped_3, def_grouped_3, gr_grouped_3)
 ```
+The table shows overwhelmingly that significantly more people accurately judged that the two values were the same for the grouped bars than for the stacked bars. This was the hypothesised result, and has presented to an  even greater extent than previously anticipated. All but 7 of the respondents who responded to this question correctly judged from the grouped bars that the obstacle was used an equal number of times in each of the two rounds, whereas the responses for the grouped bar seemed fairly well split between the three options. It may be interesting in the multivariate analysis section to compare responses depending on whether respondents were shown the stacked or grouped bars first. Perhaps a reason for the incorrect judging with the stacked
 
-**Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?**
+Respondents were then asked \textit{'Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?'}Similar to the previous question, this asks for a comparison between the size of two categories, but this time about how many times two different obstacles were used in the round Finals (Regional/City), where these two obstacles are those discussed at the start of this part of the survey.
 
-```{r echo=F}
+```{r}
 vir_stacked_4 <- vir_stacked$vir_sta_4
 def_stacked_4 <- def_stacked$def_sta_4
 gr_stacked_4 <- gr_stacked$gr_sta_4
 
-vir_dodged_4 <- vir_stacked$vir_dge_4
-def_dodged_4 <- def_stacked$def_dge_4
-gr_dodged_4 <- gr_stacked$gr_dge_4
+vir_grouped_4 <- vir_stacked$vir_grp_4
+def_grouped_4 <- def_stacked$def_grp_4
+gr_grouped_4 <- gr_stacked$gr_grp_4
 
 stacked_4 <- c(vir_stacked_4, def_stacked_4, gr_stacked_4)
-dodged_4 <- c(vir_dodged_4, def_dodged_4, gr_dodged_4)
-
-tab <- rbind(table(stacked_4), table(dodged_4))
-rownames(tab) <- c("Stacked", "Side by side")
-colnames(tab) <- c("Equal", "Less", "More")
-tab
+grouped_4 <- c(vir_grouped_4, def_grouped_4, gr_grouped_4)
 ```
+This was a potentially poorly formulated question, as the respondents had already been asked to specify how many times each of these obstacle was used in this round and respondents mostly judged this accurately with regard to both plots, but this could have been impacted by the previous questions. However, this does follow from the results from the past questions showing that respondents mostly accurately judged the values correctly, aside from those who instead judged the height of the whole bar.
 
+The aim of the question \textit{'Which bar chart do you feel is easiest to read and interpret?'} was to assess the perceived ease of interpretation of both bar plots. This is to gain an understanding in how data may best be presented in an easily understandable, easily readable manner. This is an important factor in visualisation, as a main aim in creating visuals is to provide an aid for the viewer to simply and quickly see the message. The opposite may be beneficial in certain applications however; based on the misreadings in the question regarding judging the number of times 'Log Grip' was used in the specific round, viewers of the visualisations could be easily mislead by incorrectly interpreting the plot. The people being shown the plot in, for example, an advert, may only take a fleeting look and not go beyond to analyse the plot to see accurate differences between values, and thus it is important to produce a plot that gives the easiest interpretation.
 
-**Which bar chart do you feel is easiest to read and interpret?**
-
-```{r echo=F}
-a_1 <- set_a$sta_dge
-b_1 <- set_b$sta_dge
-c_1 <- set_c$sta_dge
-d_1 <- set_d$sta_dge
-e_1 <- set_e$sta_dge
-f_1 <- set_f$sta_dge
+```{r}
+a_1 <- set_a$sta_grp
+b_1 <- set_b$sta_grp
+c_1 <- set_c$sta_grp
+d_1 <- set_d$sta_grp
+e_1 <- set_e$sta_grp
+f_1 <- set_f$sta_grp
 
 for(i in 1:length(a_1)){
   if(a_1[i] == "A"){
     a_1[i] <- "Stacked"
-  } else a_1[i] <- "Side by side"
+  } else a_1[i] <- "Grouped"
 }
 
 for(i in 1:length(b_1)){
   if(b_1[i] == "A"){
     b_1[i] <- "Stacked"
-  } else b_1[i] <- "Side by side"
+  } else b_1[i] <- "Grouped"
 }
 
 for(i in 1:length(d_1)){ 
   if(d_1[i] == "A"){
     d_1[i] <- "Stacked"
-  } else d_1[i] <- "Side by side"
+  } else d_1[i] <- "Grouped"
 }
 
 for(i in 1:length(c_1)){
   if(c_1[i] == "B"){
     c_1[i] <- "Stacked"
-  } else c_1[i] <- "Side by side"
+  } else c_1[i] <- "Grouped"
 }
 
 for(i in 1:length(e_1)){
   if(e_1[i] == "B"){
     e_1[i] <- "Stacked"
-  } else e_1[i] <- "Side by side"
+  } else e_1[i] <- "Grouped"
 }
 
 for(i in 1:length(f_1)){
   if(f_1[i] == "B"){
     f_1[i] <- "Stacked"
-  } else f_1[i] <- "Side by side"
+  } else f_1[i] <- "Grouped"
 }
 
 tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
-tab
+kable(tab)%>%
+  kable_styling(latex_options = "hold_position")
+```
+The large majority of participants found the grouped bar chart easier to read and interpret, as predicted.
+
+
+The questions \textit{'Which bar chart do you feel is easiest to read and interpret?'} and the one following \textit{'Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.'} are asked with the purpose of assessing the colour scheme that gives the greatest aesthetic pleasure, or effectively which colour palette the respondents feel is subjectively the 'prettiest' or 'nicest'. It is important to note here that aesthetics and readability do not always go hand-in-hand; a plot that is made to look very aesthetically pleasing may sacrifice readability, and vice versa. For each of the two languages, six pairings of three different colour palettes were created, whereby the first colour was the one displayed for the main questions, and the second used only for the comparison questions. As previously discussed, the three colour schemes considered are viridis, greyscale, and each language's default plotting colour palette. The colour palette pairings are outlined below, where each set of two colours is assigned a 'Pairing ID' from A to F.
+
+```{r}
+
+set <- c("A", "B", "C", "D", "E", "F")
+first_col <- c("Viridis", "Default", "Default", "Greyscale", "Viridis", "Greyscale")
+second_col <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viridis")
+
+df <- data.frame(set, first_col, second_col)
+names(df) <- c("Pairing ID", "Main Palette", "Secondary Pallette")
+knitr::kable(df)%>%
+  kable_styling(latex_options = "hold_position")
 ```
 
-``` {r, echo=F}
-tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), table(e_1), table(f_1))
-rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
-tab
-```
-
-
-**Which colour scheme do you find most aesthetically pleasing?**
-
-```{r echo=F}
-a_1 <- set_a$sta_dge
-b_1 <- set_b$sta_dge
-c_1 <- set_c$sta_dge
-d_1 <- set_d$sta_dge
-e_1 <- set_e$sta_dge
-f_1 <- set_f$sta_dge
-
-tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), table(e_1), table(f_1))
-rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
-tab
-```
-
-
-**Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.**
 
 ```{r echo=F}
 a_1 <- set_a$a_cols_1
@@ -1179,114 +1799,89 @@ d_1 <- set_d$d_cols_1
 e_1 <- set_e$e_cols_1
 f_1 <- set_f$f_cols_1
 
+tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), c(table(e_1), 0), table(f_1))
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+kable(tab)%>%
+  kable_styling(latex_options = "hold_position")
+```
+This table shows that when it came to the default/viridis pairings, displayed in the first two rows, the respondents tended to have no preference overall, although this may differ between languages, which will be explored later on. Comparing this to the bottom two rows, in which viridis is put against greyscale, only 1 respondent out of the 23, a proportion of 0.04, found the grey more aesthetically pleasing, as hypothesised. When considering greyscale/default, there was still a majority preferring the non-greyscale palette, but a higher proportion preferred this as compared to the viridis/greyscale, with 4 out of the 22, or a proportion of 0.18, preferring the grey.
+
+Complementing the aesthetic preferences, the second question assesses the colour preference with regard to readability and ease of interpretation. As mentioned before, this will be used to test both the colour palette preference itself alongside whether this preference matches up with aesthetic preference.
+
+```{r, fig.cap="Table showing which colour palettes respondents found easiest to read and interpret"}
+a_1 <- set_a$a_cols_2
+b_1 <- set_b$b_cols_2
+c_1 <- set_c$c_cols_2
+d_1 <- set_d$d_cols_2
+e_1 <- set_e$e_cols_2
+f_1 <- set_f$f_cols_2
+
 for(i in 1:length(a_1)){
-  if(a_1[i] == "A"){
-    a_1[i] <- "Viridis"
-  } else a_1[i] <- "Default"
+  if(a_1[i] == "Yes, A is easier"){
+    a_1[i] <- "A"
+  } else if(a_1[i] == "Yes, A is easier"){
+  a_1[i] <- "B"
+  } else a_1[i] <- "None"
 }
 
 for(i in 1:length(b_1)){
-  if(b_1[i] == "B"){
-    b_1[i] <- "Viridis"
-  } else b_1[i] <- "Default"
+  if(b_1[i] == "Yes, B is easier"){
+    b_1[i] <- "B"
+  } else if(b_1[i] == "Yes, A is easier"){ 
+    b_1[i] <- "A"
+    }else b_1[i] <- "None"
 }
 
 for(i in 1:length(e_1)){
-  if(e_1[i] == "A"){
-    e_1[i] <- "Viridis"
-  } else e_1[i] <- "Greyscale"
+  if(e_1[i] == "Yes, A is easier"){
+    e_1[i] <- "A"
+  } else if(e_1[i] == "Yes, B is easier"){
+    e_1[i] <- "B"
+  } else e_1[i] <- "None"
 }
 
 for(i in 1:length(f_1)){
-  if(f_1[i] == "B"){
-    f_1[i] <- "Viridis"
-  } else f_1[i] <- "Greyscale"
+  if(f_1[i] == "Yes, B is easier"){
+    f_1[i] <- "B"
+  } else if(f_1[i] == "Yes, A is easier"){
+    f_1[i] <- "A"
+  } else f_1[i] <- "None"
 }
 
 for(i in 1:length(c_1)){
-  if(c_1[i] == "A"){
-    c_1[i] <- "Default"
-  } else c_1[i] <- "Greyscale"
+  if(c_1[i] == "Yes, A is easier"){
+    c_1[i] <- "A"
+  } else if(c_1[i] == "Yes, B is easier"){ 
+    c_1[i] <- "B"
+  } else c_1[i] <- "None"
 }
 
 for(i in 1:length(d_1)){
-  if(d_1[i] == "A"){
-    d_1[i] <- "Greyscale"
-  } else d_1[i] <- "Default"
+  if(d_1[i] == "Yes, A is easier"){
+    d_1[i] <- "A"
+  } else if(d_1[i] == "Yes, B is easier"){ 
+    d_1[i] <- "B"
+  } else d_1[i] <- "None"
 }
 
 tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
-tab
+kable(tab)%>%
+  kable_styling(latex_options = "hold_position")
 ```
+Interestingly here, the top two rows appear to give opposing results; the respondents who were presented with viridis for the main questions and the default as a secondary palette stated that they found either viridis easier to interpret or had no preference, whereas those presented with the default first and viridis second tended to find the default easier. Once again looking at the comparisons with the greyscale, there were some respondents that found this easier to read, but the majority chose the alternative, whether this is viridis or the default.
 
-```{r echo=F}
-tab <- table(c(a_1, b_1))
-tab
-```
+\subsection{Sales - Part 1}
+Now consider the sales part of the survey. In this section data was taken from a the `BJsales` data set in R, which is a time series data set containing 150 observations. This data set constitutes a single vector of values with no specified timings, and the visualisation data was formed by taking subsets of size 12 this and setting a month between each point to give a year of fictional sales data.
 
-```{r echo=F}
-tab <- table(c(c_1, d_1))
-tab
-```
+\subsection{How much would you say sales of each company increased between January and December? [Company A]}
 
-```{r echo=F}
-tab <- table(c(e_1, f_1))
-tab
-```
+This question was included for the purpose of testing whether, again, axis scaling impacts the perceived differences between values, but this time with time series line plots as opposed to bar plots. Respondents were asked to assess how much the sales of company A increased over the course of the year, or in other words to look at and compare each end of the line. 
 
+The plot for which the respondents, on average, found the difference to be smallest was the zeroed, followed by the truncated, and then the separated, with means of 1.371, 2.414 and 3.043 respectively. Furthermore, the zeroed plot has a small overall range, spanning $[1, 3]$ of the scale. The other two plots have range $[1, 7]$, but IQRs of $[2, 4]$ and $[2, 3]$.
 
-\subsection{2.1.4  Sales - Part 1}
+\subsection{How much would you say sales of each company increased between January and December? [Company B]}
 
-
-**How much would you say sales of each company increased between January and December? [Company A]**
-
-```{r echo=F}
-sep_1a <- na.exclude(ab_sep$sep_1a)
-trn_1a <- ab_trn$ab_trn_1a
-zro_1a <- ab_zero$ab_zro_1
-
-for(i in 1:length(sep_1a)){
-  if(sep_1a[i] == "1 (A little)"){
-    sep_1a[i] <- "1"
-  }
-  if(sep_1a[i] == "7 (A lot)"){
-    sep_1a[i] <- "7"
-  }
-}
-
-for(i in 1:length(trn_1a)){
-  if(trn_1a[i] == "1 (A little)"){
-    trn_1a[i] <- "1"
-  }
-  if(trn_1a[i] == "7 (A lot)"){
-    trn_1a[i] <- "7"
-  }
-}
-
-for(i in 1:length(zro_1a)){
-  if(zro_1a[i] == "1 (A little)"){
-    zro_1a[i] <- "1"
-  }
-  if(zro_1a[i] == "7 (A lot)"){
-    zro_1a[i] <- "7"
-  }
-}
-
-sep_1a <- as.numeric(sep_1a)
-trn_1a <- as.numeric(trn_1a)
-zro_1a <- as.numeric(zro_1a)
-
-sumy <- cbind(summary(sep_1a), summary(trn_1a), summary(zro_1a))
-colnames(sumy) <- c("Separate", "Truncated", "Zeroed")
-
-sumy
-
-```
-
-
-**How much would you say sales of each company increased between January and December? [Company B]**
-
-```{r echo=F}
+```{r}
 sep_1b <- na.exclude(ab_sep$sep_1b)
 trn_1b <- na.exclude(ab_trn$ab_trn_1b)
 zro_1b <- na.exclude(ab_zero$ab_zro_1b)
@@ -1321,47 +1916,26 @@ for(i in 1:length(zro_1b)){
 sep_1b <- as.numeric(sep_1b)
 trn_1b <- as.numeric(trn_1b)
 zro_1b <- as.numeric(zro_1b)
-
-sumy <- cbind(summary(sep_1b), summary(trn_1b), summary(zro_1b))
-colnames(sumy) <- c("Separate", "Truncated", "Zeroed")
-
-sumy
-
 ```
 
 
-**How large would you say the drop in sales between April and July of Company A  is?**
+\subsection{How large would you say the drop in sales between April and July of Company A  is?}
 
-```{r echo=F}
+```{r}
 sep_2 <- na.exclude(ab_sep$sep_2)
 trn_2 <- na.exclude(ab_trn$ab_trn_2)
 zro_2 <- na.exclude(ab_zero$ab_zro_2)
-
-sumy <- cbind(summary(sep_2), summary(trn_2), summary(zro_2))
-colnames(sumy) <- c("Separate", "Truncated", "Zeroed")
-
-sumy
-
 ```
 
-\subsection{2.1.5  Sales - Part 2}
+\section{Sales - Part 2}
 
-**Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?**
+\subsection{Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?}
 
 
-```{r echo=F}
+```{r}
 trn_cd <- na.exclude(cd_trn$cd_trn)
 zro_cd <- na.exclude(cd_zro$cd_zro)
-
-sumy <- cbind(summary(trn_cd), summary(zro_cd))
-colnames(sumy) <- c("Truncated", "Zeroed")
-
-sumy
-
 ```
-
-
-
 
 
 
