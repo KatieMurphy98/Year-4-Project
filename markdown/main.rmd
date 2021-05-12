@@ -1,0 +1,25 @@
+---
+title: An Empirical Study of Data Visualisation
+author: Katie Murphy - 1632254
+output:
+  bookdown::pdf_book:
+     toc: yes
+     theme: united
+     pandoc_args: --top-level-division=chapter
+fontsize: 12pt
+documentclass: book
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Survey
+```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/survey/main.rmd'}
+```
+
+# Univariate Analysis
+```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/univariate-analysis/main.rmd'}
+```
+
