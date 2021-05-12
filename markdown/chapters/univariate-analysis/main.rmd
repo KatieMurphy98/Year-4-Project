@@ -24,6 +24,7 @@ library(gridExtra)
 library(kableExtra)
 library(lawstat)
 library(cowplot)
+library(stringi)
 
 require(pander)
 panderOptions('round', 2)
@@ -1877,49 +1878,46 @@ Now consider the sales part of the survey. In this section data was taken from a
 
 This question was included for the purpose of testing whether, again, axis scaling impacts the perceived differences between values, but this time with time series line plots as opposed to bar plots. Respondents were asked to assess how much the sales of company A increased over the course of the year, or in other words to look at and compare each end of the line. 
 
-The plot for which the respondents, on average, found the difference to be smallest was the zeroed, followed by the truncated, and then the separated, with means of 1.371, 2.414 and 3.043 respectively. Furthermore, the zeroed plot has a small overall range, spanning $[1, 3]$ of the scale. The other two plots have range $[1, 7]$, but IQRs of $[2, 4]$ and $[2, 3]$.
+The plot for which the respondents, on average, found the difference to be smallest was the zeroed, followed by the truncated, and then the separated, with means of 1.371, 2.414 and 3.043 respectively. These differences are found to be statistically significant, as outlined in table[?].
+
+```{r}
+hyp <- c("Truncated > Zeroed", "Truncated < Separated", "Separated > Zeroed")
+pval <- c("8.870681966755e-14", 0.00654175643803223, 3.48079934270661e-13)
+tab <- data.frame(hyp, pval)
+colnames(tab) <- c("Alternatve Hypothesis", "P-value")
+kable(tab, caption="Table of p-values for this question") %>% 
+  kable_styling(latex_options = 'hold_position')
+```
+
+The differences between languages and plot ordering were shown to be inconsequential (see table [?])
 
 \subsection{How much would you say sales of each company increased between January and December? [Company B]}
 
+The zeroed was once again perceived to have the smallest difference ($\bar{x} = 1.371$), but this time with the separated in the middle ($\bar{x} = 4.1304$) and truncated with the largest difference ($\bar{x} = 4.1304$). See table [?] for p-values. The p-values show sufficient evidence that the truncated responses were on average greater than the zeroed, as were the responses for the separated plots. However, the difference between the ratings for the truncated and separated plot responses was inconsequential, along with the language comparisons and plot order. 
+
+
 ```{r}
-sep_1b <- na.exclude(ab_sep$sep_1b)
-trn_1b <- na.exclude(ab_trn$ab_trn_1b)
-zro_1b <- na.exclude(ab_zero$ab_zro_1b)
-
-for(i in 1:length(sep_1b)){
-  if(sep_1b[i] == "1 (A little)"){
-    sep_1b[i] <- "1"
-  }
-  if(sep_1b[i] == "7 (A lot)"){
-    sep_1b[i] <- "7"
-  }
-}
-
-for(i in 1:length(trn_1b)){
-  if(trn_1b[i] == "1 (A little)"){
-    trn_1b[i] <- "1"
-  }
-  if(trn_1b[i] == "7 (A lot)"){
-    trn_1b[i] <- "7"
-  }
-}
-
-for(i in 1:length(zro_1b)){
-  if(zro_1b[i] == "1 (A little)"){
-    zro_1b[i] <- "1"
-  }
-  if(zro_1b[i] == "7 (A lot)"){
-    zro_1b[i] <- "7"
-  }
-}
-
-sep_1b <- as.numeric(sep_1b)
-trn_1b <- as.numeric(trn_1b)
-zro_1b <- as.numeric(zro_1b)
+hyp <- c("Truncated > Zeroed", "Truncated not equal to Separated", "Separated not equal to Zeroed")
+pval <- c("8.95254768631571e-23", "0.2162", "12.46327564235365e-23")
+tab <- data.frame(hyp, pval)
+colnames(tab) <- c("Hypothesis", "P-value")
+kable(tab, caption="Table of p-values for this question") %>% 
+  kable_styling(latex_options = "hold_position")
 ```
 
-
 \subsection{How large would you say the drop in sales between April and July of Company A  is?}
+
+The means for this question appear very significantly different by eye, once again with the zeroed plot eliciting the lowest average rating ($\bar{x} = 1.371429$), followed by the truncated ($\bar{x} = 2.814286$) and then the separated ($\bar{x} = 4.028571$). The p-values confirm the significance of the differences between all three variables. 
+
+```{r}
+hyp <- c("Truncated not equal to Zeroed", "Truncated not equal to Separated", "Separated not equal to Zeroed")
+pval <- c("1.03832498155043e-11", "0.00012743463393642", "1.1261341031207e-16")
+tab <- data.frame(hyp, pval)
+colnames(tab) <- c("Hypothesis", "P-value")
+kable(tab, caption="Table of p-values for this question") %>% 
+  kable_styling(latex_options = "hold_position")
+```
+
 
 ```{r}
 sep_2 <- na.exclude(ab_sep$sep_2)
@@ -1931,6 +1929,7 @@ zro_2 <- na.exclude(ab_zero$ab_zro_2)
 
 \subsection{Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?}
 
+The final question of the survey compares just two plots, for which the difference in the ratings is shown to be significant, with the mean for the truncated plot ratings at $\bar{x} = 4.271$ and for the zeroed $\bar{x} = 2.7$ and a one-sided p-value of $p=4.44089209850063e-15$ showing the difference in the truncated was on average rated as larger than for the zeroed.
 
 ```{r}
 trn_cd <- na.exclude(cd_trn$cd_trn)
