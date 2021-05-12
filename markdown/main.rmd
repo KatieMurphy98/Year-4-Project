@@ -1,17 +1,15 @@
+---
 title: An Empirical Study of Data Visualisation
 author: Katie Murphy - 1632254
 output:
-  bookdown::pdf_book:
-     toc: yes
-     theme: united
-     pandoc_args: --top-level-division=chapter
-fontsize: 12pt
+  pdf_document: default
+fontsize: 11pt
 documentclass: book
 geometry: margin=1in
 header-includes:
   \setlength{\parskip}{1em}
   \linespread {1.25}
-bibliography: main.bib  
+bibliography: bibliography.bib  
 ---
 
 
