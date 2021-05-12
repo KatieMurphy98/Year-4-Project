@@ -3841,20 +3841,20 @@ df <- rbind(
     wilcox.test(trn_ab_1b, sep_ab_1b)$null.value, 
     wilcox.test(trn_ab_1b, sep_ab_1b)$p.value),
 
-  c(wilcox.test(trn_ab_1b, sep_ab_1b, alt="l")$data.name, 
-    wilcox.test(trn_ab_1b, sep_ab_1b, alt="l")$alternative, 
-    wilcox.test(trn_ab_1b, sep_ab_1b, alt="l")$null.value, 
-    wilcox.test(trn_ab_1b, sep_ab_1b, alt="l")$p.value),
+  c(wilcox.test(trn_ab_1b, sep_ab_1b, alt="g")$data.name, 
+    wilcox.test(trn_ab_1b, sep_ab_1b, alt="g")$alternative, 
+    wilcox.test(trn_ab_1b, sep_ab_1b, alt="g")$null.value, 
+    wilcox.test(trn_ab_1b, sep_ab_1b, alt="g")$p.value),
 
   c(wilcox.test(sep_ab_1b, zero_ab_1b)$data.name, 
     wilcox.test(sep_ab_1b, zero_ab_1b)$alternative, 
     wilcox.test(sep_ab_1b, zero_ab_1b)$null.value, 
     wilcox.test(sep_ab_1b, zero_ab_1b)$p.value),
   
-  c(wilcox.test(sep_ab_1b, zero_ab_1b, "g")$data.name, 
-    wilcox.test(sep_ab_1b, zero_ab_1b, "g")$alternative, 
-    wilcox.test(sep_ab_1b, zero_ab_1b, "g")$null.value, 
-    wilcox.test(sep_ab_1b, zero_ab_1b, "g")$p.value),
+  c(wilcox.test(sep_ab_1b, zero_ab_1b, "l")$data.name, 
+    wilcox.test(sep_ab_1b, zero_ab_1b, "l")$alternative, 
+    wilcox.test(sep_ab_1b, zero_ab_1b, "l")$null.value, 
+    wilcox.test(sep_ab_1b, zero_ab_1b, "l")$p.value),
   
   c(wilcox.test(trn_ab_1b_r, trn_ab_1b_py, exact=F)$data.name, 
     wilcox.test(trn_ab_1b_r, trn_ab_1b_py, exact=F)$alternative, 
