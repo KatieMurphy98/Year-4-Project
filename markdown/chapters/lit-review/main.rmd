@@ -17,12 +17,66 @@ library(kableExtra)
 ```
 
 \section{Introduction}
-Data visualisation is a method of conveying data in an easily digestible manner through graphics. It is an important aspect of data presentation and allows key information to be quickly identified by the observer. Very many subject areas rely on such visualisations to relay messages that may get lost or have less impact when presented as written word or raw numbers. The main objective of visualisation is to create figures that display the data accurately in an aesthetic manner, giving non-misleading messages in a format that is pleasing to the eye. A good visualisation strikes a balance between aesthetics and information, where the aesthetic features are designed such that they 'enhance the message of the visualisation' [@wilke2019]. An incorrect balance of aesthetics to information can lead to figures that are misleading, confusing, or unengaging. Wilke discusses the way in which, for example, a research scientist with limited design experience may produce a visualisation displaying the data in an informative manner, but fail to draw immediate attention to the desired message, and on the other hand, someone with a main interest in the aesthetic design of a visualisation could create a figure that is very pleasing to the eye, but create a misleading visualisation in the process.
+Data visualisation is a method of conveying data in an easily digestible manner through graphics. It is an important aspect of data presentation and allows key information to be quickly identified by the observer. Very many subject areas rely on such visualisations to relay messages that may get lost or have less impact when presented as written word or raw numbers. 
+
+The main objective of visualisation is to create figures that display the data accurately in an aesthetic manner, giving non-misleading messages in a format that is pleasing to the eye. A good visualisation strikes a balance between aesthetics and information, where the aesthetic features are designed such that they 'enhance the message of the visualisation' [@wilke2019]. 
+
+An incorrect balance of aesthetics to information can lead to figures that are misleading, confusing, or unengaging. Wilke discusses the way in which, for example, a research scientist with limited design experience may produce a visualisation displaying the data in an informative manner, but fail to draw immediate attention to the desired message, and on the other hand, someone with a main interest in the aesthetic design of a visualisation could create a figure that is very pleasing to the eye, but create a misleading visualisation in the process.
 
 This literature review will discuss a range of publications discussing various aspects of data visualisation with a focus on how poor or uninformed visualisation design can produce misleading figures, as well as how such visualisations may be abused to deliberately deceive the observer. Starting with publications discussing general good visualisation practice, the discussion will then lead on to look at studies investigating the implementation of different visualisation practices, from which inspiration will be drawn to design the study for this paper.
 
 \section{Good Visualisation Practice}
-The book \textit{'Fundamentals of Data Visualization'} is renowned as \textit{'an excellent reference about producing and understanding static figures, figures'} [see @wilkerev] and described as being \textit{'suitable to be used as a reference manual'} [see @hwang2020]. Thus, this book provides a good basis to understanding the principles behind data visualisation, and how to create effective, informative and aesthetic figures. 
+The book \textit{'Fundamentals of Data Visualization'} [@wilke2019] is renowned as \textit{'an excellent reference about producing and understanding static figures, figures'} [see @wilkerev] and described as being \textit{'suitable to be used as a reference manual'} [see @hwang2020]. Thus, this book provides a good basis to understanding the principles behind data visualisation, and how to create effective, informative and aesthetic figures. 
+
+In the book, Wilke discusses a variety of topics under the data visualisation umbrella, from relatively simple but important and often overlooked ideas such as deciding on coordinate systems, axis scales and colouring, to how to visualise distributions, trends and geospatial data. This literature review will focus on the areas being investigated in the 'Empirical Study of Data Visualisation' survey; namely coordinate systems, axis scaling, colouring for bar charts, alongside stacked and grouped bar charts, as well as axis scaling and formats for time series plots.
+
+In discussing coordinate systems and axis scaling, Wilke highlights that, prior to deciding on a coordinate system, it is important to consider the form the data will take, and where the data will be positioned, as well as how many dimensions this data takes. The example used is a classic two-dimensional scatter plot, in which each data value is represented by a point positioned in a distinct location on the 2d plane, and thus two scales are required to define where this location falls, traditionally with a linear scale and horizontal x-axis with the y-axis perpendicular to this. 
+
+Alternative coordinate systems can include the perpendicular model with non-linear axes, or circular or ‘curved’ models such as polar coordinates in addition to flipped axes, where the dependent variable is represented by the x-axis as opposed to the y. 
+
+'An Empirical Study of Data Visualisation' will be mainly analysing perception of categorical bar charts, for which the 'locations' are the category as defined by the x-axis and the bar height. It will be discussed how the perception of these locations could be altered to stray from 'good practice', and how these alterations may mislead the observer. 
+
+In discussion of the linear, two-dimensional cartesian system, the author describes the various formulations that this system can take, in terms of variables with the same or different units. For example, if two variables with different units are represented perpendicular to one another on a cartesian system, the designer has the freedom to stretch or compress the data in a way to best represent the data and, as Wilke states, 'maintain a valid visualisation of the data'. 
+
+Another point of interest mentioned by Wilke here is that the ratio of x to y- axis should be such that 'important differences in position are noticeable'. This is regarded as good practice by Wilke, but could potentially be exploited as discussed by @Few2016; the aspect ratio can be manipulated to make differences appear larger depending on the story that the creator wishes to sell. On the other hand, Wilke does state that it is 'important differences' that should be noticeable, and so may relate to differences that are already significant and crucial to see, and which may be minimised by an inappropriate aspect ratio. 
+
+For example, consider a company facing a drop in profits from one time step to another. An aspect ratio minimising the height in comparison to the width can allow this difference to appear smaller. On the other side of this coin, a company may have marginal profit gain between two time steps, and can abuse principles of perception to lengthen the y-axis as compared to the x, potentially making the difference seem larger.
+
+This will be considered when writing the survey, as the perceived differences in position will be tested when changing features such as y-axis scaling or aspect ratio. A standard practice as laid out by Wilke is that, for two variables with the same unit, the aspect ratio should ensure that the space between ticks for each variable are equal in size.
+
+##### LOG SCALING
+After this, Wilke goes on to discuss logarithmic scaling, which will be investigated in this study alongside axis truncation. Conversely to what will be investigated in this study, he talks about both logarithmic scaling and log-transformed data whereas this study will consider logarithmic scaling alone.
+##### LOG SCALING
+
+
+##### COLOUR
+
+##### COLOUR
+
+
+##### VISUALISING AMOUNTS
+@wilke2910 sections 6.1, 6.2, 10.2, 10.3
+##### VISUALISING AMOUNTS
+
+
+##### WHY PIE CHARTS ARE A PIECE OF SHIT
+@wilke2910 section 10.1
+@pie
+##### WHY PIE CHARTS ARE A PIECE OF SHIT
+
+
+##### TIME SERIES
+section 13.1
+##### TIME SERIES
+
+
+##### BRIEFLY: 3D AND WHY IT'S BAD
+section 26.1
+##### BRIEFLY: 3D AND WHY IT'S BAD
+
+##### TAXONOMY PAPER 
+@taxonomy
+##### TAXONOMY PAPER
 
 \section{Studies in Visualisation}
 There is a large amount of research and literature surrounding the topic of misleading visualisations, looking into how various techniques can either deliberately or unintentionally deceive an observer in the message of the data. Results from some of these papers will be replicated, as well as used to form hypotheses which this survey will investigate. A large amount of the literature exploring misleading tactics in data visualisation focuses mainly on bar plots and line plots for categorical and time series data, and so this is what the study and literature review will focus on. 

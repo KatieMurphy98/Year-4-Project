@@ -1,0 +1,385 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\setlength{\parskip}{1em}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\frontmatter
+
+\mainmatter
+\section{Introduction}
+
+Data visualisation is a method of conveying data in an easily digestible
+manner through graphics. It is an important aspect of data presentation
+and allows key information to be quickly identified by the observer.
+Very many subject areas rely on such visualisations to relay messages
+that may get lost or have less impact when presented as written word or
+raw numbers.
+
+The main objective of visualisation is to create figures that display
+the data accurately in an aesthetic manner, giving non-misleading
+messages in a format that is pleasing to the eye. A good visualisation
+strikes a balance between aesthetics and information, where the
+aesthetic features are designed such that they `enhance the message of
+the visualisation' \citep{wilke2019}.
+
+An incorrect balance of aesthetics to information can lead to figures
+that are misleading, confusing, or unengaging. Wilke discusses the way
+in which, for example, a research scientist with limited design
+experience may produce a visualisation displaying the data in an
+informative manner, but fail to draw immediate attention to the desired
+message, and on the other hand, someone with a main interest in the
+aesthetic design of a visualisation could create a figure that is very
+pleasing to the eye, but create a misleading visualisation in the
+process.
+
+This literature review will discuss a range of publications discussing
+various aspects of data visualisation with a focus on how poor or
+uninformed visualisation design can produce misleading figures, as well
+as how such visualisations may be abused to deliberately deceive the
+observer. Starting with publications discussing general good
+visualisation practice, the discussion will then lead on to look at
+studies investigating the implementation of different visualisation
+practices, from which inspiration will be drawn to design the study for
+this paper.
+
+\section{Good Visualisation Practice}
+
+The book \textit{'Fundamentals of Data Visualization'} \citep{wilke2019}
+is renowned as
+\textit{'an excellent reference about producing and understanding static figures, figures'}
+\citep[see][]{wilkerev} and described as being
+\textit{'suitable to be used as a reference manual'}
+\citep[see][]{hwang2020}. Thus, this book provides a good basis to
+understanding the principles behind data visualisation, and how to
+create effective, informative and aesthetic figures.
+
+In the book, Wilke discusses a variety of topics under the data
+visualisation umbrella, from relatively simple but important and often
+overlooked ideas such as deciding on coordinate systems, axis scales and
+colouring, to how to visualise distributions, trends and geospatial
+data. This literature review will focus on the areas being investigated
+in the `Empirical Study of Data Visualisation' survey; namely coordinate
+systems, axis scaling, colouring for bar charts, alongside stacked and
+grouped bar charts, as well as axis scaling and formats for time series
+plots.
+
+In discussing coordinate systems and axis scaling, Wilke highlights
+that, prior to deciding on a coordinate system, it is important to
+consider the form the data will take, and where the data will be
+positioned, as well as how many dimensions this data takes. The example
+used is a classic two-dimensional scatter plot, in which each data value
+is represented by a point positioned in a distinct location on the 2d
+plane, and thus two scales are required to define where this location
+falls, traditionally with a linear scale and horizontal x-axis with the
+y-axis perpendicular to this.
+
+Alternative coordinate systems can include the perpendicular model with
+non-linear axes, or circular or `curved' models such as polar
+coordinates in addition to flipped axes, where the dependent variable is
+represented by the x-axis as opposed to the y.
+
+`An Empirical Study of Data Visualisation' will be mainly analysing
+perception of categorical bar charts, for which the `locations' are the
+category as defined by the x-axis and the bar height. It will be
+discussed how the perception of these locations could be altered to
+stray from `good practice', and how these alterations may mislead the
+observer.
+
+In discussion of the linear, two-dimensional cartesian system, the
+author describes the various formulations that this system can take, in
+terms of variables with the same or different units. For example, if two
+variables with different units are represented perpendicular to one
+another on a cartesian system, the designer has the freedom to stretch
+or compress the data in a way to best represent the data and, as Wilke
+states, `maintain a valid visualisation of the data'.
+
+Another point of interest mentioned by Wilke here is that the ratio of x
+to y- axis should be such that `important differences in position are
+noticeable'. This is regarded as good practice by Wilke, but could
+potentially be exploited as discussed by \citet{Few2016}; the aspect
+ratio can be manipulated to make differences appear larger depending on
+the story that the creator wishes to sell. On the other hand, Wilke does
+state that it is `important differences' that should be noticeable, and
+so may relate to differences that are already significant and crucial to
+see, and which may be minimised by an inappropriate aspect ratio.
+
+For example, consider a company facing a drop in profits from one time
+step to another. An aspect ratio minimising the height in comparison to
+the width can allow this difference to appear smaller. On the other side
+of this coin, a company may have marginal profit gain between two time
+steps, and can abuse principles of perception to lengthen the y-axis as
+compared to the x, potentially making the difference seem larger.
+
+This will be considered when writing the survey, as the perceived
+differences in position will be tested when changing features such as
+y-axis scaling or aspect ratio. A standard practice as laid out by Wilke
+is that, for two variables with the same unit, the aspect ratio should
+ensure that the space between ticks for each variable are equal in size.
+
+\hypertarget{log-scaling}{%
+\paragraph{LOG SCALING}\label{log-scaling}}
+
+After this, Wilke goes on to discuss logarithmic scaling, which will be
+investigated in this study alongside axis truncation. Conversely to what
+will be investigated in this study, he talks about both logarithmic
+scaling and log-transformed data whereas this study will consider
+logarithmic scaling alone. \#\#\#\#\# LOG SCALING
+
+\hypertarget{colour}{%
+\paragraph{COLOUR}\label{colour}}
+
+\hypertarget{colour-1}{%
+\paragraph{COLOUR}\label{colour-1}}
+
+\hypertarget{visualising-amounts}{%
+\paragraph{VISUALISING AMOUNTS}\label{visualising-amounts}}
+
+\citet{wilke2910} sections 6.1, 6.2, 10.2, 10.3 \#\#\#\#\# VISUALISING
+AMOUNTS
+
+\hypertarget{why-pie-charts-are-a-piece-of-shit}{%
+\paragraph{WHY PIE CHARTS ARE A PIECE OF
+SHIT}\label{why-pie-charts-are-a-piece-of-shit}}
+
+\citet{wilke2910} section 10.1 \citet{pie} \#\#\#\#\# WHY PIE CHARTS ARE
+A PIECE OF SHIT
+
+\hypertarget{time-series}{%
+\paragraph{TIME SERIES}\label{time-series}}
+
+section 13.1 \#\#\#\#\# TIME SERIES
+
+\hypertarget{briefly-3d-and-why-its-bad}{%
+\paragraph{BRIEFLY: 3D AND WHY IT'S
+BAD}\label{briefly-3d-and-why-its-bad}}
+
+section 26.1 \#\#\#\#\# BRIEFLY: 3D AND WHY IT'S BAD
+
+\hypertarget{taxonomy-paper}{%
+\paragraph{TAXONOMY PAPER}\label{taxonomy-paper}}
+
+\citet{taxonomy} \#\#\#\#\# TAXONOMY PAPER
+
+\section{Studies in Visualisation}
+
+There is a large amount of research and literature surrounding the topic
+of misleading visualisations, looking into how various techniques can
+either deliberately or unintentionally deceive an observer in the
+message of the data. Results from some of these papers will be
+replicated, as well as used to form hypotheses which this survey will
+investigate. A large amount of the literature exploring misleading
+tactics in data visualisation focuses mainly on bar plots and line plots
+for categorical and time series data, and so this is what the study and
+literature review will focus on.
+
+The 2020 paper ``The Deceptive Potential of Common Design Tactics Used
+in Data Visualizations'' \citep{claire-obrian}, as the title suggests,
+explores how using different design tactics may mislead the person
+seeing the visualisation. Similarly to ``An Empirical Study of Data
+Visualisation'', the Claire and O'Brian paper uses a survey to explore
+how deceptive visualisation techniques can be employed as well as their
+impact on perception of the data. The survey discussed in this paper
+presents the participant with four plots; a bar plot, a line plot, a pie
+chart and a bubble plot. Additionally to changing aesthetic features of
+the plots themselves, the study investigates the use of exaggerated,
+leading titles, for example one control plot has the title " Home Sales
+Show Increase From 2015 - 2016``, which is altered to''Huge Increase in
+Home Sales From 2015 -- 2016!``. The control plots consist of using a
+y-axis scaling beginning at 0 for the bar and line plots, a standard pie
+chart, and a bubble plot with proportionally sized bubbles, all
+alongside the non-exaggerated titles. The altered plots involve
+truncating the y-scale for the bar and line plots, making the pie chart
+in 3D, and arbitrarily altering the sizes of the bubbles on the bubble
+plot. The altered plots are referred to as the''deceptive" plots. The
+survey used sets of plots as crossed between deceptive aesthetics and
+deceptive titles; two had control aesthetics, one with the control title
+and one for the exaggerated title, and two had deceptive aesthetics with
+one having the exaggerated titling.
+
+With regard to truncated axes, Claire and O'Brian asked participants to
+subjectively judge the difference between two data points using a 6
+point scale ranging from ``a little'' to ``a lot''. For both the bar
+plot and line plot it was found the the use of a truncated scale
+increases the perceived difference between the data points. The use of a
+truncated scale is also discussed by \citet{YANG2021}, whereby 5
+empirical studies were performed in order to assess the effect of
+altering the scale in this way. The first of the 5 studies once again
+assessed how large the difference between data points is perceived to be
+in the truncated plot as compared to a control, again using a subjective
+scale from ``Not at all different'' to ``Extremely different'' on a 7
+point scale. This scale differed, however, in the way that a midpoint
+label of ``Moderately different'' was provided. The 7 point scale may be
+preferable to the 6 point scale as the 7 point has a defined midpoint at
+4, whereas the 6 point does not. This study once again concludes that
+the differences in data points tended to be perceived as larger than for
+the control plot. Alongside these studies, a 2014 blog post
+\citep{parikh_2014} discusses axis truncation and its effect on
+perceived data point difference for bar plots alongside other aesthetic
+features. The first example shows how truncating the y-axis of a bar
+plot can over-exaggerate differences in the heights of the bars, perhaps
+leading to incorrect observations regarding comparisons of values within
+the data.
+
+The paper \citet{stackscale} performs a similar study, but instead
+investigates the use of `stack-scale', or `stacked' bar charts and
+logarithmic scaling. The aim of the study was to explore whether
+stack-scale bar charts are an effective way to visualise large value
+data, which is less relevant to since the Ninja Warrior and Sales data
+are relatively low-valued data compared to the paper, but nevertheless
+provides a framework for exploring the use of logarithmic scaling and
+stacked bars in a respondent study. Participants were shown three plots;
+a control with a linear scale, a bar plot using a stack-scale, and one
+with logarithmic scaling. The questions asked determined how the
+different scaling affected accuracy in reading individual values,
+interpreting differences in values and determining which time-step
+exhibits the largest difference in values. \citet{logax} additionally
+discusses the use of a logarithmic axis in bar plots, explaining how it
+is impossible for a zero value to be displayed on this axis, and thus
+the bar start points are arbitrary and produce an inaccurate
+representation of the bar height with relation to the true value. To
+quote the paper,
+\textit{"Don’t create bar graphs using a logarithmic axis if your goal is to honestly show the data"}.
+It can be observed that the logarithmic scale makes the perceived
+difference appear smaller than in the control.
+
+As well as scaling, another aspect of visualisation design that could
+potentially mislead the observer is bar width and aspect ratios. When
+adding a visualisation into a publication, re-sizing the visualisation
+to fit a specific gap may include altering the aspect ratio, in turn
+affecting the length to width ratio of the bars in a bar plot. As
+explored by Steven Few in a 2016 article for the
+\textit{'Visual Business Intelligence Newsletter'} \citep{Few2016},
+altering this ratio can affect viewer perception in the way of a
+narrower and taller image distorting bars to appear longer, and vice
+versa, meaning that perceived differences between bar heights may be
+affected.
+
+Part 2 of the survey will be based around investigating this idea,
+alongside how the reading of exact values is affected. The second
+section of the survey tests whether altering aspect ratio of plots
+affects interpretation. The purpose of this is to mirror what my occur
+when visualisations are published, and may be resized to fit the section
+of the page they sit on. As in \citep{Few2016}, it will be hypothesised
+that an aspect ratio that effectively narrows the bars may cause
+overestimation in values, and vice versa, using a ratio that widens bars
+could lead to underestimation. In the paper, the author discusses how
+increasing the widths of bars could distract from the bar height as well
+as take up excessive space on a page. It is also mentioned that wider
+bars may be ``aesthetically displeasing''. This section of the survey
+will test both how bar width alters perceived difference between bars as
+well as opinions on the aesthetics. The method in the paper also
+involves altering spaces between bars, including bar plots with spaces
+at 50\% of the bar widths and then reducing the width of the space by a
+third. Conversely to this, width of spaces between bars will not be
+considered, only the effective widths of the bars themselves. The author
+concludes that a length-to-width ratio of 10:1 appears to suffer from
+perceptual imbalance, but increasing this such that the bars become
+narrower and longer does not appear to have as much of an impact; the
+ratio can be increased relatively far with out causing much perceptual
+imbalance.
+
+An article from the University of Stuttgart \citep{HuynhHaiDang2017}
+gives an overview of many types of bar chart, including stacked and
+grouped bars. The author remarks that grouped bar charts may make the
+comparison of bars in the same category more difficult, while the
+stacked bar chart sacrifices ease of comparison of values in the bars
+for increased spacial efficiency. A 2018 work from the journal of
+\textit{'Visual Informatics'} \citep{INDRATMO2018155} also provides a
+discussion on the use of various forms of stacked and grouped bar charts
+and their efficacy. The paper notes how a classical stacked bar chart
+can be useful for overall comparisons as the height of the bar
+represents the value of the item, with the different attributes depicted
+as a segmentation of this single bar into different colours. When
+discussing grouped bar charts it is mentioned that stacked bar charts
+may be less useful when performing attribute comparisons, in other words
+comparisons between different categories on the same bar, as a result of
+the bar segments being non-aligned. This results in comparison taking
+the form of length judgment as opposed to position judgment. Cleveland
+and McGill in their 1984 article in the
+\textit{'Journal of the American Statistical Association'}
+\citep{clevelandmcgill} discuss how judgments based on length are likely
+to be less accurate than those based on position. A grouped bar chart is
+a way to allow for easy comparison between individual categories, but is
+discussed to be less effective in overall comparison.
+
+\backmatter
+  \bibliography{main.bib}
+
+\end{document}
