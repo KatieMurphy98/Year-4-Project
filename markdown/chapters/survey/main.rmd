@@ -17,9 +17,8 @@ library(knitr)
 library(kableExtra)
 ```
 
-chapter{Data collection}
-
 \section{Background on survey design}
+
 
 As explained by @wiley2004, a survey is a means of obtaining quantitative information regarding opinions and experiences of the respondents in order to explore the views of the target population as a whole. In this book, a survey is noted as a "systematic" method of collecting data, where the author states that the word "systematic" is deliberately used 
 in order to separate surveys from other methods of information collection. "systematic" is defined by the Collins English Dictionary as something that \textit{"is done according to a fixed plan, in a thorough and efficient way"} [@collins-systematic], and this reflects the manner in which surveys are created in accordance with a given system, where methods for distribution, implementation and analysis are defined under a pre-determined structure. The survey will be delivered to potential respondents in the target population, who will then be asked to complete a series of standardised questions, or questions for which the question ordering and wording is identical for every respondent, unless different formats are to be used to research purposes. It is once again discussed by @wiley2004 that standardised questioning was not always the norm; most interviewers would more likely have a list of objectives, and each interviewer would formulate and word questions based around these. It was discovered that question wording can have a drastic effect on respondents' answers.
