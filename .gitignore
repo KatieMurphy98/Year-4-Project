@@ -4,6 +4,10 @@
 *.fls
 *.log
 *.synctex.gz
+src/.vscode/settings.json
+.vscode/settings.json
+node_modules/save-svg-as-png/package.json
+package-lock.json
 
 src/.vscode/settings.json
 
@@ -13,6 +17,10 @@ node_modules/save-svg-as-png/.swp
 node_modules/save-svg-as-png/.tmuxrc
 node_modules/save-svg-as-png/.vimlocal
 node_modules/save-svg-as-png/bootstrap.min.css
+node_modules/save-svg-as-png/image.png
+node_modules/save-svg-as-png/index.html
+node_modules/save-svg-as-png/index.js
+node_modules/save-svg-as-png/LICENSE
 node_modules/save-svg-as-png/index.js
 node_modules/save-svg-as-png/LICENSE
 node_modules/save-svg-as-png/package.json
