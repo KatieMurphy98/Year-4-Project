@@ -8,6 +8,10 @@ src/.vscode/settings.json
 .vscode/settings.json
 node_modules/save-svg-as-png/package.json
 package-lock.json
+
+src/.vscode/settings.json
+
+.vscode/settings.json
 node_modules/save-svg-as-png/.babelrc
 node_modules/save-svg-as-png/.swp
 node_modules/save-svg-as-png/.tmuxrc
@@ -17,6 +21,9 @@ node_modules/save-svg-as-png/image.png
 node_modules/save-svg-as-png/index.html
 node_modules/save-svg-as-png/index.js
 node_modules/save-svg-as-png/LICENSE
+node_modules/save-svg-as-png/index.js
+node_modules/save-svg-as-png/LICENSE
+node_modules/save-svg-as-png/package.json
 node_modules/save-svg-as-png/README.md
 node_modules/save-svg-as-png/selectortest.html
 node_modules/save-svg-as-png/stalemate.ttf
@@ -24,3 +31,4 @@ node_modules/save-svg-as-png/test.js
 node_modules/save-svg-as-png/test.svg
 node_modules/save-svg-as-png/viewboxtest.html
 node_modules/save-svg-as-png/lib/saveSvgAsPng.js
+package-lock.json
