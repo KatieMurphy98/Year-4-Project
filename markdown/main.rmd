@@ -1,6 +1,4 @@
 ---
-title: An Empirical Study of Data Visualisation
-author: Katie Murphy - 1632254
 output:
   pdf_document: default
 fontsize: 11pt
@@ -13,17 +11,47 @@ bibliography: bibliography.bib
 ---
 
 
+\begin{titlepage}
+    \begin{center}
+        \vspace*{2cm}
+
+        \textbf{An Emprirical Study of Data Visualisation}
+
+        \vspace{0.5cm}
+        SUBTITLE PLACEHOLDER
+
+        \vspace{1.5cm}
+
+        \textbf{Katie Murphy}
+        \vspace{1.5cm}
+
+        \includegraphics[width=0.5\textwidth]{universitylogo.eps}
+
+        \vfill
+
+
+        MMORS Final Year Dissertation\\
+
+        \vspace{0.5cm}
+        Cardiff School of Mathematics
+
+        \vspace{1.5cm}
+
+
+
+    \end{center}
+\end{titlepage}
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, warning = F, comment = NA, fig.pos = "!H", fig.width = 7, fig.height = 3)
 library(knitr)
 library(kableExtra)
 ```
 
-# The Survey
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/survey/main.rmd'}
 ```
 
-# Univariate Analysis
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/univariate-analysis/main.rmd'}
 ```
 
