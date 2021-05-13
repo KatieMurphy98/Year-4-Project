@@ -1,30 +1,4383 @@
----
-title: "Appendix"
-author: "Katie Murphy"
-date: "13/05/2021"
-output: pdf_document
----
+\chapter{Appendices}
+\section{Apendix 1 - The Survey}
+The following shows a pdf paper format of the first versions of the surveys, for R and Python.
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+\subsection{R}
+\includepdf[pages=-,nup=2,pagecommand={}]{R_survey_v1.pdf}
+
+\subsection{Python}
+\includepdf[pages=-,nup=2,pagecommand={}]{py_survey_v1.pdf}
+
+###
+\section{Appendix 2 - Univariate Analysis}
+```{r include = FALSE}
+rm(list=ls())
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(rstatix)
+library(BSDA)
+library(gridExtra)
+library(kableExtra)
+library(lawstat)
+
+require(pander)
+panderOptions('round', 2)
+
+
+### SET UP DATA ###
+for(i in 1:6){
+  r <- assign(paste0("r",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("R - v",i)))))
+  py <- assign(paste0("py",i), (as.data.frame(read_excel("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/survey responses/raw.xlsx", paste0("Py - v",i)))))
+  assign(paste0("ver",i), rbind(r, py))
+}
+
+ver1 <- ver1[-1,]
+r1 <- r1[-1,]
+
+names(ver1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 
+                 "def_1", "def_2", "def_3", 
+                 "nar_1", "nar_2", "nar_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "all_1", "all_2", "all_3",
+                 
+                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+                 "sta_grp",
+                 "a_cols_1", "a_cols_2", 
+                 
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+                 
+                 "cd_trn",
+                 "cd_zero"
+)
+
+names(r1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+               
+               "con_1", "con_2", "con_3", "con_4", 
+               "log_1", "log_2", "log_3", "log_4",
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               
+               "def_1", "def_2", "def_3", 
+               "nar_1", "nar_2", "nar_3", 
+               "wid_1", "wid_2", "wid_3",
+               "all_1", "all_2", "all_3",
+               
+               "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+               "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+               "sta_grp",
+               "a_cols_1", "a_cols_2", 
+               
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+               
+               "cd_trn",
+               "cd_zero"
+)
+
+names(py1) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                
+                "con_1", "con_2", "con_3", "con_4", 
+                "log_1", "log_2", "log_3", "log_4",
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                
+                "def_1", "def_2", "def_3", 
+                "nar_1", "nar_2", "nar_3", 
+                "wid_1", "wid_2", "wid_3",
+                "all_1", "all_2", "all_3",
+                
+                "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+                "sta_grp",
+                "a_cols_1", "a_cols_2", 
+                
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+                
+                "cd_trn",
+                "cd_zero")
+
+
+names(ver2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "log_1", "log_2", "log_3", "log_4",
+                 
+                 "def_1", "def_2", "def_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "nar_1", "nar_2", "nar_3", 
+                 "all_1", "all_2", "all_3",
+                 
+                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+                 "sta_grp",
+                 "b_cols_1", "b_cols_2", 
+                 
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 
+                 "cd_trn",
+                 "cd_zero"
+)
+
+names(r2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+               
+               "con_1", "con_2", "con_3", "con_4", 
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "log_1", "log_2", "log_3", "log_4",
+               
+               "def_1", "def_2", "def_3", 
+               "wid_1", "wid_2", "wid_3",
+               "nar_1", "nar_2", "nar_3", 
+               "all_1", "all_2", "all_3",
+               
+               "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+               "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+               "sta_grp",
+               "b_cols_1", "b_cols_2", 
+               
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               
+               "cd_trn",
+               "cd_zero"
+)
+
+names(py2) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                
+                "con_1", "con_2", "con_3", "con_4", 
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "log_1", "log_2", "log_3", "log_4",
+                
+                "def_1", "def_2", "def_3", 
+                "wid_1", "wid_2", "wid_3",
+                "nar_1", "nar_2", "nar_3", 
+                "all_1", "all_2", "all_3",
+                
+                "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+                "sta_grp",
+                "b_cols_1", "b_cols_2", 
+                
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                
+                "cd_trn",
+                "cd_zero"
+)
+
+
+names(ver3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "con_1", "con_2", "con_3", "con_4", 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 
+                 "nar_1", "nar_2", "nar_3", 
+                 "def_1", "def_2", "def_3", 
+                 "wid_1", "wid_2", "wid_3",  
+                 "all_1", "all_2", "all_3",
+                 
+                 "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+                 "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                 "sta_grp",
+                 "c_cols_1", "c_cols_2", 
+                 
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_zero_1", "ab_zero_1b", "ab_zero_2",                
+                 
+                 "cd_zero",
+                 "cd_trn"
+)
+
+names(r3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+               
+               "log_1", "log_2", "log_3", "log_4",
+               "con_1", "con_2", "con_3", "con_4", 
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               
+               "nar_1", "nar_2", "nar_3", 
+               "def_1", "def_2", "def_3", 
+               "wid_1", "wid_2", "wid_3",  
+               "all_1", "all_2", "all_3",
+               
+               "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+               "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+               "sta_grp",
+               "c_cols_1", "c_cols_2", 
+               
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_zero_1", "ab_zero_1b", "ab_zero_2",                
+               
+               "cd_zero",
+               "cd_trn"
+)
+
+names(py3) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro", 
+                "log_1", "log_2", "log_3", "log_4",
+                "con_1", "con_2", "con_3", "con_4", 
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                
+                "nar_1", "nar_2", "nar_3", 
+                "def_1", "def_2", "def_3", 
+                "wid_1", "wid_2", "wid_3",  
+                "all_1", "all_2", "all_3",
+                
+                "def_grp_1", "def_grp_2", "def_grp_3", "def_grp_4",
+                "def_sta_1", "def_sta_2", "def_sta_3", "def_sta_4", 
+                "sta_grp",
+                "c_cols_1", "c_cols_2", 
+                
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_zero_1", "ab_zero_1b", "ab_zero_2",                
+                
+                "cd_zero",
+                "cd_trn"
+)
+
+
+names(ver4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "log_1", "log_2", "log_3", "log_4",
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "con_1", "con_2", "con_3", "con_4", 
+                 
+                 "nar_1", "nar_2", "nar_3", 
+                 "wid_1", "wid_2", "wid_3",
+                 "def_1", "def_2", "def_3", 
+                 "all_1", "all_2", "all_3",
+                 
+                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
+                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
+                 "sta_grp",
+                 "d_cols_1", "d_cols_2", 
+                 
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+                 "sep_1a", "sep_1b", "sep_2",
+                 
+                 "cd_trn",
+                 "cd_zero"
+)
+
+names(r4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+               
+               "log_1", "log_2", "log_3", "log_4",
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "con_1", "con_2", "con_3", "con_4", 
+               
+               "nar_1", "nar_2", "nar_3", 
+               "wid_1", "wid_2", "wid_3",
+               "def_1", "def_2", "def_3", 
+               "all_1", "all_2", "all_3",
+               
+               "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
+               "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
+               "sta_grp",
+               "d_cols_1", "d_cols_2", 
+               
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+               "sep_1a", "sep_1b", "sep_2",
+               
+               "cd_trn",
+               "cd_zero"
+)
+
+names(py4) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                
+                "log_1", "log_2", "log_3", "log_4",
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "con_1", "con_2", "con_3", "con_4", 
+                
+                "nar_1", "nar_2", "nar_3", 
+                "wid_1", "wid_2", "wid_3",
+                "def_1", "def_2", "def_3", 
+                "all_1", "all_2", "all_3",
+                
+                "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4",
+                "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",  
+                "sta_grp",
+                "d_cols_1", "d_cols_2", 
+                
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+                "sep_1a", "sep_1b", "sep_2",
+                
+                "cd_trn",
+                "cd_zero"
+)
+
+
+names(ver5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "con_1", "con_2", "con_3", "con_4",
+                 "log_1", "log_2", "log_3", "log_4", 
+                 
+                 "wid_1", "wid_2", "wid_3",
+                 "def_1", "def_2", "def_3", 
+                 "nar_1", "nar_2", "nar_3", 
+                 "all_1", "all_2", "all_3",
+                 
+                 "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+                 "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                 "sta_grp",
+                 "e_cols_1", "e_cols_2", 
+                 
+                 "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+                 "sep_1a", "sep_1b", "sep_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 
+                 "cd_zero",
+                 "cd_trn"
+)
+
+names(r5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+               
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "con_1", "con_2", "con_3", "con_4",
+               "log_1", "log_2", "log_3", "log_4", 
+               
+               "wid_1", "wid_2", "wid_3",
+               "def_1", "def_2", "def_3", 
+               "nar_1", "nar_2", "nar_3", 
+               "all_1", "all_2", "all_3",
+               
+               "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+               "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+               "sta_grp",
+               "e_cols_1", "e_cols_2", 
+               
+               "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+               "sep_1a", "sep_1b", "sep_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               
+               "cd_zero",
+               "cd_trn"
+)
+
+names(py5) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "con_1", "con_2", "con_3", "con_4",
+                "log_1", "log_2", "log_3", "log_4", 
+                
+                "wid_1", "wid_2", "wid_3",
+                "def_1", "def_2", "def_3", 
+                "nar_1", "nar_2", "nar_3", 
+                "all_1", "all_2", "all_3",
+                
+                "vir_grp_1", "vir_grp_2", "vir_grp_3", "vir_grp_4",
+                "vir_sta_1", "vir_sta_2", "vir_sta_3", "vir_sta_4", 
+                "sta_grp",
+                "e_cols_1", "e_cols_2", 
+                
+                "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+                "sep_1a", "sep_1b", "sep_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                
+                "cd_zero",
+                "cd_trn"
+)
+
+names(ver6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                 
+                 "trn_1", "trn_2", "trn_3", "trn_4",
+                 "log_1", "log_2", "log_3", "log_4", 
+                 "con_1", "con_2", "con_3", "con_4",
+                 
+                 "wid_1", "wid_2", "wid_3",
+                 "nar_1", "nar_2", "nar_3", 
+                 "def_1", "def_2", "def_3", 
+                 "all_1", "all_2", "all_3",
+                 
+                 "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
+                 "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
+                 "sta_grp",
+                 "f_cols_1", "f_cols_2", 
+                 
+                 "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+                 "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                 "sep_1a", "sep_1b", "sep_2",
+                 
+                 "cd_zero",
+                 "cd_trn"
+)
+
+names(r6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+               
+               "trn_1", "trn_2", "trn_3", "trn_4",
+               "log_1", "log_2", "log_3", "log_4", 
+               "con_1", "con_2", "con_3", "con_4",
+               
+               "wid_1", "wid_2", "wid_3",
+               "nar_1", "nar_2", "nar_3", 
+               "def_1", "def_2", "def_3", 
+               "all_1", "all_2", "all_3",
+               
+               "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
+               "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
+               "sta_grp",
+               "f_cols_1", "f_cols_2", 
+               
+               "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+               "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+               "sep_1a", "sep_1b", "sep_2",
+               
+               "cd_zero",
+               "cd_trn"
+)
+
+names(py6) <- c("timestamp", "consent", "age", "uni", "sp_aware", "obs_skl", "num_skl", "cblind", "vis_pro",
+                
+                "trn_1", "trn_2", "trn_3", "trn_4",
+                "log_1", "log_2", "log_3", "log_4", 
+                "con_1", "con_2", "con_3", "con_4",
+                
+                "wid_1", "wid_2", "wid_3",
+                "nar_1", "nar_2", "nar_3", 
+                "def_1", "def_2", "def_3", 
+                "all_1", "all_2", "all_3",
+                
+                "gr_grp_1", "gr_grp_2", "gr_grp_3", "gr_grp_4",
+                "gr_sta_1", "gr_sta_2", "gr_sta_3", "gr_sta_4", 
+                "sta_grp",
+                "f_cols_1", "f_cols_2", 
+                
+                "ab_zero_1", "ab_zero_1b", "ab_zero_2",
+                "ab_trn_1a", "ab_trn_1b", "ab_trn_2", 
+                "sep_1a", "sep_1b", "sep_2",
+                
+                "cd_zero",
+                "cd_trn"
+)
+
+ver2$uni[which(is.na(ver2$uni))] <- "None"
+
+### Y SCALES ###
+ctrl_y_scale <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)], ver3[,c(4:7, 14:17)], ver4[,c(4:7, 18:21)], ver5[,c(4:7, 14:17)], ver6[,c(4:7, 18:21)])
+log_y_scale <- rbind(ver1[,c(4:7, 14:17)], ver2[,c(4:7, 18:21)], ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)], ver5[,c(4:7, 18:21)], ver6[,c(4:7, 14:17)])
+trnc_y_scale <- rbind(ver1[,c(4:7, 18:21)], ver2[,c(4:7, 14:17)], ver3[,c(4:7, 18:21)], ver4[,c(4:7, 14:17)], ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
+
+ctrl_y_scale_r <- rbind(r1[,c(4:7, 10:13)], r2[,c(4:7, 10:13)], r3[,c(4:7, 14:17)], r4[,c(4:7, 18:21)], r5[,c(4:7, 14:17)], r6[,c(4:7, 18:21)])
+log_y_scale_r<- rbind(r1[,c(4:7, 14:17)], r2[,c(4:7, 18:21)], r3[,c(4:7, 10:13)], r4[,c(4:7, 10:13)], r5[,c(4:7, 18:21)], r6[,c(4:7, 14:17)])
+trnc_y_scale_r <- rbind(r1[,c(4:7, 18:21)], r2[,c(4:7, 14:17)], r3[,c(4:7, 18:21)], r4[,c(4:7, 14:17)], r5[,c(4:7, 10:13)], r6[,c(4:7, 10:13)])
+
+ctrl_y_scale_py <- rbind(py1[,c(4:7, 10:13)], py2[,c(4:7, 10:13)], py3[,c(4:7, 14:17)], py4[,c(4:7, 18:21)], py5[,c(4:7, 14:17)], py6[,c(4:7, 18:21)])
+
+log_y_scale_py <- rbind(py1[,c(4:7, 14:17)], py2[,c(4:7, 18:21)], py3[,c(4:7, 10:13)], py4[,c(4:7, 10:13)], py5[,c(4:7, 18:21)], py6[,c(4:7, 14:17)])
+
+trnc_y_scale_py <- rbind(py1[,c(4:7, 18:21)], py2[,c(4:7, 14:17)], py3[,c(4:7, 18:21)], py4[,c(4:7, 14:17)], py5[,c(4:7, 10:13)], py6[,c(4:7, 10:13)])
+
+for(i in c(unique(ctrl_y_scale$uni), unique(trnc_y_scale$uni), unique(log_y_scale$uni))){
+  assign(paste0(i, "_ctrl"), ctrl_y_scale[which(ctrl_y_scale$uni==i),])
+  assign(paste0(i, "_trnc"), trnc_y_scale[which(trnc_y_scale$uni==i),])
+  assign(paste0(i, "_log"), log_y_scale[which(log_y_scale$uni==i),])
+}
+
+Soc_sci_ctrl <- `Social Sciences_ctrl`
+Soc_sci_trnc <- `Social Sciences_trnc`
+Soc_sci_log <- `Social Sciences_log`
+
+Sus_geog_ctrl <- `Sustainability/geological science_ctrl`
+Sus_geog_trnc <- `Sustainability/geological science_trnc`
+Sus_geog_log <- `Sustainability/geological science_log`
+
+stem_ctrl <- rbind(Science_ctrl, Technology_ctrl, Engineering_ctrl, Maths_ctrl, Medicine_ctrl, Architecture_ctrl)
+soc_sci_ctrl <- rbind(psychology_ctrl, Soc_sci_ctrl, Sus_geog_ctrl, Criminology_ctrl)
+hum_ctrl <- rbind(Humanities_ctrl, Geography_ctrl)
+
+stem_trnc <- rbind(Science_trnc, Technology_trnc, Engineering_trnc, Maths_trnc, Medicine_trnc, Architecture_trnc)
+soc_sci_trnc <- rbind(psychology_trnc, Soc_sci_trnc, Sus_geog_trnc, Criminology_trnc)
+hum_trnc <- rbind(Humanities_trnc, Geography_trnc)
+
+stem_log <- rbind(Science_log, Technology_log, Engineering_log, Maths_log, Medicine_log, Architecture_log)
+soc_sci_log <- rbind(psychology_log, Soc_sci_log, Sus_geog_log, Criminology_log)
+hum_log <- rbind(Humanities_log, Geography_log)
+
+con_first <- rbind(ver1[,c(4:7, 10:13)], ver2[,c(4:7, 10:13)])
+log_first <- rbind(ver3[,c(4:7, 10:13)], ver4[,c(4:7, 10:13)])
+trn_first <- rbind(ver5[,c(4:7, 10:13)], ver6[,c(4:7, 10:13)])
+
+### ASPECT RATIO ###
+def_ratio <- rbind(ver1[,c(4:7, 22:24)], ver2[,c(4:7, 22:24)], ver3[,c(4:7, 25:27)], ver4[,c(4:7, 28:30)], ver5[,c(4:7, 25:27)], ver6[,c(4:7, 28:30)])
+nar_ratio <- rbind(ver1[,c(4:7, 25:27)], ver2[,c(4:7, 28:30)], ver3[,c(4:7, 22:24)], ver4[,c(4:7, 22:24)], ver5[,c(4:7, 28:30)], ver6[,c(4:7, 25:27)])
+wid_ratio <- rbind(ver1[,c(4:7, 28:30)], ver2[,c(4:7, 25:27)], ver3[,c(4:7, 28:30)], ver4[,c(4:7, 25:27)], ver5[,c(4:7, 22:24)], ver6[,c(4:7, 22:24)])
+
+def_ratio_r <- rbind(r1[,c(4:7, 22:24)], r2[,c(4:7, 22:24)], r3[,c(4:7, 25:27)], r4[,c(4:7, 28:30)], r5[,c(4:7, 25:27)], r6[,c(4:7, 28:30)])
+nar_ratio_r <- rbind(r1[,c(4:7, 25:27)], r2[,c(4:7, 28:30)], r3[,c(4:7, 22:24)], r4[,c(4:7, 22:24)], r5[,c(4:7, 28:30)], r6[,c(4:7, 25:27)])
+wid_ratio_r <- rbind(r1[,c(4:7, 28:30)], r2[,c(4:7, 25:27)], r3[,c(4:7, 28:30)], r4[,c(4:7, 25:27)], r5[,c(4:7, 22:24)], r6[,c(4:7, 22:24)])
+
+def_ratio_py <- rbind(py1[,c(4:7, 22:24)], py2[,c(4:7, 22:24)], py3[,c(4:7, 25:27)], py4[,c(4:7, 28:30)], py5[,c(4:7, 25:27)], py6[,c(4:7, 28:30)])
+nar_ratio_py <- rbind(py1[,c(4:7, 25:27)], py2[,c(4:7, 28:30)], py3[,c(4:7, 22:24)], py4[,c(4:7, 22:24)], py5[,c(4:7, 28:30)], py6[,c(4:7, 25:27)])
+wid_ratio_py <- rbind(py1[,c(4:7, 28:30)], py2[,c(4:7, 25:27)], py3[,c(4:7, 28:30)], py4[,c(4:7, 25:27)], py5[,c(4:7, 22:24)], py6[,c(4:7, 22:24)])
+
+
+for(i in 1:dim(ver1)[1]){
+  if(ver1$all_1[i]=="A"){
+    ver1$all_1[i] <- "Default"
+  }
+  if(ver1$all_1[i]=="B"){
+    ver1$all_1[i] <- "Narrow"
+  }
+  if(ver1$all_1[i]=="C"){
+    ver1$all_1[i] <- "Wide"
+  }
+  
+  if(ver1$all_2[i]=="A"){
+    ver1$all_2[i] <- "Default"
+  }
+  if(ver1$all_2[i]=="B"){
+    ver1$all_2[i] <- "Narrow"
+  }
+  if(ver1$all_2[i]=="C"){
+    ver1$all_2[i] <- "Wide"
+  }
+  
+  if(ver1$all_3[i]=="A"){
+    ver1$all_3[i] <- "Default"
+  }
+  if(ver1$all_3[i]=="B"){
+    ver1$all_3[i] <- "Narrow"
+  }
+  if(ver1$all_3[i]=="C"){
+    ver1$all_3[i] <- "Wide"
+  }
+}
+
+for(i in 1:dim(ver2)[1]){
+  if(ver2$all_1[i]=="A"){
+    ver2$all_1[i] <- "Default"
+  }
+  if(ver2$all_1[i]=="C"){
+    ver2$all_1[i] <- "Narrow"
+  }
+  if(ver2$all_1[i]=="B"){
+    ver2$all_1[i] <- "Wide"
+  }
+  
+  if(ver2$all_2[i]=="A"){
+    ver2$all_2[i] <- "Default"
+  }
+  if(ver2$all_2[i]=="C"){
+    ver2$all_2[i] <- "Narrow"
+  }
+  if(ver2$all_2[i]=="B"){
+    ver2$all_2[i] <- "Wide"
+  }
+  
+  if(ver2$all_3[i]=="A"){
+    ver2$all_3[i] <- "Default"
+  }
+  if(ver2$all_3[i]=="C"){
+    ver2$all_3[i] <- "Narrow"
+  }
+  if(ver2$all_3[i]=="B"){
+    ver2$all_3[i] <- "Wide"
+  }
+}
+
+for(i in 1:dim(ver3)[1]){
+  if(ver3$all_1[i]=="B"){
+    ver3$all_1[i] <- "Default"
+  }
+  if(ver3$all_1[i]=="A"){
+    ver3$all_1[i] <- "Narrow"
+  }
+  if(ver3$all_1[i]=="C"){
+    ver3$all_1[i] <- "Wide"
+  }
+  
+  if(ver3$all_2[i]=="B"){
+    ver3$all_2[i] <- "Default"
+  }
+  if(ver3$all_2[i]=="A"){
+    ver3$all_2[i] <- "Narrow"
+  }
+  if(ver3$all_2[i]=="C"){
+    ver3$all_2[i] <- "Wide"
+  }
+  
+  if(ver3$all_3[i]=="B"){
+    ver3$all_3[i] <- "Default"
+  }
+  if(ver3$all_3[i]=="A"){
+    ver3$all_3[i] <- "Narrow"
+  }
+  if(ver3$all_3[i]=="C"){
+    ver3$all_3[i] <- "Wide"
+  }
+}
+
+for(i in 1:dim(ver4)[1]){
+  if(ver4$all_1[i]=="B"){
+    ver4$all_1[i] <- "Default"
+  }
+  if(ver4$all_1[i]=="C"){
+    ver4$all_1[i] <- "Narrow"
+  }
+  if(ver4$all_1[i]=="A"){
+    ver4$all_1[i] <- "Wide"
+  }
+  
+  if(ver4$all_2[i]=="B"){
+    ver4$all_2[i] <- "Default"
+  }
+  if(ver4$all_2[i]=="C"){
+    ver4$all_2[i] <- "Narrow"
+  }
+  if(ver4$all_2[i]=="A"){
+    ver4$all_2[i] <- "Wide"
+  }
+  
+  if(ver4$all_3[i]=="B"){
+    ver4$all_3[i] <- "Default"
+  }
+  if(ver4$all_3[i]=="C"){
+    ver4$all_3[i] <- "Narrow"
+  }
+  if(ver4$all_3[i]=="A"){
+    ver4$all_3[i] <- "Wide"
+  }
+}
+
+ver5$all_1[is.na(ver5$all_1)] <- "none"
+
+for(i in 1:dim(ver5)[1]){
+  
+  if(ver5$all_1[i]=="C"){
+    ver5$all_1[i] <- "Default"
+  }
+  if(ver5$all_1[i]=="A"){
+    ver5$all_1[i] <- "Narrow"
+  }
+  if(ver5$all_1[i]=="B"){
+    ver5$all_1[i] <- "Wide"
+  }
+  
+  if(ver5$all_2[i]=="C"){
+    ver5$all_2[i] <- "Default"
+  }
+  if(ver5$all_2[i]=="A"){
+    ver5$all_2[i] <- "Narrow"
+  }
+  if(ver5$all_2[i]=="B"){
+    ver5$all_2[i] <- "Wide"
+  }
+  
+  if(ver5$all_3[i]=="C"){
+    ver5$all_3[i] <- "Default"
+  }
+  if(ver5$all_3[i]=="A"){
+    ver5$all_3[i] <- "Narrow"
+  }
+  if(ver5$all_3[i]=="B"){
+    ver5$all_3[i] <- "Wide"
+  }
+}
+
+for(i in 1:dim(ver6)[1]){
+  if(ver6$all_1[i]=="C"){
+    ver6$all_1[i] <- "Default"
+  }
+  if(ver6$all_1[i]=="B"){
+    ver6$all_1[i] <- "Narrow"
+  }
+  if(ver6$all_1[i]=="A"){
+    ver6$all_1[i] <- "Wide"
+  }
+  
+  if(ver6$all_2[i]=="C"){
+    ver6$all_2[i] <- "Default"
+  }
+  if(ver6$all_2[i]=="B"){
+    ver6$all_2[i] <- "Narrow"
+  }
+  if(ver6$all_2[i]=="A"){
+    ver6$all_2[i] <- "Wide"
+  }
+  
+  if(ver6$all_3[i]=="C"){
+    ver6$all_3[i] <- "Default"
+  }
+  if(ver6$all_3[i]=="B"){
+    ver6$all_3[i] <- "Narrow"
+  }
+  if(ver6$all_3[i]=="A"){
+    ver6$all_3[i] <- "Wide"
+  }
+}
+
+for(i in c(unique(def_ratio$uni), unique(nar_ratio$uni), unique(wid_ratio$uni))){
+  assign(paste0(i, "_def"), def_ratio[which(def_ratio$uni==i),])
+  assign(paste0(i, "_nar"), nar_ratio[which(nar_ratio$uni==i),])
+  assign(paste0(i, "_wid"), wid_ratio[which(wid_ratio$uni==i),])
+}
+
+Soc_sci_def <- `Social Sciences_def`
+Soc_sci_nar <- `Social Sciences_nar`
+Soc_sci_wid <- `Social Sciences_wid`
+
+Sus_geog_def <- `Sustainability/geological science_def`
+Sus_geog_nar <- `Sustainability/geological science_nar`
+Sus_geog_wid <- `Sustainability/geological science_wid`
+
+stem_def <- rbind(Science_def, Technology_def, Engineering_def, Maths_def, Medicine_def, Architecture_def)
+soc_sci_def <- rbind(psychology_def, Soc_sci_def, Sus_geog_def, Criminology_def)
+hum_def <- rbind(Humanities_def, Geography_def)
+
+stem_nar <- rbind(Science_nar, Technology_nar, Engineering_nar, Maths_nar, Medicine_nar, Architecture_nar)
+soc_sci_nar <- rbind(psychology_nar, Soc_sci_nar, Sus_geog_nar, Criminology_nar)
+hum_nar <- rbind(Humanities_nar, Geography_nar)
+
+stem_wid <- rbind(Science_wid, Technology_wid, Engineering_wid, Maths_wid, Medicine_wid, Architecture_wid)
+soc_sci_wid <- rbind(psychology_wid, Soc_sci_wid, Sus_geog_wid, Criminology_wid)
+hum_wid <- rbind(Humanities_wid, Geography_wid)
+
+
+comp_ratio_all <- rbind(ver1[,c(4:7, 31:33)], ver2[,c(4:7, 31:33)], ver3[,c(4:7, 31:33)], ver4[,c(4:7, 31:33)], ver5[,c(4:7, 31:33)], ver6[,c(4:7, 31:33)])
+
+comp_ratio_r <- rbind(r1[,c(4:7, 31:33)], r2[,c(4:7, 31:33)], r3[,c(4:7, 31:33)], r4[,c(4:7, 31:33)], r5[,c(4:7, 31:33)], r6[,c(4:7, 31:33)])
+
+comp_ratio_py <- rbind(py1[,c(4:7, 31:33)], py2[,c(4:7, 31:33)], py3[,c(4:7, 31:33)], py4[,c(4:7, 31:33)], py5[,c(4:7, 31:33)], py6[,c(4:7, 31:33)])
+
+def_first <- rbind(ver1[,c(4:7, 22:24)], ver2[,c(4:7, 22:24)])
+nar_first <- rbind(ver3[,c(4:7, 22:24)], ver4[,c(4:7, 22:24)])
+wid_first <- rbind(ver5[,c(4:7, 22:24)], ver6[,c(4:7, 22:24)])
+
+### STACKED ###
+vir_stacked <- rbind(ver1[,c(4:7, 34:37)], ver5[,c(4:7, 38:41)])
+def_stacked <- rbind(ver2[,c(4:7, 34:37)], ver3[,c(4:7, 38:41)])
+gr_stacked <- rbind(ver4[,c(4:7, 34:37)], ver6[,c(4:7, 38:41)])
+
+vir_grouped <- rbind(ver1[,c(4:7, 38:41)], ver5[,c(4:7, 34:37)])
+def_grouped <- rbind(ver2[,c(4:7, 38:41)], ver3[,c(4:7, 34:37)])
+gr_grouped <- rbind(ver4[,c(4:7, 38:41)], ver6[,c(4:7, 34:37)])
+
+vir_stacked_r <- rbind(r1[,c(4:7, 34:37)], r5[,c(4:7, 38:41)])
+def_stacked_r <- rbind(r2[,c(4:7, 34:37)], r3[,c(4:7, 38:41)])
+gr_stacked_r <- rbind(r4[,c(4:7, 34:37)], r6[,c(4:7, 38:41)])
+
+vir_grouped_r <- rbind(r1[,c(4:7, 38:41)], r5[,c(4:7, 34:37)])
+def_grouped_r <- rbind(r2[,c(4:7, 38:41)], r3[,c(4:7, 34:37)])
+gr_grouped_r <- rbind(r4[,c(4:7, 38:41)], r6[,c(4:7, 34:37)])
+
+vir_stacked_py <- rbind(py1[,c(4:7, 34:37)], py5[,c(4:7, 38:41)])
+def_stacked_py <- rbind(py2[,c(4:7, 34:37)], py3[,c(4:7, 38:41)])
+gr_stacked_py <- rbind(py4[,c(4:7, 34:37)], py6[,c(4:7, 38:41)])
+
+vir_grouped_py <- rbind(py1[,c(4:7, 38:41)], py5[,c(4:7, 34:37)])
+def_grouped_py <- rbind(py2[,c(4:7, 38:41)], py3[,c(4:7, 34:37)])
+gr_grouped_py <- rbind(py4[,c(4:7, 38:41)], py6[,c(4:7, 34:37)])
+
+set_a <- ver1[,c(4:9, 42:44)]
+set_b <- ver2[,c(4:9, 42:44)]
+set_c <- ver3[,c(4:9, 42:44)]
+set_d <- ver4[,c(4:9, 42:44)]
+set_e <- ver5[,c(4:9, 42:44)]
+set_f <- ver6[,c(4:9, 42:44)]
+
+set_a_r <- r1[,c(4:9, 42:44)]
+set_b_r <- r2[,c(4:9, 42:44)]
+set_c_r <- r3[,c(4:9, 42:44)]
+set_d_r <- r4[,c(4:9, 42:44)]
+set_e_r <- r5[,c(4:9, 42:44)]
+set_f_r <- r6[,c(4:9, 42:44)]
+
+set_a_py <- py1[,c(4:9, 42:44)]
+set_b_py <- py2[,c(4:9, 42:44)]
+set_c_py <- py3[,c(4:9, 42:44)]
+set_d_py <- py4[,c(4:9, 42:44)]
+set_e_py <- py5[,c(4:9, 42:44)]
+set_f_py <- py6[,c(4:9, 42:44)]
+
+stack_first_vir <- ver1[,c(4:7, 34:37)] %>% 
+  rename("sta_1" = vir_sta_1) %>% 
+  rename("sta_2" = vir_sta_2) %>% 
+  rename("sta_3" = vir_sta_3) %>% 
+  rename("sta_4" = vir_sta_4)
+
+stack_first_def <- ver2[,c(4:7, 34:37)] %>% 
+  rename("sta_1" = def_sta_1) %>% 
+  rename("sta_2" = def_sta_2) %>% 
+  rename("sta_3" = def_sta_3) %>% 
+  rename("sta_4" = def_sta_4)
+
+stack_first_gr <- ver4[,c(4:7, 34:37)] %>% 
+  rename("sta_1" = gr_sta_1) %>% 
+  rename("sta_2" = gr_sta_2) %>% 
+  rename("sta_3" = gr_sta_3) %>% 
+  rename("sta_4" = gr_sta_4)
+
+stack_first <- rbind(stack_first_vir, stack_first_def, stack_first_gr)
+
+group_first_vir <- ver5[,c(4:7, 34:37)] %>% 
+  rename("grp_1" = vir_grp_1) %>% 
+  rename("grp_2" = vir_grp_2) %>% 
+  rename("grp_3" = vir_grp_3) %>% 
+  rename("grp_4" = vir_grp_4)
+
+group_first_def <- ver3[,c(4:7, 34:37)] %>% 
+  rename("grp_1" = def_grp_1) %>% 
+  rename("grp_2" = def_grp_2) %>% 
+  rename("grp_3" = def_grp_3) %>% 
+  rename("grp_4" = def_grp_4)
+
+group_first_gr <- ver6[,c(4:7, 34:37)] %>% 
+  rename("grp_1" = gr_grp_1) %>% 
+  rename("grp_2" = gr_grp_2) %>% 
+  rename("grp_3" = gr_grp_3) %>% 
+  rename("grp_4" = gr_grp_4)
+
+group_first <- rbind(group_first_vir, group_first_def, group_first_gr)
+
+
+
+### SALES_AB ###
+ab_sep <- rbind(ver1[,c(4:7, 45:47)], ver2[,c(4:7, 45:47)], ver3[,c(4:7, 48:50)], ver4[,c(4:7, 51:53)], ver5[,c(4:7, 48:50)], ver6[,c(4:7, 51:53)])
+
+ab_sep_r <- rbind(r1[,c(4:7, 45:47)], r2[,c(4:7, 45:47)], r3[,c(4:7, 48:50)], r4[,c(4:7, 51:53)], r5[,c(4:7, 48:50)], r6[,c(4:7, 51:53)])
+
+ab_sep_py <- rbind(py1[,c(4:7, 45:47)], py2[,c(4:7, 45:47)], py3[,c(4:7, 48:50)], py4[,c(4:7, 51:53)], py5[,c(4:7, 48:50)], py6[,c(4:7, 51:53)])
+
+
+
+ab_trn <- rbind(ver1[,c(4:7, 48:50)], ver2[,c(4:7, 51:53)], ver3[,c(4:7, 45:47)], ver4[,c(4:7, 45:47)], ver5[,c(4:7, 51:53)], ver6[,c(4:7, 48:50)])
+
+ab_trn_r <- rbind(r1[,c(4:7, 48:50)], r2[,c(4:7, 51:53)], r3[,c(4:7, 45:47)], r4[,c(4:7, 45:47)], r5[,c(4:7, 51:53)], r6[,c(4:7, 48:50)])
+
+ab_trn_py <- rbind(py1[,c(4:7, 48:50)], py2[,c(4:7, 51:53)], py3[,c(4:7, 45:47)], py4[,c(4:7, 45:47)], py5[,c(4:7, 51:53)], py6[,c(4:7, 48:50)])
+
+
+
+ab_zero <- rbind(ver1[,c(4:7, 51:53)], ver2[,c(4:7, 48:50)], ver3[,c(4:7, 51:53)], ver4[,c(4:7, 48:50)], ver5[,c(4:7, 45:47)], ver6[,c(4:7, 45:47)])
+
+ab_zero_r <- rbind(r1[,c(4:7, 51:53)], r2[,c(4:7, 48:50)], r3[,c(4:7, 51:53)], r4[,c(4:7, 48:50)], r5[,c(4:7, 45:47)], r6[,c(4:7, 45:47)])
+
+ab_zero_py <- rbind(py1[,c(4:7, 51:53)], py2[,c(4:7, 48:50)], py3[,c(4:7, 51:53)], py4[,c(4:7, 48:50)], py5[,c(4:7, 45:47)], py6[,c(4:7, 45:47)])
+
+ab_sep_first <- rbind(ver3[,c(4:7, 48:50)], ver5[,c(4:7, 48:50)])
+ab_trn_first <- rbind(ver1[,c(4:7, 48:50)], ver6[,c(4:7, 48:50)])
+ab_zero_first <- rbind(ver2[,c(4:7, 48:50)], ver4[,c(4:7, 48:50)])
+
+### SALES_CD ###
+cd_trn <- rbind(ver1[,c(4:7, 54)], ver2[,c(4:7, 54)], ver3[,c(4:7, 55)], ver4[,c(4:7, 54)], ver5[,c(4:7, 55)], ver6[,c(4:7, 55)])
+cd_trn_r <- rbind(r1[,c(4:7, 54)], r2[,c(4:7, 54)], r3[,c(4:7, 55)], r4[,c(4:7, 54)], r5[,c(4:7, 55)], r6[,c(4:7, 55)])
+cd_trn_py <- rbind(py1[,c(4:7, 54)], py2[,c(4:7, 54)], py3[,c(4:7, 55)], py4[,c(4:7, 54)], py5[,c(4:7, 55)], py6[,c(4:7, 55)])
+
+cd_zero <- rbind(ver1[,c(4:7, 55)], ver2[,c(4:7, 55)], ver3[,c(4:7, 54)], ver4[,c(4:7, 55)], ver5[,c(4:7, 54)], ver6[,c(4:7, 54)])
+cd_zero_r <- rbind(r1[,c(4:7, 55)], r2[,c(4:7, 55)], r3[,c(4:7, 54)], r4[,c(4:7, 55)], r5[,c(4:7, 54)], r6[,c(4:7, 54)])
+cd_zero_py <- rbind(py1[,c(4:7, 55)], py2[,c(4:7, 55)], py3[,c(4:7, 54)], py4[,c(4:7, 55)], py5[,c(4:7, 54)], py6[,c(4:7, 54)])
+
+cd_trn_first <- rbind(ver1[,c(4:7, 54)], ver2[,c(4:7, 54)], ver4[,c(4:7, 54)])
+cd_zero_first <- rbind(ver3[,c(4:7, 54)], ver5[,c(4:7, 54)], ver6[,c(4:7, 54)])
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+dist_check <- function(test=c("shap", "sym"), data, dataname){
+  
+  dataname <- noquote(paste(dataname))
+  
+  if(test == "shap"){
+    out <- c(dataname, shapiro.test(data)$p.value)
+  }
+  
+  if(test == "sym"){
+    out <- c(dataname, symmetry.test(data)$p.value)
+  }
+  
+  return(out)
+}
 
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+\clearpage
 
-You can also embed plots, for example:
+\section{Ninja Warrior - Part 1}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+\subsection{"Approximately many times would you say the `Salmon Ladder’ was used?"}
+
+```{r echo=F}
+control_1 <- ctrl_y_scale$con_1
+control_1[which(control_1 == "41/42")] <- 41.5
+control_1 <- na.exclude(as.numeric(control_1))
+
+truncated_1 <- as.numeric(trnc_y_scale$trn_1)
+
+logarithmic_1 <- log_y_scale$log_1
+logarithmic_1[which(logarithmic_1 == "Don't know")] <- NA
+logarithmic_1[which(logarithmic_1 == "Next to none.")] <- NA
+logarithmic_1[which(logarithmic_1 == "10^15")] <- 1e+15
+logarithmic_1[which(logarithmic_1 == "10^9")] <- 1e+9
+logarithmic_1 <- as.numeric(na.exclude(logarithmic_1))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+N <- c(length(control_1), length(truncated_1), length(logarithmic_1))
+
+Var <- c(var(control_1), var(truncated_1), var(logarithmic_1, na.rm = T))
+
+sum_ysc1all <- rbind(N, cbind(summary(control_1), summary(truncated_1), summary(logarithmic_1)), Var)
+
+colnames(sum_ysc1all) <- c("Control", "Truncated", "Logarithmic")
+kable(sum_ysc1all, caption="Summary statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+logarithmic_1 <- logarithmic_1[which(logarithmic_1 >= 14.25)]
+logarithmic_1 <- logarithmic_1[which(logarithmic_1 <= 60.75)]
+
+N <- c(length(control_1), length(truncated_1), length(logarithmic_1))
+
+Var <- c(var(control_1), var(truncated_1), var(logarithmic_1))
+
+sum_ysc1all <- rbind(N, cbind(summary(control_1), summary(truncated_1), summary(logarithmic_1)), Var)
+colnames(sum_ysc1all) <- c("Control", "Truncated", "Logarithmic")
+kable(sum_ysc1all, caption="Summary statistics over the whole population after removing outliers in the logarithmic responses") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+control_1_r <- ctrl_y_scale_r$con_1
+control_1_r[which(control_1_r == "41/42")] <- 41.5
+control_1_r <- as.numeric(control_1_r)
+control_1_py <- ctrl_y_scale_py$con_1
+
+truncated_1_r <- as.numeric(trnc_y_scale_r$trn_1)
+truncated_1_py <- as.numeric(trnc_y_scale_py$trn_1)
+
+logarithmic_1_py <- log_y_scale_py$log_1
+logarithmic_1_py[which(logarithmic_1_py == "Don't know")] <- NA
+logarithmic_1_py[which(logarithmic_1_py == "Next to none.")] <- NA
+logarithmic_1_py[which(logarithmic_1_py == "10^15")] <- NA
+logarithmic_1_py[which(logarithmic_1_py == "10^9")] <- NA
+logarithmic_1_py <- as.numeric(na.exclude(logarithmic_1_py))
+logarithmic_1_py <- logarithmic_1_py[which(logarithmic_1_py >= 14.25)]
+logarithmic_1_py <- logarithmic_1[which(logarithmic_1_py <= 60.75)]
+
+logarithmic_1_r <- log_y_scale_r$log_1
+logarithmic_1_r <- as.numeric(na.exclude(logarithmic_1_r))
+``` 
+
+```{r}
+N <- c(length(control_1), length(control_1_r), length(control_1_py))
+
+Var <- c(var(control_1), var(control_1_r), var(control_1_py))
+
+sum_ysc1lang_ctrl <- rbind(N, cbind(summary(control_1), summary(control_1_r), summary(control_1_py)), Var)
+colnames(sum_ysc1lang_ctrl) <- c("Whole Pop", "R", "Python")
+kable(sum_ysc1lang_ctrl, caption="Summary statistics relating to the control plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+N <- c(length(truncated_1), length(truncated_1_r), length(truncated_1_py))
+
+Var <- c(var(truncated_1), var(truncated_1_r), var(truncated_1_py))
+
+sum_ysc1lang_trnc <- rbind(N, cbind(summary(truncated_1), summary(truncated_1_r), summary(truncated_1_py)), Var)
+colnames(sum_ysc1lang_trnc) <- c("Whole Pop", "R", "Python")
+kable(sum_ysc1lang_trnc, caption="Summary statistics relating to the truncated plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+N <- c(length(logarithmic_1), length(logarithmic_1_r), length(logarithmic_1_py))
+
+Var <- c(var(logarithmic_1), var(logarithmic_1_r), var(logarithmic_1_py))
+
+sum_ysc1lang_log <- rbind(N, cbind(summary(logarithmic_1), summary(logarithmic_1_r), summary(logarithmic_1_py)), Var)
+colnames(sum_ysc1lang_log) <- c("Whole Pop", "R", "Python")
+kable(sum_ysc1lang_log, caption="Summary statistics relating to the logarithmic plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+logarithmic_1_stem <- stem_log$log_1
+logarithmic_1_stem[which(logarithmic_1_stem == "Don't Know")] <- NA
+logarithmic_1_stem <- c(na.exclude(as.numeric(logarithmic_1_stem)))
+
+logarithmic_1_hum <- as.numeric(hum_log$log_1) 
+
+logarithmic_1_socsci <- soc_sci_log$log_1
+logarithmic_1_socsci[which(logarithmic_1_socsci == "10^15")] <- 1e+15
+logarithmic_1_socsci[which(logarithmic_1_socsci == "10^9")] <- 1e+9
+logarithmic_1_socsci <- c(na.exclude(as.numeric(logarithmic_1_socsci)))
+
+logarithmic_1_arts <- as.numeric(Arts_log$log_1)
+logarithmic_1_bus <- as.numeric(Business_log$log_1)
+
+logarithmic_1_none <- as.numeric(None_log$log_1)
+logarithmic_1_none[which(logarithmic_1_none == "Next to none.")] <- NA
+
+N <- c(length(logarithmic_1_stem), length(logarithmic_1_hum), length(logarithmic_1_socsci), length(logarithmic_1_arts), length(logarithmic_1_bus), length(logarithmic_1_none))
+
+Var <- c(c(var(logarithmic_1_stem), var(logarithmic_1_hum), var(logarithmic_1_socsci), var(logarithmic_1_arts), var(logarithmic_1_bus), var(logarithmic_1_none)))
+
+sum_ysc1deg_log <- rbind(N, cbind(summary(logarithmic_1_stem), summary(logarithmic_1_hum), summary(logarithmic_1_socsci), summary(logarithmic_1_arts), summary(logarithmic_1_bus), summary(logarithmic_1_none)), Var)
+
+colnames(sum_ysc1deg_log) <- c("STEM", "Humanities", "Social Sci", "Arts", "Business", "NA")
+kable(sum_ysc1deg_log, caption="Summary statistics of degree subgroups relating to the logarithmic plot responses")  %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+kable(rbind(
+  log_y_scale[which(log_y_scale$log_1 == "Don't know"),1:5],
+  log_y_scale[which(log_y_scale$log_1 == "Next to none."),1:5],
+  log_y_scale[which(log_y_scale$log_1 == "10^15"),1:5],
+  log_y_scale[which(log_y_scale$log_1 == "10^9"),1:5]
+), caption="Degree and self-rated skills for the respondents that submitted invalid or high magnitude answers")  %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+con_first_1 <- as.numeric(con_first$con_1)
+trn_first_1 <- as.numeric(trn_first$trn_1)
+log_first_1 <- as.numeric(log_first$log_1)
+
+log_first_1[which(log_first_1 == "10^15")] <- NA
+log_first_1 <- as.numeric(na.exclude(log_first_1))
+log_first_1 <- log_first_1[which(log_first_1 >= 14.25)]
+log_first_1 <- log_first_1[which(log_first_1 <= 60.75)]
+
+logarithmic_1 <- as.numeric(na.exclude(logarithmic_1))
+
+
+N <- c(length(con_first_1), length(trn_first_1), length(log_first_1))
+Var <- c(var(con_first_1), var(trn_first_1), var(log_first_1))
+sum_ysc1cfirst <- rbind(N, cbind(summary(con_first_1), summary(trn_first_1), summary(log_first_1)), Var)
+colnames(sum_ysc1cfirst) <- c("Control First", "Truncated First", "Logarithmic First")
+kable(sum_ysc1cfirst, caption="Summary statistics for the subgroups that were shown each of the three plots first. ie. here the control statistics are only for respondents who saw the control plot first etc.") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(control_1), length(con_first_1))
+Var <- c(var(control_1), var(con_first_1))
+sum_ysc1cfirst <- rbind(N, cbind(summary(control_1), summary(con_first_1)), Var)
+colnames(sum_ysc1cfirst) <- c("Control Overall", "Control First")
+kable(sum_ysc1cfirst, caption="Summary statistics to compare responses for the control plot between the whole population and those shown the control plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+N <- c(length(truncated_1), length(trn_first_1))
+Var <- c(var(truncated_1), var(trn_first_1))
+sum_ysc1cfirst <- rbind(N, cbind(summary(truncated_1), summary(trn_first_1)), Var)
+colnames(sum_ysc1cfirst) <- c("Truncated Overall", "Truncated First")
+kable(sum_ysc1cfirst, caption="Summary statistics to compare responses for the truncated plot between the whole population and those shown the truncated plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+
+N <- c(length(logarithmic_1), length(log_first_1))
+Var <- c(var(logarithmic_1), var(log_first_1))
+sum_ysc1cfirst <- rbind(N, cbind(summary(logarithmic_1), summary(log_first_1)), Var)
+colnames(sum_ysc1cfirst) <- c("Log Overall", "Log First")
+kable(sum_ysc1cfirst, caption="Summary statistics to compare responses for the logarithmic plot between the whole population and those shown the logarithmic plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+shap_1 <- rbind(
+  dist_check("shap", control_1, dataname = "control_1"),
+  dist_check("shap", truncated_1, dataname = "truncated_1"),
+  dist_check("shap", logarithmic_1, dataname = "logarithmic_1"),
+  
+  dist_check("shap", control_1_r, dataname = "control_1_r"),
+  dist_check("shap", truncated_1_r, dataname = "truncated_1_r"),
+  dist_check("shap", logarithmic_1_r, dataname = "logarithmic_1_r"),
+  
+  dist_check("shap", control_1_py, dataname = "control_1_py"),
+  dist_check("shap", truncated_1_py, dataname = "truncated_1_py"),
+  dist_check("shap", logarithmic_1_py, dataname = "logarithmic_1_py"),
+  
+  dist_check("sym", con_first_1, dataname = "con_first_1"),
+  dist_check("sym", trn_first_1, dataname = "trn_first_1"),
+  dist_check("sym", log_first_1, dataname = "log_first_1")
+) %>% noquote()
+colnames(shap_1) <- c("Variable", "P-Value")
+kable(shap_1, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+sym_1 <- rbind(
+  dist_check("sym", control_1, dataname = "control_1"),
+  dist_check("sym", truncated_1, dataname = "truncated_1"),
+  dist_check("sym", logarithmic_1, dataname = "logarithmic_1"),
+  
+  dist_check("sym", control_1_r, dataname = "control_1_r"),
+  dist_check("sym", truncated_1_r, dataname = "truncated_1_r"),
+  dist_check("sym", logarithmic_1_r, dataname = "logarithmic_1_r"),
+  
+  dist_check("sym", control_1_py, dataname = "control_1_py"),
+  dist_check("sym", truncated_1_py, dataname = "truncated_1_py"),
+  dist_check("sym", logarithmic_1_py, dataname = "logarithmic_1_py")
+) %>% noquote()
+colnames(sym_1) <- c("Variable", "P-Value")
+kable(sym_1, caption="Symmetry test results to test for symmetric data") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r echo=F}
+df <- rbind(
+  c(SIGN.test(control_1, md=41)$data.name, 
+    SIGN.test(control_1, md=41)$alternative, 
+    SIGN.test(control_1, md=41)$null.value, 
+    SIGN.test(control_1, md=41)$p.value), 
+  
+  
+  c(SIGN.test(truncated_1, md=41)$data.name, 
+    SIGN.test(truncated_1, md=41)$alternative, 
+    SIGN.test(truncated_1, md=41)$null.value, 
+    SIGN.test(truncated_1, md=41)$p.value), 
+  
+  
+  c(SIGN.test(truncated_1, md=41, alt="g")$data.name, 
+    SIGN.test(truncated_1, md=41, alt="g")$alternative, 
+    SIGN.test(truncated_1, md=41, alt="g")$null.value, 
+    SIGN.test(truncated_1, md=41, alt="g")$p.value),
+  
+  
+  c(SIGN.test(truncated_1, control_1, )$data.name, 
+    SIGN.test(truncated_1, control_1, )$alternative, 
+    SIGN.test(truncated_1, control_1, )$null.value,
+    SIGN.test(truncated_1, control_1, )$p.value),
+  
+  
+  
+  c(SIGN.test(control_1_r, md=41)$data.name, 
+    SIGN.test(control_1_r, md=41)$alternative, 
+    SIGN.test(control_1_r, md=41)$null.value, 
+    SIGN.test(control_1_r, md=41)$p.value),
+
+  c(SIGN.test(control_1_r, alt="g", md=41)$data.name, 
+    SIGN.test(control_1_r, alt="g", md=41)$alternative, 
+    SIGN.test(control_1_r, alt="g", md=41)$null.value, 
+    SIGN.test(control_1_r, alt="g", md=41)$p.value),
+
+  
+  
+  c(SIGN.test(truncated_1_r, md=41)$data.name, 
+    SIGN.test(truncated_1_r, md=41)$alternative, 
+    SIGN.test(truncated_1_r, md=41)$null.value, 
+    SIGN.test(truncated_1_r, md=41)$p.value),  
+  
+  c(SIGN.test(truncated_1_r, alt="g", md=41)$data.name, 
+    SIGN.test(truncated_1_r, alt="g", md=41)$alternative, 
+    SIGN.test(truncated_1_r, alt="g", md=41)$null.value, 
+    SIGN.test(truncated_1_r, alt="g", md=41)$p.value),  
+  
+
+  
+  c(SIGN.test(logarithmic_1_r, md=41)$data.name, 
+    SIGN.test(logarithmic_1_r, md=41)$alternative, 
+    SIGN.test(logarithmic_1_r, md=41)$null.value, 
+    SIGN.test(logarithmic_1_r, md=41)$p.value),
+  
+  c(SIGN.test(logarithmic_1_r, alt="l", md=41)$data.name, 
+    SIGN.test(logarithmic_1_r, alt="l", md=41)$alternative, 
+    SIGN.test(logarithmic_1_r, alt="l", md=41)$null.value, 
+    SIGN.test(logarithmic_1_r, alt="l", md=41)$p.value)
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="Sign test results for data considered non-normal and asymmetric")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+
+```{r echo=F}
+df <- rbind(
+  c(wilcox.test(logarithmic_1, mu=41, exact=F)$data.name, 
+    wilcox.test(logarithmic_1, mu=41, exact=F)$alternative, 
+    wilcox.test(logarithmic_1, mu=41, exact=F)$null.value, 
+    wilcox.test(logarithmic_1, mu=41, exact=F)$p.value), 
+  
+  c(wilcox.test(logarithmic_1, mu=41, alt="l", exact=F)$data.name, 
+    wilcox.test(logarithmic_1, mu=41, alt="l", exact=F)$alternative, 
+    wilcox.test(logarithmic_1, mu=41, alt="l", exact=F)$null.value, 
+    wilcox.test(logarithmic_1, mu=41, alt="l", exact=F)$p.value), 
+  
+  
+  
+  c(wilcox.test(logarithmic_1, control_1,exact=F)$data.name, 
+    wilcox.test(logarithmic_1, control_1,exact=F)$alternative, 
+    wilcox.test(logarithmic_1, control_1,exact=F)$null.value, 
+    wilcox.test(logarithmic_1, control_1,exact=F)$p.value),
+  
+  c(wilcox.test(logarithmic_1, control_1, alt="l", exact=F)$data.name, 
+    wilcox.test(logarithmic_1, control_1, alt="l", exact=F)$alternative, 
+    wilcox.test(logarithmic_1, control_1, alt="l", exact=F)$null.value, 
+    wilcox.test(logarithmic_1, control_1, alt="l", exact=F)$p.value),
+  
+    
+  
+  c(wilcox.test(control_1_py,mu=41, exact=F)$data.name, 
+    wilcox.test(control_1_py,mu=41, exact=F)$alternative, 
+    wilcox.test(control_1_py,mu=41, exact=F)$null.value, 
+    wilcox.test(control_1_py,mu=41, exact=F)$p.value),
+  
+  c(wilcox.test(control_1_py, alt="g", mu=41, exact=F)$data.name, 
+    wilcox.test(control_1_py, alt="g", mu=41, exact=F)$alternative, 
+    wilcox.test(control_1_py, alt="g", mu=41, exact=F)$null.value, 
+    wilcox.test(control_1_py, alt="g", mu=41, exact=F)$p.value),
+  
+  
+  
+  c(wilcox.test(truncated_1_py,mu=41, exact=F)$data.name, 
+    wilcox.test(truncated_1_py,mu=41, exact=F)$alternative, 
+    wilcox.test(truncated_1_py,mu=41, exact=F)$null.value, 
+    wilcox.test(truncated_1_py,mu=41, exact=F)$p.value),  
+  
+  c(wilcox.test(truncated_1_py, alt="g", mu=41, exact=F)$data.name, 
+    wilcox.test(truncated_1_py, alt="g", mu=41, exact=F)$alternative, 
+    wilcox.test(truncated_1_py, alt="g", mu=41, exact=F)$null.value, 
+    wilcox.test(truncated_1_py, alt="g", mu=41, exact=F)$p.value),  
+  
+  
+  
+  c(wilcox.test(logarithmic_1_py,mu=41, exact=F)$data.name, 
+    wilcox.test(logarithmic_1_py,mu=41, exact=F)$alternative, 
+    wilcox.test(logarithmic_1_py,mu=41, exact=F)$null.value, 
+    wilcox.test(logarithmic_1_py,mu=41, exact=F)$p.value),
+  
+  c(wilcox.test(logarithmic_1_py, alt="l", mu=41, exact=F)$data.name, 
+    wilcox.test(logarithmic_1_py, alt="l", mu=41, exact=F)$alternative, 
+    wilcox.test(logarithmic_1_py, alt="l", mu=41, exact=F)$null.value, 
+    wilcox.test(logarithmic_1_py, alt="l", mu=41, exact=F)$p.value),
+  
+  
+  
+  c(wilcox.test(control_1_r, control_1_py,exact=F)$data.name, 
+    wilcox.test(control_1_r, control_1_py,exact=F)$alternative, 
+    wilcox.test(control_1_r, control_1_py,exact=F)$null.value, 
+    wilcox.test(control_1_r, control_1_py,exact=F)$p.value),
+  
+  c(wilcox.test(control_1_r, control_1_py, alt="g", exact=F)$data.name, 
+    wilcox.test(control_1_r, control_1_py, alt="g", exact=F)$alternative, 
+    wilcox.test(control_1_r, control_1_py, alt="g", exact=F)$null.value, 
+    wilcox.test(control_1_r, control_1_py, alt="g", exact=F)$p.value),
+  
+  
+  
+  
+  c(wilcox.test(truncated_1_r, truncated_1_py,exact=F)$data.name, 
+    wilcox.test(truncated_1_r, truncated_1_py,exact=F)$alternative, 
+    wilcox.test(truncated_1_r, truncated_1_py,exact=F)$null.value, 
+    wilcox.test(truncated_1_r, truncated_1_py,exact=F)$p.value),  
+    
+  c(wilcox.test(truncated_1_r, truncated_1_py, alt="g", exact=F)$data.name, 
+    wilcox.test(truncated_1_r, truncated_1_py, alt="g", exact=F)$alternative, 
+    wilcox.test(truncated_1_r, truncated_1_py, alt="g", exact=F)$null.value, 
+    wilcox.test(truncated_1_r, truncated_1_py, alt="g", exact=F)$p.value),  
+  
+  
+  
+  c(wilcox.test(logarithmic_1_r, logarithmic_1_py, exact=F)$data.name, 
+    wilcox.test(logarithmic_1_r, logarithmic_1_py, exact=F)$alternative, 
+    wilcox.test(logarithmic_1_r, logarithmic_1_py, exact=F)$null.value, 
+    wilcox.test(logarithmic_1_r, logarithmic_1_py, exact=F)$p.value), 
+  
+  
+  
+  c(wilcox.test(con_first_1, log_first_1, exact=F)$data.name, 
+    wilcox.test(con_first_1, log_first_1, exact=F)$alternative, 
+    wilcox.test(con_first_1, log_first_1, exact=F)$null.value, 
+    wilcox.test(con_first_1, log_first_1, exact=F)$p.value), 
+  
+  c(wilcox.test(con_first_1, log_first_1, alt="g", exact=F)$data.name, 
+    wilcox.test(con_first_1, log_first_1, alt="g", exact=F)$alternative, 
+    wilcox.test(con_first_1, log_first_1, alt="g", exact=F)$null.value, 
+    wilcox.test(con_first_1, log_first_1, alt="g", exact=F)$p.value), 
+  
+  
+  
+  c(wilcox.test(trn_first_1, truncated_1, exact=F)$data.name, 
+    wilcox.test(trn_first_1, truncated_1, exact=F)$alternative, 
+    wilcox.test(trn_first_1, truncated_1, exact=F)$null.value, 
+    wilcox.test(trn_first_1, truncated_1, exact=F)$p.value), 
+  
+  
+  c(wilcox.test(log_first_1, logarithmic_1, exact=F)$data.name, 
+    wilcox.test(log_first_1, logarithmic_1, exact=F)$alternative, 
+    wilcox.test(log_first_1, logarithmic_1, exact=F)$null.value, 
+    wilcox.test(log_first_1, logarithmic_1, exact=F)$p.value)
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW test results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\subsection{Approximately how much more than `Log Grip' would you say `Salmon Ladder' was was used?}
+
+
+```{r echo=F}
+control_2 <- ctrl_y_scale$con_2
+truncated_2 <- trnc_y_scale$trn_2
+logarithmic_2 <- log_y_scale$log_2
+```
+
+```{r}
+N <- c(length(control_2), length(truncated_2), length(logarithmic_2))
+
+Var <- c(var(control_2), var(truncated_2), var(logarithmic_2))
+
+sum_ysc2all <- rbind(N, cbind(summary(control_2), summary(truncated_2), summary(logarithmic_2)), Var)
+colnames(sum_ysc2all) <- c("Control", "Truncated", "Logarithmic")
+kable(sum_ysc2all, caption="Summary statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+control_2_r <- ctrl_y_scale_r$con_2
+truncated_2_r <- trnc_y_scale_r$trn_2
+logarithmic_2_r <- log_y_scale_r$log_2
+
+control_2_py <- ctrl_y_scale_py$con_2
+truncated_2_py <- trnc_y_scale_py$trn_2
+logarithmic_2_py <- log_y_scale_py$log_2
+
+y_scale_2_r <- cbind(control_2_r, truncated_2_r, logarithmic_2_r)
+y_scale_2_py <- cbind(control_2_py, truncated_2_py, logarithmic_2_py)
+``` 
+
+```{r}
+N <- c(length(control_2), length(control_2_r), length(control_2_py))
+Var <- c(var(control_2), var(control_2_r), var(control_2_py))
+sum_ysc2lang_ctrl <- rbind(N, cbind(summary(control_2), summary(control_2_r), summary(control_2_py)), Var)
+colnames(sum_ysc2lang_ctrl) <- c("Whole Pop", "R", "Python")
+kable(sum_ysc2lang_ctrl, caption="Summary statistics relating to the control plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+N <- c(length(truncated_2), length(truncated_2_r), length(truncated_2_py))
+Var <- c(var(truncated_2), var(truncated_2_r), var(truncated_2_py))
+sum_ysc2lang_trnc <- rbind(N, cbind(summary(truncated_2), summary(truncated_2_r), summary(truncated_2_py)), Var)
+colnames(sum_ysc2lang_trnc) <- c("Whole Pop", "R", "Python")
+kable(sum_ysc2lang_trnc, caption="Summary statistics relating to the truncated plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+N <- c(length(logarithmic_2), length(logarithmic_2_r), length(logarithmic_2_py))
+Var <- c(var(logarithmic_2), var(logarithmic_2_r), var(logarithmic_2_py))
+sum_ysc2lang_log <- rbind(N, cbind(summary(logarithmic_2), summary(logarithmic_2_r), summary(logarithmic_2_py)), Var)
+colnames(sum_ysc2lang_log) <- c("Whole Pop", "R", "Python")
+kable(sum_ysc2lang_log, caption="Summary statistics relating to the logarithmic plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+con_first_2 <- as.numeric(con_first$con_2)
+trn_first_2 <- as.numeric(trn_first$trn_2)
+log_first_2 <- as.numeric(log_first$log_2)
+
+N <- c(length(con_first_2), length(trn_first_2), length(log_first_2))
+Var <- c(var(con_first_2), var(trn_first_2), var(log_first_2))
+sum_ysc1cfirst <- rbind(N, cbind(summary(con_first_2), summary(trn_first_2), summary(log_first_2)), Var)
+colnames(sum_ysc1cfirst) <- c("Control First", "Truncated First", "Logarithmic First")
+kable(sum_ysc1cfirst, caption="Summary statistics for the subgroups that were shown each of the three plots first. ie. here the control statistics are only for respondents who saw the control plot first etc.") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(control_2), length(con_first_2))
+Var <- c(var(control_2), var(con_first_2))
+sum_ysc1cfirst <- rbind(N, cbind(summary(control_2), summary(con_first_2)), Var)
+colnames(sum_ysc1cfirst) <- c("Control Overall", "Control First")
+kable(sum_ysc1cfirst, caption="Summary statistics to compare responses for the control plot between the whole population and those shown the control plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+N <- c(length(truncated_2), length(trn_first_2))
+Var <- c(var(truncated_2), var(trn_first_2))
+sum_ysc1cfirst <- rbind(N, cbind(summary(truncated_2), summary(trn_first_2)), Var)
+colnames(sum_ysc1cfirst) <- c("Truncated Overall", "Truncated First")
+kable(sum_ysc1cfirst, caption="Summary statistics to compare responses for the truncated plot between the whole population and those shown the truncated plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(logarithmic_2), length(log_first_2))
+Var <- c(var(logarithmic_2), var(log_first_2))
+sum_ysc1cfirst <- rbind(N, cbind(summary(logarithmic_2), summary(log_first_2)), Var)
+colnames(sum_ysc1cfirst) <- c("Log Overall", "Log First")
+kable(sum_ysc1cfirst, caption="Summary statistics to compare responses for the logarithmic plot between the whole population and those shown the logarithmic plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+shap_2 <- rbind(
+  dist_check("shap", control_2, dataname = "control_2"),
+  dist_check("shap", truncated_2, dataname = "truncated_2"),
+  dist_check("shap", logarithmic_2, dataname = "logarithmic_2"),
+  
+  dist_check("shap", control_2_r, dataname = "control_2_r"),
+  dist_check("shap", truncated_2_r, dataname = "truncated_2_r"),
+  dist_check("shap", logarithmic_2_r, dataname = "logarithmic_2_r"),
+  
+  dist_check("shap", control_2_py, dataname = "control_2_py"),
+  dist_check("shap", truncated_2_py, dataname = "truncated_2_py"),
+  dist_check("shap", logarithmic_2_py, dataname = "logarithmic_2_py")
+) %>% noquote()
+colnames(shap_2) <- c("Variable", "P-Value")
+kable(shap_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+sym_2 <- rbind(
+  dist_check("sym", control_2, dataname = "control_2"),
+  dist_check("sym", truncated_2, dataname = "truncated_2"),
+  dist_check("sym", logarithmic_2, dataname = "logarithmic_2"),
+  
+  dist_check("sym", control_2_r, dataname = "control_2_r"),
+  dist_check("sym", truncated_2_r, dataname = "truncated_2_r"),
+  dist_check("sym", logarithmic_2_r, dataname = "logarithmic_2_r"),
+  
+  dist_check("sym", control_2_py, dataname = "control_2_py"),
+  dist_check("sym", truncated_2_py, dataname = "truncated_2_py"),
+  dist_check("sym", logarithmic_2_py, dataname = "logarithmic_2_py"),
+  
+  dist_check("sym", con_first_2, dataname = "con_first_2"),
+  dist_check("sym", trn_first_2, dataname = "trn_first_2"),
+  dist_check("sym", log_first_2, dataname = "log_first_2")
+) %>% noquote()
+colnames(sym_2) <- c("Variable", "P-Value")
+kable(sym_2, caption="Symmetry test results to test for symmetric data") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r echo=F}
+df <- rbind(
+  
+  c(SIGN.test(truncated_2, control_2)$data.name, 
+    SIGN.test(truncated_2, control_2)$alternative, 
+    SIGN.test(truncated_2, control_2)$null.value,
+    SIGN.test(truncated_2, control_2)$p.value),
+  
+  c(SIGN.test(truncated_2, control_2, alt="g")$data.name, 
+    SIGN.test(truncated_2, control_2, alt="g")$alternative, 
+    SIGN.test(truncated_2, control_2, alt="g")$null.value,
+    SIGN.test(truncated_2, control_2, alt="g")$p.value),
+  
+  
+  
+  c(SIGN.test(logarithmic_2, control_2)$data.name, 
+    SIGN.test(logarithmic_2, control_2)$alternative, 
+    SIGN.test(logarithmic_2, control_2)$null.value, 
+    SIGN.test(logarithmic_2, control_2)$p.value),
+
+  c(SIGN.test(logarithmic_2, control_2, alt="l")$data.name, 
+    SIGN.test(logarithmic_2, control_2, alt="l")$alternative, 
+    SIGN.test(logarithmic_2, control_2, alt="l")$null.value, 
+    SIGN.test(logarithmic_2, control_2, alt="l")$p.value)
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="Sign test results for data considered non-normal and asymmetric")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+
+```{r echo=F}
+df <- rbind(
+  c(wilcox.test(control_2_r, control_2_py, exact=F)$data.name, 
+    wilcox.test(control_2_r, control_2_py, exact=F)$alternative, 
+    wilcox.test(control_2_r, control_2_py, exact=F)$null.value, 
+    wilcox.test(control_2_r, control_2_py, exact=F)$p.value),
+  
+  c(wilcox.test(truncated_2_r, truncated_2_py, exact=F)$data.name, 
+    wilcox.test(truncated_2_r, truncated_2_py, exact=F)$alternative, 
+    wilcox.test(truncated_2_r, truncated_2_py, exact=F)$null.value, 
+    wilcox.test(truncated_2_r, truncated_2_py, exact=F)$p.value),  
+  
+  
+  
+  c(wilcox.test(logarithmic_2_r, logarithmic_2_py, exact=F)$data.name, 
+    wilcox.test(logarithmic_2_r, logarithmic_2_py, exact=F)$alternative, 
+    wilcox.test(logarithmic_2_r, logarithmic_2_py, exact=F)$null.value, 
+    wilcox.test(logarithmic_2_r, logarithmic_2_py, exact=F)$p.value), 
+  
+  c(wilcox.test(logarithmic_2_r, logarithmic_2_py, alt="g", exact=F)$data.name, 
+    wilcox.test(logarithmic_2_r, logarithmic_2_py, alt="g", exact=F)$alternative, 
+    wilcox.test(logarithmic_2_r, logarithmic_2_py, alt="g", exact=F)$null.value, 
+    wilcox.test(logarithmic_2_r, logarithmic_2_py, alt="g", exact=F)$p.value), 
+  
+  
+  
+  c(wilcox.test(con_first_2, control_2, exact=F)$data.name, 
+    wilcox.test(con_first_2, control_2, exact=F)$alternative, 
+    wilcox.test(con_first_2, control_2, exact=F)$null.value, 
+    wilcox.test(con_first_2, control_2, exact=F)$p.value), 
+  
+  c(wilcox.test(trn_first_2, truncated_2, exact=F)$data.name, 
+    wilcox.test(trn_first_2, truncated_2, exact=F)$alternative, 
+    wilcox.test(trn_first_2, truncated_2, exact=F)$null.value, 
+    wilcox.test(trn_first_2, truncated_2, exact=F)$p.value), 
+  
+  c(wilcox.test(log_first_2, logarithmic_2)$data.name, 
+    wilcox.test(log_first_2, logarithmic_2)$alternative, 
+    wilcox.test(log_first_2, logarithmic_2)$null.value, 
+    wilcox.test(log_first_2, logarithmic_2, exact=F)$p.value)
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW test results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\subsection{'Approximately how much more than `Quintuple Steps' would you say `Salmon Ladder' was used?'}
+
+
+```{r echo=F}
+control_3 <- ctrl_y_scale$con_3
+truncated_3 <- trnc_y_scale$trn_3
+logarithmic_3 <- log_y_scale$log_3
+```
+
+```{r}
+N <- c(length(control_3), length(truncated_3), length(logarithmic_3))
+
+Var <- c(var(control_3), var(truncated_3), var(logarithmic_3))
+
+sum_ysc2all <- rbind(N, cbind(summary(control_3), summary(truncated_3), summary(logarithmic_3)), Var)
+colnames(sum_ysc2all) <- c("Control", "Truncated", "Logarithmic")
+kable(sum_ysc2all, caption="Summary statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+control_3_r <- ctrl_y_scale_r$con_3
+truncated_3_r <- trnc_y_scale_r$trn_3
+logarithmic_3_r <- log_y_scale_r$log_3
+
+control_3_py <- ctrl_y_scale_py$con_3
+truncated_3_py <- trnc_y_scale_py$trn_3
+logarithmic_3_py <- log_y_scale_py$log_3
+
+y_scale_3_r <- cbind(control_3_r, truncated_3_r, logarithmic_3_r)
+y_scale_3_py <- cbind(control_3_py, truncated_3_py, logarithmic_3_py)
+``` 
+
+```{r}
+N <- c(length(control_3), length(control_3_r), length(control_3_py))
+Var <- c(var(control_3), var(control_3_r), var(control_3_py))
+sum_ysc2lang_ctrl <- rbind(N, cbind(summary(control_3), summary(control_3_r), summary(control_3_py)), Var)
+colnames(sum_ysc2lang_ctrl) <- c("Whole Pop", "R", "Python")
+kable(sum_ysc2lang_ctrl, caption="Summary statistics relating to the control plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+N <- c(length(truncated_3), length(truncated_3_r), length(truncated_3_py))
+Var <- c(var(truncated_3), var(truncated_3_r), var(truncated_3_py))
+sum_ysc2lang_trnc <- rbind(N, cbind(summary(truncated_3), summary(truncated_3_r), summary(truncated_3_py)), Var)
+colnames(sum_ysc2lang_trnc) <- c("Whole Pop", "R", "Python")
+kable(sum_ysc2lang_trnc, caption="Summary statistics relating to the truncated plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+N <- c(length(logarithmic_3), length(logarithmic_3_r), length(logarithmic_3_py))
+Var <- c(var(logarithmic_3), var(logarithmic_3_r), var(logarithmic_3_py))
+sum_ysc2lang_log <- rbind(N, cbind(summary(logarithmic_3), summary(logarithmic_3_r), summary(logarithmic_3_py)), Var)
+colnames(sum_ysc2lang_log) <- c("Whole Pop", "R", "Python")
+kable(sum_ysc2lang_log, caption="Summary statistics relating to the logarithmic plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+con_first_3 <- as.numeric(con_first$con_3)
+trn_first_3 <- as.numeric(trn_first$trn_3)
+log_first_3 <- as.numeric(log_first$log_3)
+
+N <- c(length(con_first_3), length(trn_first_3), length(log_first_3))
+Var <- c(var(con_first_3), var(trn_first_3), var(log_first_3))
+sum_ysc1cfirst <- rbind(N, cbind(summary(con_first_3), summary(trn_first_3), summary(log_first_3)), Var)
+colnames(sum_ysc1cfirst) <- c("Control First", "Truncated First", "Logarithmic First")
+kable(sum_ysc1cfirst, caption="Summary statistics for the subgroups that were shown each of the three plots first. ie. here the control statistics are only for respondents who saw the control plot first etc.") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(control_3), length(con_first_3))
+Var <- c(var(control_3), var(con_first_3))
+sum_ysc1cfirst <- rbind(N, cbind(summary(control_3), summary(con_first_3)), Var)
+colnames(sum_ysc1cfirst) <- c("Control Overall", "Control First")
+kable(sum_ysc1cfirst, caption="Summary statistics to compare responses for the control plot between the whole population and those shown the control plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+N <- c(length(truncated_3), length(trn_first_3))
+Var <- c(var(truncated_3), var(trn_first_3))
+sum_ysc1cfirst <- rbind(N, cbind(summary(truncated_3), summary(trn_first_3)), Var)
+colnames(sum_ysc1cfirst) <- c("Truncated Overall", "Truncated First")
+kable(sum_ysc1cfirst, caption="Summary statistics to compare responses for the truncated plot between the whole population and those shown the truncated plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(logarithmic_3), length(log_first_3))
+Var <- c(var(logarithmic_3), var(log_first_3))
+sum_ysc1cfirst <- rbind(N, cbind(summary(logarithmic_3), summary(log_first_3)), Var)
+colnames(sum_ysc1cfirst) <- c("Log Overall", "Log First")
+kable(sum_ysc1cfirst, caption="Summary statistics to compare responses for the logarithmic plot between the whole population and those shown the logarithmic plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+shap_3 <- rbind(
+  dist_check("shap", control_3, dataname = "control_3"),
+  dist_check("shap", truncated_3, dataname = "truncated_3"),
+  dist_check("shap", logarithmic_3, dataname = "logarithmic_3"),
+  
+  dist_check("shap", control_3_r, dataname = "control_3_r"),
+  dist_check("shap", truncated_3_r, dataname = "truncated_3_r"),
+  dist_check("shap", logarithmic_3_r, dataname = "logarithmic_3_r"),
+  
+  dist_check("shap", control_3_py, dataname = "control_3_py"),
+  dist_check("shap", truncated_3_py, dataname = "truncated_3_py"),
+  dist_check("shap", logarithmic_3_py, dataname = "logarithmic_3_py")
+) %>% noquote()
+colnames(shap_3) <- c("Variable", "P-Value")
+kable(shap_3, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+sym_3 <- rbind(
+  dist_check("sym", control_3, dataname = "control_3"),
+  dist_check("sym", truncated_3, dataname = "truncated_3"),
+  dist_check("sym", logarithmic_3, dataname = "logarithmic_3"),
+  
+  dist_check("sym", control_3_r, dataname = "control_3_r"),
+  dist_check("sym", truncated_3_r, dataname = "truncated_3_r"),
+  dist_check("sym", logarithmic_3_r, dataname = "logarithmic_3_r"),
+  
+  dist_check("sym", control_3_py, dataname = "control_3_py"),
+  dist_check("sym", truncated_3_py, dataname = "truncated_3_py"),
+  dist_check("sym", logarithmic_3_py, dataname = "logarithmic_3_py"),
+  
+  dist_check("sym", con_first_3, dataname = "con_first_3"),
+  dist_check("sym", trn_first_3, dataname = "trn_first_3"),
+  dist_check("sym", log_first_3, dataname = "log_first_3")
+) %>% noquote()
+colnames(sym_3) <- c("Variable", "P-Value")
+kable(sym_3, caption="Symmetry test results to test for symmetric data") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r echo=F}
+df <- rbind(
+  
+  c(SIGN.test(truncated_3, control_3)$data.name, 
+    SIGN.test(truncated_3, control_3)$alternative, 
+    SIGN.test(truncated_3, control_3)$null.value,
+    SIGN.test(truncated_3, control_3)$p.value),
+  
+  c(SIGN.test(truncated_3, control_3, alt="g")$data.name, 
+    SIGN.test(truncated_3, control_3, alt="g")$alternative, 
+    SIGN.test(truncated_3, control_3, alt="g")$null.value,
+    SIGN.test(truncated_3, control_3, alt="g")$p.value),
+  
+  
+  
+  c(SIGN.test(logarithmic_3, control_3)$data.name, 
+    SIGN.test(logarithmic_3, control_3)$alternative, 
+    SIGN.test(logarithmic_3, control_3)$null.value, 
+    SIGN.test(logarithmic_3, control_3)$p.value),
+
+  c(SIGN.test(logarithmic_3, control_3, alt="l")$data.name, 
+    SIGN.test(logarithmic_3, control_3, alt="l")$alternative, 
+    SIGN.test(logarithmic_3, control_3, alt="l")$null.value, 
+    SIGN.test(logarithmic_3, control_3, alt="l")$p.value)
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="Sign test results for data considered non-normal and asymmetric")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+
+```{r echo=F}
+df <- rbind(
+  c(wilcox.test(control_3_r, control_3_py, exact=F)$data.name, 
+    wilcox.test(control_3_r, control_3_py, exact=F)$alternative, 
+    wilcox.test(control_3_r, control_3_py, exact=F)$null.value, 
+    wilcox.test(control_3_r, control_3_py, exact=F)$p.value),
+  
+  c(wilcox.test(truncated_3_r, truncated_3_py, exact=F)$data.name, 
+    wilcox.test(truncated_3_r, truncated_3_py, exact=F)$alternative, 
+    wilcox.test(truncated_3_r, truncated_3_py, exact=F)$null.value, 
+    wilcox.test(truncated_3_r, truncated_3_py, exact=F)$p.value),  
+  
+  
+  
+  c(wilcox.test(logarithmic_3_r, logarithmic_3_py, exact=F)$data.name, 
+    wilcox.test(logarithmic_3_r, logarithmic_3_py, exact=F)$alternative, 
+    wilcox.test(logarithmic_3_r, logarithmic_3_py, exact=F)$null.value, 
+    wilcox.test(logarithmic_3_r, logarithmic_3_py, exact=F)$p.value), 
+  
+  c(wilcox.test(logarithmic_3_r, logarithmic_3_py, alt="g", exact=F)$data.name, 
+    wilcox.test(logarithmic_3_r, logarithmic_3_py, alt="g", exact=F)$alternative, 
+    wilcox.test(logarithmic_3_r, logarithmic_3_py, alt="g", exact=F)$null.value, 
+    wilcox.test(logarithmic_3_r, logarithmic_3_py, alt="g", exact=F)$p.value), 
+  
+  
+  
+  c(wilcox.test(con_first_3, control_3, exact=F)$data.name, 
+    wilcox.test(con_first_3, control_3, exact=F)$alternative, 
+    wilcox.test(con_first_3, control_3, exact=F)$null.value, 
+    wilcox.test(con_first_3, control_3, exact=F)$p.value), 
+  
+  c(wilcox.test(trn_first_3, truncated_3, exact=F)$data.name, 
+    wilcox.test(trn_first_3, truncated_3, exact=F)$alternative, 
+    wilcox.test(trn_first_3, truncated_3, exact=F)$null.value, 
+    wilcox.test(trn_first_3, truncated_3, exact=F)$p.value), 
+  
+  c(wilcox.test(log_first_3, logarithmic_3)$data.name, 
+    wilcox.test(log_first_3, logarithmic_3)$alternative, 
+    wilcox.test(log_first_3, logarithmic_3)$null.value, 
+    wilcox.test(log_first_3, logarithmic_3, exact=F)$p.value)
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\section{Ninja Warrior - Part 2}
+
+\subsection{"How large would you say the difference between `Jumping spider' and `Salmon Ladder' is?"}
+
+```{r echo=F}
+default_1 <- def_ratio$def_1
+narrow_1 <- nar_ratio$nar_1
+wide_1 <- wid_ratio$wid_1
+```
+
+```{r}
+N <- c(length(default_1), length(narrow_1), length(wide_1))
+
+Var <- c(var(default_1), var(narrow_1), var(wide_1))
+
+sum_ratio1all <- rbind(N, cbind(summary(default_1), summary(narrow_1), summary(wide_1)), Var)
+colnames(sum_ratio1all) <- c("Default", "Narrow", "Wide")
+kable(sum_ratio1all, caption="Summary statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+default_1_r <- def_ratio_r$def_1
+narrow_1_r <- nar_ratio_r$nar_1
+wide_1_r <- wid_ratio_r$wid_1
+
+default_1_py <- def_ratio_py$def_1
+narrow_1_py <- nar_ratio_py$nar_1
+wide_1_py <- wid_ratio_py$wid_1
+
+ratio_1_r <- cbind(default_1_r, narrow_1_r, wide_1_r)
+ratio_1_py <- cbind(default_1_py, narrow_1_py, wide_1_py)
+``` 
+
+```{r}
+N <- c(length(default_1), length(default_1_r), length(default_1_py))
+Var <- c(var(default_1), var(default_1_r), var(default_1_py))
+sum_ratio1lang_def <- rbind(N, cbind(summary(default_1), summary(default_1_r), summary(default_1_py)), Var)
+colnames(sum_ratio1lang_def) <- c("Whole Pop", "R", "Python")
+kable(sum_ratio1lang_def, caption="Summary statistics relating to the default plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+N <- c(length(narrow_1), length(narrow_1_r), length(narrow_1_py))
+Var <- c(var(narrow_1), var(narrow_1_r), var(narrow_1_py))
+sum_ratio1lang_nar <- rbind(N, cbind(summary(narrow_1), summary(narrow_1_r), summary(narrow_1_py)), Var)
+colnames(sum_ratio1lang_nar) <- c("Whole Pop", "R", "Python")
+kable(sum_ratio1lang_nar, caption="Summary statistics relating to the narrow plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+N <- c(length(wide_1), length(wide_1_r), length(wide_1_py))
+Var <- c(var(wide_1), var(wide_1_r), var(wide_1_py))
+sum_ratio1lang_wid <- rbind(N, cbind(summary(wide_1), summary(wide_1_r), summary(wide_1_py)), Var)
+colnames(sum_ratio1lang_wid) <- c("Whole Pop", "R", "Python")
+kable(sum_ratio1lang_wid, caption="Summary statistics relating to the wide plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+def_first_1 <- as.numeric(def_first$def_1)
+nar_first_1 <- as.numeric(nar_first$nar_1)
+wid_first_1 <- as.numeric(wid_first$wid_1)
+
+N <- c(length(def_first_1), length(nar_first_1), length(wid_first_1))
+Var <- c(var(def_first_1), var(nar_first_1), var(wid_first_1))
+sum_ratio1cfirst <- rbind(N, cbind(summary(def_first_1), summary(nar_first_1), summary(wid_first_1)), Var)
+colnames(sum_ratio1cfirst) <- c("Default First", "Narrow First", "Wide First")
+kable(sum_ratio1cfirst, caption="Summary statistics for the subgroups that were shown each of the three plots first. ie. here the default statistics are only for respondents who saw the default plot first etc.") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(default_1), length(def_first_1))
+Var <- c(var(default_1), var(def_first_1))
+sum_ratio1cfirst <- rbind(N, cbind(summary(default_1), summary(def_first_1)), Var)
+colnames(sum_ratio1cfirst) <- c("Default Overall", "Default First")
+kable(sum_ratio1cfirst, caption="Summary statistics to compare responses for the default plot between the whole population and those shown the default plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+N <- c(length(narrow_1), length(nar_first_1))
+Var <- c(var(narrow_1), var(nar_first_1))
+sum_ratio1cfirst <- rbind(N, cbind(summary(narrow_1), summary(nar_first_1)), Var)
+colnames(sum_ratio1cfirst) <- c("Narrow Overall", "Narrow First")
+kable(sum_ratio1cfirst, caption="Summary statistics to compare responses for the narrow plot between the whole population and those shown the narrow plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(wide_1), length(wid_first_1))
+Var <- c(var(wide_1), var(wid_first_1))
+sum_ratio1cfirst <- rbind(N, cbind(summary(wide_1), summary(wid_first_1)), Var)
+colnames(sum_ratio1cfirst) <- c("Log Overall", "Log First")
+kable(sum_ratio1cfirst, caption="Summary statistics to compare responses for the wide plot between the whole population and those shown the wide plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+shap_1 <- rbind(
+  dist_check("shap", default_1, dataname = "default_1"),
+  dist_check("shap", narrow_1, dataname = "narrow_1"),
+  dist_check("shap", wide_1, dataname = "wide_1"),
+  
+  dist_check("shap", default_1_r, dataname = "default_1_r"),
+  dist_check("shap", narrow_1_r, dataname = "narrow_1_r"),
+  dist_check("shap", wide_1_r, dataname = "wide_1_r"),
+  
+  dist_check("shap", default_1_py, dataname = "default_1_py"),
+  dist_check("shap", narrow_1_py, dataname = "narrow_1_py"),
+  dist_check("shap", wide_1_py, dataname = "wide_1_py")
+) %>% noquote()
+colnames(shap_1) <- c("Variable", "P-Value")
+kable(shap_1, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+sym_1 <- rbind(
+  dist_check("sym", default_1, dataname = "default_1"),
+  dist_check("sym", narrow_1, dataname = "narrow_1"),
+  dist_check("sym", wide_1, dataname = "wide_1"),
+  
+  dist_check("sym", default_1_r, dataname = "default_1_r"),
+  dist_check("sym", narrow_1_r, dataname = "narrow_1_r"),
+  dist_check("sym", wide_1_r, dataname = "wide_1_r"),
+  
+  dist_check("sym", default_1_py, dataname = "default_1_py"),
+  dist_check("sym", narrow_1_py, dataname = "narrow_1_py"),
+  dist_check("sym", wide_1_py, dataname = "wide_1_py"),
+  
+  dist_check("sym", def_first_1, dataname = "def_first_1"),
+  dist_check("sym", nar_first_1, dataname = "nar_first_1"),
+  dist_check("sym", wid_first_1, dataname = "wid_first_1")
+) %>% noquote()
+colnames(sym_1) <- c("Variable", "P-Value")
+kable(sym_1, caption="Symmetry test results to test for symmetric data") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+
+```{r echo=F}
+df <- rbind(
+  
+  c(wilcox.test(narrow_1, default_1, exact=F)$data.name, 
+    wilcox.test(narrow_1, default_1, exact=F)$alternative, 
+    wilcox.test(narrow_1, default_1, exact=F)$null.value,
+    wilcox.test(narrow_1, default_1, exact=F)$p.value),
+
+  c(wilcox.test(wide_1, default_1, exact=F)$data.name, 
+    wilcox.test(wide_1, default_1, exact=F)$alternative, 
+    wilcox.test(wide_1, default_1, exact=F)$null.value, 
+    wilcox.test(wide_1, default_1, exact=F)$p.value),
+
+  c(wilcox.test(default_1_r, default_1_py, exact=F)$data.name, 
+    wilcox.test(default_1_r, default_1_py, exact=F)$alternative, 
+    wilcox.test(default_1_r, default_1_py, exact=F)$null.value, 
+    wilcox.test(default_1_r, default_1_py, exact=F)$p.value),
+  
+  c(wilcox.test(narrow_1_r, narrow_1_py, exact=F)$data.name, 
+    wilcox.test(narrow_1_r, narrow_1_py, exact=F)$alternative, 
+    wilcox.test(narrow_1_r, narrow_1_py, exact=F)$null.value, 
+    wilcox.test(narrow_1_r, narrow_1_py, exact=F)$p.value),  
+  
+  
+  c(wilcox.test(wide_1_r, wide_1_py, exact=F)$data.name, 
+    wilcox.test(wide_1_r, wide_1_py, exact=F)$alternative, 
+    wilcox.test(wide_1_r, wide_1_py, exact=F)$null.value, 
+    wilcox.test(wide_1_r, wide_1_py, exact=F)$p.value), 
+  
+  
+  c(wilcox.test(def_first_1, default_1, exact=F)$data.name, 
+    wilcox.test(def_first_1, default_1, exact=F)$alternative, 
+    wilcox.test(def_first_1, default_1, exact=F)$null.value, 
+    wilcox.test(def_first_1, default_1, exact=F)$p.value), 
+  
+  c(wilcox.test(nar_first_1, narrow_1, exact=F)$data.name, 
+    wilcox.test(nar_first_1, narrow_1, exact=F)$alternative, 
+    wilcox.test(nar_first_1, narrow_1, exact=F)$null.value, 
+    wilcox.test(nar_first_1, narrow_1, exact=F)$p.value), 
+  
+  c(wilcox.test(wid_first_1, wide_1, exact=F)$data.name, 
+    wilcox.test(wid_first_1, wide_1, exact=F)$alternative, 
+    wilcox.test(wid_first_1, wide_1, exact=F)$null.value, 
+    wilcox.test(wid_first_1, wide_1, exact=F)$p.value)
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW test results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\subsection{How large would you say the difference between `Log Grip' and `Floating Steps' is?}
+
+
+```{r echo=F}
+default_2 <- def_ratio$def_2
+narrow_2 <- nar_ratio$nar_2
+wide_2 <- wid_ratio$wid_2
+```
+
+```{r}
+N <- c(length(default_2), length(narrow_2), length(wide_2))
+
+Var <- c(var(default_2), var(narrow_2), var(wide_2))
+
+sum_ratio2all <- rbind(N, cbind(summary(default_2), summary(narrow_2), summary(wide_2)), Var)
+colnames(sum_ratio2all) <- c("Default", "Narrow", "Wide")
+kable(sum_ratio2all, caption="Summary statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+default_2_r <- def_ratio_r$def_2
+narrow_2_r <- nar_ratio_r$nar_2
+wide_2_r <- wid_ratio_r$wid_2
+
+default_2_py <- def_ratio_py$def_2
+narrow_2_py <- nar_ratio_py$nar_2
+wide_2_py <- wid_ratio_py$wid_2
+
+ratio_2_r <- cbind(default_2_r, narrow_2_r, wide_2_r)
+ratio_2_py <- cbind(default_2_py, narrow_2_py, wide_2_py)
+``` 
+
+```{r}
+N <- c(length(default_2), length(default_2_r), length(default_2_py))
+Var <- c(var(default_2), var(default_2_r), var(default_2_py))
+sum_ratio2lang_def <- rbind(N, cbind(summary(default_2), summary(default_2_r), summary(default_2_py)), Var)
+colnames(sum_ratio2lang_def) <- c("Whole Pop", "R", "Python")
+kable(sum_ratio2lang_def, caption="Summary statistics relating to the default plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+N <- c(length(narrow_2), length(narrow_2_r), length(narrow_2_py))
+Var <- c(var(narrow_2), var(narrow_2_r), var(narrow_2_py))
+sum_ratio2lang_nar <- rbind(N, cbind(summary(narrow_2), summary(narrow_2_r), summary(narrow_2_py)), Var)
+colnames(sum_ratio2lang_nar) <- c("Whole Pop", "R", "Python")
+kable(sum_ratio2lang_nar, caption="Summary statistics relating to the narrow plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+N <- c(length(wide_2), length(wide_2_r), length(wide_2_py))
+Var <- c(var(wide_2), var(wide_2_r), var(wide_2_py))
+sum_ratio2lang_wid <- rbind(N, cbind(summary(wide_2), summary(wide_2_r), summary(wide_2_py)), Var)
+colnames(sum_ratio2lang_wid) <- c("Whole Pop", "R", "Python")
+kable(sum_ratio2lang_wid, caption="Summary statistics relating to the wide plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+def_first_2 <- as.numeric(def_first$def_2)
+nar_first_2 <- as.numeric(nar_first$nar_2)
+wid_first_2 <- as.numeric(wid_first$wid_2)
+
+N <- c(length(def_first_2), length(nar_first_2), length(wid_first_2))
+Var <- c(var(def_first_2), var(nar_first_2), var(wid_first_2))
+sum_ratio1cfirst <- rbind(N, cbind(summary(def_first_2), summary(nar_first_2), summary(wid_first_2)), Var)
+colnames(sum_ratio1cfirst) <- c("Default First", "Narrow First", "Wide First")
+kable(sum_ratio1cfirst, caption="Summary statistics for the subgroups that were shown each of the three plots first. ie. here the default statistics are only for respondents who saw the default plot first etc.") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(default_2), length(def_first_2))
+Var <- c(var(default_2), var(def_first_2))
+sum_ratio1cfirst <- rbind(N, cbind(summary(default_2), summary(def_first_2)), Var)
+colnames(sum_ratio1cfirst) <- c("Default Overall", "Default First")
+kable(sum_ratio1cfirst, caption="Summary statistics to compare responses for the default plot between the whole population and those shown the default plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+N <- c(length(narrow_2), length(nar_first_2))
+Var <- c(var(narrow_2), var(nar_first_2))
+sum_ratio1cfirst <- rbind(N, cbind(summary(narrow_2), summary(nar_first_2)), Var)
+colnames(sum_ratio1cfirst) <- c("Narrow Overall", "Narrow First")
+kable(sum_ratio1cfirst, caption="Summary statistics to compare responses for the narrow plot between the whole population and those shown the narrow plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(wide_2), length(wid_first_2))
+Var <- c(var(wide_2), var(wid_first_2))
+sum_ratio1cfirst <- rbind(N, cbind(summary(wide_2), summary(wid_first_2)), Var)
+colnames(sum_ratio1cfirst) <- c("Log Overall", "Log First")
+kable(sum_ratio1cfirst, caption="Summary statistics to compare responses for the wide plot between the whole population and those shown the wide plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+shap_2 <- rbind(
+  dist_check("shap", default_2, dataname = "default_2"),
+  dist_check("shap", narrow_2, dataname = "narrow_2"),
+  dist_check("shap", wide_2, dataname = "wide_2"),
+  
+  dist_check("shap", default_2_r, dataname = "default_2_r"),
+  dist_check("shap", narrow_2_r, dataname = "narrow_2_r"),
+  dist_check("shap", wide_2_r, dataname = "wide_2_r"),
+  
+  dist_check("shap", default_2_py, dataname = "default_2_py"),
+  dist_check("shap", narrow_2_py, dataname = "narrow_2_py"),
+  dist_check("shap", wide_2_py, dataname = "wide_2_py")
+) %>% noquote()
+colnames(shap_2) <- c("Variable", "P-Value")
+kable(shap_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+sym_2 <- rbind(
+  dist_check("sym", default_2, dataname = "default_2"),
+  dist_check("sym", narrow_2, dataname = "narrow_2"),
+  dist_check("sym", wide_2, dataname = "wide_2"),
+  
+  dist_check("sym", default_2_r, dataname = "default_2_r"),
+  dist_check("sym", narrow_2_r, dataname = "narrow_2_r"),
+  dist_check("sym", wide_2_r, dataname = "wide_2_r"),
+  
+  dist_check("sym", default_2_py, dataname = "default_2_py"),
+  dist_check("sym", narrow_2_py, dataname = "narrow_2_py"),
+  dist_check("sym", wide_2_py, dataname = "wide_2_py"),
+  
+  dist_check("sym", def_first_2, dataname = "def_first_2"),
+  dist_check("sym", nar_first_2, dataname = "nar_first_2"),
+  dist_check("sym", wid_first_2, dataname = "wid_first_2")
+) %>% noquote()
+colnames(sym_2) <- c("Variable", "P-Value")
+kable(sym_2, caption="Symmetry test results to test for symmetric data") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+
+```{r echo=F}
+df <- rbind(
+  
+  c(wilcox.test(narrow_2, default_2, exact=F)$data.name, 
+    wilcox.test(narrow_2, default_2, exact=F)$alternative, 
+    wilcox.test(narrow_2, default_2, exact=F)$null.value,
+    wilcox.test(narrow_2, default_2, exact=F)$p.value),
+
+  c(wilcox.test(wide_2, default_2, exact=F)$data.name, 
+    wilcox.test(wide_2, default_2, exact=F)$alternative, 
+    wilcox.test(wide_2, default_2, exact=F)$null.value, 
+    wilcox.test(wide_2, default_2, exact=F)$p.value),
+
+  c(wilcox.test(default_2_r, default_2_py, exact=F)$data.name, 
+    wilcox.test(default_2_r, default_2_py, exact=F)$alternative, 
+    wilcox.test(default_2_r, default_2_py, exact=F)$null.value, 
+    wilcox.test(default_2_r, default_2_py, exact=F)$p.value),
+  
+  c(wilcox.test(narrow_2_r, narrow_2_py, exact=F)$data.name, 
+    wilcox.test(narrow_2_r, narrow_2_py, exact=F)$alternative, 
+    wilcox.test(narrow_2_r, narrow_2_py, exact=F)$null.value, 
+    wilcox.test(narrow_2_r, narrow_2_py, exact=F)$p.value),  
+  
+  
+  c(wilcox.test(wide_2_r, wide_2_py, exact=F)$data.name, 
+    wilcox.test(wide_2_r, wide_2_py, exact=F)$alternative, 
+    wilcox.test(wide_2_r, wide_2_py, exact=F)$null.value, 
+    wilcox.test(wide_2_r, wide_2_py, exact=F)$p.value), 
+  
+  
+  c(wilcox.test(def_first_2, default_2, exact=F)$data.name, 
+    wilcox.test(def_first_2, default_2, exact=F)$alternative, 
+    wilcox.test(def_first_2, default_2, exact=F)$null.value, 
+    wilcox.test(def_first_2, default_2, exact=F)$p.value), 
+  
+  c(wilcox.test(nar_first_2, narrow_2, exact=F)$data.name, 
+    wilcox.test(nar_first_2, narrow_2, exact=F)$alternative, 
+    wilcox.test(nar_first_2, narrow_2, exact=F)$null.value, 
+    wilcox.test(nar_first_2, narrow_2, exact=F)$p.value), 
+  
+  c(wilcox.test(wid_first_2, wide_2, exact=F)$data.name, 
+    wilcox.test(wid_first_2, wide_2, exact=F)$alternative, 
+    wilcox.test(wid_first_2, wide_2, exact=F)$null.value, 
+    wilcox.test(wid_first_2, wide_2, exact=F)$p.value)
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+\clearpage
+
+\subsection{How many times would you say `Floating Steps' were used?}
+
+```{r echo=F}
+default_3 <- def_ratio$def_3
+narrow_3 <- nar_ratio$nar_3
+wide_3 <- wid_ratio$wid_3
+
+```
+
+```{r}
+N <- c(length(default_3), length(narrow_3), length(wide_3))
+
+Var <- c(var(default_3), var(narrow_3), var(wide_3))
+
+sum_ratio1all <- rbind(N, cbind(summary(default_3), summary(narrow_3), summary(wide_3)), Var)
+
+colnames(sum_ratio1all) <- c("Default", "Narrow", "Wide")
+kable(sum_ratio1all, caption="Summary statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+default_3_r <- def_ratio_r$def_3
+default_3_py <- def_ratio_py$def_3
+
+narrow_3_r <- as.numeric(nar_ratio_r$nar_3)
+narrow_3_py <- as.numeric(nar_ratio_py$nar_3)
+
+wide_3_py <- wid_ratio_py$wid_3
+wide_3_r <- wid_ratio_r$wid_3
+``` 
+
+```{r}
+N <- c(length(default_3), length(default_3_r), length(default_3_py))
+
+Var <- c(var(default_3), var(default_3_r), var(default_3_py))
+
+sum_ratio1lang_def <- rbind(N, cbind(summary(default_3), summary(default_3_r), summary(default_3_py)), Var)
+colnames(sum_ratio1lang_def) <- c("Whole Pop", "R", "Python")
+kable(sum_ratio1lang_def, caption="Summary statistics relating to the default plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+N <- c(length(narrow_3), length(narrow_3_r), length(narrow_3_py))
+
+Var <- c(var(narrow_3), var(narrow_3_r), var(narrow_3_py))
+
+sum_ratio1lang_nar <- rbind(N, cbind(summary(narrow_3), summary(narrow_3_r), summary(narrow_3_py)), Var)
+colnames(sum_ratio1lang_nar) <- c("Whole Pop", "R", "Python")
+kable(sum_ratio1lang_nar, caption="Summary statistics relating to the narrow plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r}
+N <- c(length(wide_3), length(wide_3_r), length(wide_3_py))
+
+Var <- c(var(wide_3), var(wide_3_r), var(wide_3_py))
+
+sum_ratio1lang_wid <- rbind(N, cbind(summary(wide_3), summary(wide_3_r), summary(wide_3_py)), Var)
+colnames(sum_ratio1lang_wid) <- c("Whole Pop", "R", "Python")
+kable(sum_ratio1lang_wid, caption="Summary statistics relating to the wide plot responses for comparison between languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+
+```{r}
+def_first_3 <- as.numeric(def_first$def_3)
+nar_first_3 <- as.numeric(nar_first$nar_3)
+wid_first_3 <- as.numeric(wid_first$wid_3)
+
+N <- c(length(def_first_3), length(nar_first_3), length(wid_first_3))
+Var <- c(var(def_first_3), var(nar_first_3), var(wid_first_3))
+sum_ratio1cfirst <- rbind(N, cbind(summary(def_first_3), summary(nar_first_3), summary(wid_first_3)), Var)
+colnames(sum_ratio1cfirst) <- c("Default First", "Narrow First", "Wide First")
+kable(sum_ratio1cfirst, caption="Summary statistics for the subgroups that were shown each of the three plots first. ie. here the default statistics are only for respondents who saw the default plot first etc.") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(default_3), length(def_first_3))
+Var <- c(var(default_3), var(def_first_3))
+sum_ratio1cfirst <- rbind(N, cbind(summary(default_3), summary(def_first_3)), Var)
+colnames(sum_ratio1cfirst) <- c("Default Overall", "Default First")
+kable(sum_ratio1cfirst, caption="Summary statistics to compare responses for the default plot between the whole population and those shown the default plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+N <- c(length(narrow_3), length(nar_first_3))
+Var <- c(var(narrow_3), var(nar_first_3))
+sum_ratio1cfirst <- rbind(N, cbind(summary(narrow_3), summary(nar_first_3)), Var)
+colnames(sum_ratio1cfirst) <- c("Narrow Overall", "Narrow First")
+kable(sum_ratio1cfirst, caption="Summary statistics to compare responses for the narrow plot between the whole population and those shown the narrow plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+
+N <- c(length(wide_3), length(wid_first_3))
+Var <- c(var(wide_3), var(wid_first_3))
+sum_ratio1cfirst <- rbind(N, cbind(summary(wide_3), summary(wid_first_3)), Var)
+colnames(sum_ratio1cfirst) <- c("Log Overall", "Log First")
+kable(sum_ratio1cfirst, caption="Summary statistics to compare responses for the wide plot between the whole population and those shown the wide plot first") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+shap_3 <- rbind(
+  dist_check("shap", default_3, dataname = "default_3"),
+  dist_check("shap", narrow_3, dataname = "narrow_3"),
+  dist_check("shap", wide_3, dataname = "wide_3"),
+  
+  dist_check("shap", default_3_r, dataname = "default_3_r"),
+  dist_check("shap", narrow_3_r, dataname = "narrow_3_r"),
+  dist_check("shap", wide_3_r, dataname = "wide_3_r"),
+  
+  dist_check("shap", default_3_py, dataname = "default_3_py"),
+  dist_check("shap", narrow_3_py, dataname = "narrow_3_py"),
+  dist_check("shap", wide_3_py, dataname = "wide_3_py"),
+  
+  dist_check("sym", def_first_3, dataname = "def_first_3"),
+  dist_check("sym", nar_first_3, dataname = "nar_first_3"),
+  dist_check("sym", wid_first_3, dataname = "wid_first_3")
+) %>% noquote()
+colnames(shap_3) <- c("Variable", "P-Value")
+kable(shap_3, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+sym_3 <- rbind(
+  dist_check("sym", default_3, dataname = "default_3"),
+  dist_check("sym", narrow_3, dataname = "narrow_3"),
+  dist_check("sym", wide_3, dataname = "wide_3"),
+  
+  dist_check("sym", default_3_r, dataname = "default_3_r"),
+  dist_check("sym", narrow_3_r, dataname = "narrow_3_r"),
+  dist_check("sym", wide_3_r, dataname = "wide_3_r"),
+  
+  dist_check("sym", default_3_py, dataname = "default_3_py"),
+  dist_check("sym", narrow_3_py, dataname = "narrow_3_py"),
+  dist_check("sym", wide_3_py, dataname = "wide_3_py")
+) %>% noquote()
+colnames(sym_3) <- c("Variable", "P-Value")
+kable(sym_3, caption="Symmetry test results to test for symmetric data") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r echo=F}
+df <- rbind(
+  
+  c(SIGN.test(narrow_3, md=28)$data.name, 
+    SIGN.test(narrow_3, md=28)$alternative, 
+    SIGN.test(narrow_3, md=28)$null.value, 
+    SIGN.test(narrow_3, md=28)$p.value), 
+  
+  c(SIGN.test(narrow_3, md=28, alt="l")$data.name, 
+    SIGN.test(narrow_3, md=28, alt="l")$alternative, 
+    SIGN.test(narrow_3, md=28, alt="l")$null.value, 
+    SIGN.test(narrow_3, md=28, alt="l")$p.value),
+  
+  
+  c(SIGN.test(narrow_3, default_3)$data.name, 
+    SIGN.test(narrow_3, default_3)$alternative, 
+    SIGN.test(narrow_3, default_3)$null.value,
+    SIGN.test(narrow_3, default_3)$p.value),
+  
+  c(SIGN.test(narrow_3, default_3, alt="l")$data.name, 
+    SIGN.test(narrow_3, default_3, alt="l")$alternative, 
+    SIGN.test(narrow_3, default_3, alt="l")$null.value,
+    SIGN.test(narrow_3, default_3, alt="l")$p.value),
+  
+  
+  c(SIGN.test(narrow_3_r, md=28)$data.name, 
+    SIGN.test(narrow_3_r, md=28)$alternative, 
+    SIGN.test(narrow_3_r, md=28)$null.value, 
+    SIGN.test(narrow_3_r, md=28)$p.value), 
+  
+  c(SIGN.test(narrow_3_r, md=28, alt="l")$data.name, 
+    SIGN.test(narrow_3_r, md=28, alt="l")$alternative, 
+    SIGN.test(narrow_3_r, md=28, alt="l")$null.value, 
+    SIGN.test(narrow_3_r, md=28, alt="l")$p.value),
+
+  
+  c(wilcox.test(narrow_3_r, narrow_3_py,exact=F)$data.name, 
+    wilcox.test(narrow_3_r, narrow_3_py,exact=F)$alternative, 
+    wilcox.test(narrow_3_r, narrow_3_py,exact=F)$null.value, 
+    wilcox.test(narrow_3_r, narrow_3_py,exact=F)$p.value),  
+  
+  
+  c(wilcox.test(nar_first_3, narrow_3, exact=F)$data.name, 
+    wilcox.test(nar_first_3, narrow_3, exact=F)$alternative, 
+    wilcox.test(nar_first_3, narrow_3, exact=F)$null.value, 
+    wilcox.test(nar_first_3, narrow_3, exact=F)$p.value)
+
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="Sign test results for data considered non-normal and asymmetric")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+
+```{r echo=F}
+df <- rbind(
+  
+  c(wilcox.test(default_3, mu=28, exact=F)$data.name, 
+    wilcox.test(default_3, mu=28, exact=F)$alternative, 
+    wilcox.test(default_3, mu=28, exact=F)$null.value, 
+    wilcox.test(default_3, mu=28, exact=F)$p.value), 
+  
+  c(wilcox.test(wide_3, mu=28, exact=F)$data.name, 
+    wilcox.test(wide_3, mu=28, exact=F)$alternative, 
+    wilcox.test(wide_3, mu=28, exact=F)$null.value, 
+    wilcox.test(wide_3, mu=28, exact=F)$p.value), 
+  
+  
+  c(wilcox.test(wide_3, default_3,exact=F)$data.name, 
+    wilcox.test(wide_3, default_3,exact=F)$alternative, 
+    wilcox.test(wide_3, default_3,exact=F)$null.value, 
+    wilcox.test(wide_3, default_3,exact=F)$p.value),
+  
+  
+  
+  c(wilcox.test(default_3_r,mu=28, exact=F)$data.name, 
+    wilcox.test(default_3_r,mu=28, exact=F)$alternative, 
+    wilcox.test(default_3_r,mu=28, exact=F)$null.value, 
+    wilcox.test(default_3_r,mu=28, exact=F)$p.value),
+  
+  c(wilcox.test(default_3_py,mu=28, exact=F)$data.name, 
+    wilcox.test(default_3_py,mu=28, exact=F)$alternative, 
+    wilcox.test(default_3_py,mu=28, exact=F)$null.value, 
+    wilcox.test(default_3_py,mu=28, exact=F)$p.value),
+
+  
+  
+  c(wilcox.test(narrow_3_py,mu=28, exact=F)$data.name, 
+    wilcox.test(narrow_3_py,mu=28, exact=F)$alternative, 
+    wilcox.test(narrow_3_py,mu=28, exact=F)$null.value, 
+    wilcox.test(narrow_3_py,mu=28, exact=F)$p.value),  
+  
+  c(wilcox.test(narrow_3_py, alt="l", mu=28, exact=F)$data.name, 
+    wilcox.test(narrow_3_py, alt="l", mu=28, exact=F)$alternative, 
+    wilcox.test(narrow_3_py, alt="l", mu=28, exact=F)$null.value, 
+    wilcox.test(narrow_3_py, alt="l", mu=28, exact=F)$p.value),  
+  
+  
+  c(wilcox.test(wide_3_r,mu=28, exact=F)$data.name, 
+    wilcox.test(wide_3_r,mu=28, exact=F)$alternative, 
+    wilcox.test(wide_3_r,mu=28, exact=F)$null.value, 
+    wilcox.test(wide_3_r,mu=28, exact=F)$p.value),
+  
+  c(wilcox.test(wide_3_py,mu=28, exact=F)$data.name, 
+    wilcox.test(wide_3_py,mu=28, exact=F)$alternative, 
+    wilcox.test(wide_3_py,mu=28, exact=F)$null.value, 
+    wilcox.test(wide_3_py,mu=28, exact=F)$p.value),
+  
+  
+  c(wilcox.test(default_3_r, default_3_py,exact=F)$data.name, 
+    wilcox.test(default_3_r, default_3_py,exact=F)$alternative, 
+    wilcox.test(default_3_r, default_3_py,exact=F)$null.value, 
+    wilcox.test(default_3_r, default_3_py,exact=F)$p.value),
+  
+  
+  c(wilcox.test(wide_3_r, wide_3_py, exact=F)$data.name, 
+    wilcox.test(wide_3_r, wide_3_py, exact=F)$alternative, 
+    wilcox.test(wide_3_r, wide_3_py, exact=F)$null.value, 
+    wilcox.test(wide_3_r, wide_3_py, exact=F)$p.value), 
+  
+  
+  c(wilcox.test(def_first_3, default_3, exact=F)$data.name, 
+    wilcox.test(def_first_3, default_3, exact=F)$alternative, 
+    wilcox.test(def_first_3, default_3, exact=F)$null.value, 
+    wilcox.test(def_first_3, default_3, exact=F)$p.value), 
+  
+  
+  c(wilcox.test(wid_first_3, wide_3, exact=F)$data.name, 
+    wilcox.test(wid_first_3, wide_3, exact=F)$alternative, 
+    wilcox.test(wid_first_3, wide_3, exact=F)$null.value, 
+    wilcox.test(wid_first_3, wide_3, exact=F)$p.value)
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\section{Ninja Warrior - Part 3}
+
+\subsection{How many times would you say `Floating Steps' were used in the Finals (Regional/City) round?}
+
+
+```{r echo=F}
+vir_stacked_1 <- vir_stacked$vir_sta_1
+def_stacked_1 <- def_stacked$def_sta_1
+gr_stacked_1 <- gr_stacked$gr_sta_1
+
+vir_grouped_1 <- vir_grouped$vir_grp_1
+def_grouped_1 <- def_grouped$def_grp_1
+gr_grouped_1 <- gr_grouped$gr_grp_1
+
+stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
+grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
+
+stack_first_1 <- stack_first$sta_1
+group_first_1 <- group_first$grp_1
+
+N <- c(length(stacked_1), length(grouped_1))
+Var <- c(var(stacked_1), var(grouped_1))
+sum_stack_1 <- rbind(N, cbind(summary(stacked_1), summary(grouped_1)), Var)
+colnames(sum_stack_1) <- c("Stacked", "Grouped")
+kable(sum_stack_1, caption="Summary statistics for the stacked and grouped plot responses for the whole population")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+vir_stacked_1_r <- vir_stacked_r$vir_sta_1
+def_stacked_1_r <- def_stacked_r$def_sta_1
+gr_stacked_1_r <- gr_stacked_r$gr_sta_1
+
+vir_grouped_1_r <- vir_grouped_r$vir_grp_1
+def_grouped_1_r <- def_grouped_r$def_grp_1
+gr_grouped_1_r <- gr_grouped_r$gr_grp_1
+
+stacked_1_r <- c(vir_stacked_1_r, def_stacked_1_r, gr_stacked_1_r)
+grouped_1_r <- c(vir_grouped_1_r, def_grouped_1_r, gr_grouped_1_r)
+
+vir_stacked_1_py <- vir_stacked_py$vir_sta_1
+def_stacked_1_py <- def_stacked_py$def_sta_1
+gr_stacked_1_py <- gr_stacked_py$gr_sta_1
+
+vir_grouped_1_py <- vir_grouped_py$vir_grp_1
+def_grouped_1_py <- def_grouped_py$def_grp_1
+gr_grouped_1_py <- gr_grouped_py$gr_grp_1
+
+stacked_1_py<- c(vir_stacked_1_py, def_stacked_1_py, gr_stacked_1_py)
+grouped_1_py<- c(vir_grouped_1_py, def_grouped_1_py, gr_grouped_1_py)
+
+N <- c(length(stacked_1), length(stacked_1_r), length(stacked_1_py))
+Var <- c(var(stacked_1), var(stacked_1_r), var(stacked_1_py))
+sum_stack_1_r <- rbind(N, cbind(summary(stacked_1), summary(stacked_1_r), summary(stacked_1_py)), Var)
+colnames(sum_stack_1_r) <- c("Whole Population", "R", "Python")
+kable(sum_stack_1_r, caption="Summary statistics relating to the stacked plot responses for comparison between
+languages")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(grouped_1), length(grouped_1_r), length(grouped_1_py))
+Var <- c(var(grouped_1), var(grouped_1_r), var(grouped_1_py))
+sum_group_1_r <- rbind(N, cbind(summary(grouped_1), summary(grouped_1_r), summary(grouped_1_py)), Var)
+colnames(sum_group_1_r) <- c("Whole Population", "R", "Python")
+kable(sum_group_1_r, caption="Summary statistics relating to the grouped plot responses for comparison between
+languages")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+shap_1 <- rbind(
+  dist_check("shap", stacked_1, dataname = "stacked_1"),
+  dist_check("shap", grouped_1, dataname = "grouped_1"),
+  
+  dist_check("shap", stacked_1_r, dataname = "stacked_1_r"),
+  dist_check("shap", grouped_1_r, dataname = "grouped_1_r" ),
+  
+  dist_check("shap", stacked_1_py, dataname = "stacked_1_py"),
+  dist_check("shap", grouped_1_py, dataname = "grouped_1_py"),
+  
+  dist_check("sym", stack_first_1, dataname = "stack_first_1"),
+  dist_check("sym", group_first_1, dataname = "grp_first_1")
+) %>% noquote()
+colnames(shap_1) <- c("Variable", "P-Value")
+kable(shap_1, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+sym_1 <- rbind(
+  dist_check("sym", stacked_1, dataname = "stacked_1"),
+  dist_check("sym", grouped_1, dataname = "grouped_1"),
+  
+  dist_check("sym", stacked_1_r, dataname = "stacked_1_r"),
+  dist_check("sym", grouped_1_r, dataname = "grouped_1_r" ),
+  
+  dist_check("sym", stacked_1_py, dataname = "stacked_1_py"),
+  dist_check("sym", grouped_1_py, dataname = "grouped_1_py"),
+  
+  dist_check("sym", stack_first_1, dataname = "stack_first_1"),
+  dist_check("sym", group_first_1, dataname = "grp_first_1")
+) %>% noquote()
+colnames(sym_1) <- c("Variable", "P-Value")
+kable(sym_1, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+df <- rbind(
+  
+  c(SIGN.test(stacked_1, md=11, exact=F)$data.name, 
+    SIGN.test(stacked_1, md=11, exact=F)$alternative, 
+    SIGN.test(stacked_1, md=11, exact=F)$null.value, 
+    SIGN.test(stacked_1, md=11, exact=F)$p.value), 
+  
+  c(SIGN.test(grouped_1, md=11, exact=F)$data.name, 
+    SIGN.test(grouped_1, md=11, exact=F)$alternative, 
+    SIGN.test(grouped_1, md=11, exact=F)$null.value, 
+    SIGN.test(grouped_1, md=11, exact=F)$p.value), 
+
+  c(SIGN.test(grouped_1, md=11, alt="g", exact=F)$data.name, 
+    SIGN.test(grouped_1, md=11, alt="g", exact=F)$alternative, 
+    SIGN.test(grouped_1, md=11, alt="g", exact=F)$null.value, 
+    SIGN.test(grouped_1, md=11, alt="g", exact=F)$p.value), 
+  
+  c(SIGN.test(grouped_1, stacked_1,exact=F)$data.name, 
+    SIGN.test(grouped_1, stacked_1,exact=F)$alternative, 
+    SIGN.test(grouped_1, stacked_1,exact=F)$null.value, 
+    SIGN.test(grouped_1, stacked_1,exact=F)$p.value),
+  
+  
+  
+  c(SIGN.test(stacked_1_r,md=11, exact=F)$data.name, 
+    SIGN.test(stacked_1_r,md=11, exact=F)$alternative, 
+    SIGN.test(stacked_1_r,md=11, exact=F)$null.value, 
+    SIGN.test(stacked_1_r,md=11, exact=F)$p.value),
+  
+  c(SIGN.test(stacked_1_py,md=11, exact=F)$data.name, 
+    SIGN.test(stacked_1_py,md=11, exact=F)$alternative, 
+    SIGN.test(stacked_1_py,md=11, exact=F)$null.value, 
+    SIGN.test(stacked_1_py,md=11, exact=F)$p.value),
+
+  
+  
+  c(SIGN.test(grouped_1_r,md=11, exact=F)$data.name, 
+    SIGN.test(grouped_1_r,md=11, exact=F)$alternative, 
+    SIGN.test(grouped_1_r,md=11, exact=F)$null.value, 
+    SIGN.test(grouped_1_r,md=11, exact=F)$p.value),
+  
+  c(SIGN.test(grouped_1_r,md=11, alt="g", exact=F)$data.name, 
+    SIGN.test(grouped_1_r,md=11, alt="g", exact=F)$alternative, 
+    SIGN.test(grouped_1_r,md=11, alt="g", exact=F)$null.value, 
+    SIGN.test(grouped_1_r,md=11, alt="g", exact=F)$p.value),
+  
+  
+  
+  c(SIGN.test(grouped_1_py,md=11, exact=F)$data.name, 
+    SIGN.test(grouped_1_py,md=11, exact=F)$alternative, 
+    SIGN.test(grouped_1_py,md=11, exact=F)$null.value, 
+    SIGN.test(grouped_1_py,md=11, exact=F)$p.value)
+  
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="Sign test results for data considered non-normal and asymmetric") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+df <- rbind(
+  c(wilcox.test(stacked_1_r, stacked_1_py,exact=F)$data.name, 
+    wilcox.test(stacked_1_r, stacked_1_py,exact=F)$alternative, 
+    wilcox.test(stacked_1_r, stacked_1_py,exact=F)$null.value, 
+    wilcox.test(stacked_1_r, stacked_1_py,exact=F)$p.value),
+  
+  
+  c(wilcox.test(grouped_1_r, grouped_1_py, exact=F)$data.name, 
+    wilcox.test(grouped_1_r, grouped_1_py, exact=F)$alternative, 
+    wilcox.test(grouped_1_r, grouped_1_py, exact=F)$null.value, 
+    wilcox.test(grouped_1_r, grouped_1_py, exact=F)$p.value),
+  
+  
+  c(wilcox.test(stack_first_1, stacked_1, exact=F)$data.name, 
+    wilcox.test(stack_first_1, stacked_1, exact=F)$alternative, 
+    wilcox.test(stack_first_1, stacked_1, exact=F)$null.value, 
+    wilcox.test(stack_first_1, stacked_1, exact=F)$p.value), 
+  
+  c(wilcox.test(group_first_1, grouped_1, exact=F)$data.name, 
+    wilcox.test(group_first_1, grouped_1, exact=F)$alternative, 
+    wilcox.test(group_first_1, grouped_1, exact=F)$null.value, 
+    wilcox.test(group_first_1, grouped_1, exact=F)$p.value)
+  
+)  %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\subsection{How many times would you say 'Log Grip' was used in the Finals (Regional/City) round}
+
+```{r echo=F}
+vir_stacked_2 <- vir_stacked$vir_sta_2
+def_stacked_2 <- def_stacked$def_sta_2
+gr_stacked_2 <- gr_stacked$gr_sta_2
+
+vir_grouped_2 <- vir_grouped$vir_grp_2
+def_grouped_2 <- def_grouped$def_grp_2
+gr_grouped_2 <- gr_grouped$gr_grp_2
+
+stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
+grouped_2 <- c(vir_grouped_2, def_grouped_2, gr_grouped_2)
+
+stack_first_2 <- stack_first$sta_2
+group_first_2 <- group_first$grp_2
+
+N <- c(length(stacked_2), length(grouped_2))
+Var <- c(var(stacked_2), var(grouped_2))
+sum_stack_2 <- rbind(N, cbind(summary(stacked_2), summary(grouped_2)), Var)
+colnames(sum_stack_2) <- c("Stacked", "Grouped")
+kable(sum_stack_2, caption="Summary statistics for the stacked and grouped plot responses for the whole population")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r echo=F}
+vir_stacked_2_r <- vir_stacked_r$vir_sta_2
+def_stacked_2_r <- def_stacked_r$def_sta_2
+gr_stacked_2_r <- gr_stacked_r$gr_sta_2
+
+vir_grouped_2_r <- vir_grouped_r$vir_grp_2
+def_grouped_2_r <- def_grouped_r$def_grp_2
+gr_grouped_2_r <- gr_grouped_r$gr_grp_2
+
+stacked_2_r <- c(vir_stacked_2_r, def_stacked_2_r, gr_stacked_2_r)
+grouped_2_r <- c(vir_grouped_2_r, def_grouped_2_r, gr_grouped_2_r)
+
+vir_stacked_2_py <- vir_stacked_py$vir_sta_2
+def_stacked_2_py <- def_stacked_py$def_sta_2
+gr_stacked_2_py <- gr_stacked_py$gr_sta_2
+
+vir_grouped_2_py <- vir_grouped_py$vir_grp_2
+def_grouped_2_py <- def_grouped_py$def_grp_2
+gr_grouped_2_py <- gr_grouped_py$gr_grp_2
+
+stacked_2_py<- c(vir_stacked_2_py, def_stacked_2_py, gr_stacked_2_py)
+grouped_2_py<- c(vir_grouped_2_py, def_grouped_2_py, gr_grouped_2_py)
+
+N <- c(length(stacked_2), length(stacked_2_r), length(stacked_2_py))
+Var <- c(var(stacked_2), var(stacked_2_r), var(stacked_2_py))
+sum_stack_2_r <- rbind(N, cbind(summary(stacked_2), summary(stacked_2_r), summary(stacked_2_py)), Var)
+colnames(sum_stack_2_r) <- c("Whole Population", "R", "Python")
+kable(sum_stack_2_r, caption="Summary statistics relating to the stacked plot responses for comparison between
+languages")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+N <- c(length(grouped_2), length(grouped_2_r), length(grouped_2_py))
+Var <- c(var(grouped_2), var(grouped_2_r), var(grouped_2_py))
+sum_group_2_r <- rbind(N, cbind(summary(grouped_2), summary(grouped_2_r), summary(grouped_2_py)), Var)
+colnames(sum_group_2_r) <- c("Whole Population", "R", "Python")
+kable(sum_group_2_r, caption="Summary statistics relating to the grouped plot responses for comparison between
+languages")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+shap_2 <- rbind(
+  dist_check("shap", stacked_2, dataname = "stacked_2"),
+  dist_check("shap", grouped_2, dataname = "grouped_2"),
+  
+  dist_check("shap", stacked_2_r, dataname = "stacked_2_r"),
+  dist_check("shap", grouped_2_r, dataname = "grouped_2_r" ),
+  
+  dist_check("shap", stacked_2_py, dataname = "stacked_2_py"),
+  dist_check("shap", grouped_2_py, dataname = "grouped_2_py"),
+  
+  dist_check("sym", stack_first_2, dataname = "stack_first_2"),
+  dist_check("sym", group_first_2, dataname = "grp_first_2")
+) %>% noquote()
+colnames(shap_2) <- c("Variable", "P-Value")
+kable(shap_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+sym_2 <- rbind(
+  dist_check("sym", stacked_2, dataname = "stacked_2"),
+  dist_check("sym", grouped_2, dataname = "grouped_2"),
+  
+  dist_check("sym", stacked_2_r, dataname = "stacked_2_r"),
+  dist_check("sym", grouped_2_r, dataname = "grouped_2_r" ),
+  
+  dist_check("sym", stacked_2_py, dataname = "stacked_2_py"),
+  dist_check("sym", grouped_2_py, dataname = "grouped_2_py"),
+  
+  dist_check("sym", stack_first_2, dataname = "stack_first_2"),
+  dist_check("sym", group_first_2, dataname = "grp_first_2")
+) %>% noquote()
+colnames(sym_2) <- c("Variable", "P-Value")
+kable(sym_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+df <- rbind(
+  
+  c(SIGN.test(stacked_2, md=9)$data.name, 
+    SIGN.test(stacked_2, md=9)$alternative, 
+    SIGN.test(stacked_2, md=9)$null.value, 
+    SIGN.test(stacked_2, md=9)$p.value), 
+
+  c(SIGN.test(stacked_2, stacked_2,exact=F)$data.name, 
+    SIGN.test(stacked_2, stacked_2,exact=F)$alternative, 
+    SIGN.test(stacked_2, stacked_2,exact=F)$null.value, 
+    SIGN.test(stacked_2, stacked_2,exact=F)$p.value),
+  
+  
+  
+  c(SIGN.test(stacked_2_r, md=9)$data.name, 
+    SIGN.test(stacked_2_r, md=9)$alternative, 
+    SIGN.test(stacked_2_r, md=9)$null.value, 
+    SIGN.test(stacked_2_r, md=9)$p.value),
+  
+  c(SIGN.test(stacked_2_py,md=9)$data.name, 
+    SIGN.test(stacked_2_py,md=9)$alternative, 
+    SIGN.test(stacked_2_py,md=9)$null.value, 
+    SIGN.test(stacked_2_py,md=9)$p.value)
+  
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="Sign test results for data considered non-normal and asymmetric") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+df <- rbind(
+  
+  c(wilcox.test(grouped_2, stacked_2, exact=F)$data.name, 
+    wilcox.test(grouped_2, stacked_2, exact=F)$alternative, 
+    wilcox.test(grouped_2, stacked_2, exact=F)$null.value, 
+    wilcox.test(grouped_2, stacked_2, exact=F)$p.value),
+  
+  
+  
+  c(wilcox.test(grouped_2, mu=9, exact=F)$data.name, 
+    wilcox.test(grouped_2, mu=9, exact=F)$alternative, 
+    wilcox.test(grouped_2, mu=9, exact=F)$null.value, 
+    wilcox.test(grouped_2, mu=9, exact=F)$p.value), 
+
+  
+  
+  c(wilcox.test(grouped_2_r, mu=9, exact=F)$data.name, 
+    wilcox.test(grouped_2_r, mu=9, exact=F)$alternative, 
+    wilcox.test(grouped_2_r, mu=9, exact=F)$null.value, 
+    wilcox.test(grouped_2_r, mu=9, exact=F)$p.value),
+  
+  c(wilcox.test(grouped_2_py,mu=9, exact=F)$data.name, 
+    wilcox.test(grouped_2_py,mu=9, exact=F)$alternative, 
+    wilcox.test(grouped_2_py,mu=9, exact=F)$null.value, 
+    wilcox.test(grouped_2_py,mu=9, exact=F)$p.value),
+     
+  c(wilcox.test(grouped_2_r, grouped_2_py, exact=F)$data.name, 
+    wilcox.test(grouped_2_r, grouped_2_py, exact=F)$alternative, 
+    wilcox.test(grouped_2_r, grouped_2_py, exact=F)$null.value, 
+    wilcox.test(grouped_2_r, grouped_2_py, exact=F)$p.value),
+  
+  c(wilcox.test(stacked_2_r, stacked_2_py, exact=F)$data.name, 
+    wilcox.test(stacked_2_r, stacked_2_py, exact=F)$alternative, 
+    wilcox.test(stacked_2_r, stacked_2_py, exact=F)$null.value, 
+    wilcox.test(stacked_2_r, stacked_2_py, exact=F)$p.value),
+  
+
+  
+  c(wilcox.test(stack_first_2, stacked_2, exact=F)$data.name, 
+    wilcox.test(stack_first_2, stacked_2, exact=F)$alternative, 
+    wilcox.test(stack_first_2, stacked_2, exact=F)$null.value, 
+    wilcox.test(stack_first_2, stacked_2, exact=F)$p.value),
+  
+  c(wilcox.test(group_first_2, grouped_2, exact=F)$data.name, 
+    wilcox.test(group_first_2, grouped_2, exact=F)$alternative, 
+    wilcox.test(group_first_2, grouped_2, exact=F)$null.value, 
+    wilcox.test(group_first_2, grouped_2, exact=F)$p.value)
+  
+)  %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\subsection{Please select the statement you feel applies to the bar chart above.}
+
+
+```{r echo=F}
+vir_stacked_3 <- vir_stacked$vir_sta_3
+def_stacked_3 <- def_stacked$def_sta_3
+gr_stacked_3 <- gr_stacked$gr_sta_3
+
+vir_grouped_3 <- vir_grouped$vir_grp_3
+def_grouped_3 <- def_grouped$def_grp_3
+gr_grouped_3 <- gr_grouped$gr_grp_3
+
+stacked_3 <- c(vir_stacked_3, def_stacked_3, gr_stacked_3)
+grouped_3 <- c(vir_grouped_3, def_grouped_3, gr_grouped_3)
+
+tab <- rbind(table(stacked_3), table(grouped_3))
+rownames(tab) <- c("Stacked", "Grouped")
+colnames(tab) <- c("Equal", "Less", "More")
+kable(tab, caption = "Table showing responses over the whole population")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+vir_stacked_3_r <- vir_stacked_r$vir_sta_3
+def_stacked_3_r <- def_stacked_r$def_sta_3
+gr_stacked_3_r <- gr_stacked_r$gr_sta_3
+
+vir_grouped_3_r <- vir_grouped_r$vir_grp_3
+def_grouped_3_r <- def_grouped_r$def_grp_3
+gr_grouped_3_r <- gr_grouped_r$gr_grp_3
+
+stacked_3_r<- c(vir_stacked_3_r, def_stacked_3_r, gr_stacked_3_r)
+grouped_3_r <- c(vir_grouped_3_r, def_grouped_3_r, gr_grouped_3_r)
+
+tab <- rbind(table(stacked_3_r), table(grouped_3_r))
+rownames(tab) <- c("Stacked", "Grouped")
+colnames(tab) <- c("Equal", "Less", "More")
+kable(tab, caption = "Table showing responses over the R subgroup")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r echo=F}
+vir_stacked_3_py <- vir_stacked_py$vir_sta_3
+def_stacked_3_py <- def_stacked_py$def_sta_3
+gr_stacked_3_py <- gr_stacked_py$gr_sta_3
+
+vir_grouped_3_py <- vir_grouped_py$vir_grp_3
+def_grouped_3_py <- def_grouped_py$def_grp_3
+gr_grouped_3_py <- gr_grouped_py$gr_grp_3
+
+stacked_3_py<- c(vir_stacked_3_py, def_stacked_3_py, gr_stacked_3_py)
+grouped_3_py <- c(vir_grouped_3_py, def_grouped_3_py, gr_grouped_3_py)
+
+tab <- rbind(table(stacked_3_py), table(grouped_3_py))
+rownames(tab) <- c("Stacked", "Grouped")
+colnames(tab) <- c("Equal", "Less", "More")
+kable(tab, caption = "Table showing responses over the Python subgroup")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\subsection{Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?}
+
+```{r echo=F}
+vir_stacked_4 <- vir_stacked$vir_sta_4
+def_stacked_4 <- def_stacked$def_sta_4
+gr_stacked_4 <- gr_stacked$gr_sta_4
+
+vir_grouped_4 <- vir_grouped$vir_grp_4
+def_grouped_4 <- def_grouped$def_grp_4
+gr_grouped_4 <- gr_grouped$gr_grp_4
+
+stacked_4 <- c(vir_stacked_4, def_stacked_4, gr_stacked_4)
+grouped_4 <- c(vir_grouped_4, def_grouped_4, gr_grouped_4)
+
+tab <- rbind(table(stacked_4), table(grouped_4))
+rownames(tab) <- c("Stacked", "Grouped")
+colnames(tab) <- c("Floating Steps", "Log Grip", "Both the same")
+kable(tab, caption = "Table showing responses over the whole population")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+vir_stacked_4_r <- vir_stacked_r$vir_sta_4
+def_stacked_4_r <- def_stacked_r$def_sta_4
+gr_stacked_4_r <- gr_stacked_r$gr_sta_4
+
+vir_grouped_4_r <- vir_grouped_r$vir_grp_4
+def_grouped_4_r <- def_grouped_r$def_grp_4
+gr_grouped_4_r <- gr_grouped_r$gr_grp_4
+
+stacked_4_r <- c(vir_stacked_4_r, def_stacked_4_r, gr_stacked_4_r)
+grouped_4_r <- c(vir_grouped_4_r, def_grouped_4_r, gr_grouped_4_r)
+
+tab <- rbind(c(table(stacked_4_r), 0), table(grouped_4_r))
+rownames(tab) <- c("Stacked", "Grouped")
+colnames(tab) <- c("Floating Steps", "Log Grip", "Both the same")
+kable(tab, caption = "Table showing responses over the R subgroup")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+vir_stacked_4_py <- vir_stacked_py$vir_sta_4
+def_stacked_4_py <- def_stacked_py$def_sta_4
+gr_stacked_4_py <- gr_stacked_py$gr_sta_4
+
+vir_grouped_4_py <- vir_grouped_py$vir_grp_4
+def_grouped_4_py <- def_grouped_py$def_grp_4
+gr_grouped_4_py <- gr_grouped_py$gr_grp_4
+
+stacked_4_py <- c(vir_stacked_4_py, def_stacked_4_py, gr_stacked_4_py)
+grouped_4_py <- c(vir_grouped_4_py, def_grouped_4_py, gr_grouped_4_py)
+
+tab <- rbind(table(stacked_4_py), table(grouped_4_py))
+rownames(tab) <- c("Stacked", "Grouped")
+colnames(tab) <- c("Floating Steps", "Log Grip", "Both the same")
+kable(tab, caption = "Table showing responses over the Python subgroup")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+\subsection{Which bar chart do you feel is easiest to read and interpret?}
+```{r echo=F}
+a_1 <- set_a$sta_grp
+b_1 <- set_b$sta_grp
+c_1 <- set_c$sta_grp
+d_1 <- set_d$sta_grp
+e_1 <- set_e$sta_grp
+f_1 <- set_f$sta_grp
+
+a_1_r <- set_a_r$sta_grp
+b_1_r <- set_b_r$sta_grp
+c_1_r <- set_c_r$sta_grp
+d_1_r <- set_d_r$sta_grp
+e_1_r <- set_e_r$sta_grp
+f_1_r <- set_f_r$sta_grp
+
+a_1_py <- set_a_py$sta_grp
+b_1_py <- set_b_py$sta_grp
+c_1_py <- set_c_py$sta_grp
+d_1_py <- set_d_py$sta_grp
+e_1_py <- set_e_py$sta_grp
+f_1_py <- set_f_py$sta_grp
+
+stack_first <- function(colset){
+  for(i in 1:length(colset)){
+    if(colset[i] == "A"){
+      colset[i] <- "Stacked"
+    } else colset[i] <- "Grouped"
+  }
+}
+
+stack_first(a_1)
+stack_first(a_1_r)
+stack_first(a_1_py)
+
+stack_first(b_1)
+stack_first(b_1_r)
+stack_first(b_1_py)
+
+stack_first(d_1)
+stack_first(d_1_r)
+stack_first(d_1_py)
+
+group_first <- function(colset){
+  for(i in 1:length(colset)){
+    if(colset[i] == "B"){
+      colset[i] <- "Stacked"
+    } else colset[i] <- "Grouped"
+  }
+}
+
+group_first(c_1)
+group_first(c_1_r)
+group_first(c_1_py)
+
+group_first(e_1)
+group_first(e_1_r)
+group_first(e_1_py)
+
+group_first(f_1)
+group_first(f_1_r)
+group_first(f_1_py)
+
+
+tab <- rbind(table(c(a_1, b_1, c_1, d_1, e_1, f_1)), 
+             table(c(a_1_r, b_1_r, c_1_r, d_1_r, e_1_r, f_1_r)), 
+             table(c(a_1_py, b_1_py, c_1_py, d_1_py, e_1_py, f_1_py))
+)
+rownames(tab) <- c("Whole Population", "R", "Python")
+as.data.frame(tab)
+```
+
+```{r}
+
+set <- c("A", "B", "C", "D", "E", "F")
+first_col <- c("Viridis", "Default", "Default", "Greyscale", "Viridis", "Greyscale")
+second_col <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viridis")
+
+df <- data.frame(set, first_col, second_col)
+names(df) <- c("Colour Set", "Main Palette", "Secondary Pallette")
+kable(df, caption = "Description of colour pairings")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+``` {r, echo=F}
+first_col <- c("Viridis", "Default", "Default", "Greyscale", "Viridis", "Greyscale")
+second_col <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viridis")
+
+tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), table(e_1), table(f_1))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+kable(tab, caption = "Table showing responses over the whole population, separated by colour set")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+``` {r, echo=F}
+tab <- rbind(table(a_1_r), table(b_1_r), table(c_1_r), table(d_1_r), table(e_1_r), table(f_1_r))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+kable(tab, caption = "Table showing responses over the R sungroup, separated by colour set")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+``` {r, echo=F}
+tab <- rbind(table(a_1_py), table(b_1_py), table(c_1_py), table(d_1_py), table(e_1_py), table(f_1_py))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+kable(tab, caption = "Table showing responses over the Python subgroup, separated by colour set")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\subsection{Which colour scheme do you find most aesthetically pleasing?}
+
+
+```{r echo=F}
+tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), table(e_1), table(f_1))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+kable(tab, caption = "Table showing responses over the whole population")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r echo=F}
+tab <- rbind(table(a_1_r), c(0, table(b_1_r)), table(c_1_r), table(d_1_r), table(e_1_r), table(f_1_r))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+kable(tab, caption = "Table showing responses over the R subgroup")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r echo=F}
+tab <- rbind(table(a_1_py), table(b_1_py), c(table(c_1_py), 0), c(0, table(d_1_py)), table(e_1_py), table(f_1_py))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "A Colour", "B Colour")
+kable(tab, caption = "Table showing responses over the Python subgroup")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\subsection{Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.}
+
+```{r echo=F, fig.cap="Table showing which colour palettes respondents found easiest to read and interpret"}
+a_2 <- set_a$a_cols_2
+b_2 <- set_b$b_cols_2
+c_2 <- set_c$c_cols_2
+d_2 <- set_d$d_cols_2
+e_2 <- set_e$e_cols_2
+f_2 <- set_f$f_cols_2
+
+a_2_r <- set_a_r$a_cols_2
+b_2_r <- set_b_r$b_cols_2
+c_2_r <- set_c_r$c_cols_2
+d_2_r <- set_d_r$d_cols_2
+e_2_r <- set_e_r$e_cols_2
+f_2_r <- set_f_r$f_cols_2
+
+a_2_py <- set_a_py$a_cols_2
+b_2_py <- set_b_py$b_cols_2
+c_2_py <- set_c_py$c_cols_2
+d_2_py <- set_d_py$d_cols_2
+e_2_py <- set_e_py$e_cols_2
+f_2_py <- set_f_py$f_cols_2
+
+
+col_interp <- function(colset){
+  for(i in 1:length(colset)){
+    if(colset[i] == "Yes, A is easier"){
+      colset[i] <- "A"
+    }else if(colset[i] == "Yes, B is easier"){
+      colset[i] <- "B"
+    } else colset[i] <- "None"
+  }
+}
+
+col_interp(a_2)
+col_interp(a_2_r)
+col_interp(a_2_py)
+
+col_interp(b_2)
+col_interp(b_2_r)
+col_interp(b_2_py)
+
+col_interp(d_2)
+col_interp(d_2_r)
+col_interp(d_2_py)
+
+col_interp(c_2)
+col_interp(c_2_r)
+col_interp(c_2_py)
+
+col_interp(e_2)
+col_interp(e_2_r)
+col_interp(e_2_py)
+
+col_interp(f_2)
+col_interp(f_2_r)
+col_interp(f_2_py)
+```
+
+
+```{r}
+tab <- rbind(table(a_2), table(b_2), table(c_2), table(d_2), table(e_2), table(f_2))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("None", "A", "B", "A Colour", "B Colour")
+kable(tab, caption = "Table showing responses over the whole population, separated by colour set")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+tab <- rbind(c(0, table(a_2_r)), c(table(b_2_r), 0), c(0, table(c_2_r)), c(0, table(d_2_r)), c(0, table(e_2_r), 0), table(f_2_r))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("None", "A", "B", "A Colour", "B Colour")
+kable(tab, caption = "Table showing responses over the R subgroup, separated by colour set")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+```{r}
+tab <- rbind(c(table(a_2_py), 0), c(0, table(b_2_py), 0), c(0, table(c_2_py), 0), c(0, table(d_2_py)), c(0, table(e_2_py), 0), c(0, 0, table(f_2_py)))
+tab <- cbind(tab, first_col, second_col)
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("None", "A", "B", "A Colour", "B Colour")
+kable(tab, caption = "Table showing responses over the Python subgroup, separated by colour set")%>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\section{Sales - Part 1}
+
+
+```{r echo=F}
+sep_ab_1a <- na.exclude(ab_sep$sep_1a)
+
+for(i in 1:length(sep_ab_1a)){
+  if(sep_ab_1a[i] == "1 (A little)"){
+    sep_ab_1a[i] <- 1
+  }
+  if(sep_ab_1a[i] == "7 (A lot)"){
+    sep_ab_1a[i] <- 4
+  }
+}
+sep_ab_1a <- as.numeric(sep_ab_1a)
+
+trn_ab_1a <- na.exclude(ab_trn$ab_trn_1a)
+
+for(i in 1:length(trn_ab_1a)){
+  if(trn_ab_1a[i] == "1 (A little)"){
+    trn_ab_1a[i] <- 1
+  }
+  if(trn_ab_1a[i] == "7 (A lot)"){
+    trn_ab_1a[i] <- 4
+  }
+}
+trn_ab_1a <- as.numeric(trn_ab_1a)
+
+zero_ab_1a <- na.exclude(ab_zero$ab_zero_1)
+
+for(i in 1:length(zero_ab_1a)){
+  if(zero_ab_1a[i] == "1 (A little)"){
+    zero_ab_1a[i] <- 1
+  }
+  if(zero_ab_1a[i] == "7 (A lot)"){
+    zero_ab_1a[i] <- 4
+  }
+}
+zero_ab_1a <- as.numeric(zero_ab_1a)
+
+sumy <- cbind(summary(sep_ab_1a), summary(trn_ab_1a), summary(zero_ab_1a))
+colnames(sumy) <- c("Separate","Truncated", "Zeroed")
+
+kable(sumy, caption="Statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+```{r echo=F}
+sep_ab_1a_r <- na.exclude(ab_sep_r$sep_1a)
+
+for(i in 1:length(sep_ab_1a_r)){
+  if(sep_ab_1a_r[i] == "1 (A little)"){
+    sep_ab_1a_r[i] <- 1
+  }
+  if(sep_ab_1a_r[i] == "7 (A lot)"){
+    sep_ab_1a_r[i] <- 4
+  }
+}
+sep_ab_1a_r <- as.numeric(sep_ab_1a_r)
+
+trn_ab_1a_r <- na.exclude(ab_trn_r$ab_trn_1a)
+
+for(i in 1:length(trn_ab_1a_r)){
+  if(trn_ab_1a_r[i] == "1 (A little)"){
+    trn_ab_1a_r[i] <- 1
+  }
+  if(trn_ab_1a_r[i] == "7 (A lot)"){
+    trn_ab_1a_r[i] <- 4
+  }
+}
+trn_ab_1a_r <- as.numeric(trn_ab_1a_r)
+
+zero_ab_1a_r <- na.exclude(ab_zero_r$ab_zero_1)
+
+for(i in 1:length(zero_ab_1a_r)){
+  if(zero_ab_1a_r[i] == "1 (A little)"){
+    zero_ab_1a_r[i] <- 1
+  }
+  if(zero_ab_1a_r[i] == "7 (A lot)"){
+    zero_ab_1a_r[i] <- 4
+  }
+}
+zero_ab_1a_r <- as.numeric(zero_ab_1a_r)
+
+
+```
+\clearpage
+```{r echo=F}
+sep_ab_1a_py <- na.exclude(ab_sep_py$sep_1a)
+
+for(i in 1:length(sep_ab_1a_py)){
+  if(sep_ab_1a_py[i] == "1 (A little)"){
+    sep_ab_1a_py[i] <- 1
+  }
+  if(sep_ab_1a_py[i] == "7 (A lot)"){
+    sep_ab_1a_py[i] <- 4
+  }
+}
+sep_ab_1a_py <- as.numeric(sep_ab_1a_py)
+
+trn_ab_1a_py <- na.exclude(ab_trn_py$ab_trn_1a)
+
+for(i in 1:length(trn_ab_1a_py)){
+  if(trn_ab_1a_py[i] == "1 (A little)"){
+    trn_ab_1a_py[i] <- 1
+  }
+  if(trn_ab_1a_py[i] == "7 (A lot)"){
+    trn_ab_1a_py[i] <- 4
+  }
+}
+trn_ab_1a_py <- as.numeric(trn_ab_1a_py)
+
+zero_ab_1a_py <- na.exclude(ab_zero_py$ab_zero_1)
+
+for(i in 1:length(zero_ab_1a_py)){
+  if(zero_ab_1a_py[i] == "1 (A little)"){
+    zero_ab_1a_py[i] <- 1
+  }
+  if(zero_ab_1a_py[i] == "7 (A lot)"){
+    zero_ab_1a_py[i] <- 4
+  }
+}
+zero_ab_1a_py <- as.numeric(zero_ab_1a_py)
+
+```
+
+```{r}
+
+sumy <- cbind(summary(sep_ab_1a), summary(sep_ab_1a_r), summary(sep_ab_1a_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the separated plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+sumy <- cbind(summary(trn_ab_1a), summary(trn_ab_1a_r), summary(trn_ab_1a_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the truncated plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+sumy <- cbind(summary(zero_ab_1a), summary(zero_ab_1a_r), summary(zero_ab_1a_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the zeroed plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r echo=F}
+sep_first_ab <- na.exclude(ab_sep_first$sep_1a)
+
+for(i in 1:length(sep_first_ab)){
+  if(sep_first_ab[i] == "1 (A little)"){
+    sep_first_ab[i] <- 1
+  }
+  if(sep_first_ab[i] == "7 (A lot)"){
+    sep_first_ab[i] <- 4
+  }
+}
+sep_first_ab <- as.numeric(sep_first_ab)
+
+sumy <- cbind(summary(sep_ab_1a), summary(sep_first_ab))
+colnames(sumy) <- c("Separated - Whole Population", "Separated First")
+
+kable(sumy, caption="Statistics for the subgroup that saw the separated plots first compared to the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+trn_first_ab <- na.exclude(ab_trn_first$ab_trn_1a)
+
+for(i in 1:length(trn_first_ab)){
+  if(trn_first_ab[i] == "1 (A little)"){
+    trn_first_ab[i] <- 1
+  }
+  if(trn_first_ab[i] == "7 (A lot)"){
+    trn_first_ab[i] <- 4
+  }
+}
+trn_first_ab <- as.numeric(trn_first_ab)
+sumy <- cbind(summary(trn_ab_1a), summary(trn_first_ab))
+colnames(sumy) <- c("Truncated - Whole Population", "Truncated First")
+
+kable(sumy, caption="Statistics for the subgroup that saw the Truncated plot first compared to the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+zero_first_ab <- na.exclude(ab_zero_first$ab_zero_1)
+
+for(i in 1:length(zero_first_ab)){
+  if(zero_first_ab[i] == "1 (A little)"){
+    zero_first_ab[i] <- 1
+  }
+  if(zero_first_ab[i] == "7 (A lot)"){
+    zero_first_ab[i] <- 4
+  }
+}
+zero_first_ab <- as.numeric(zero_first_ab)
+
+sumy <- cbind(summary(zero_ab_1a), summary(zero_first_ab))
+colnames(sumy) <- c("Zeroed - Whole Population", "Zeroed First")
+
+kable(sumy, caption="Statistics for the subgroup that saw the zeroed plot first compared to the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+```{r echo=F}
+shap_2 <- rbind(
+  dist_check("shap", trn_ab_1a, dataname = "trn_ab_1a"),
+  dist_check("shap", zero_ab_1a, dataname = "zero_ab_1a"),
+  
+  dist_check("shap", trn_ab_1a_r, dataname = "trn_ab_1a_r"),
+  dist_check("shap", zero_ab_1a_r, dataname = "zero_ab_1a_r"),
+  
+  dist_check("shap", trn_ab_1a_py, dataname = "trn_ab_1a_py"),
+  dist_check("shap", zero_ab_1a_py, dataname = "zero_ab_1a_py"),
+  
+  dist_check("shap", trn_first_ab, dataname = "trn_first_ab"),
+  dist_check("shap", zero_first_ab, dataname = "zero_first_ab")
+  
+) %>% noquote()
+colnames(shap_2) <- c("Variable", "P-Value")
+kable(shap_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+\clearpage
+```{r}
+sym_2 <- rbind(
+  dist_check("sym", sep_ab_1a, dataname = "sep_ab_1a"),
+  dist_check("sym", trn_ab_1a, dataname = "trn_ab_1a"),
+  dist_check("sym", zero_ab_1a, dataname = "zero_ab_1a"),
+
+  dist_check("sym", sep_ab_1a, dataname = "sep_ab_1a"),
+  dist_check("sym", trn_ab_1a_r, dataname = "trn_ab_1a_r"),
+  dist_check("sym", zero_ab_1a_r, dataname = "zero_ab_1a_r"),
+  
+  dist_check("sym", sep_ab_1a, dataname = "sep_ab_1a"),  
+  dist_check("sym", trn_ab_1a_py, dataname = "trn_ab_1a_py"),
+  dist_check("sym", zero_ab_1a_py, dataname = "zero_ab_1a_py"),
+  
+  dist_check("sym", sep_ab_1a, dataname = "sep_ab_1a"),  
+  dist_check("sym", trn_first_ab, dataname = "trn_first_ab"),
+  dist_check("sym", zero_first_ab, dataname = "zero_first_ab")
+  
+) %>% noquote()
+colnames(sym_2) <- c("Variable", "P-Value")
+kable(sym_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+```{r echo=F}
+df <- rbind(
+  
+  c(SIGN.test(trn_ab_1a, zero_ab_1a)$data.name, 
+    SIGN.test(trn_ab_1a, zero_ab_1a)$alternative, 
+    SIGN.test(trn_ab_1a, zero_ab_1a)$null.value, 
+    SIGN.test(trn_ab_1a, zero_ab_1a)$p.value),
+  
+  c(SIGN.test(trn_ab_1a, zero_ab_1a, alt="g")$data.name, 
+    SIGN.test(trn_ab_1a, zero_ab_1a, alt="g")$alternative, 
+    SIGN.test(trn_ab_1a, zero_ab_1a, alt="g")$null.value, 
+    SIGN.test(trn_ab_1a, zero_ab_1a, alt="g")$p.value)
+  
+
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="Sign test results for data considered non-normal and asymmetric") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+df <- rbind(
+  
+  c(wilcox.test(trn_ab_1a, sep_ab_1a)$data.name, 
+    wilcox.test(trn_ab_1a, sep_ab_1a)$alternative, 
+    wilcox.test(trn_ab_1a, sep_ab_1a)$null.value, 
+    wilcox.test(trn_ab_1a, sep_ab_1a)$p.value),
+
+  c(wilcox.test(trn_ab_1a, sep_ab_1a, alt="l")$data.name, 
+    wilcox.test(trn_ab_1a, sep_ab_1a, alt="l")$alternative, 
+    wilcox.test(trn_ab_1a, sep_ab_1a, alt="l")$null.value, 
+    wilcox.test(trn_ab_1a, sep_ab_1a, alt="l")$p.value),
+
+  c(wilcox.test(sep_ab_1a, zero_ab_1a)$data.name, 
+    wilcox.test(sep_ab_1a, zero_ab_1a)$alternative, 
+    wilcox.test(sep_ab_1a, zero_ab_1a)$null.value, 
+    wilcox.test(sep_ab_1a, zero_ab_1a)$p.value),
+  
+  c(wilcox.test(sep_ab_1a, zero_ab_1a, "g")$data.name, 
+    wilcox.test(sep_ab_1a, zero_ab_1a, "g")$alternative, 
+    wilcox.test(sep_ab_1a, zero_ab_1a, "g")$null.value, 
+    wilcox.test(sep_ab_1a, zero_ab_1a, "g")$p.value),
+  
+  c(wilcox.test(trn_ab_1a_r, trn_ab_1a_py, exact=F)$data.name, 
+    wilcox.test(trn_ab_1a_r, trn_ab_1a_py, exact=F)$alternative, 
+    wilcox.test(trn_ab_1a_r, trn_ab_1a_py, exact=F)$null.value, 
+    wilcox.test(trn_ab_1a_r, trn_ab_1a_py, exact=F)$p.value),
+  
+  c(wilcox.test(zero_ab_1a_r, zero_ab_1a_py, exact=F)$data.name, 
+    wilcox.test(zero_ab_1a_r, zero_ab_1a_py, exact=F)$alternative, 
+    wilcox.test(zero_ab_1a_r, zero_ab_1a_py, exact=F)$null.value, 
+    wilcox.test(zero_ab_1a_r, zero_ab_1a_py, exact=F)$p.value),
+  
+  c(wilcox.test(sep_ab_1a_r, sep_ab_1a_py, exact=F)$data.name, 
+    wilcox.test(sep_ab_1a_r, sep_ab_1a_py, exact=F)$alternative, 
+    wilcox.test(sep_ab_1a_r, sep_ab_1a_py, exact=F)$null.value, 
+    wilcox.test(sep_ab_1a_r, sep_ab_1a_py, exact=F)$p.value),
+  
+  c(wilcox.test(trn_first_ab, trn_ab_1a, exact=F)$data.name, 
+    wilcox.test(trn_first_ab, trn_ab_1a, exact=F)$alternative, 
+    wilcox.test(trn_first_ab, trn_ab_1a, exact=F)$null.value, 
+    wilcox.test(trn_first_ab, trn_ab_1a, exact=F)$p.value),
+  
+  c(wilcox.test(zero_first_ab, zero_ab_1a, exact=F)$data.name, 
+    wilcox.test(zero_first_ab, zero_ab_1a, exact=F)$alternative, 
+    wilcox.test(zero_first_ab, zero_ab_1a, exact=F)$null.value, 
+    wilcox.test(zero_first_ab, zero_ab_1a, exact=F)$p.value),
+  
+  c(wilcox.test(sep_first_ab, sep_ab_1a, exact=F)$data.name, 
+    wilcox.test(sep_first_ab, sep_ab_1a, exact=F)$alternative, 
+    wilcox.test(sep_first_ab, sep_ab_1a, exact=F)$null.value, 
+    wilcox.test(sep_first_ab, sep_ab_1a, exact=F)$p.value)
+  
+)  %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+\clearpage
+
+\subsection{How much would you say sales of each company increased between January and December? [Company B]}
+
+
+
+```{r echo=F}
+sep_ab_1b <- na.exclude(ab_sep$sep_1b)
+
+for(i in 1:length(sep_ab_1b)){
+  if(sep_ab_1b[i] == "1 (A little)"){
+    sep_ab_1b[i] <- 1
+  }
+  if(sep_ab_1b[i] == "7 (A lot)"){
+    sep_ab_1b[i] <- 4
+  }
+}
+sep_ab_1b <- as.numeric(sep_ab_1b)
+
+trn_ab_1b <- na.exclude(ab_trn$ab_trn_1b)
+
+for(i in 1:length(trn_ab_1b)){
+  if(trn_ab_1b[i] == "1 (A little)"){
+    trn_ab_1b[i] <- 1
+  }
+  if(trn_ab_1b[i] == "7 (A lot)"){
+    trn_ab_1b[i] <- 4
+  }
+}
+trn_ab_1b <- as.numeric(trn_ab_1b)
+
+zero_ab_1b <- na.exclude(ab_zero$ab_zero_1)
+
+for(i in 1:length(zero_ab_1b)){
+  if(zero_ab_1b[i] == "1 (A little)"){
+    zero_ab_1b[i] <- 1
+  }
+  if(zero_ab_1b[i] == "7 (A lot)"){
+    zero_ab_1b[i] <- 4
+  }
+}
+zero_ab_1b <- as.numeric(zero_ab_1b)
+
+sumy <- cbind(summary(sep_ab_1b), summary(trn_ab_1b), summary(zero_ab_1b))
+colnames(sumy) <- c("Separate","Truncated", "Zeroed")
+
+kable(sumy, caption="Statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+\clearpage
+```{r echo=F}
+sep_ab_1b_r <- na.exclude(ab_sep_r$sep_1b)
+
+for(i in 1:length(sep_ab_1b_r)){
+  if(sep_ab_1b_r[i] == "1 (A little)"){
+    sep_ab_1b_r[i] <- 1
+  }
+  if(sep_ab_1b_r[i] == "7 (A lot)"){
+    sep_ab_1b_r[i] <- 4
+  }
+}
+sep_ab_1b_r <- as.numeric(sep_ab_1b_r)
+
+trn_ab_1b_r <- na.exclude(ab_trn_r$ab_trn_1b)
+
+for(i in 1:length(trn_ab_1b_r)){
+  if(trn_ab_1b_r[i] == "1 (A little)"){
+    trn_ab_1b_r[i] <- 1
+  }
+  if(trn_ab_1b_r[i] == "7 (A lot)"){
+    trn_ab_1b_r[i] <- 4
+  }
+}
+trn_ab_1b_r <- as.numeric(trn_ab_1b_r)
+
+zero_ab_1b_r <- na.exclude(ab_zero_r$ab_zero_1)
+
+for(i in 1:length(zero_ab_1b_r)){
+  if(zero_ab_1b_r[i] == "1 (A little)"){
+    zero_ab_1b_r[i] <- 1
+  }
+  if(zero_ab_1b_r[i] == "7 (A lot)"){
+    zero_ab_1b_r[i] <- 4
+  }
+}
+zero_ab_1b_r <- as.numeric(zero_ab_1b_r)
+```
+
+```{r echo=F}
+sep_ab_1b_py <- na.exclude(ab_sep_py$sep_1b)
+
+for(i in 1:length(sep_ab_1b_py)){
+  if(sep_ab_1b_py[i] == "1 (A little)"){
+    sep_ab_1b_py[i] <- 1
+  }
+  if(sep_ab_1b_py[i] == "7 (A lot)"){
+    sep_ab_1b_py[i] <- 4
+  }
+}
+sep_ab_1b_py <- as.numeric(sep_ab_1b_py)
+
+trn_ab_1b_py <- na.exclude(ab_trn_py$ab_trn_1b)
+
+for(i in 1:length(trn_ab_1b_py)){
+  if(trn_ab_1b_py[i] == "1 (A little)"){
+    trn_ab_1b_py[i] <- 1
+  }
+  if(trn_ab_1b_py[i] == "7 (A lot)"){
+    trn_ab_1b_py[i] <- 4
+  }
+}
+trn_ab_1b_py <- as.numeric(trn_ab_1b_py)
+
+zero_ab_1b_py <- na.exclude(ab_zero_py$ab_zero_1)
+
+for(i in 1:length(zero_ab_1b_py)){
+  if(zero_ab_1b_py[i] == "1 (A little)"){
+    zero_ab_1b_py[i] <- 1
+  }
+  if(zero_ab_1b_py[i] == "7 (A lot)"){
+    zero_ab_1b_py[i] <- 4
+  }
+}
+zero_ab_1b_py <- as.numeric(zero_ab_1b_py)
+
+```
+
+```{r}
+
+sumy <- cbind(summary(sep_ab_1b), summary(sep_ab_1b_r), summary(sep_ab_1b_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the separated plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+sumy <- cbind(summary(trn_ab_1b), summary(trn_ab_1b_r), summary(trn_ab_1b_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the truncated plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+sumy <- cbind(summary(zero_ab_1b), summary(zero_ab_1b_r), summary(zero_ab_1b_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the zeroed plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+sep_first_ab <- na.exclude(ab_sep_first$sep_1b)
+
+for(i in 1:length(sep_first_ab)){
+  if(sep_first_ab[i] == "1 (A little)"){
+    sep_first_ab[i] <- 1
+  }
+  if(sep_first_ab[i] == "7 (A lot)"){
+    sep_first_ab[i] <- 4
+  }
+}
+sep_first_ab <- as.numeric(sep_first_ab)
+
+trn_first_ab <- na.exclude(ab_trn_r$ab_trn_1b)
+
+for(i in 1:length(trn_first_ab)){
+  if(trn_first_ab[i] == "1 (A little)"){
+    trn_first_ab[i] <- 1
+  }
+  if(trn_first_ab[i] == "7 (A lot)"){
+    trn_first_ab[i] <- 4
+  }
+}
+trn_first_ab <- as.numeric(trn_first_ab)
+
+zero_first_ab <- na.exclude(ab_zero_r$ab_zero_1)
+
+for(i in 1:length(zero_first_ab)){
+  if(zero_first_ab[i] == "1 (A little)"){
+    zero_first_ab[i] <- 1
+  }
+  if(zero_first_ab[i] == "7 (A lot)"){
+    zero_first_ab[i] <- 4
+  }
+}
+zero_first_ab <- as.numeric(zero_first_ab)
+
+sumy <- cbind(summary(sep_first_ab), summary(trn_first_ab), summary(zero_first_ab))
+colnames(sumy) <- c("Separate","Truncated", "Zeroed")
+
+kable(sumy, caption="Statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+\clearpage
+```{r echo=F}
+shap_2 <- rbind(
+  dist_check("shap", trn_ab_1b, dataname = "trn_ab_1b"),
+  dist_check("shap", zero_ab_1b, dataname = "zero_ab_1b"),
+  
+  dist_check("shap", trn_ab_1b_r, dataname = "trn_ab_1b_r"),
+  dist_check("shap", zero_ab_1b_r, dataname = "zero_ab_1b_r"),
+  
+  dist_check("shap", trn_ab_1b_py, dataname = "trn_ab_1b_py"),
+  dist_check("shap", zero_ab_1b_py, dataname = "zero_ab_1b_py"),
+  
+  dist_check("shap", trn_first_ab, dataname = "trn_first_ab"),
+  dist_check("shap", zero_first_ab, dataname = "zero_first_ab")
+  
+) %>% noquote()
+colnames(shap_2) <- c("Variable", "P-Value")
+kable(shap_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+sym_2 <- rbind(
+  dist_check("sym", sep_ab_1b, dataname = "sep_ab_1b"),
+  dist_check("sym", trn_ab_1b, dataname = "trn_ab_1b"),
+  dist_check("sym", zero_ab_1b, dataname = "zero_ab_1b"),
+
+  dist_check("sym", sep_ab_1b, dataname = "sep_ab_1b"),
+  dist_check("sym", trn_ab_1b_r, dataname = "trn_ab_1b_r"),
+  dist_check("sym", zero_ab_1b_r, dataname = "zero_ab_1b_r"),
+  
+  dist_check("sym", sep_ab_1b, dataname = "sep_ab_1b"),  
+  dist_check("sym", trn_ab_1b_py, dataname = "trn_ab_1b_py"),
+  dist_check("sym", zero_ab_1b_py, dataname = "zero_ab_1b_py"),
+  
+  dist_check("sym", sep_ab_1b, dataname = "sep_ab_1b"),  
+  dist_check("sym", trn_first_ab, dataname = "trn_first_ab"),
+  dist_check("sym", zero_first_ab, dataname = "zero_first_ab")
+  
+) %>% noquote()
+colnames(sym_2) <- c("Variable", "P-Value")
+kable(sym_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+```{r}
+df <- rbind(
+  
+  c(wilcox.test(trn_ab_1b, zero_ab_1b)$data.name, 
+    wilcox.test(trn_ab_1b, zero_ab_1b)$alternative, 
+    wilcox.test(trn_ab_1b, zero_ab_1b)$null.value, 
+    wilcox.test(trn_ab_1b, zero_ab_1b)$p.value),
+  
+  c(wilcox.test(trn_ab_1b, zero_ab_1b, alt="g")$data.name, 
+    wilcox.test(trn_ab_1b, zero_ab_1b, alt="g")$alternative, 
+    wilcox.test(trn_ab_1b, zero_ab_1b, alt="g")$null.value, 
+    wilcox.test(trn_ab_1b, zero_ab_1b, alt="g")$p.value),
+  
+  c(wilcox.test(trn_ab_1b, sep_ab_1b)$data.name, 
+    wilcox.test(trn_ab_1b, sep_ab_1b)$alternative, 
+    wilcox.test(trn_ab_1b, sep_ab_1b)$null.value, 
+    wilcox.test(trn_ab_1b, sep_ab_1b)$p.value),
+
+  c(wilcox.test(trn_ab_1b, sep_ab_1b, alt="g")$data.name, 
+    wilcox.test(trn_ab_1b, sep_ab_1b, alt="g")$alternative, 
+    wilcox.test(trn_ab_1b, sep_ab_1b, alt="g")$null.value, 
+    wilcox.test(trn_ab_1b, sep_ab_1b, alt="g")$p.value),
+
+  c(wilcox.test(sep_ab_1b, zero_ab_1b)$data.name, 
+    wilcox.test(sep_ab_1b, zero_ab_1b)$alternative, 
+    wilcox.test(sep_ab_1b, zero_ab_1b)$null.value, 
+    wilcox.test(sep_ab_1b, zero_ab_1b)$p.value),
+  
+  c(wilcox.test(sep_ab_1b, zero_ab_1b, "l")$data.name, 
+    wilcox.test(sep_ab_1b, zero_ab_1b, "l")$alternative, 
+    wilcox.test(sep_ab_1b, zero_ab_1b, "l")$null.value, 
+    wilcox.test(sep_ab_1b, zero_ab_1b, "l")$p.value),
+  
+  c(wilcox.test(trn_ab_1b_r, trn_ab_1b_py, exact=F)$data.name, 
+    wilcox.test(trn_ab_1b_r, trn_ab_1b_py, exact=F)$alternative, 
+    wilcox.test(trn_ab_1b_r, trn_ab_1b_py, exact=F)$null.value, 
+    wilcox.test(trn_ab_1b_r, trn_ab_1b_py, exact=F)$p.value),
+  
+  c(wilcox.test(zero_ab_1b_r, zero_ab_1b_py, exact=F)$data.name, 
+    wilcox.test(zero_ab_1b_r, zero_ab_1b_py, exact=F)$alternative, 
+    wilcox.test(zero_ab_1b_r, zero_ab_1b_py, exact=F)$null.value, 
+    wilcox.test(zero_ab_1b_r, zero_ab_1b_py, exact=F)$p.value),
+  
+  c(wilcox.test(sep_ab_1b_r, sep_ab_1b_py, exact=F)$data.name, 
+    wilcox.test(sep_ab_1b_r, sep_ab_1b_py, exact=F)$alternative, 
+    wilcox.test(sep_ab_1b_r, sep_ab_1b_py, exact=F)$null.value, 
+    wilcox.test(sep_ab_1b_r, sep_ab_1b_py, exact=F)$p.value),
+  
+  c(wilcox.test(trn_first_ab, trn_ab_1b, exact=F)$data.name, 
+    wilcox.test(trn_first_ab, trn_ab_1b, exact=F)$alternative, 
+    wilcox.test(trn_first_ab, trn_ab_1b, exact=F)$null.value, 
+    wilcox.test(trn_first_ab, trn_ab_1b, exact=F)$p.value),
+  
+  c(wilcox.test(zero_first_ab, zero_ab_1b, exact=F)$data.name, 
+    wilcox.test(zero_first_ab, zero_ab_1b, exact=F)$alternative, 
+    wilcox.test(zero_first_ab, zero_ab_1b, exact=F)$null.value, 
+    wilcox.test(zero_first_ab, zero_ab_1b, exact=F)$p.value),
+  
+  c(wilcox.test(sep_first_ab, sep_ab_1b, exact=F)$data.name, 
+    wilcox.test(sep_first_ab, sep_ab_1b, exact=F)$alternative, 
+    wilcox.test(sep_first_ab, sep_ab_1b, exact=F)$null.value, 
+    wilcox.test(sep_first_ab, sep_ab_1b, exact=F)$p.value)
+  
+)  %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+\subsection{How large would you say the drop in sales between April and July of Company A  is?}
+
+
+
+```{r echo=F}
+sep_ab_2 <- na.exclude(ab_sep$sep_2)
+
+for(i in 1:length(sep_ab_2)){
+  if(sep_ab_2[i] == "1 (A little)"){
+    sep_ab_2[i] <- 1
+  }
+  if(sep_ab_2[i] == "7 (A lot)"){
+    sep_ab_2[i] <- 4
+  }
+}
+sep_ab_2 <- as.numeric(sep_ab_2)
+
+trn_ab_2 <- na.exclude(ab_trn$ab_trn_2)
+
+for(i in 1:length(trn_ab_2)){
+  if(trn_ab_2[i] == "1 (A little)"){
+    trn_ab_2[i] <- 1
+  }
+  if(trn_ab_2[i] == "7 (A lot)"){
+    trn_ab_2[i] <- 4
+  }
+}
+trn_ab_2 <- as.numeric(trn_ab_2)
+
+zero_ab_2 <- na.exclude(ab_zero$ab_zero_1)
+
+for(i in 1:length(zero_ab_2)){
+  if(zero_ab_2[i] == "1 (A little)"){
+    zero_ab_2[i] <- 1
+  }
+  if(zero_ab_2[i] == "7 (A lot)"){
+    zero_ab_2[i] <- 4
+  }
+}
+zero_ab_2 <- as.numeric(zero_ab_2)
+
+sumy <- cbind(summary(sep_ab_2), summary(trn_ab_2), summary(zero_ab_2))
+colnames(sumy) <- c("Separate","Truncated", "Zeroed")
+
+kable(sumy, caption="Statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+```{r echo=F}
+sep_ab_2_r <- na.exclude(ab_sep_r$sep_2)
+
+for(i in 1:length(sep_ab_2_r)){
+  if(sep_ab_2_r[i] == "1 (A little)"){
+    sep_ab_2_r[i] <- 1
+  }
+  if(sep_ab_2_r[i] == "7 (A lot)"){
+    sep_ab_2_r[i] <- 4
+  }
+}
+sep_ab_2_r <- as.numeric(sep_ab_2_r)
+
+trn_ab_2_r <- na.exclude(ab_trn_r$ab_trn_2)
+
+for(i in 1:length(trn_ab_2_r)){
+  if(trn_ab_2_r[i] == "1 (A little)"){
+    trn_ab_2_r[i] <- 1
+  }
+  if(trn_ab_2_r[i] == "7 (A lot)"){
+    trn_ab_2_r[i] <- 4
+  }
+}
+trn_ab_2_r <- as.numeric(trn_ab_2_r)
+
+zero_ab_2_r <- na.exclude(ab_zero_r$ab_zero_1)
+
+for(i in 1:length(zero_ab_2_r)){
+  if(zero_ab_2_r[i] == "1 (A little)"){
+    zero_ab_2_r[i] <- 1
+  }
+  if(zero_ab_2_r[i] == "7 (A lot)"){
+    zero_ab_2_r[i] <- 4
+  }
+}
+zero_ab_2_r <- as.numeric(zero_ab_2_r)
+```
+\clearpage
+```{r echo=F}
+sep_ab_2_py <- na.exclude(ab_sep_py$sep_2)
+
+for(i in 1:length(sep_ab_2_py)){
+  if(sep_ab_2_py[i] == "1 (A little)"){
+    sep_ab_2_py[i] <- 1
+  }
+  if(sep_ab_2_py[i] == "7 (A lot)"){
+    sep_ab_2_py[i] <- 4
+  }
+}
+sep_ab_2_py <- as.numeric(sep_ab_2_py)
+
+trn_ab_2_py <- na.exclude(ab_trn_py$ab_trn_2)
+
+for(i in 1:length(trn_ab_2_py)){
+  if(trn_ab_2_py[i] == "1 (A little)"){
+    trn_ab_2_py[i] <- 1
+  }
+  if(trn_ab_2_py[i] == "7 (A lot)"){
+    trn_ab_2_py[i] <- 4
+  }
+}
+trn_ab_2_py <- as.numeric(trn_ab_2_py)
+
+zero_ab_2_py <- na.exclude(ab_zero_py$ab_zero_1)
+
+for(i in 1:length(zero_ab_2_py)){
+  if(zero_ab_2_py[i] == "1 (A little)"){
+    zero_ab_2_py[i] <- 1
+  }
+  if(zero_ab_2_py[i] == "7 (A lot)"){
+    zero_ab_2_py[i] <- 4
+  }
+}
+zero_ab_2_py <- as.numeric(zero_ab_2_py)
+
+```
+
+```{r}
+
+sumy <- cbind(summary(sep_ab_2), summary(sep_ab_2_r), summary(sep_ab_2_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the separated plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+sumy <- cbind(summary(trn_ab_2), summary(trn_ab_2_r), summary(trn_ab_2_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the truncated plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+
+sumy <- cbind(summary(zero_ab_2), summary(zero_ab_2_r), summary(zero_ab_2_py))
+colnames(sumy) <- c("Whole Pop","R", "Py")
+kable(sumy, caption="Summary statistics relating to the zeroed plot responses for comparison between
+languages") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r echo=F}
+sep_first_ab <- na.exclude(ab_sep_first$sep_2)
+
+for(i in 1:length(sep_first_ab)){
+  if(sep_first_ab[i] == "1 (A little)"){
+    sep_first_ab[i] <- 1
+  }
+  if(sep_first_ab[i] == "7 (A lot)"){
+    sep_first_ab[i] <- 4
+  }
+}
+sep_first_ab <- as.numeric(sep_first_ab)
+
+sumy <- cbind(summary(sep_ab_2), summary(sep_first_ab))
+colnames(sumy) <- c("Separate- Whole Population", "Separate First")
+
+trn_first_ab <- na.exclude(ab_trn_first$ab_trn_2)
+
+for(i in 1:length(trn_first_ab)){
+  if(trn_first_ab[i] == "1 (A little)"){
+    trn_first_ab[i] <- 1
+  }
+  if(trn_first_ab[i] == "7 (A lot)"){
+    trn_first_ab[i] <- 4
+  }
+}
+trn_first_ab <- as.numeric(trn_first_ab)
+
+sumy <- cbind(summary(trn_ab_2), summary(trn_first_ab))
+colnames(sumy) <- c("Truncated- Whole Population", "Truncated First")
+
+zero_first_ab <- na.exclude(ab_zero_first$ab_zero_1)
+
+for(i in 1:length(zero_first_ab)){
+  if(zero_first_ab[i] == "1 (A little)"){
+    zero_first_ab[i] <- 1
+  }
+  if(zero_first_ab[i] == "7 (A lot)"){
+    zero_first_ab[i] <- 4
+  }
+}
+zero_first_ab <- as.numeric(zero_first_ab)
+
+sumy <- cbind(summary(zero_ab_2), summary(zero_first_ab))
+colnames(sumy) <- c("Zeroed- Whole Population", "Zeroed First")
+
+
+```
+
+```{r echo=F}
+shap_2 <- rbind(
+  dist_check("shap", trn_ab_2, dataname = "trn_ab_2"),
+  dist_check("shap", zero_ab_2, dataname = "zero_ab_2"),
+  
+  dist_check("shap", trn_ab_2_r, dataname = "trn_ab_2_r"),
+  dist_check("shap", zero_ab_2_r, dataname = "zero_ab_2_r"),
+  
+  dist_check("shap", trn_ab_2_py, dataname = "trn_ab_2_py"),
+  dist_check("shap", zero_ab_2_py, dataname = "zero_ab_2_py"),
+  
+  dist_check("shap", trn_first_ab, dataname = "trn_first_ab"),
+  dist_check("shap", zero_first_ab, dataname = "zero_first_ab")
+  
+) %>% noquote()
+colnames(shap_2) <- c("Variable", "P-Value")
+kable(shap_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+sym_2 <- rbind(
+  dist_check("sym", sep_ab_2, dataname = "sep_ab_2"),
+  dist_check("sym", trn_ab_2, dataname = "trn_ab_2"),
+  dist_check("sym", zero_ab_2, dataname = "zero_ab_2"),
+
+  dist_check("sym", sep_ab_2, dataname = "sep_ab_2"),
+  dist_check("sym", trn_ab_2_r, dataname = "trn_ab_2_r"),
+  dist_check("sym", zero_ab_2_r, dataname = "zero_ab_2_r"),
+  
+  dist_check("sym", sep_ab_2, dataname = "sep_ab_2"),  
+  dist_check("sym", trn_ab_2_py, dataname = "trn_ab_2_py"),
+  dist_check("sym", zero_ab_2_py, dataname = "zero_ab_2_py"),
+  
+  dist_check("sym", sep_ab_2, dataname = "sep_ab_2"),  
+  dist_check("sym", trn_first_ab, dataname = "trn_first_ab"),
+  dist_check("sym", zero_first_ab, dataname = "zero_first_ab")
+  
+) %>% noquote()
+colnames(sym_2) <- c("Variable", "P-Value")
+kable(sym_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+\clearpage
+```{r echo=F}
+df <- rbind(
+  
+  c(SIGN.test(trn_ab_2, zero_ab_2)$data.name, 
+    SIGN.test(trn_ab_2, zero_ab_2)$alternative, 
+    SIGN.test(trn_ab_2, zero_ab_2)$null.value, 
+    SIGN.test(trn_ab_2, zero_ab_2)$p.value),
+  
+  c(SIGN.test(trn_ab_2, zero_ab_2, alt="g")$data.name, 
+    SIGN.test(trn_ab_2, zero_ab_2, alt="g")$alternative, 
+    SIGN.test(trn_ab_2, zero_ab_2, alt="g")$null.value, 
+    SIGN.test(trn_ab_2, zero_ab_2, alt="g")$p.value)
+  
+
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="Sign test results for data considered non-normal and asymmetric") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+df <- rbind(
+  
+  c(wilcox.test(trn_ab_2, sep_ab_2)$data.name, 
+    wilcox.test(trn_ab_2, sep_ab_2)$alternative, 
+    wilcox.test(trn_ab_2, sep_ab_2)$null.value, 
+    wilcox.test(trn_ab_2, sep_ab_2)$p.value),
+
+  c(wilcox.test(trn_ab_2, sep_ab_2, alt="l")$data.name, 
+    wilcox.test(trn_ab_2, sep_ab_2, alt="l")$alternative, 
+    wilcox.test(trn_ab_2, sep_ab_2, alt="l")$null.value, 
+    wilcox.test(trn_ab_2, sep_ab_2, alt="l")$p.value),
+
+  c(wilcox.test(sep_ab_2, zero_ab_2)$data.name, 
+    wilcox.test(sep_ab_2, zero_ab_2)$alternative, 
+    wilcox.test(sep_ab_2, zero_ab_2)$null.value, 
+    wilcox.test(sep_ab_2, zero_ab_2)$p.value),
+  
+  c(wilcox.test(sep_ab_2, zero_ab_2, "g")$data.name, 
+    wilcox.test(sep_ab_2, zero_ab_2, "g")$alternative, 
+    wilcox.test(sep_ab_2, zero_ab_2, "g")$null.value, 
+    wilcox.test(sep_ab_2, zero_ab_2, "g")$p.value),
+  
+  c(wilcox.test(trn_ab_2_r, trn_ab_2_py, exact=F)$data.name, 
+    wilcox.test(trn_ab_2_r, trn_ab_2_py, exact=F)$alternative, 
+    wilcox.test(trn_ab_2_r, trn_ab_2_py, exact=F)$null.value, 
+    wilcox.test(trn_ab_2_r, trn_ab_2_py, exact=F)$p.value),
+  
+  c(wilcox.test(zero_ab_2_r, zero_ab_2_py, exact=F)$data.name, 
+    wilcox.test(zero_ab_2_r, zero_ab_2_py, exact=F)$alternative, 
+    wilcox.test(zero_ab_2_r, zero_ab_2_py, exact=F)$null.value, 
+    wilcox.test(zero_ab_2_r, zero_ab_2_py, exact=F)$p.value),
+  
+  c(wilcox.test(sep_ab_2_r, sep_ab_2_py, exact=F)$data.name, 
+    wilcox.test(sep_ab_2_r, sep_ab_2_py, exact=F)$alternative, 
+    wilcox.test(sep_ab_2_r, sep_ab_2_py, exact=F)$null.value, 
+    wilcox.test(sep_ab_2_r, sep_ab_2_py, exact=F)$p.value),
+  
+  c(wilcox.test(trn_first_ab, trn_ab_2, exact=F)$data.name, 
+    wilcox.test(trn_first_ab, trn_ab_2, exact=F)$alternative, 
+    wilcox.test(trn_first_ab, trn_ab_2, exact=F)$null.value, 
+    wilcox.test(trn_first_ab, trn_ab_2, exact=F)$p.value),
+  
+  c(wilcox.test(zero_first_ab, zero_ab_2, exact=F)$data.name, 
+    wilcox.test(zero_first_ab, zero_ab_2, exact=F)$alternative, 
+    wilcox.test(zero_first_ab, zero_ab_2, exact=F)$null.value, 
+    wilcox.test(zero_first_ab, zero_ab_2, exact=F)$p.value),
+  
+  c(wilcox.test(sep_first_ab, sep_ab_2, exact=F)$data.name, 
+    wilcox.test(sep_first_ab, sep_ab_2, exact=F)$alternative, 
+    wilcox.test(sep_first_ab, sep_ab_2, exact=F)$null.value, 
+    wilcox.test(sep_first_ab, sep_ab_2, exact=F)$p.value)
+  
+)  %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+\clearpage
+
+\section{Sales - Part 2}
+
+\subsection{Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?}
+
+
+```{r echo=F}
+trn_cd <- na.exclude(cd_trn$cd_trn)
+zero_cd <- na.exclude(cd_zero$cd_zero)
+
+sumy <- cbind(summary(trn_cd), summary(zero_cd))
+colnames(sumy) <- c("Truncated", "Zeroed")
+
+kable(sumy, caption="Statistics over the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+```{r echo=F}
+trn_cd_r <- na.exclude(cd_trn_r$cd_trn)
+zero_cd_r <- na.exclude(cd_zero_r$cd_zero)
+
+sumy <- cbind(summary(trn_cd_r), summary(zero_cd_r))
+colnames(sumy) <- c("Truncated", "Zeroed")
+
+kable(sumy, caption="Statistics for the R subgroup") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+```{r echo=F}
+trn_cd_py <- na.exclude(cd_trn_py$cd_trn)
+zero_cd_py <- na.exclude(cd_zero_py$cd_zero)
+
+sumy <- cbind(summary(trn_cd_py), summary(zero_cd_py))
+colnames(sumy) <- c("Truncated", "Zeroed")
+
+kable(sumy, caption="Statistics for the Python subgroup") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+```{r}
+trn_first_cd <- na.exclude(cd_trn_first$cd_trn)
+zero_first_cd <- na.exclude(cd_zero_first$cd_zero)
+
+sumy <- cbind(summary(trn_cd), summary(trn_first_cd))
+colnames(sumy) <- c("Truncated - Whole Population", "Truncated First")
+kable(sumy, caption="Statistics for the subgroup that saw the truncated plot first compared to the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+sumy <- cbind(summary(zero_cd), summary(zero_first_cd))
+colnames(sumy) <- c("Zeroed - Whole Population", "Zeroed First")
+kable(sumy, caption="Statistics for the subgroup that saw the zeroed plot first compared to the whole population") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+
+```
+
+```{r echo=F}
+shap_2 <- rbind(
+  dist_check("shap", trn_cd, dataname = "trn_cd"),
+  dist_check("shap", zero_cd, dataname = "zero_cd"),
+  
+  dist_check("shap", trn_cd_r, dataname = "trn_cd_r"),
+  dist_check("shap", zero_cd_r, dataname = "zero_cd_r"),
+  
+  dist_check("shap", trn_cd_py, dataname = "trn_cd_py"),
+  dist_check("shap", zero_cd_py, dataname = "zero_cd_py"),
+  
+  dist_check("shap", trn_first_cd, dataname = "trn_first_cd"),
+  dist_check("shap", zero_first_cd, dataname = "zero_first_cd")
+  
+) %>% noquote()
+colnames(shap_2) <- c("Variable", "P-Value")
+kable(shap_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+```{r echo=F}
+sym_2 <- rbind(
+  dist_check("sym", trn_cd, dataname = "trn_cd"),
+  dist_check("sym", zero_cd, dataname = "zero_cd"),
+  
+  dist_check("sym", trn_cd_r, dataname = "trn_cd_r"),
+  dist_check("sym", zero_cd_r, dataname = "zero_cd_r" ),
+  
+  dist_check("sym", trn_cd_py, dataname = "trn_cd_py"),
+  dist_check("sym", zero_cd_py, dataname = "zero_cd_py"),
+  
+  dist_check("sym", trn_first_cd, dataname = "trn_first_cd"),
+  dist_check("sym", zero_first_cd, dataname = "zero_first_cd")
+) %>% noquote()
+colnames(sym_2) <- c("Variable", "P-Value")
+kable(sym_2, caption="Shapiro-Wilk test results to test for normality") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+\clearpage
+
+```{r echo=F}
+df <- rbind(
+  
+  c(SIGN.test(trn_cd, zero_cd)$data.name, 
+    SIGN.test(trn_cd, zero_cd)$alternative, 
+    SIGN.test(trn_cd, zero_cd)$null.value, 
+    SIGN.test(trn_cd, zero_cd)$p.value),
+  
+  c(SIGN.test(trn_cd, zero_cd, alt="g")$data.name, 
+    SIGN.test(trn_cd, zero_cd, alt="g")$alternative, 
+    SIGN.test(trn_cd, zero_cd, alt="g")$null.value, 
+    SIGN.test(trn_cd, zero_cd, alt="g")$p.value)
+  
+) %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="Sign test results for data considered non-normal and asymmetric") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+```{r}
+df <- rbind(
+  
+
+  c(wilcox.test(trn_cd_r, trn_cd_py, exact=F)$data.name, 
+    wilcox.test(trn_cd_r, trn_cd_py, exact=F)$alternative, 
+    wilcox.test(trn_cd_r, trn_cd_py, exact=F)$null.value, 
+    wilcox.test(trn_cd_r, trn_cd_py, exact=F)$p.value),
+  
+  c(wilcox.test(zero_cd_r, zero_cd_py, exact=F)$data.name, 
+    wilcox.test(zero_cd_r, zero_cd_py, exact=F)$alternative, 
+    wilcox.test(zero_cd_r, zero_cd_py, exact=F)$null.value, 
+    wilcox.test(zero_cd_r, zero_cd_py, exact=F)$p.value),
+  
+  c(wilcox.test(trn_first_cd, trn_cd, exact=F)$data.name, 
+    wilcox.test(trn_first_cd, trn_cd, exact=F)$alternative, 
+    wilcox.test(trn_first_cd, trn_cd, exact=F)$null.value, 
+    wilcox.test(trn_first_cd, trn_cd, exact=F)$p.value),
+  
+  c(wilcox.test(zero_first_cd, zero_cd, exact=F)$data.name, 
+    wilcox.test(zero_first_cd, zero_cd, exact=F)$alternative, 
+    wilcox.test(zero_first_cd, zero_cd, exact=F)$null.value, 
+    wilcox.test(zero_first_cd, zero_cd, exact=F)$p.value)
+  
+)  %>% noquote
+
+colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
+kable(df, caption="MWW results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
+  kable_styling("bordered", position="center", latex_options = "hold_position")
+```
+
+
+
+
+
+
+
+
+
+
+
+###
+\section{Appendix 3 - Multivariate Analysis}
+
+###
+\section{Appendix 4 - Interview Transcripts}

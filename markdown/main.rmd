@@ -1,13 +1,17 @@
 ---
 output:
-  pdf_document: default
+  pdf_document:
+    number_sections: true
 fontsize: 11pt
 documentclass: book
 geometry: margin=1in
 header-includes:
   \setlength{\parskip}{1em}
   \linespread {1.25}
+  \usepackage{pdfpages}
 bibliography: bibliography.bib  
+link-citations: yes
+toc: true
 ---
 
 
@@ -43,6 +47,7 @@ bibliography: bibliography.bib
 \end{titlepage}
 
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, warning = F, comment = NA, fig.pos = "!H", fig.width = 7, fig.height = 3)
 library(knitr)
@@ -55,3 +60,7 @@ library(kableExtra)
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/univariate-analysis/main.rmd'}
 ```
 
+```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/appendix.rmd'}
+```
+
+\chapter{References}
