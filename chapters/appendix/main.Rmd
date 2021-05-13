@@ -1,16 +1,20 @@
-\chapter{Appendices}
-\section{Apendix 1 - The Survey}
-The following shows a pdf paper format of the first versions of the surveys, for R and Python.
+---
+output:
+  pdf_document: default
+fontsize: 12pt
+geometry: margin=1in
+documentclass: book
+header-includes:
+  \setlength{\parskip}{1em}
+  \maxdeadcycles=200
+  \extrafloats{1000}
+---
 
-\subsection{R}
-\includepdf[pages=-,nup=1,pagecommand={}]{R_survey_v1.pdf}
+```{r setup, include=FALSE, warning=F}
+knitr::opts_chunk$set(echo = F, warning=F, comment = NA)
+```
 
-\subsection{Python}
-\includepdf[pages=-,nup=1,pagecommand={}]{py_survey_v1.pdf}
-
-###
-\section{Appendix 2 - Univariate Analysis}
-```{r include = FALSE}
+```{r Data manipulation, include = FALSE}
 rm(list=ls())
 library(readxl)
 library(dplyr)
@@ -4374,16 +4378,3 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 
 
 
-
-
-###
-\section{Appendix 3 - Multivariate Analysis}
-
-###
-\section{Appendix 4 - Interview Transcripts}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/andreas}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/geraint}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/henry}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/nikoletta}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/owen}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/vince}
