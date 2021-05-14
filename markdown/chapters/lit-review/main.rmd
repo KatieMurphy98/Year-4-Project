@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 
 \section{Introduction}
 Data visualisation is a method of conveying data in an easily digestible manner through graphics. It is an important aspect of data presentation and allows key information to be quickly identified by the observer. Very many subject areas rely on such visualisations to relay messages that may get lost or have less impact when presented as written word or raw numbers. 
@@ -52,7 +47,9 @@ When discussing good practice for bar charts, Wilke discusses many aspects of vi
 In terms of bar ordering, Wilke discusses that it is important aesthetically to order bars from largest to smallest, given there is no pre-specified ordering in the data, such as age ranges. Bar plots will be discussed in more detail in the past study reviews.
 
 \subsection{Visualisation Taxonomy}
-The paper @taxonomy provides a 'task by data type' basis for creating visualisations, summarising this with the 'Visual Information Seeking Mantra'; 'Overview first, zoom and filter, then details-on-demand'. This provides a starting point for visualisation, and relates to the process of filtering operations 
+The paper @taxonomy provides a 'task by data type' basis for creating visualisations, summarising this with the 'Visual Information Seeking Mantra'; 'Overview first, zoom and filter, then details-on-demand'. This mantra provides a starting point when thinking about creating a visualisation, and relates to the different messages encoded in a visualisation; the viewer must first be able to gain a good overview of the whole data when taking a glance at the plot, but then discern more detail by paying closer attention, as per the 'zoom and filter' principle. The third principle in the mantra is useful to consider when creating interactive visuals; the user is able to, for example, obtain further tables of values and information-based visuals which, and as described in @taylor2014, are 'less visual, and more text-heavy'. The mantra allows the designer to focus on not making visuals too busy whilst also encoding the necessary information. 
+
+Based on this mantra, Shneiderman suggests a 'task by data type taxonomy', which involves cross referencing 7 data types with 7 tasks, for which he doesn't provide a diagram but the description envisions what seems to be a 7-by-7 table of tasks against data types. The idea is to discuss these alongside each other to draw meaningful conclusions as to how best to produce the visual representation.
 
 \section{Studies in Visualisation}
 There is a large amount of research and literature surrounding the topic of misleading visualisations, looking into how various techniques can either deliberately or unintentionally deceive an observer in the message of the data. Results from some of these papers will be replicated, as well as used to form hypotheses which this survey will investigate. A large amount of the literature exploring misleading tactics in data visualisation focuses mainly on bar plots and line plots for categorical and time series data, and so this is what the study and literature review will focus on. 
