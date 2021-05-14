@@ -1,20 +1,8 @@
 ---
 output:
-  pdf_document: 
-    extra_dependencies: ["float"]
-    citation_package: natbib
-fontsize: 12pt
-geometry: margin=1in
-documentclass: book
-header-includes:
-  \setlength{\parskip}{1em}
-bibliography: main.bib
+  pdf_document: default
+  html_document: default
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, fig.pos = 'H', warning = F, message = F, include=T)
-library(knitr)
-library(kableExtra)
-```
 
 \section{Introduction}
 Data visualisation is a method of conveying data in an easily digestible manner through graphics. It is an important aspect of data presentation and allows key information to be quickly identified by the observer. Very many subject areas rely on such visualisations to relay messages that may get lost or have less impact when presented as written word or raw numbers. 
@@ -30,6 +18,7 @@ The book \textit{'Fundamentals of Data Visualization'} [@wilke2019] is renowned 
 
 In the book, Wilke discusses a variety of topics under the data visualisation umbrella, from relatively simple but important and often overlooked ideas such as deciding on coordinate systems, axis scales and colouring, to how to visualise distributions, trends and geospatial data. This literature review will focus on the areas being investigated in the 'Empirical Study of Data Visualisation' survey; namely coordinate systems, axis scaling, colouring for bar charts, alongside stacked and grouped bar charts, as well as axis scaling and formats for time series plots.
 
+\subsection{Axis Scaling}
 In discussing coordinate systems and axis scaling, Wilke highlights that, prior to deciding on a coordinate system, it is important to consider the form the data will take, and where the data will be positioned, as well as how many dimensions this data takes. The example used is a classic two-dimensional scatter plot, in which each data value is represented by a point positioned in a distinct location on the 2d plane, and thus two scales are required to define where this location falls, traditionally with a linear scale and horizontal x-axis with the y-axis perpendicular to this. 
 
 Alternative coordinate systems can include the perpendicular model with non-linear axes, or circular or ‘curved’ models such as polar coordinates in addition to flipped axes, where the dependent variable is represented by the x-axis as opposed to the y. 
@@ -44,25 +33,28 @@ For example, consider a company facing a drop in profits from one time step to a
 
 This will be considered when writing the survey, as the perceived differences in position will be tested when changing features such as y-axis scaling or aspect ratio. A standard practice as laid out by Wilke is that, for two variables with the same unit, the aspect ratio should ensure that the space between ticks for each variable are equal in size.
 
-##### LOG SCALING
-After this, Wilke goes on to discuss logarithmic scaling, which will be investigated in this study alongside axis truncation. Conversely to what will be investigated in this study, he talks about both logarithmic scaling and log-transformed data whereas this study will consider logarithmic scaling alone.
-##### LOG SCALING
+After this, Wilke goes on to discuss logarithmic scaling, which will be investigated in this study alongside axis truncation. Conversely to what will be investigated in this study, he talks about both logarithmic scaling and log-transformed data whereas this study will consider logarithmic scaling alone. He describes how this is a preferable format when dealing with ratios, and explains that this is a result of the fact that the product of linear numbers is analogous to the sum of the logarithms when using a logarithmic scale. Additionally, data containing a large variation in magnitudes is also stated to benefit from logarithmic scaling.
 
+The book also explains the differences between plotting the original data on a logarithmic scale, and log-transformed data on a linear scale. In terms of mathematics, these are analogous, but Wilke states that plotting the original data on a log-transformed scale is favoured as this shows the true data values as opposed and allows easier reader interpretation of values. This will be considered and the original data on a logarithmic scale will be investigated. A study with narrower scope on only logarithmic scaling and log-transformed data, or even just a study of axis scaling, may allow to test both log-transformations and log-scalings, however the wide scope of this study means that study topics have to be reduced.
 
-##### COLOUR
+\subsection{Colour}
+A very important aspect of visualisation is the use of colour. Colour is a very useful means of showing features of the data such as groupings and gradients of values, as well as to highlight key values. It could be said that colour works as a third dimension to the visualisation, showing another dimension of information on top of that shown by the position or size of the data points. It is important that the use of colour is carefully thought out, and not just applied with aesthetics in mind. Aesthetics are, or course, an important factor in colouring a visualisation, as 'pretty' colouring allows the visualisations to be eye-catching and memorable, which can be beneficial to, for example, brands or pharmaceutical companies giving regular data presentations as very aesthetic plots are more likely to be remembered. 
 
-##### COLOUR
+Once again, Wilke has a good explanation and examples of each type of colour usage. There can be defined to be two types of colour scale, or palette; qualitative or quantitative. Qualitative colour scales do not have a logical order of colouring and are used for data for which the ordering of either values of groupings is inconsequential, such as for much categorical data. The latter, quantitative colour scales, provide gradients of colour and can consist of either a gradual scale moving through two or more colours, or a single colour with varying saturation. This type of scale provides a continuous colouring and can show grouping tendencies in continuous data, and is also often used in maps. As mentioned by Wilke, continuous graduated colour scales have the ability to show the degree to which two values are similar. There are several examples of both types of colour scale, and those discussed in this study will involve the defaults for both R and Python, and two colourblind friendly palettes; viridis and greyscale. 
 
+It is important to consider that the visualisations may be viewed by people with colourblindness in order to ensure they are accessible to any viewer. Using certain colour scales may be problematic for someone who is colourblind as they may find it difficult to distinguish between certain colours, and thus lose the impact and story told by the third dimension of the visualisation. @colourb has a good explanation of how visualisation can be modified to accommodate those with the condition. Using colours such as red and green, or a traffic light scaling is not ideal, as these can be harder to distinguish. However, red and green is a very common and useful combination to use, as it can give a highly intuitive story of 'good' and 'bad' values, or positive and negative. Shaffer describes that this can be worked around by adding arrows, icons or annotations to distinguish values. Another workaround is to, for example, use very light green and very dark red as a saturation as opposed to hue comparison. The viridis palette has been specifically formulated to allow easier perception for people with colourblindness.
 
-##### VISUALISING AMOUNTS
-@wilke2910 sections 6.1, 6.2, 10.2, 10.3
-##### VISUALISING AMOUNTS
+Colour can very easily be misused, however, and a common misuse, described by Wilke, is to colour each individual bar in a simple bar chart. This colouring reveals no additional information about the data and labeling is much preferred as the added colour here draws attention away from the message of the data. However, colour is useful for stacked or grouped bar charts to distinguish between groupings. 
 
+\subsection{Bar Charts}
+When discussing good practice for bar charts, Wilke discusses many aspects of visualisation including axis alignment and bar ordering, as well as discussion on stacked and grouped bars. The axis alignment, ie vertical vs horizontal bars, is dependent on the data being visualised. Wilke uses the example of bars with labels that may become either difficult to read or unaesthetic when shown on the vertical chart, but appear clearer on the horizontal. 
 
-##### WHY PIE CHARTS ARE A PIECE OF SHIT
+In terms of bar ordering, Wilke discusses that it is important aesthetically to order bars from largest to smallest, given there is no pre-specified ordering in the data, such as age ranges. Bar plots will be discussed in more detail in the past study reviews.
+
+##### PIE CHARTS
 @wilke2910 section 10.1
 @pie
-##### WHY PIE CHARTS ARE A PIECE OF SHIT
+##### PIE CHARTS 
 
 
 ##### TIME SERIES
