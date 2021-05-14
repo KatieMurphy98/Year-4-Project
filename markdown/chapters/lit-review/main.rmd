@@ -51,24 +51,8 @@ When discussing good practice for bar charts, Wilke discusses many aspects of vi
 
 In terms of bar ordering, Wilke discusses that it is important aesthetically to order bars from largest to smallest, given there is no pre-specified ordering in the data, such as age ranges. Bar plots will be discussed in more detail in the past study reviews.
 
-##### PIE CHARTS
-@wilke2910 section 10.1
-@pie
-##### PIE CHARTS 
-
-
-##### TIME SERIES
-section 13.1
-##### TIME SERIES
-
-
-##### BRIEFLY: 3D AND WHY IT'S BAD
-section 26.1
-##### BRIEFLY: 3D AND WHY IT'S BAD
-
-##### TAXONOMY PAPER 
-@taxonomy
-##### TAXONOMY PAPER
+\subsection{Visualisation Taxonomy}
+The paper @taxonomy provides a 'task by data type' basis for creating visualisations, summarising this with the 'Visual Information Seeking Mantra'; 'Overview first, zoom and filter, then details-on-demand'. This provides a starting point for visualisation, and relates to the process of filtering operations 
 
 \section{Studies in Visualisation}
 There is a large amount of research and literature surrounding the topic of misleading visualisations, looking into how various techniques can either deliberately or unintentionally deceive an observer in the message of the data. Results from some of these papers will be replicated, as well as used to form hypotheses which this survey will investigate. A large amount of the literature exploring misleading tactics in data visualisation focuses mainly on bar plots and line plots for categorical and time series data, and so this is what the study and literature review will focus on. 
