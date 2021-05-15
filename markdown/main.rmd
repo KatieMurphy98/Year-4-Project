@@ -11,8 +11,16 @@ header-includes:
   \usepackage{pdfpages}
 bibliography: bibliography.bib  
 link-citations: yes
-toc: true
+toc: yes
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = F, comment = NA, fig.pos = "!H", fig.width = 7, fig.height = 3)
+library(knitr)
+library(kableExtra)
+devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8", 
+                      filename = 'render_toc.R')
+```
 
 
 \begin{titlepage}
@@ -22,7 +30,7 @@ toc: true
         \textbf{An Emprirical Study of Data Visualisation}
 
         \vspace{0.5cm}
-        SUBTITLE PLACEHOLDER
+        \textit{A study into the theory behind data visualisation}
 
         \vspace{1.5cm}
 
@@ -40,18 +48,25 @@ toc: true
         Cardiff School of Mathematics
 
         \vspace{1.5cm}
-
-
+        
+        \textbf{Abtract}\\
+        
+        \textit{A study into the theory behind data visualisation, looking into different ways in which data can be
+        interpreted visually to portray key information accurately in an elegant and concise manner using the
+        libraries 'ggplot2' from R and 'matplotlib' from Python. The investigation will focus on aspects of
+        visualisations that may either deliberately or accidentally mislead the observer, such as inapropriate axis 
+        scalings and labeling, alteration of aspect ratios, and the use of colour. A survey is administered to gather
+        quantitative information and interviews with experienced programmers are held to gain an understanding on the
+        opinions of the codes and visualisation packages themselves.}
 
     \end{center}
+    
+
 \end{titlepage}
 
+\section{Acknowledgements}
 
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, warning = F, comment = NA, fig.pos = "!H", fig.width = 7, fig.height = 3)
-library(knitr)
-library(kableExtra)
+```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/lit-review/main.rmd'}
 ```
 
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/survey/main.rmd'}

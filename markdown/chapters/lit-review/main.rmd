@@ -1,4 +1,6 @@
 
+\chapter{Literature Review}
+
 \section{Introduction}
 Data visualisation is a method of conveying data in an easily digestible manner through graphics. It is an important aspect of data presentation and allows key information to be quickly identified by the observer. Very many subject areas rely on such visualisations to relay messages that may get lost or have less impact when presented as written word or raw numbers. 
 
