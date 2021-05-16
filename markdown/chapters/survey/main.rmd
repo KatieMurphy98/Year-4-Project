@@ -140,7 +140,9 @@ The questions regarding each of the three bar plots were as follows:
   \item In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used? (Open)
 \end{itemize}
 
-Here, the two questions with the difference rating scale are used to assess whether having the bars next to each other vs on opposite ends of the plot has an effect on the difference in rating when comparing the responses for each of the plots. 
+Here, the two questions with the difference rating scale are used to assess whether having the bars next to each other vs on opposite ends of the plot has an effect on the difference in rating when comparing the responses for each of the plots. The use of the word 'more' in these questions could perhaps be considered leading, as it indicates to the respondent the direction of the difference. The wording of part 2, specifying that distance is being compared but without specifying a direction, may have been better here, and next time would be used. However, this is unlikely to have has too large of an effect, as it is easy to see that the 'Salmon Ladder' was used most out of the four obstacles.
+
+Question 4 here was perhaps too wordy and/or confusing, and asks effectively the same question as the two previous. If this survey were to be applied again, this would be omitted as it adds unnecessary respondent fatigue. This is especially the case since the responses to this question mean it has been omitted from analysis, and so added to respondent fatigue without any additional information gain.
 
 The table below shows all the permutations of the three plot types, and which questionnaire version they appear in.
 
@@ -174,6 +176,8 @@ The questions regarding each of the three bar plots were as follows:
   \item How large would you say the difference between 'Log Grip' and 'Floating Steps' is? (1-7 scale)
   \item How many times would you say 'Floating Steps' were used? (Open)
 \end{itemize}
+
+In hindsight, the value judgment question should perhaps have used the same phrasing as part 1. Removing the word 'approximately' from the value judgment question could have an adverse affect on responses by comparison to part one in the way of perhaps making respondents feel they have to give a more 'accurate' and less subjective response than part 1. 
 
 Similar to part 1, the below table gives all permutations of the three plot types.
 \begin{center}
@@ -221,7 +225,7 @@ The next question is "Please select the statement you feel applies to the bar ch
   \item 'Log Grip' was used an EQUAL number of times in Finals (Regional/City) rounds and Qualifying (Regional/City) rounds.")
 \end{itemize}
 
-This is followed by another mulitple choice question, given as Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?, with the following options:
+This is followed by another multiple choice question, given as Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?, with the following options:
 \begin{itemize}  
   \item 'Log Grip'
   \item 'Floating Steps'
@@ -264,7 +268,7 @@ kable(mat)
 \subsection{Sales - Part 1}
 The respondents then moved onto part 1 of the sales section of the survey, in which they are asked to once again give subjective opinions regarding the y-axis scaling, but this time relating to time series line plots. 
 
-Once again, the same set of questions is asked for each plot which consist of, firstly, a two-row multiple choice grid, with each row relating to one of the companies. Respondents were asked the question "How much would you say sales of each company increased between January and December?" and were to give a response on the 7-point scale. 
+Once again, the same set of questions is asked for each plot which consist of, firstly, a two-row multiple choice grid, with each row relating to one of the companies. Respondents were asked the question "How much would you say sales of each company increased between January and December?" and were to give a response on the 7-point scale. Again, this could be seen as leading due to the word "increased", and in hindsight this could be altered to read "changed", with the response options then potentially on a scale with the centre value (ie 4 on a 7 point scale) corresponding to no change, and the numbers on either side representing a positive or negative change. This would also perhaps be implemented in the questions regarding comparisons of bar heights. 
 
 The ordering of the plots for each version number are given below.
 
