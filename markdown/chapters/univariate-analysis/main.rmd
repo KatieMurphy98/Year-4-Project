@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 ```{r Data manipulation, include = FALSE}
 rm(list=ls())
 library(readxl)
@@ -817,13 +822,15 @@ In terms of testing, Shapiro-Wilk tests will be applied with the `shapiro.test()
 
 The sample sizes are 70, 38 and 32 for the whole population, R subgroup and Python subgroup, respectively before removing NA of invalid values. The sample means and medians will be notated as $\bar{x}$ and $\tilde{x}$, respectively.
 
+See appendix 2 for all statistical testing results and p-values.
+
 \section{American Ninja Warrior - Part 1}
 This part of the survey assess the effect of truncated and logarithmic scaling on bar plots perception and interpretation.
 
 The final question in part 1 of the survey, \textit{'In your opinion, approximately how many times would you say 'Log Grip' was used, as a percentage of the number of times 'Salmon Ladder' was used?'} will not be considered as it is similar to the previous questions, and responses ranged in form, between percentages and decimals, and it can not just be assumed that all the decimals can be converted to percentages; for example a value of 0.5 could be the decimal value for $50\%$, or the respondent could have meant this as $0.5\%$.
 
 \subsection{Effect of Y-Axis Truncation}
-In general, truncating the y-axis had less of an effect than anticipated. In question 1, \textit{"Approximately many times would you say the ‘Salmon Ladder’ was used?"}, for which the true value was 41, the distribution of responses for the truncated plot ($\bar{x} = 41.35$) as compared to that of the control plot responses ($\bar{x}=41.21$) shows a small difference, with the mean perceived value of the bar being slightly higher for the truncated plot. The median for both of these is 41, showing that both distributions are centered around the true value of 41. The control and truncated plots have contextually fairly small variances of 0.752 and 0.753 respectively, depicting both that there is limited variation in the responses and most of the observations lie fairly close to the respective means. The variances are also quite similar, showing that the distributions appear fairly similar, as emphasised by observing the below density plot.
+In general, truncating the y-axis had less of an effect than anticipated. In question 1, \textit{"Approximately many times would you say the ‘Salmon Ladder’ was used?"}, for which the true value was 41, the distribution of responses for the truncated plot ($\bar{x} = 41.35$) as compared to that of the control plot responses ($\bar{x}=41.21$) shows a small difference, with the mean perceived value of the bar being slightly higher for the truncated plot. The median for both of these is 41, showing that both distributions are centered around the true value of 41. The control and truncated plots have contextually fairly small variances of 0.752 and 0.753 respectively, depicting both that there is limited variation in the responses and most of the observations lie fairly close to the respective means. The variances are also quite similar, showing that the distributions appear fairly similar, as emphasised by observing figure 3.1 below.
 
 ```{r echo=F}
 control_1 <- ctrl_y_scale$con_1
@@ -846,7 +853,9 @@ y_scale_1_all <- cbind(control_1, truncated_1, logarithmic_1)
 
 brks <- c("Control", "Truncated")
 vals <- c("#1c9e77", "#d95f02")
+```
 
+```{r fig.cap = "Density plot showing distributions of responses regarding the control and truncated plots for the question 1"}
 ggplot() +
   geom_density(data = as.data.frame(control_1), aes(x=control_1, col = "Control"))+
   geom_density(data = as.data.frame(truncated_1), aes(x=truncated_1, col = "Truncated"))+
@@ -865,7 +874,9 @@ truncated_2 <- trnc_y_scale$trn_2
 resp <- c(control_2, truncated_2)
 type <- c(rep('Control', 70), rep('Truncated', 70)) 
 stats_2 <- data.frame(resp, type)
+```
 
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 2"}
 ggplot(stats_2)+
   geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
   ylab("Number of Respondents")+
@@ -883,12 +894,15 @@ The spread for the truncated and control plot responses are slightly skewed to t
 Question 3 of part 1, \textit{'Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?'}, asks a similar question to question 2, but asks respondents to judge the difference for bars on opposite ends of the plot as opposed to next to each. Again, the by eye comparison shows not a massive difference between distributions of responses for the control ($\bar{x}=3.12$, $\tilde{x}=3$) and truncated ($\bar{x}=3.12$, $\tilde{x}=3$) plots, although the sign test shows that the there is evidence to suggest that the truncated plot responses are in fact on average greater than for the control plot ($p=4.624e-06$). figure[?] shows the distribution of responses.
 
 ```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3"}
+
 control_3 <- ctrl_y_scale$con_3
 truncated_3 <- trnc_y_scale$trn_3
 resp <- c(control_3, truncated_3)
 type <- c(rep('Control', 70), rep('Truncated', 70)) 
 stats_3 <- data.frame(resp, type)
+```
 
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3"}
 ggplot(stats_3)+
   geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
   ylab("Number of Respondents")+
@@ -898,6 +912,7 @@ ggplot(stats_3)+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
   theme_classic()
 ```
+
 The response distributions, conversely to question 2, now seem skewed more to the left. However there is a similarity in the way that for the lower ratings of 2 and 3, the control plot response bars dominate, and for the responses of 4 and 5 the opposite is true.
 
 Overall, it seems that the use of truncation has a small but statistically significant effect on perception of height difference between bars, with respondents tending to judge the difference as slightly larger than for the control plot, although this effect is smaller than initially anticipated, and larger for bars that are further apart. In terms of reading values from bars, the truncation did not have a statistically significant effect when comparing the two distributions, however in one sample testing the truncated plot responses did differ significantly from the true value.
@@ -943,9 +958,12 @@ q<-ggplot() +
   scale_colour_manual(name = " ", breaks = brks, values = vals)+
   theme(title = "Python Subgroup")+
   theme_classic()
+```
 
+```{r fig.cap = "Density plot showing distributions of responses regarding the control and truncated plots for the question 1"}
 plot_grid(p, q)
 ```
+
 The distributions for the control and truncated plot responses for the R subgroup are fairly similar to the whole population, although the peaks for the logarithmic plot responses are marginally lower. The distribution of the truncated plots is unexpected from lokking at the numbers, and more 'chaotic'. This shows potentially more variation in the responses.
 
 
@@ -983,11 +1001,13 @@ q <- ggplot(stats_2_py)+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
   theme(plot.title = element_text(size=10))+
   theme_classic()
+```
 
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 2, for the R and Python subgroups"}
 plot_grid(p, q)
 ```
 
-For question 3 (see figure [?]), it is again seen that the responses in relation to the R version of truncated plot ($\bar{x} = 3.76$, $\tilde{x} = 4$) do not differ significantly to those related to the Python version ($\bar{x} = 3.78$, $\tilde{x} = 4$), with a two sample MWW p-value of 0.9708. Similarly the control plot, there is little difference between the R ($\bar{x} = 3.342$, $\tilde{x} = 3$) and the Python ($\bar{x} = 2.87$, $\tilde{x} = 3$) versions of the plot, again with am MWW p-value 0f 0.1465.
+For question 3, it is again seen that the responses in relation to the R version of truncated plot ($\bar{x} = 3.76$, $\tilde{x} = 4$) do not differ significantly to those related to the Python version ($\bar{x} = 3.78$, $\tilde{x} = 4$), with a two sample MWW p-value of 0.9708. Similarly the control plot, there is little difference between the R ($\bar{x} = 3.342$, $\tilde{x} = 3$) and the Python ($\bar{x} = 2.87$, $\tilde{x} = 3$) versions of the plot, again with am MWW p-value 0f 0.1465.
 
 ```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3, for the R and Python subgroups"}
 control_3_r <- ctrl_y_scale_r$con_3
@@ -1021,9 +1041,12 @@ q <- ggplot(stats_3_py)+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
   theme(plot.title = element_text(size=10))+
   theme_classic()
+```
 
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3, for the R and Python subgroups"}
 plot_grid(p, q)
 ```
+
 Figure[?] shows both distributions, with the R appearing more positively skewed and the python looking fairly symmetric for both plot types, which was also found when performing symmetry tests. For the Python it can also easily be seen that the bars for the truncated plot responses seems 'shifted' to the right slightly as compared to the control.
 
 Now considering subsetting for the respondents that saw the truncated plot first out of the three. Note that 25 saw the control plot first and 23 saw the truncated plot first.
@@ -1090,16 +1113,17 @@ q <- ggplot() +
   labs(x="Response", y="Density")+
   scale_colour_manual(name = " ", breaks = brks, values = vals)+
   theme_classic()
+```
 
+```{r, fig.cap = "Density plot showing distributions of responses regarding the control and logarithmic scaled plot, after removing values of greater or equal to 1000"}
 plot_grid(p, q)
-
 ```
 
 The Python default of standard form notation appears to have confused certain respondents, who are perhaps not as used to seeing this notation, and there was a large range in the responses along with one person not even entering a number, but rather stating that they "Don't know", and another stating they believed the value was "Next to none". The "Next to none" entry is subjective, but could potentially be be assumed as a value close to 0, once again maybe as a result of standard form being less well known to this respondent.
 
 The distribution of responses for question 2 is displayed in figure[?].
 
-```{r fig.cap = "Bar plot showing distributions of responses regarding the control and logarithmic plots for question 2"}
+```{r}
 
 brks <- c("Control", "Logarithmic")
 vals <- c("#1c9e77",  "#7570b3")
@@ -1112,7 +1136,9 @@ y_scale_2_all <- as.data.frame(y_scale_2_all)
 resp <- c(control_2, logarithmic_2)
 type <- c(rep('Control', 70), rep('Logarithmic', 70)) 
 stats_2 <- data.frame(resp, type)
+```
 
+```{r fig.cap = "Bar plot showing distributions of responses regarding the control and logarithmic plots for question 2"}
 ggplot(stats_2)+
   geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
   ylab("Number of Respondents")+
@@ -1123,6 +1149,7 @@ ggplot(stats_2)+
   theme_classic()
 
 ```
+
 The spread of logarithmic plot values is fairly wide, with at least one response for each option, and the control is the same as stated before. The plot depicts how there is a wide spread of values, with some respondents having very different subjective views of the size of the difference to others. On average, the subjective perceived difference in bar heights was significantly lower for the logarithmic plot responses ($\bar{x}=3.67$, $\tilde{x}=3.5$) than for the control ($\bar{x}=3.35$, $\tilde{x}=5$). This is evidenced by a one-sided sign test with the alternative hypothesis that the logarithmic plot responses are on average lower than the control plot responses.
 
 There is evidence to show that the difference between the R and Python versions of the logarithmic plot is significant ($p=0.00096$, $\bar{x}_R = 4.263$, $\bar{x}_{Py} = 2.969$). The distributions for the two language subsets are shown in figure[?]. 
@@ -1173,7 +1200,7 @@ plot_grid(p, q)
 
 In regard to question 3, see again figure[?] for the plotted distributions.
 
-```{r fig.cap = fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 3"}
+```{r fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 3"}
 brks <- c("Control", "Logarithmic")
 vals <- c("#1c9e77",  "#7570b3")
 
@@ -1307,7 +1334,7 @@ ggplot()+
 
 On average, truncating the scale had a similar effect for both questions, albeit with slightly more effect for when comparing 'Salmon Ladder' with 'Quintuple Steps' as opposed to 'Log Grip'. For the logarithmically scaled plots, however, the re-scaling appears to have had a significantly greater effect when considering the bars directly next to each other, with respondents on average judging the difference in bar height to be greater by 1.68 on the 7-point scale, whereas this is 0.9 for the bars further apart. It can be concluded from this that truncating the scale had more of an impact when bars were on opposite ends of the plot as opposed to next to each other, and the way round for the bars close to each other; the logarithmic scaling had more of an impact.
 
-\subsection{Ninja Warrior - Part 2}
+\section{American Ninja Warrior - Part 2}
 
 This part of the survey assessed whether different aspect ratios would have an impact on perception of bar height differences as well as reading of true values. This part will be analysed question by question.
 
@@ -1560,7 +1587,7 @@ Similarly, 37 out of the 70 that responded to the second question found the plot
 The plot judged hardest to read and interpret by the most respondents was the one with the wide bars, with 30 selecting this and 20 selecting each of the other two. While a significant number chose the default and narrow bars, the slightly higher amount selecting the plot with wide bars matches the previously stated hypothesis formulated from following the Stephen Few paper, which discusses that an ratio of greater width to length could suffer from perceptual imbalance. While this imbalance isn't seen in the numbers from the previous questions, the result here does give some indication that the aspect ratio producing wide bars may impact on ease of interpretation.
 
 
-\subsection{Ninja Warrior - Part 3}
+\section{American Ninja Warrior - Part 3}
 
 The third and final part of the questions about the American Ninja Warrior data discusses stacked bars and colour schemes. The questions asked in this part are used to decipher how data with multiple categories may be best represented in a bar plot. The plots presented use the same bars as in part 1, but this time the number of times each obstacle was used in each stage of the competition for each bar is highlighted.  Each participant was shown both a stacked and a grouped bar plot in one of three colour schemes; the default for the language, viridis, and greyscale. For three versions of the survey, the stacked bars were shown first, and for the other three versions the first shown was the grouped bars. The final question of this part also asked respondents to compare two colour schemes, and through the 6 surveys there are comparisons of every colour scheme against every other colour scheme.
 
@@ -1855,7 +1882,7 @@ kable(tab)%>%
 ```
 Interestingly here, the top two rows appear to give opposing results; the respondents who were presented with viridis for the main questions and the default as a secondary palette stated that they found either viridis easier to interpret or had no preference, whereas those presented with the default first and viridis second tended to find the default easier. Once again looking at the comparisons with the greyscale, there were some respondents that found this easier to read, but the majority chose the alternative, whether this is viridis or the default.
 
-\subsection{Sales - Part 1}
+\section{Sales - Part 1}
 Now consider the sales part of the survey. In this section data was taken from a the `BJsales` data set in R, which is a time series data set containing 150 observations. This data set constitutes a single vector of values with no specified timings, and the visualisation data was formed by taking subsets of size 12 this and setting a month between each point to give a year of fictional sales data.
 
 \subsection{How much would you say sales of each company increased between January and December? [Company A]}
@@ -1877,7 +1904,7 @@ The differences between languages and plot ordering were shown to be inconsequen
 
 \subsection{How much would you say sales of each company increased between January and December? [Company B]}
 
-The zeroed was once again perceived to have the smallest difference ($\bar{x} = 1.371$), but this time with the separated in the middle ($\bar{x} = 4.1304$) and truncated with the largest difference ($\bar{x} = 4.1304$). See table [?] for p-values. The p-values show sufficient evidence that the truncated responses were on average greater than the zeroed, as were the responses for the separated plots. However, the difference between the ratings for the truncated and separated plot responses was inconsequential, along with the language comparisons and plot order. 
+The zeroed was once again perceived to have the smallest difference ($\bar{x} = 1.371$), but this time with the separated in the middle ($\bar{x} = 4.1304$) and truncated with the largest difference ($\bar{x} = 4.1304$). See appendix 2, table [?] for p-values. The p-values show sufficient evidence that the truncated responses were on average greater than the zeroed, as were the responses for the separated plots. However, the difference between the ratings for the truncated and separated plot responses was inconsequential, along with the language comparisons and plot order. 
 
 
 ```{r}
