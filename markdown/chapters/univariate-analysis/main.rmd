@@ -1127,7 +1127,7 @@ The spread of logarithmic plot values is fairly wide, with at least one response
 
 There is evidence to show that the difference between the R and Python versions of the logarithmic plot is significant ($p=0.00096$, $\bar{x}_R = 4.263$, $\bar{x}_{Py} = 2.969$). The distributions for the two language subsets are shown in figure[?]. 
 
-```{r}
+```{r fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 2, separated by language"}
 brks <- c("Control", "Logarithmic")
 vals <- c("#1c9e77",  "#7570b3")
 
@@ -1173,7 +1173,7 @@ plot_grid(p, q)
 
 In regard to question 3, see again figure[?] for the plotted distributions.
 
-```{r}
+```{r fig.cap = fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 3"}
 brks <- c("Control", "Logarithmic")
 vals <- c("#1c9e77",  "#7570b3")
 
@@ -1200,7 +1200,7 @@ The responses for the logarithmically scaled plot are skewed towards the lower e
 
 Figure [?] shows the distributions for R and Python subgroups.
 
-```{r}
+```{r fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 2, separated by language"}
 brks <- c("Control", "Logarithmic")
 vals <- c("#1c9e77",  "#7570b3")
 
@@ -1336,7 +1336,7 @@ Note that 'narrow' is defined as the plot with the aspect ratio of smaller width
 
 Now looking at figure[?], showing the three distributions. There isn't an immediately obvious difference in distributions, but on closer inspection it can be seen that the orange "Wide" bars dominate over the three for the range [2, 5], and the purple "Narrow" dominated for the response of 7, following the above analysis of summary statistics. There was a fairly strong consensus that in general that a rating of 6 was applicable to all three plots.
 
-```{r, echo=F}
+```{r fig.cap = "Bar plots showing distributions of responses regarding the three plots"}
 
 brks <- c("Default", "wide", "narrow")
 vals <- c("#1c9e77", "#d95f02", "#7570b3")
@@ -1360,7 +1360,7 @@ SIGN.test(default, wide, alt="g")
 Running a one-sided MWW test to compare the responses for default plot to the narrow plot, it is confirmed that there is evidence to suggest that using a 'narrow' aspect ratio causes the perceived difference to be greater ($p=0.0468$). Then applying a one-sided sign test to compare the default to the wide plot, the perceived difference is shown to be smaller ($p=6.457e-06$).
 
 
-```{r}
+```{r fig.cap = "Density plot showing distributions of responses regarding the three plots"}
 
 ggplot() +
   geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
@@ -1385,7 +1385,7 @@ ratio_2_all <- cbind(default, wide, narrow)
 ```
 The analysis results here show that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wide plots being identical at 3.057, with the mean of the narrow plot responses only 0.157 greater at3.214. The median for all three is 3, and the IQRs are all $[2, 7]$. The variances, however, do differ from one another, with values 1.301, 0.866 and 1.214 for the default, wide and narrow bars, respectively. The distribution of values are shown in figure[?]. The results of two-sided MWW tests show that neither aspect ratio appears to have a significant effect on the rating of the perceived difference ($p=0.2446$ and $p=0.5688$).
 
-```{r, echo=F}
+```{r fig.cap = "Box plots showing distributions of responses regarding the three plots"}
 
 brks <- c("Default", "wide", "narrow")
 vals <- c("#1c9e77", "#d95f02", "#7570b3")
@@ -1409,7 +1409,7 @@ ggplot(data = stats, aes(x=type, y=resp, fill=type))+
 At least $50/%$ of respondents placed the difference in the range $[2, 4]$ for all three plots, showing that they believed the difference was small to moderate, and this didn't change depending on the plot type, and thus for the bars further apart from each other, changing the aspect ratio does not appear to make much of a difference. The overall distributions are shown in the figure[?]
 
 
-```{r}
+```{r fig.cap = "Density plots showing distributions of responses regarding the three plots"}
 
 ggplot() +
   geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
@@ -1491,7 +1491,7 @@ ratio_1_all <- cbind(default, wide, narrow)
 ```
 The means of each of the three sets of responses were very close to the true value, at 27.97, 28.04 and 27.39, respectively for the default, wide and narrow, and the medians are exactly equal to the true value. Based on the means and medians it appears that, once again, altering the aspect ratio had minimal, if any, effect on interpretation of the data value. The value for the default plot also appears to be closer to the true value than the control plot in part 1, question 1.
 
-```{r, echo=F}
+```{r fig.cap = "Box plots showing distributions of responses regarding the three plots"}
 
 brks <- c("Default", "wide", "narrow")
 vals <- c("#1c9e77", "#d95f02", "#7570b3")
@@ -1514,7 +1514,7 @@ ggplot(data = stats, aes(x=type, y=resp, fill=type))+
 Looking at the box plots, there are very small ranges in the values, signifying that there was a large consensus between respondents in terms of what they perceived the height to be. It can also be seen that there are three outliers below the box plot for the narrow plot responses, and two above for the default plot responses. There is very little overlap between the boxes, and it appears again that there altering the aspect ratio of the bar plot has little to no impact on reading the height of the bar. Additionally, there was less agreement between respondents for the wide plot than for the other two, although this doesn't seem to be too significant.  
 
 
-```{r}
+```{r fig.cap = "Density plots showing distributions of responses regarding the three plots"}
 
 ggplot() +
   geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
@@ -1583,7 +1583,7 @@ bars <- data.frame(stacked_1, grouped_1)
 ```
 The mean for the values estimated by respondents using the stacked bars is 14.32, a fair bit larger than the true value of 11, and the mean estimated value for the grouped bars was closer to the true value, at 11.8. The IQR for the grouped bars is also smaller than for the stacked, and comprises of the range $[11, 12]$, insinuating that the estimated values tended to be fairly accurate but with some respondents perhaps slightly overestimating. The IQR for the stacked bars on the other hand covers the interval $[10, 14]$, which does contain the true value, but shows a tendency for both over and underestimation of respondents. Additionally to this, there is a large variance in the responses to this question, at 54.8 compared to the variance of 13.1 for the responses regarding the grouped bar plots. This adds to the picture that there was much less agreement between respondents, with many straying away from the mean of 14.3. It is seen however that the median for both the stacked and grouped bars is 11, showing that the higher mean of the stacked bars may be a result of an influential value at the upper end of the distribution, and that many observations do actually sit around 11. The fact that many values actually sit around 11 could be contributing to the higher variance, as variance is simply the sum of the squared distances from the mean, and so will be elevated if there are many values that sit some distance away from the mean. The higher mean could be reflected in the maximum of the stacked responses being 35, although the maximum of the grouped responses is 40, so there may be more than one influential point in the stacked responses. Outliers can be checked for by looking at the box plots for this data.
 
-```{r}
+```{r fig.cap = "Box plots showing distributions of responses regarding the two plots"}
 brks <- c("Stacked", "Grouped")
 vals <- c("#1c9e77", "#d95f02")
 
@@ -1648,7 +1648,7 @@ bars <- data.frame(stacked_2, grouped_2)
 ```
 Similarly to the previous question, the mean response for the stacked bar plots are higher than that of the grouped, and the mean of the stacked also slightly overestimates the value. Once again however, a selection of respondents appeared to judge the full height of the bar rather than the category as asked. 
 
-```{r}
+```{r fig.cap = "Bar plots showing distributions of responses regarding the three plots"}
 brks <- c("Stacked", "Grouped")
 vals <- c("#1c9e77", "#d95f02")
 
@@ -1663,7 +1663,7 @@ ggplot(data = stats_2)+
   ylab("Value")+
   xlab("Plot Type")
 ```
-Indeed, the distributions of values for each of the two response sets appear to be almost identical 
+Indeed, the distributions of values for each of the two response sets appear to be almost identical.
 
 ```{r}
 stacked_2 <- c(vir_stacked_2, def_stacked_2, gr_stacked_2)
