@@ -4367,23 +4367,34 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 ```
 
 
+\section{Appendix 3 - Code Snippets}
+
+![Running stylr on R code](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/stylr.JPG)
+![Running black on Python code](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Black.PNG)
+
+![R code for y-scaling bar plots](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots1.JPG)
+![R code for aspect ratio bar plots](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots2.JPG)
+![R code for stacked bar plots](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots3.JPG)
+![R code for line plots](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_lineplots.JPG)
 
 
-
-
-
-
-
-
-
-###
-\section{Appendix 3 - Multivariate Analysis}
+![Python code for y-scaling bar plots](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots1.JPG)
+![Python code for aspect ratio bar plots](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots2.JPG)
+![Python code for stacked bar plots (1)](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/py_barplots3.1.JPG)
+![Python code for stacked bar plots (2)](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/py_barplots3.2.JPG)
+![Python code for line plots](C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_lineplots.JPG)
 
 ###
 \section{Appendix 4 - Interview Transcripts}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/andreas}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/geraint}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/henry}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/nikoletta}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/owen}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/vince}
+
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/andreas.pdf}
+
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/geraint.pdf}
+
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/henry.pdf}
+
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/nikoletta.pdf}
+
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/owen.pdf}
+
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/vince.pdf}
