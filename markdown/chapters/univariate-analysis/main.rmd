@@ -1,8 +1,4 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
+
 ```{r Data manipulation, include = FALSE}
 rm(list=ls())
 library(readxl)
@@ -1655,7 +1651,7 @@ stacked_1 <- stacked_1[which(stacked_1 >= 25)]
 ```
 As a result of this, this set of 12 values will be discounted from the analysis, and thus come to the conclusion that, for the respondents that appear to have judged the height of the correct section, there was little to no impact when using stacked vs grouped bar charts, and most of the difference comes from misinterpretation of the plot itself, as opposed to a poorer judgment of size.
 
-To see if either of these values are significantly far from the true value, tests are once again run. A sign test on the stacked bar plot responses gives a high p-value of 0.5258, showing that for the stacked bar plot responses (after removing the values as priorly specified), the participant estimated values do not differ significantly from the true value. For the grouped bar plot the obtained p-value is 0.009 < 0.05, and thus these responses are statistically significantly different from the true value. Running t-tests on the means, however, sees both sets of responses differing statistically significantly from the true value.
+To see if either of these values are significantly far from the true value, tests are once again run. A sign test on the stacked bar plot responses gives a high p-value of 0.5258, showing that for the stacked bar plot responses (after removing the values as priorly specified), the participant estimated values do not differ significantly from the true value. For the grouped bar plot the obtained p-value is 0.009 < 0.05, and thus these responses are statistically significantly different from the true value. 
 
 The next question, \textit{'How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?'}, is similar the above, but for the next bar to the right. The purpose of this question was to test the same hypothesis as the previous question, and also to lead into the following question, where respondents were asked to compare the 'Floating Steps' and 'Log Grip'. Additionally, the bar in the previous question had only two categories, of which the respondents were asked to judge the size of the category on the top of the bar in the stacked plot, whereas the bar for 'Log Grip' has 5 categories, of which the category of interest sits above 4. The true value of this was 9.
 
@@ -1700,10 +1696,7 @@ After removing the outlying values, there tended to be a slight underestimation 
 
 Once again the response sets are non-normally distributed and asymmetric, and so sign tests are applicable. The response set for the stacked bar plots produces a p-value of around 0.04, which shows a statistically significant difference in the responses from the true value of 9 at the 0.05 level of significance. However, this would easily become insignificant by slightly lowering the significance level to, say, 0.035. The p-value for the grouped bar responses, however, is >> 0.05, as expected given that the median of the data sits at the true value.
 
-The t-tests show that the differences in the means from the true value are statistically significant, although not considering the tests it can be seen by eye that the means are relatively close to 9.
-
-
-The respondents were then asked to \textit{'How many times would you say 'Log Grip' was used in the Finals (Regional/City) round?'}. This question asked respondents to judge whether log grip was used more, less, or an equal amount in the Finals (Regional/City) and Qualifying(Regional/City) rounds. This was to see how well differences between sizes of categories are judged when relating to the same variable, and are in the same bar. The results for this are given in the table below.
+The respondents were then asked to \textit{'Please select the statement you feel applies to the bar chart above.'}. This question asked respondents to judge whether log grip was used more, less, or an equal amount in the Finals (Regional/City) and Qualifying(Regional/City) rounds. This was to see how well differences between sizes of categories are judged when relating to the same variable, and are in the same bar. The results for this are given in the table below.
 
 ```{r}
 vir_stacked_3 <- vir_stacked$vir_sta_3
@@ -1717,7 +1710,9 @@ gr_grouped_3 <- gr_stacked$gr_grp_3
 stacked_3 <- c(vir_stacked_3, def_stacked_3, gr_stacked_3)
 grouped_3 <- c(vir_grouped_3, def_grouped_3, gr_grouped_3)
 ```
-The table shows overwhelmingly that significantly more people accurately judged that the two values were the same for the grouped bars than for the stacked bars. This was the hypothesised result, and has presented to an  even greater extent than previously anticipated. All but 7 of the respondents who responded to this question correctly judged from the grouped bars that the obstacle was used an equal number of times in each of the two rounds, whereas the responses for the grouped bar seemed fairly well split between the three options. It may be interesting in the multivariate analysis section to compare responses depending on whether respondents were shown the stacked or grouped bars first. Perhaps a reason for the incorrect judging with the stacked
+The table shows overwhelmingly that significantly more people accurately judged that the two values were the same for the grouped bars than for the stacked bars. This was the hypothesised result, and has presented to an  even greater extent than previously anticipated. All but 7 of the respondents who responded to this question correctly judged from the grouped bars that the obstacle was used an equal number of times in each of the two rounds, whereas the responses for the grouped bar seemed fairly well split between the three options. It may be interesting in the multivariate analysis section to compare responses depending on whether respondents were shown the stacked or grouped bars first. 
+
+Perhaps a reason for the incorrect judging with the stacked is that the human brain works best when dealing with comparison in position than with length, by the '10 elementary tasks' idea put forward by @clevelandmcgill, since comparing two height next to each other is a comparison in position as opposed to length, whereas the stacked bars are a length comparison.
 
 Respondents were then asked \textit{'Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?'}Similar to the previous question, this asks for a comparison between the size of two categories, but this time about how many times two different obstacles were used in the round Finals (Regional/City), where these two obstacles are those discussed at the start of this part of the survey.
 
@@ -1798,7 +1793,7 @@ second_col <- c("Default", "Viridis", "Greyscale", "Default", "Greyscale", "Viri
 
 df <- data.frame(set, first_col, second_col)
 names(df) <- c("Pairing ID", "Main Palette", "Secondary Pallette")
-knitr::kable(df)%>%
+knitr::kable(df, caption = "Colour pairings")%>%
   kable_styling(latex_options = "hold_position")
 ```
 
@@ -1811,76 +1806,238 @@ d_1 <- set_d$d_cols_1
 e_1 <- set_e$e_cols_1
 f_1 <- set_f$f_cols_1
 
+a_1_r <- set_a_r$a_cols_1
+b_1_r <- set_b_r$b_cols_1
+c_1_r <- set_c_r$c_cols_1
+d_1_r <- set_d_r$d_cols_1
+e_1_r <- set_e_r$e_cols_1
+f_1_r <- set_f_r$f_cols_1
+
+a_1_py <- set_a_py$a_cols_1
+b_1_py <- set_b_py$b_cols_1
+c_1_py <- set_c_py$c_cols_1
+d_1_py <- set_d_py$d_cols_1
+e_1_py <- set_e_py$e_cols_1
+f_1_py <- set_f_py$f_cols_1
+
 tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), c(table(e_1), 0), table(f_1))
 rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
-kable(tab)%>%
+kable(tab, caption = "Easiest to read and interpret colour scheme")%>%
+  kable_styling(latex_options = "hold_position")
+
+tab <- rbind(table(a_1_r), table(b_1_r), table(c_1_r), table(d_1_r), c(table(e_1_r), 0), table(f_1_r))
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+kable(tab, caption = "Easiest to read and interpret colour scheme, for R")%>%
+  kable_styling(latex_options = "hold_position")
+
+tab <- rbind(table(a_1_py), table(b_1_py), table(c_1_py), table(d_1_py), c(table(e_1_py), 0), table(f_1_py))
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+kable(tab, caption = "Easiest to read and interpret colour scheme, for Python")%>%
   kable_styling(latex_options = "hold_position")
 ```
-This table shows that when it came to the default/viridis pairings, displayed in the first two rows, the respondents tended to have no preference overall, although this may differ between languages, which will be explored later on. Comparing this to the bottom two rows, in which viridis is put against greyscale, only 1 respondent out of the 23, a proportion of 0.04, found the grey more aesthetically pleasing, as hypothesised. When considering greyscale/default, there was still a majority preferring the non-greyscale palette, but a higher proportion preferred this as compared to the viridis/greyscale, with 4 out of the 22, or a proportion of 0.18, preferring the grey.
+This table shows that when it came to the default/viridis pairings, displayed in the first two rows, the respondents tended to have no preference overall. Comparing this to the bottom two rows, in which viridis is put against greyscale, only 1 respondent out of the 23, a proportion of 0.04, found the grey more aesthetically pleasing, as hypothesised. When considering greyscale/default, there was still a majority preferring the non-greyscale palette, but a higher proportion preferred this as compared to the viridis/greyscale, with 4 out of the 22, or a proportion of 0.18, preferring the grey. Overall, 35 preferred viridis, 30 the default, and 5 the greyscale.
+
+As anticipated, the two more-colourful palettes are preferred aesthetically over the grey, and the viridis was preferred over the default.
 
 Complementing the aesthetic preferences, the second question assesses the colour preference with regard to readability and ease of interpretation. As mentioned before, this will be used to test both the colour palette preference itself alongside whether this preference matches up with aesthetic preference.
 
-```{r, fig.cap="Table showing which colour palettes respondents found easiest to read and interpret"}
-a_1 <- set_a$a_cols_2
-b_1 <- set_b$b_cols_2
-c_1 <- set_c$c_cols_2
-d_1 <- set_d$d_cols_2
-e_1 <- set_e$e_cols_2
-f_1 <- set_f$f_cols_2
+```{r}
+a_2 <- set_a$a_cols_2
+b_2 <- set_b$b_cols_2
+c_2 <- set_c$c_cols_2
+d_2 <- set_d$d_cols_2
+e_2 <- set_e$e_cols_2
+f_2 <- set_f$f_cols_2
 
-for(i in 1:length(a_1)){
-  if(a_1[i] == "Yes, A is easier"){
-    a_1[i] <- "A"
-  } else if(a_1[i] == "Yes, A is easier"){
-  a_1[i] <- "B"
-  } else a_1[i] <- "None"
+a_2_r <- set_a_r$a_cols_2
+b_2_r <- set_b_r$b_cols_2
+c_2_r <- set_c_r$c_cols_2
+d_2_r <- set_d_r$d_cols_2
+e_2_r <- set_e_r$e_cols_2
+f_2_r <- set_f_r$f_cols_2
+
+a_2_py <- set_a_py$a_cols_2
+b_2_py <- set_b_py$b_cols_2
+c_2_py <- set_c_py$c_cols_2
+d_2_py <- set_d_py$d_cols_2
+e_2_py <- set_e_py$e_cols_2
+f_2_py <- set_f_py$f_cols_2
+
+for(i in 1:length(a_2)){
+  if(a_2[i] == "Yes, A is easier"){
+    a_2[i] <- "A"
+  } else if(a_2[i] == "Yes, B is easier"){
+  a_2[i] <- "B"
+  } else a_2[i] <- "None"
 }
 
-for(i in 1:length(b_1)){
-  if(b_1[i] == "Yes, B is easier"){
-    b_1[i] <- "B"
-  } else if(b_1[i] == "Yes, A is easier"){ 
-    b_1[i] <- "A"
-    }else b_1[i] <- "None"
+for(i in 1:length(b_2)){
+  if(b_2[i] == "Yes, B is easier"){
+    b_2[i] <- "B"
+  } else if(b_2[i] == "Yes, A is easier"){ 
+    b_2[i] <- "A"
+    }else b_2[i] <- "None"
 }
 
-for(i in 1:length(e_1)){
-  if(e_1[i] == "Yes, A is easier"){
-    e_1[i] <- "A"
-  } else if(e_1[i] == "Yes, B is easier"){
-    e_1[i] <- "B"
-  } else e_1[i] <- "None"
+for(i in 1:length(e_2)){
+  if(e_2[i] == "Yes, A is easier"){
+    e_2[i] <- "A"
+  } else if(e_2[i] == "Yes, B is easier"){
+    e_2[i] <- "B"
+  } else e_2[i] <- "None"
 }
 
-for(i in 1:length(f_1)){
-  if(f_1[i] == "Yes, B is easier"){
-    f_1[i] <- "B"
-  } else if(f_1[i] == "Yes, A is easier"){
-    f_1[i] <- "A"
-  } else f_1[i] <- "None"
+for(i in 1:length(f_2)){
+  if(f_2[i] == "Yes, B is easier"){
+    f_2[i] <- "B"
+  } else if(f_2[i] == "Yes, A is easier"){
+    f_2[i] <- "A"
+  } else f_2[i] <- "None"
 }
 
-for(i in 1:length(c_1)){
-  if(c_1[i] == "Yes, A is easier"){
-    c_1[i] <- "A"
-  } else if(c_1[i] == "Yes, B is easier"){ 
-    c_1[i] <- "B"
-  } else c_1[i] <- "None"
+for(i in 1:length(c_2)){
+  if(c_2[i] == "Yes, A is easier"){
+    c_2[i] <- "A"
+  } else if(c_2[i] == "Yes, B is easier"){ 
+    c_2[i] <- "B"
+  } else c_2[i] <- "None"
 }
 
-for(i in 1:length(d_1)){
-  if(d_1[i] == "Yes, A is easier"){
-    d_1[i] <- "A"
-  } else if(d_1[i] == "Yes, B is easier"){ 
-    d_1[i] <- "B"
-  } else d_1[i] <- "None"
+for(i in 1:length(d_2)){
+  if(d_2[i] == "Yes, A is easier"){
+    d_2[i] <- "A"
+  } else if(d_2[i] == "Yes, B is easier"){ 
+    d_2[i] <- "B"
+  } else d_2[i] <- "None"
 }
 
-tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
-kable(tab)%>%
+
+
+
+
+for(i in 1:length(a_2_r)){
+  if(a_2_r[i] == "Yes, A is easier"){
+    a_2_r[i] <- "A"
+  } else if(a_2_r[i] == "Yes, B is easier"){
+  a_2_r[i] <- "B"
+  } else a_2_r[i] <- "None"
+}
+
+for(i in 1:length(b_2_r)){
+  if(b_2_r[i] == "Yes, B is easier"){
+    b_2_r[i] <- "B"
+  } else if(b_2_r[i] == "Yes, A is easier"){ 
+    b_2_r[i] <- "A"
+    }else b_2_r[i] <- "None"
+}
+
+for(i in 1:length(e_2_r)){
+  if(e_2_r[i] == "Yes, A is easier"){
+    e_2_r[i] <- "A"
+  } else if(e_2_r[i] == "Yes, B is easier"){
+    e_2_r[i] <- "B"
+  } else e_2_r[i] <- "None"
+}
+
+for(i in 1:length(f_2_r)){
+  if(f_2_r[i] == "Yes, B is easier"){
+    f_2_r[i] <- "B"
+  } else if(f_2_r[i] == "Yes, A is easier"){
+    f_2_r[i] <- "A"
+  } else f_2_r[i] <- "None"
+}
+
+for(i in 1:length(c_2_r)){
+  if(c_2_r[i] == "Yes, A is easier"){
+    c_2_r[i] <- "A"
+  } else if(c_2_r[i] == "Yes, B is easier"){ 
+    c_2_r[i] <- "B"
+  } else c_2_r[i] <- "None"
+}
+
+for(i in 1:length(d_2_r)){
+  if(d_2_r[i] == "Yes, A is easier"){
+    d_2_r[i] <- "A"
+  } else if(d_2_r[i] == "Yes, B is easier"){ 
+    d_2_r[i] <- "B"
+  } else d_2_r[i] <- "None"
+}
+
+
+for(i in 1:length(a_2_py)){
+  if(a_2_py[i] == "Yes, A is easier"){
+    a_2_py[i] <- "A"
+  } else if(a_2_py[i] == "Yes, B is easier"){
+  a_2_py[i] <- "B"
+  } else a_2_py[i] <- "None"
+}
+
+for(i in 1:length(b_2_py)){
+  if(b_2_py[i] == "Yes, B is easier"){
+    b_2_py[i] <- "B"
+  } else if(b_2_py[i] == "Yes, A is easier"){ 
+    b_2_py[i] <- "A"
+    }else b_2_py[i] <- "None"
+}
+
+for(i in 1:length(e_2_py)){
+  if(e_2_py[i] == "Yes, A is easier"){
+    e_2_py[i] <- "A"
+  } else if(e_2_py[i] == "Yes, B is easier"){
+    e_2_py[i] <- "B"
+  } else e_2_py[i] <- "None"
+}
+
+for(i in 1:length(f_2_py)){
+  if(f_2_py[i] == "Yes, B is easier"){
+    f_2_py[i] <- "B"
+  } else if(f_2_py[i] == "Yes, A is easier"){
+    f_2_py[i] <- "A"
+  } else f_2_py[i] <- "None"
+}
+
+for(i in 1:length(c_2_py)){
+  if(c_2_py[i] == "Yes, A is easier"){
+    c_2_py[i] <- "A"
+  } else if(c_2_py[i] == "Yes, B is easier"){ 
+    c_2_py[i] <- "B"
+  } else c_2_py[i] <- "None"
+}
+
+for(i in 1:length(d_2_py)){
+  if(d_2_py[i] == "Yes, A is easier"){
+    d_2_py[i] <- "A"
+  } else if(d_2_py[i] == "Yes, B is easier"){ 
+    d_2_py[i] <- "B"
+  } else d_2_py[i] <- "None"
+}
+
+
+tab <- rbind(table(a_2), c(table(b_2)[1], 0,table(b_2)[1]), c(table(c_2), 0), c(table(d_2), 0), c(table(e_2), 0), table(f_2))
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "None")
+kable(tab, caption = "Aesthetic preference of colour schemes")%>%
+  kable_styling(latex_options = "hold_position")
+
+tab <- rbind(table(a_2_r), c(table(b_2_r)[1], 0, table(b_2_r)[2]), c(table(c_2_r), 0), c(table(d_2_r), 0), c(table(e_2_r), 0, 0), table(f_2_r))
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "None")
+kable(tab, caption = "Aesthetic preference of colour schemes, for R")%>%
+  kable_styling(latex_options = "hold_position")
+
+tab <- rbind(table(a_2_py), c(table(b_2_py)[1], 0, 0), c(table(c_2_py), 0, 0), c(table(d_2_py), 0), c(table(e_2_py), 0, 0), c(0, table(f_2_py), 0))
+rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
+colnames(tab) <- c("A", "B", "None")
+kable(tab, caption = "Aesthetic preference of colour schemes, for Python")%>%
   kable_styling(latex_options = "hold_position")
 ```
-Interestingly here, the top two rows appear to give opposing results; the respondents who were presented with viridis for the main questions and the default as a secondary palette stated that they found either viridis easier to interpret or had no preference, whereas those presented with the default first and viridis second tended to find the default easier. Once again looking at the comparisons with the greyscale, there were some respondents that found this easier to read, but the majority chose the alternative, whether this is viridis or the default.
+Interestingly here, the top two rows appear to give slightly opposing results; the respondents who were presented with viridis for the main questions and the default as a secondary palette stated that they found either viridis easier to interpret or had no preference, whereas those presented with the default first and viridis second tended to find the default easier. This could perhaps be a result of the respondents becoming used to their primary colour scheme.
+
+Once again looking at the comparisons with the greyscale, there were some respondents that found this easier to read, but the majority chose the alternative, whether this is viridis or the default. 
+
+The results seem fairly similar for the R and Python responses, showing that the default colourings for each language elicit a similar level of ease of interpretation.
+
+The sample of respondents with colour blindness was too small to test this analysis.
 
 \section{Sales - Part 1}
 Now consider the sales part of the survey. In this section data was taken from a the `BJsales` data set in R, which is a time series data set containing 150 observations. This data set constitutes a single vector of values with no specified timings, and the visualisation data was formed by taking subsets of size 12 this and setting a month between each point to give a year of fictional sales data.
@@ -1946,6 +2103,15 @@ The final question of the survey compares just two plots, for which the differen
 trn_cd <- na.exclude(cd_trn$cd_trn)
 zro_cd <- na.exclude(cd_zro$cd_zro)
 ```
+
+\section{Conclusion}
+From this analysis, it can be concluded that altering axis scales in the way of truncating the axis or converting to a logarithmic scaling may have an effect on interpretation of differences in values, for both bar and line plots. The axis truncation has the effect of increasing the perceived difference in value and the logarithmic does the opposite. In general, from both literature, it is advised against to truncate the axis of a bar plot and this study confirms that it does in fact have an effect on interpretation. A logarithmic scaling may be ill-advised where it will distort the perceived size of the difference in point value, such as for the bar chart used here, however as discussed before from literature could be useful for other purposes, such as data that differs greatly in orders of magnitude. The labeling of this may also need to be considered, since the standard form labeling here confused some respondents. 
+
+Altering the aspect ratios had less of an effect, however there was a marginal effect of the wide plot making the difference in bar height appear smaller, and vice versa for the narrow, with the language not making a huge difference. This means that, while some consideration should be given to aspect ratios when re-scaling plots, it shouldn't have too much of an effect on interpretation.
+
+It was found that grouped bar charts lead to a higher accuracy in interpretation of data values by that a stacked chart, and that the judgement of size difference is also more accurate for the grouped, along with ease of interpretation. Based on this as well as the literature, it appears grouped bars are mostly preferable to stacked. 
+
+
 
 
 
