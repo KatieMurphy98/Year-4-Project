@@ -2109,7 +2109,7 @@ From this analysis, it can be concluded that altering axis scales in the way of 
 
 Altering the aspect ratios had less of an effect, however there was a marginal effect of the wide plot making the difference in bar height appear smaller, and vice versa for the narrow, with the language not making a huge difference. This means that, while some consideration should be given to aspect ratios when re-scaling plots, it shouldn't have too much of an effect on interpretation.
 
-It was found that grouped bar charts lead to a higher accuracy in interpretation of data values by that a stacked chart, and that the judgement of size difference is also more accurate for the grouped, along with ease of interpretation. Based on this as well as the literature, it appears grouped bars are mostly preferable to stacked. 
+It was found that grouped bar charts lead to a higher accuracy in interpretation of data values by that a stacked chart, and that the judgment of size difference is also more accurate for the grouped, along with ease of interpretation. Based on this as well as the literature, it appears grouped bars are mostly preferable to stacked. 
 
 
 
