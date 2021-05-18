@@ -13,9 +13,10 @@ from matplotlib import cm
 
 import os
 
+# Set working directory
 os.chdir("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Plots/Py")
 
-
+# Read in and manipulate data
 NinjaWarrior = pd.read_excel(
     "https://query.data.world/s/tjkd2yop2xh2x4o2j5fhatxdidcvty"
 )
@@ -31,7 +32,9 @@ NinjaWarrior = NinjaWarrior.rename(
 
 
 def obstacles(ObstacleNumbers):
-
+  # The function orders the data in decending order of how many times each obstacle
+  # was used and then subsets for the required indices.
+ 
     obst = pd.DataFrame(columns={"name", "ntimes"})
 
     for i in np.unique(NinjaWarrior.name):
@@ -44,7 +47,8 @@ def obstacles(ObstacleNumbers):
 
     print(obst)
 
-
+# Above function does not operate properly, 
+# so manually create data.
 name = [
     "Salmon Ladder",
     "Quintuple Steps",
@@ -75,9 +79,11 @@ rounds = np.array(
 )
 
 obst = pd.DataFrame(data={"name": name, "ntimes": ntimes})
-
+  # n.obst specifies the indices of obstacles to be plotted
+  # Function returns and saves bar plots with different axis scalings
 
 def barplots_yscaling(nobst):
+
     ##### CONTROL #####
     plt.bar(name[0:nobst], ntimes[0:nobst], color="#69b3a2")
     plt.xlabel("Obstacle")
@@ -103,6 +109,9 @@ barplots_yscaling(4)
 
 
 def barplots_axisratio():
+  # n.obst specifies the indices of obstacles to be plotted
+  # Function returns and saves bar plots with different aspect ratios
+
     ##### CONTROL #####
     plt.bar(name[0:nobst], ntimes[0:nobst], color="#69b3a2")
     plt.xlabel("Obstacle")
@@ -131,7 +140,9 @@ barplots_axisratio(7)
 
 
 def barplots_stacked(nobst):
-
+  # n.obst specifies the indices of obstacles to be plotted
+  # Function returns and saves stacked bar plots with different colourings
+  
     ##### CONTROL #####
     def default(title):
         plt.bar(
@@ -338,8 +349,10 @@ def barplots_stacked(nobst):
 barplots_stacked(4)
 
 
-def barplots_sidebyside(nobst):
-
+def barplots_grouped(nobst):
+  # n.obst specifies the indices of obstacles to be plotted
+  # Function returns and saves stacked bar plots with different colourings
+  
     pos = np.arange(len(name[0:nobst]))
     barwidth = np.array([0.8 / 3, 0.8 / 4, 0.8 / 2, 0.8 / 4])
 
@@ -464,11 +477,13 @@ def barplots_sidebyside(nobst):
     plt.show()
 
 
-barplots_sidebyside(4)
+barplots_grouped(4)
 
 ##### sales #####
 
 month = list(range(1, 13))
+
+# Manually create data to match data used in R plots
 
 salesA = [
     211.0,
