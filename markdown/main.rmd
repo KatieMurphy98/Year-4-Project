@@ -66,6 +66,8 @@ devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8",
 
 \section{Acknowledgements}
 
+\chapter{Introduction}
+
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/lit-review/main.rmd'}
 ```
 
@@ -77,6 +79,8 @@ devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8",
 
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/appendix.rmd'}
 ```
+
+\chapter{Conclusion}
 
 \chapter{Future Work}
 Future work on this topic would include running focus groups with survey respondents to obtain more in depth information regarding the survey questions, for example asking open ended questions to understand the reasoning behind responses and to open a discussion about the topic in general.
