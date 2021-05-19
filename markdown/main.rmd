@@ -86,7 +86,9 @@ Finally, I would like to thank everyone who participated in the study, in both t
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/appendix.rmd'}
 ```
 
+\chapter{Conclusion}
+
 \chapter{Future Work}
-Future work on this topic would include running focus groups with survey respondents to obtain more in depth information regarding the survey questions, for example asking open ended questions to understand the reasoning behind responses and to open a discussion about the topic in general.
+Future work on this topic would include running focus groups with survey respondents to obtain more in depth information regarding the survey questions, for example asking open ended questions to understand the reasoning behind responses and to open a discussion about the topic in general. This is in addition to the prior mentioned topics for further research. If not for time constraints, JavaScript D3 would also have been implemented and investigated, and so this could perhaps be involved in a future study and compared to R and Python. An investigation into the combined D3/Python approach could also be studied.
 
 \chapter{References}
