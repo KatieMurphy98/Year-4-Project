@@ -4,14 +4,14 @@ output:
     number_sections: true
 fontsize: 11pt
 documentclass: book
-geometry: margin=1in
+geometry: margin=0.8in
 header-includes:
   \setlength{\parskip}{1em}
   \linespread {1.25}
   \usepackage{pdfpages}
+  \usepackage{sectsty}
 bibliography: bibliography.bib  
 link-citations: yes
-toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -30,11 +30,11 @@ devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8",
         \textbf{An Emprirical Study of Data Visualisation}
 
         \vspace{0.5cm}
-        \textit{A study into the theory behind data visualisation}
+        \textit{An investigation into the theory behind data visualisation}
 
         \vspace{1.5cm}
 
-        \textbf{Katie Murphy}
+        \textbf{Katie Murphy - 1632254}
         \vspace{1.5cm}
 
         \includegraphics[width=0.5\textwidth]{universitylogo.eps}
@@ -56,7 +56,7 @@ devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8",
         libraries 'ggplot2' from R and 'matplotlib' from Python. The investigation will focus on aspects of
         visualisations that may either deliberately or accidentally mislead the observer, such as inapropriate axis 
         scalings and labeling, alteration of aspect ratios, and the use of colour. A survey is administered to gather
-        quantitative information and interviews with experienced programmers are held to gain an understanding on the
+        quantitative information in regard to visual perception of visualisations with a variety of modifications and interviews with experienced programmers are held to gain an understanding on the
         opinions of the codes and visualisation packages themselves.}
 
     \end{center}
@@ -66,7 +66,7 @@ devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8",
 
 \newpage
 
-\section{Acknowledgements}
+\section*{Acknowlegements}
 
 I would like to thank my supervisor, Dr. Vince Knight, for his invaluable support and encouragement throughout the last year. It has been a difficult year for many reasons, and Vince has always been very understanding and supportive, and has helped me greatly in managing to get this dissertation to this point. I could not have managed without his continued support and guidance.
 
@@ -78,15 +78,16 @@ Finally, I would like to thank everyone who participated in the study, in both t
 
 \vspace{5cm}
 
-This report was written using R Markdown [@Allaire2020-sr] with version control using Git and GitHub [@git].
+This report was written and compiled using R Markdown [@Allaire2020-sr] with pdflatex and version control using Git and GitHub [@git].
 
 
 \centering
+
 \raggedright
-\newpage
+
+\clearpage
+
 \tableofcontents
-
-
 
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/lit-review/main.rmd'}
 ```
@@ -97,8 +98,8 @@ This report was written using R Markdown [@Allaire2020-sr] with version control 
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/univariate-analysis/main.rmd'}
 ```
 
-#```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/appendix.rmd'}
-#```
+```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/appendix.rmd'}
+```
 
 \chapter{Conclusion}
 

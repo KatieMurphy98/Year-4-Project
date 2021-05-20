@@ -1,5 +1,5 @@
 \chapter{Appendices}
-\section{Apendix 1 - The Survey}
+\section{Appendix 1 - The Survey}
 The following shows a pdf paper format of the first versions of the surveys, for R and Python.
 
 \subsection{R}

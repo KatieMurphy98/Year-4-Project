@@ -818,7 +818,7 @@ In terms of testing, Shapiro-Wilk tests will be applied with the `shapiro.test()
 
 The sample sizes are 70, 38 and 32 for the whole population, R subgroup and Python subgroup, respectively before removing NA of invalid values. The sample means and medians will be notated as $\bar{x}$ and $\tilde{x}$, respectively.
 
-See appendix 2 for all statistical testing results and p-values.
+See appendix 4 for all statistical testing results and p-values.
 
 \section{American Ninja Warrior - Part 1}
 This part of the survey assess the effect of truncated and logarithmic scaling on bar plots perception and interpretation.
@@ -864,7 +864,7 @@ Performing a dependent-samples sign test comparing these two sets of responses c
 
 In question 2, \textit{'Approximately how much more than 'Log Grip' would you say 'Salmon Ladder' was was used?'}, the set of responses for the truncated plot ($\bar{x} = 5.87$, $\tilde{x} = 6$) is considered significantly different by a dependent-samples sign test from the control plot responses ($\bar{x} = 5.36$, $\tilde{x} = 5$). By eye, the average values do not seem too different between the two plot types, although the p-value of the sign test ($p = 0.00019$) shows that there is in fact a statistically significant difference. The perceived difference for the truncated plot being rated higher on average than for the control plot provides evidence to accept the hypothesis that using a truncated scale can cause differences in bar height to appear larger, once again this is confirmed by a one-sided sign test ($p=9.554e-05$), with the alternative hypothesis that the true median of truncated responses is greater than that of the control responses. 
 
-```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 2"}
+```{r}
 control_2 <- ctrl_y_scale$con_2
 truncated_2 <- trnc_y_scale$trn_2
 resp <- c(control_2, truncated_2)
@@ -887,9 +887,9 @@ ggplot(stats_2)+
 
 The spread for the truncated and control plot responses are slightly skewed to the right, depicting that the subjective view on the difference between the bar heights was that it was in general on the larger side. Looking at the bar heights, for the responses of 4 and 5 the control plot bars are higher, and vice versa for the truncated plot response bars. This again emphasises the evidence to support the hypothesis that truncation leads to larger perceived difference.
 
-Question 3 of part 1, \textit{'Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?'}, asks a similar question to question 2, but asks respondents to judge the difference for bars on opposite ends of the plot as opposed to next to each. Again, the by eye comparison shows not a massive difference between distributions of responses for the control ($\bar{x}=3.12$, $\tilde{x}=3$) and truncated ($\bar{x}=3.12$, $\tilde{x}=3$) plots, although the sign test shows that the there is evidence to suggest that the truncated plot responses are in fact on average greater than for the control plot ($p=4.624e-06$). figure[?] shows the distribution of responses.
+Question 3 of part 1, \textit{'Approximately how much more than 'Quintuple Steps' would you say 'Salmon Ladder' was used?'}, asks a similar question to question 2, but asks respondents to judge the difference for bars on opposite ends of the plot as opposed to next to each. Again, the by eye comparison shows not a massive difference between distributions of responses for the control ($\bar{x}=3.12$, $\tilde{x}=3$) and truncated ($\bar{x}=3.12$, $\tilde{x}=3$) plots, although the sign test shows that the there is evidence to suggest that the truncated plot responses are in fact on average greater than for the control plot ($p=4.624e-06$). figure 3.3 shows the distribution of responses.
 
-```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3"}
+```{r}
 
 control_3 <- ctrl_y_scale$con_3
 truncated_3 <- trnc_y_scale$trn_3
@@ -922,7 +922,7 @@ Comparisons via MWW testing show that the responses related to the control plot 
 A sign test shows sufficient evidence that the R subgroup responses relating to the truncated plot differ from the true value ($p = 0.0004$), whereas there is insufficient evidence when applying a MWW test to the Python responses ($p = 0.718$). Similarly, the R subgroup's responses in relation to the control plot statistically significantly differ from the true value ($p=7.629e-05$), but the Python subgroup's do not ($p=0.1185$). This could potentially be a result of the less granulated R plot scaling, due to the reduced precision.
 
 
-```{r fig.cap = "Density plot showing distributions of responses regarding the control and truncated plots for the question 1"}
+```{r}
 control_1_r <- ctrl_y_scale_r$con_1
 control_1_r[which(control_1_r == "41/42")] <- 41.5
 control_1_r <- na.exclude(as.numeric(control_1_r))
@@ -963,9 +963,9 @@ plot_grid(p, q)
 The distributions for the control and truncated plot responses for the R subgroup are fairly similar to the whole population, although the peaks for the logarithmic plot responses are marginally lower. The distribution of the truncated plots is unexpected from lokking at the numbers, and more 'chaotic'. This shows potentially more variation in the responses.
 
 
-For question 2 it is similarly seen that the language used does not have a statistically significant impact on the response for the truncated plot, with means $5.500$ and $5.187$, and medians $6$ and $5$ respectively for R and Python for the control plot, and means $5.98$ and $5.84$ both with median $6$ for the truncated. Comparative testing with MWW gives $p=0.2199$ for the control plot and $0.9105$ for the truncated. Thus, the scale granulation or any other differing aspect of the plots does not seem to have a significant effect. See figure[?] for the distributions.
+For question 2 it is similarly seen that the language used does not have a statistically significant impact on the response for the truncated plot, with means $5.500$ and $5.187$, and medians $6$ and $5$ respectively for R and Python for the control plot, and means $5.98$ and $5.84$ both with median $6$ for the truncated. Comparative testing with MWW gives $p=0.2199$ for the control plot and $0.9105$ for the truncated. Thus, the scale granulation or any other differing aspect of the plots does not seem to have a significant effect. See figure 3.4 for the distributions.
 
-```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 2, for the R and Python subgroups"}
+```{r}
 control_2_r <- ctrl_y_scale_r$con_2
 truncated_2_r <- trnc_y_scale_r$trn_2
 resp <- c(control_2_r, truncated_2_r)
@@ -1005,7 +1005,7 @@ plot_grid(p, q)
 
 For question 3, it is again seen that the responses in relation to the R version of truncated plot ($\bar{x} = 3.76$, $\tilde{x} = 4$) do not differ significantly to those related to the Python version ($\bar{x} = 3.78$, $\tilde{x} = 4$), with a two sample MWW p-value of 0.9708. Similarly the control plot, there is little difference between the R ($\bar{x} = 3.342$, $\tilde{x} = 3$) and the Python ($\bar{x} = 2.87$, $\tilde{x} = 3$) versions of the plot, again with am MWW p-value 0f 0.1465.
 
-```{r fig.cap = "Bar plot showing distributions of responses regarding the control and truncated plots for question 3, for the R and Python subgroups"}
+```{r}
 control_3_r <- ctrl_y_scale_r$con_3
 truncated_3_r <- trnc_y_scale_r$trn_3
 resp <- c(control_3_r, truncated_3_r)
@@ -1043,7 +1043,7 @@ q <- ggplot(stats_3_py)+
 plot_grid(p, q)
 ```
 
-Figure[?] shows both distributions, with the R appearing more positively skewed and the python looking fairly symmetric for both plot types, which was also found when performing symmetry tests. For the Python it can also easily be seen that the bars for the truncated plot responses seems 'shifted' to the right slightly as compared to the control.
+Figure 3.4 shows both distributions, with the R appearing more positively skewed and the python looking fairly symmetric for both plot types, which was also found when performing symmetry tests. For the Python it can also easily be seen that the bars for the truncated plot responses seems 'shifted' to the right slightly as compared to the control.
 
 Now considering subsetting for the respondents that saw the truncated plot first out of the three. Note that 25 saw the control plot first and 23 saw the truncated plot first.
 
@@ -1090,7 +1090,7 @@ The variance in the responses for the logarithmic plot is also high, with value 
 The distribution of responses in the R subgroup also shows on average a slight underestimation ($\bar{x}= 39.73$, $\tilde{x} = 35$) and, as expected, vast overestimation for the Python version ($\bar{x}= 39.73$, $\tilde{x} = 35$). This shows that, with a linearly notated logarithmic scale, the scale may cause underestimation, but this is counteracted by using a standard form notation. 
 
 
-It can be considered to follow the convention of values that have value outside the range $[Q1 - 1.5 \times IQR, Q3 + 1.5 \times IQR]$, where $Q1$ and $Q3$ are the first and third quartiles, which here would be the range $[14.25, 60.75]$ and results in a sample size of 59. Consider now the response distribution for the logarithmically-scaled plot, after removing these responses, for which figure[?] gives the density plot. Both plots show the response distribution of the outlier-removed set of responses, with the providing a comparison with the distribution of responses relating to the control plot.
+It can be considered to follow the convention of values that have value outside the range $[Q1 - 1.5 \times IQR, Q3 + 1.5 \times IQR]$, where $Q1$ and $Q3$ are the first and third quartiles, which here would be the range $[14.25, 60.75]$ and results in a sample size of 59. Consider now the response distribution for the logarithmically-scaled plot, after removing these responses, for which figure 3.7 gives the density plot. Both plots show the response distribution of the outlier-removed set of responses, with the providing a comparison with the distribution of responses relating to the control plot.
 ```{r, fig.cap = "Density plot showing distributions of responses regarding the control and logarithmic scaled plot, after removing values of greater or equal to 1000"}
 brks <- c("Control", "Logarithmic")
 vals <- c("#1c9e77",  "#7570b3")
@@ -1117,7 +1117,7 @@ plot_grid(p, q)
 
 The Python default of standard form notation appears to have confused certain respondents, who are perhaps not as used to seeing this notation, and there was a large range in the responses along with one person not even entering a number, but rather stating that they "Don't know", and another stating they believed the value was "Next to none". The "Next to none" entry is subjective, but could potentially be be assumed as a value close to 0, once again maybe as a result of standard form being less well known to this respondent.
 
-The distribution of responses for question 2 is displayed in figure[?].
+The distribution of responses for question 2 is displayed in figure 3.8.
 
 ```{r}
 
@@ -1148,9 +1148,9 @@ ggplot(stats_2)+
 
 The spread of logarithmic plot values is fairly wide, with at least one response for each option, and the control is the same as stated before. The plot depicts how there is a wide spread of values, with some respondents having very different subjective views of the size of the difference to others. On average, the subjective perceived difference in bar heights was significantly lower for the logarithmic plot responses ($\bar{x}=3.67$, $\tilde{x}=3.5$) than for the control ($\bar{x}=3.35$, $\tilde{x}=5$). This is evidenced by a one-sided sign test with the alternative hypothesis that the logarithmic plot responses are on average lower than the control plot responses.
 
-There is evidence to show that the difference between the R and Python versions of the logarithmic plot is significant ($p=0.00096$, $\bar{x}_R = 4.263$, $\bar{x}_{Py} = 2.969$). The distributions for the two language subsets are shown in figure[?]. 
+There is evidence to show that the difference between the R and Python versions of the logarithmic plot is significant ($p=0.00096$, $\bar{x}_R = 4.263$, $\bar{x}_{Py} = 2.969$). The distributions for the two language subsets are shown in figure 3.9. 
 
-```{r fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 2, separated by language"}
+```{r}
 brks <- c("Control", "Logarithmic")
 vals <- c("#1c9e77",  "#7570b3")
 
@@ -1189,12 +1189,14 @@ q <- ggplot(stats_2)+
   scale_fill_manual(values=vals, breaks = c('Control', 'Logarithmic'))+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
   theme_classic()
+```
 
+```{r fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 2, separated by language"}
 plot_grid(p, q)
 ```
 
 
-In regard to question 3, see again figure[?] for the plotted distributions.
+In regard to question 3, see again the below figure for the plotted distributions.
 
 ```{r fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 3"}
 brks <- c("Control", "Logarithmic")
@@ -1208,7 +1210,9 @@ y_scale_3_all <- as.data.frame(y_scale_3_all)
 resp <- c(control_3, logarithmic_3)
 type <- c(rep('Control', 70), rep('Logarithmic', 70)) 
 stats_2 <- data.frame(resp, type)
+```
 
+```{r fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 3"}
 ggplot(stats_2)+
   geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge') +
   ylab("Number of Respondents")+
@@ -1217,13 +1221,13 @@ ggplot(stats_2)+
   scale_fill_manual(values=vals, breaks = c('Control', 'Logarithmic'))+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
   theme_classic()
-
 ```
+
 The responses for the logarithmically scaled plot are skewed towards the lower end of the scale, similar to the control and truncated responses, and there does not appear to be much difference between distributions of the two populations. Looking at the numbers, however, the averages for the logarithmic plot ($\bar{x}=2.22$, $\tilde{x}=2$) seem lower than that of the control plot ($\bar{x}=3.77$, $\tilde{x}=4$). Indeed, a one sided MWW test comparing the logarithmic and control plot responses elicits a p-value of $1.317e-06$, showing evidence that the logarithmic scale resulted in lower rating in difference of bar height.
 
-Figure [?] shows the distributions for R and Python subgroups.
+Figure 3.10 shows the distributions for R and Python subgroups.
 
-```{r fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 2, separated by language"}
+```{r}
 brks <- c("Control", "Logarithmic")
 vals <- c("#1c9e77",  "#7570b3")
 
@@ -1260,7 +1264,9 @@ q <- ggplot(stats_3_py)+
   scale_fill_manual(values=vals, breaks = c('Control', 'Logarithmic'))+
   scale_x_discrete(breaks = c("1", "2", "3", "4", "5", "6", "7"), labels = c("1", "2", "3", "4", "5", "6", "7"), limits = c("1", "2", "3", "4", "5", "6", "7"))+
   theme_classic()
+```
 
+```{r fig.cap = "Bar plots showing distributions of responses regarding the control and logarithmic plots for the question 2, separated by language"}
 plot_grid(p, q)
 ```
 
@@ -1270,7 +1276,7 @@ Looking at the responses from the respondents who saw the logarithmic plot first
 
 
 \subsection{Differences Between Question 2 and 3 Responses}
-Now take $\bar{x}_{control} - \bar{x}_{truncated}$ and $\bar{x}_{control} - \bar{x}_{logarithmic}$ for each of questions 2 and 3, which is shown in figure[?]. 
+Now take $\bar{x}_{control} - \bar{x}_{truncated}$ and $\bar{x}_{control} - \bar{x}_{logarithmic}$ for each of questions 2 and 3, which is shown in figure 3.11. 
 ```{r}
 control <- ctrl_y_scale$con_2
 truncated <- trnc_y_scale$trn_2
@@ -1309,7 +1315,7 @@ rownames(diff_mat) <- c("Q2", "Q3")
 kable(diff_mat, caption = "Table showing difference in the percieved difference for the logarithmic-scaled and truncated plots as compared to the control, for questions 2 and 3") %>%
   kable_styling(latex_options = "hold_position")
 ```
-This again shows that the responses for the truncated plot were in general rated higher than the control plot responses, and also that the effect was more significant for the bars on opposite ends of the plot as compared to the bars next to each other. The opposite is true for the logarithmic plot responses; on average they were rated lower than the control plot, but this was greatly more significant for the bars next to each other, as opposed to the truncated plot. Figure[?] shows this visually.
+This again shows that the responses for the truncated plot were in general rated higher than the control plot responses, and also that the effect was more significant for the bars on opposite ends of the plot as compared to the bars next to each other. The opposite is true for the logarithmic plot responses; on average they were rated lower than the control plot, but this was greatly more significant for the bars next to each other, as opposed to the truncated plot. Figure 3.12 shows this visually.
 
 
 ```{r fig.cap= "Bar plot giving a visual representation of the table"}
@@ -1317,8 +1323,9 @@ brks <- c("Truncated", "Logarithmic")
 vals <- c("#d95f02",  "#7570b3")
 
 df <- data.frame("Trnc"=c(diff_mat[,1]), "Log"=c(diff_mat[,2]), "Question" = c("Log Grip vs Salmon Ladder", "Quintuple Steps vs Salmon Ladder"))
+```
 
-
+```{r fig.cap= "Bar plot giving a visual representation of the table"}
 ggplot()+
   geom_bar(data=df, aes(x = Question, y=Trnc, fill = brks[1]), stat="identity")+
   geom_bar(data=df, aes(x = Question, y=Log, fill = brks[2]), stat="identity")+
@@ -1328,7 +1335,11 @@ ggplot()+
   theme_classic()
 ```
 
-On average, truncating the scale had a similar effect for both questions, albeit with slightly more effect for when comparing 'Salmon Ladder' with 'Quintuple Steps' as opposed to 'Log Grip'. For the logarithmically scaled plots, however, the re-scaling appears to have had a significantly greater effect when considering the bars directly next to each other, with respondents on average judging the difference in bar height to be greater by 1.68 on the 7-point scale, whereas this is 0.9 for the bars further apart. It can be concluded from this that truncating the scale had more of an impact when bars were on opposite ends of the plot as opposed to next to each other, and the way round for the bars close to each other; the logarithmic scaling had more of an impact.
+On average, truncating the scale had a similar effect for both questions, albeit with slightly more effect for when comparing 'Salmon Ladder' with 'Quintuple Steps' as opposed to 'Log Grip'. 
+
+\newpage
+
+For the logarithmically scaled plots, however, the re-scaling appears to have had a significantly greater effect when considering the bars directly next to each other, with respondents on average judging the difference in bar height to be greater by 1.68 on the 7-point scale, whereas this is 0.9 for the bars further apart. It can be concluded from this that truncating the scale had more of an impact when bars were on opposite ends of the plot as opposed to next to each other, and the way round for the bars close to each other; the logarithmic scaling had more of an impact.
 
 \section{American Ninja Warrior - Part 2}
 
@@ -1342,7 +1353,7 @@ narrow <- nar_ratio$nar_1
 wide <- wid_ratio$wid_1
 ratio_1_all <- cbind(default, wide, narrow)
 ```
-Looking at the means and medians here, it doesn't seem like there is that much of a difference in perception of the differences between the three aspect ratios, as displayed in table[?].
+Looking at the means and medians here, it doesn't seem like there is that much of a difference in perception of the differences between the three aspect ratios, as displayed in table 3.2.
 
 ```{r}
 means <- c(mean(default), mean(narrow), mean(wide))
@@ -1350,14 +1361,17 @@ meds <- c(median(default), median(narrow), median(wide))
 tab <- rbind(means, meds)
 colnames(tab) <- c("Default", "Narrow", "Wide")
 rownames(tab) <- c("Mean", "Median")
-kable(tab, digits=3) %>%
+```
+
+```{r}
+kable(tab, digits=3, caption = "Table showing means and medians") %>%
   kable_styling(latex_options = "hold_position")
 ```
 
 
 Note that 'narrow' is defined as the plot with the aspect ratio of smaller width to greater height, and vice versa for the 'wide' plot. The means show marginal differences, whereby the default plot mean is the middle-valued mean of the three, with the mean perceived difference for the wide plot being slightly smaller than this and the mean perceived difference for the narrow plot is slightly larger. This result, although at first glance marginal, follows the hypothesis that the wide plot would cause differences to be perceived as smaller and narrow bars to cause differences to be perceived to be greater. 
 
-Now looking at figure[?], showing the three distributions. There isn't an immediately obvious difference in distributions, but on closer inspection it can be seen that the orange "Wide" bars dominate over the three for the range [2, 5], and the purple "Narrow" dominated for the response of 7, following the above analysis of summary statistics. There was a fairly strong consensus that in general that a rating of 6 was applicable to all three plots.
+Now looking at figure 3.13, showing the three distributions. There isn't an immediately obvious difference in distributions, but on closer inspection it can be seen that the orange "Wide" bars dominate over the three for the range [2, 5], and the purple "Narrow" dominated for the response of 7, following the above analysis of summary statistics. There was a fairly strong consensus that in general that a rating of 6 was applicable to all three plots.
 
 ```{r fig.cap = "Bar plots showing distributions of responses regarding the three plots"}
 
@@ -1377,7 +1391,6 @@ ggplot(data = stats)+
   xlab("Response")+
   ylab("Number of Respondents")
 
-SIGN.test(default, wide, alt="g")
 ```
 
 Running a one-sided MWW test to compare the responses for default plot to the narrow plot, it is confirmed that there is evidence to suggest that using a 'narrow' aspect ratio causes the perceived difference to be greater ($p=0.0468$). Then applying a one-sided sign test to compare the default to the wide plot, the perceived difference is shown to be smaller ($p=6.457e-06$).
@@ -1406,9 +1419,9 @@ wide <- wid_ratio$wid_2
 
 ratio_2_all <- cbind(default, wide, narrow)
 ```
-The analysis results here show that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wide plots being identical at 3.057, with the mean of the narrow plot responses only 0.157 greater at3.214. The median for all three is 3, and the IQRs are all $[2, 7]$. The variances, however, do differ from one another, with values 1.301, 0.866 and 1.214 for the default, wide and narrow bars, respectively. The distribution of values are shown in figure[?]. The results of two-sided MWW tests show that neither aspect ratio appears to have a significant effect on the rating of the perceived difference ($p=0.2446$ and $p=0.5688$).
+The analysis results here show that altering the axis ratio appears to have even less of an effect than in the first question, with the means of the responses for the default and wide plots being identical at 3.057, with the mean of the narrow plot responses only 0.157 greater at3.214. The median for all three is 3, and the IQRs are all $[2, 7]$. The variances, however, do differ from one another, with values 1.301, 0.866 and 1.214 for the default, wide and narrow bars, respectively. The distribution of values are shown in figure 3.14. The results of two-sided MWW tests show that neither aspect ratio appears to have a significant effect on the rating of the perceived difference ($p=0.2446$ and $p=0.5688$).
 
-```{r fig.cap = "Box plots showing distributions of responses regarding the three plots"}
+```{r}
 
 brks <- c("Default", "wide", "narrow")
 vals <- c("#1c9e77", "#d95f02", "#7570b3")
@@ -1417,7 +1430,9 @@ ratio_1_all <- as.data.frame(ratio_2_all)
 resp <- c(default, wide, narrow)
 type <- c(rep('Default', 70), rep('wide', 70), rep('narrow', 70)) 
 stats <- data.frame(resp, type)
+```
 
+```{r fig.cap = "Box plots showing distributions of responses regarding the three plots"}
 ggplot(data = stats, aes(x=type, y=resp, fill=type))+
   geom_boxplot(outlier.colour="black", outlier.shape=1,
              outlier.size=2, notch=F)+
@@ -1429,7 +1444,8 @@ ggplot(data = stats, aes(x=type, y=resp, fill=type))+
   xlab("Plot Type")
 
 ```
-At least $50/%$ of respondents placed the difference in the range $[2, 4]$ for all three plots, showing that they believed the difference was small to moderate, and this didn't change depending on the plot type, and thus for the bars further apart from each other, changing the aspect ratio does not appear to make much of a difference. The overall distributions are shown in the figure[?]
+
+At least $50\%$ of respondents placed the difference in the range $[2, 4]$ for all three plots, showing that they believed the difference was small to moderate, and this didn't change depending on the plot type, and thus for the bars further apart from each other, changing the aspect ratio does not appear to make much of a difference. The overall distributions are shown in the figure 3.14.
 
 
 ```{r fig.cap = "Density plots showing distributions of responses regarding the three plots"}
@@ -1485,12 +1501,14 @@ kable(diff_mat, caption = "Table showing difference in the percieved difference 
   kable_styling(latex_options = "hold_position")
 ```
 
-As before, the table below gives a visual representation.
+As before, the figure below gives a visual representation.
+
+```{r}
+df <- data.frame("narrow"=c(diff_mat[,1]), "wide"=c(diff_mat[,2]), "Question" = c("Jumping Spider vs Salmon Ladder", "Log Grip vs Floating Steps"))
+```
+
 
 ```{r fig.cap= "Bar plot giving a visual representation of the table"}
-df <- data.frame("narrow"=c(diff_mat[,1]), "wide"=c(diff_mat[,2]), "Question" = c("Jumping Spider vs Salmon Ladder", "Log Grip vs Floating Steps"))
-
-
 ggplot()+
   geom_bar(data=df, aes(x = Question, y=narrow, fill = brks[2]), stat="identity")+
   geom_bar(data=df, aes(x = Question, y=wide, fill = brks[3]), stat="identity")+
@@ -1499,7 +1517,8 @@ ggplot()+
   scale_y_continuous(name = "Average difference from default plot", limits = c(-0.25, 0.6), breaks = seq(-0.25, 0.6, 0.1))+
   theme_classic()
 ```
-Both by eye comparisons of values and statistical testing show that the language used has negligible effect on the perceived difference, as does the order in which the plots were shown. See tables 51 - 61 in the appendix for more details.
+
+Both by eye comparisons of values and statistical testing show that the language used has negligible effect on the perceived difference, as does the order in which the plots were shown. See tables 51 - 61 in appendix 4 for more details.
 
 \subsection{How many times would you say 'Floating Steps' were used?}
 
@@ -1522,7 +1541,9 @@ vals <- c("#1c9e77", "#d95f02", "#7570b3")
 resp <- c(default, wide, narrow)
 type <- c(rep('Default', 70), rep('wide', 70), rep('narrow', 70)) 
 stats <- data.frame(resp, type)
+```
 
+```{r fig.cap = "Box plots showing distributions of responses regarding the three plots"}
 ggplot(data = stats, aes(x=type, y=resp, fill=type))+
   geom_boxplot(outlier.colour="black", outlier.shape=1,
              outlier.size=2, notch=F)+
@@ -1538,15 +1559,15 @@ Looking at the box plots, there are very small ranges in the values, signifying 
 
 
 ```{r fig.cap = "Density plots showing distributions of responses regarding the three plots"}
-
 ggplot() +
-  geom_density(data = as.data.frame(default ), aes(x=default , col = "Default"))+
-  geom_density(data = as.data.frame(wide   ), aes(x=wide   , col = "wide"))+
+  geom_density(data = as.data.frame(default), aes(x=default , col = "Default"))+
+  geom_density(data = as.data.frame(wide), aes(x=wide   , col = "wide"))+
   geom_density(data = as.data.frame(narrow), aes(x=narrow, col = "narrow"))+
   labs(x="Response", y="Density")+
   scale_colour_manual(name = " ", breaks = brks, values = vals)+
   theme_classic()
 ```
+
 The distributions for the default and narrow plot responses are similar, both seeming to be fairly centred on the mean with a steep decrease in density on either side of the mean to shallow tails within the range $[25, 30]$. The responses for the wide plot appear to be more spread with lower density function values, with a slight negative skew.
 
 ```{r}
@@ -1561,9 +1582,9 @@ However, statistical tests do actually show that while the default responses did
 
 Changing the language and plot order was once again inconsequential here.
 
-\subsection{Differences Between Question 1 and 2 Responses}
+\subsection{Comparison questions on aesthetics and ease of interpretation}
 
-The last set of questions in part 2 show respondents all three of the bar plots presented in this section and ask them to select which they find most aesthetically pleasing, and which they find easiest and hardest to interpret. Table[?] gives the number of respondents that selected each plot for each of the three questions.
+The last set of questions in part 2 show respondents all three of the bar plots presented in this section and ask them to select which they find most aesthetically pleasing, and which they find easiest and hardest to interpret. Table 3.4 gives the number of respondents that selected each plot for each of the three questions.
 
 ```{r echo=F}
 comp_1 <- comp_ratio_all$all_1
@@ -1572,7 +1593,8 @@ comp_2 <- comp_ratio_all$all_2
 comp_3 <- comp_ratio_all$all_3
 tab <- rbind(table(comp_1), table(comp_2), table(comp_3))
 rownames(tab) <- c("Most aesthetically pleasing?", "Easiest to read and interpret?", "Hardest to read and interpret?")
-kable(tab) %>%
+
+kable(tab, caption="Numbers of responses for each option") %>%
   kable_styling(latex_options = "hold_position")
 ```
 
@@ -1606,14 +1628,16 @@ bars <- data.frame(stacked_1, grouped_1)
 ```
 The mean for the values estimated by respondents using the stacked bars is 14.32, a fair bit larger than the true value of 11, and the mean estimated value for the grouped bars was closer to the true value, at 11.8. The IQR for the grouped bars is also smaller than for the stacked, and comprises of the range $[11, 12]$, insinuating that the estimated values tended to be fairly accurate but with some respondents perhaps slightly overestimating. The IQR for the stacked bars on the other hand covers the interval $[10, 14]$, which does contain the true value, but shows a tendency for both over and underestimation of respondents. Additionally to this, there is a large variance in the responses to this question, at 54.8 compared to the variance of 13.1 for the responses regarding the grouped bar plots. This adds to the picture that there was much less agreement between respondents, with many straying away from the mean of 14.3. It is seen however that the median for both the stacked and grouped bars is 11, showing that the higher mean of the stacked bars may be a result of an influential value at the upper end of the distribution, and that many observations do actually sit around 11. The fact that many values actually sit around 11 could be contributing to the higher variance, as variance is simply the sum of the squared distances from the mean, and so will be elevated if there are many values that sit some distance away from the mean. The higher mean could be reflected in the maximum of the stacked responses being 35, although the maximum of the grouped responses is 40, so there may be more than one influential point in the stacked responses. Outliers can be checked for by looking at the box plots for this data.
 
-```{r fig.cap = "Box plots showing distributions of responses regarding the two plots"}
+```{r}
 brks <- c("Stacked", "Grouped")
 vals <- c("#1c9e77", "#d95f02")
 
 resp <- c(stacked_1, grouped_1)
 type <- c(rep('Stacked', 70), rep('Grouped', 70)) 
 stats_1 <- data.frame(resp, type)
+```
 
+```{r fig.cap = "Box plots showing distributions of responses regarding the two plots"}
 ggplot(data = stats_1, aes(x=type, y=resp, fill=type))+
   geom_boxplot(outlier.colour="black", outlier.shape=1,
              outlier.size=2, notch=F)+
@@ -1624,10 +1648,10 @@ ggplot(data = stats_1, aes(x=type, y=resp, fill=type))+
   ylab("Value")+
   xlab("Plot Type")
 ```
+
 It can in fact be seen that the box for the grouped responses is short and centered around 11. The box for the stacked responses shows many high valued outliers that could be causing the mean to be higher, although the IQR is still a fair bit larger than that of the responses for the grouped bars. The mean for this also sits above the IQR, and thus the outliers may be having a significant influence. Now the outliers will be removed, assuming, from the box plot, that outliers are any values above or equal to 25 for the stacked responses and above or equal to 20 for the grouped. 
 
 ```{r}
-
 stacked_1 <- c(vir_stacked_1, def_stacked_1, gr_stacked_1)
 grouped_1 <- c(vir_grouped_1, def_grouped_1, gr_grouped_1)
 ```
@@ -1671,14 +1695,16 @@ bars <- data.frame(stacked_2, grouped_2)
 ```
 Similarly to the previous question, the mean response for the stacked bar plots are higher than that of the grouped, and the mean of the stacked also slightly overestimates the value. Once again however, a selection of respondents appeared to judge the full height of the bar rather than the category as asked. 
 
-```{r fig.cap = "Bar plots showing distributions of responses regarding the three plots"}
+```{r}
 brks <- c("Stacked", "Grouped")
 vals <- c("#1c9e77", "#d95f02")
 
 resp <- c(stacked_2, grouped_2)
 type <- c(rep('Stacked', 70), rep('Grouped', 70)) 
 stats_2 <- data.frame(resp, type)
+```
 
+```{r fig.cap = "Bar plots showing distributions of responses regarding the three plots"}
 ggplot(data = stats_2)+
   geom_bar(aes(x=resp, group = type, fill = type), position = 'dodge')+
   theme_classic()+
@@ -1686,6 +1712,7 @@ ggplot(data = stats_2)+
   ylab("Value")+
   xlab("Plot Type")
 ```
+
 Indeed, the distributions of values for each of the two response sets appear to be almost identical.
 
 ```{r}
@@ -1777,7 +1804,7 @@ for(i in 1:length(f_1)){
 }
 
 tab <- table(c(a_1, b_1, c_1, d_1, e_1, f_1))
-kable(tab)%>%
+kable(tab, caption="Number of respondents finding each of the two charts easier to read and interpret")%>%
   kable_styling(latex_options = "hold_position")
 ```
 The large majority of participants found the grouped bar chart easier to read and interpret, as predicted.
@@ -1822,7 +1849,7 @@ f_1_py <- set_f_py$f_cols_1
 
 tab <- rbind(table(a_1), table(b_1), table(c_1), table(d_1), c(table(e_1), 0), table(f_1))
 rownames(tab) <- c("Set A", "Set B", "Set C", "Set D", "Set E", "Set F")
-kable(tab, caption = "Easiest to read and interpret colour scheme")%>%
+kable(tab, caption = "Easiest colour scheme to read and interpret")%>%
   kable_styling(latex_options = "hold_position")
 
 tab <- rbind(table(a_1_r), table(b_1_r), table(c_1_r), table(d_1_r), c(table(e_1_r), 0), table(f_1_r))
@@ -2046,7 +2073,7 @@ Now consider the sales part of the survey. In this section data was taken from a
 
 This question was included for the purpose of testing whether, again, axis scaling impacts the perceived differences between values, but this time with time series line plots as opposed to bar plots. Respondents were asked to assess how much the sales of company A increased over the course of the year, or in other words to look at and compare each end of the line. 
 
-The plot for which the respondents, on average, found the difference to be smallest was the zeroed, followed by the truncated, and then the separated, with means of 1.371, 2.414 and 3.043 respectively. These differences are found to be statistically significant, as outlined in table[?].
+The plot for which the respondents, on average, found the difference to be smallest was the zeroed, followed by the truncated, and then the separated, with means of 1.371, 2.414 and 3.043 respectively. These differences are found to be statistically significant, as outlined in table 3.13.
 
 ```{r}
 hyp <- c("Truncated > Zeroed", "Truncated < Separated", "Separated > Zeroed")
@@ -2057,11 +2084,11 @@ kable(tab, caption="Table of p-values for this question") %>%
   kable_styling(latex_options = 'hold_position')
 ```
 
-The differences between languages and plot ordering were shown to be inconsequential (see table [?])
+The differences between languages and plot ordering were shown to be inconsequential.
 
 \subsection{How much would you say sales of each company increased between January and December? [Company B]}
 
-The zeroed was once again perceived to have the smallest difference ($\bar{x} = 1.371$), but this time with the separated in the middle ($\bar{x} = 4.1304$) and truncated with the largest difference ($\bar{x} = 4.1304$). See appendix 2, table [?] for p-values. The p-values show sufficient evidence that the truncated responses were on average greater than the zeroed, as were the responses for the separated plots. However, the difference between the ratings for the truncated and separated plot responses was inconsequential, along with the language comparisons and plot order. 
+The zeroed was once again perceived to have the smallest difference ($\bar{x} = 1.371$), but this time with the separated in the middle ($\bar{x} = 4.1304$) and truncated with the largest difference ($\bar{x} = 4.1304$). See appendix 4 for p-values. The p-values show sufficient evidence that the truncated responses were on average greater than the zeroed, as were the responses for the separated plots. However, the difference between the ratings for the truncated and separated plot responses was inconsequential, along with the language comparisons and plot order. 
 
 
 ```{r}

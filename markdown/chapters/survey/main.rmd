@@ -69,10 +69,10 @@ The set will consist of two groups of surveys, which will be identical up to the
 
 \section{Creating the Visualisations}
 
-See appendix for the code and figures of the visualisations. The R visualisations were created using R version 4.0.2 [@R] using ggplot2 version 3.3.3 [@ggplot]. The Python visualisations were made using Python version 3.7.4 [@py] with pyplot from matplotlib version 3.3.3 [@matplot]. 
+See appendix 1 for a pdf of the survey, containing the finished visuals, and appendices 2 and 3 for code. The R visualisations were created using R version 4.0.2 [@R] using ggplot2 version 3.3.3 [@ggplot]. The Python visualisations were made using Python version 3.7.4 [@py] with pyplot from matplotlib version 3.3.3 [@matplot]. 
 
 \subsection{The Data}
-The visualisations for the survey were created with inspiration from the papers discussed above. The bar plots were created using a data set regarding the history of obstacles used over 10 seasons of \textit{'American Ninja Warrior'} [@ANW]. Each row of the data represents a single instance of an obstacle being used, and each instance has variables as specified in the below table.
+The visualisations for the survey were created with inspiration from the papers discussed above. The bar plots were created using a data set regarding the history of obstacles used over 10 seasons of \textit{'American Ninja Warrior'} [@ANW]. Each row of the data represents a single instance of an obstacle being used, and each instance has variables as specified in table 2.1.
 
 \begin{center}
 ```{r}
@@ -88,7 +88,7 @@ mat[,2] <- expl
 
 colnames(mat) <- c("Variable Name", "Explanation")
 
-kable(mat)
+kable(mat, caption="Table with explanation of variables")
 ```
 \end{center}
 
@@ -162,7 +162,7 @@ order[6,] <- c("Truncated", "Log", "Control")
 
 rownames(order) <- version
 
-kable(order, col.names = question)
+kable(order, col.names = question, caption="Order of plots in part 1")
 ```
 \end{center}
 
@@ -196,7 +196,7 @@ order[6,] <- c("Wide", "Narrow", "Default")
 
 rownames(order) <- version
 
-kable(order, col.names = question)
+kable(order, col.names = question, caption="Order of plots in part 2")
 ```
 \end{center}
 Questions regarding comparisons between the plots were then administered as follows, while showing respondents all of the three plots on a single page.
@@ -261,7 +261,7 @@ mat[,3] <- comp
 
 colnames(mat) <- c("Version", "Main colours", "Comparitor")
 
-kable(mat)
+kable(mat, caption="Colour palette pairings used in each question")
 ```
 \end{center}
 
@@ -288,7 +288,7 @@ order[6,] <- c("Zeroed", "Truncated", "Separated")
 
 rownames(order) <- version
 
-kable(order, col.names = question)
+kable(order, col.names = question, caption="Order of plots in part 3")
 ```
 \end{center}
 
