@@ -4,7 +4,7 @@
 \section{Introduction}
 Data visualisation is a method of conveying data in an easily digestible manner through graphics. It is an important aspect of data presentation and allows key information to be quickly identified by the observer. Very many subject areas rely on such visualisations to relay messages that may get lost or have less impact when presented as written word or raw numbers. 
 
-The main objective of visualisation is to create figures that display the data accurately in an aesthetic manner, giving non-misleading messages in a format that is pleasing to the eye. A good visualisation strikes a balance between aesthetics and information, where the aesthetic features are designed such that they 'enhance the message of the visualisation' [@wilke2019]. 
+As stated by the creator of the R \textit{ggplot2} package, Harvey Wickham, \textit{"it is useful tothink about why we create visualizations: not to createpretty pictures, but to better understand our data."} [@ggplot2]. This summarises the key objective of visualisation; creating figures that display the data accurately in an aesthetic manner, giving non-misleading messages in a format that is pleasing to the eye. A good visualisation strikes a balance between aesthetics and information, where the aesthetic features are designed such that they \textit{"enhance the message of the visualisation"} [@wilke2019]. 
 
 An incorrect balance of aesthetics to information can lead to figures that are misleading, confusing, or unengaging. Wilke discusses the way in which, for example, a research scientist with limited design experience may produce a visualisation displaying the data in an informative manner, but fail to draw immediate attention to the desired message, and on the other hand, someone with a main interest in the aesthetic design of a visualisation could create a figure that is very pleasing to the eye, but create a misleading visualisation in the process.
 
@@ -112,30 +112,46 @@ When it comes to static visuals, as investigated in this study, two commonly use
 \section{Background on R and Python}
 R and Python are two languages that differ in programming paradigms, with R being a mostly functional language and Python taking more of a multi-paradigm approach, incorporating mainly elements of object-oriented programming, but along with some elements of procedure-oriented and functional paradigms [@paradigm]. 
 
-At a basic level, functional programming does exactly what the name says; it operates mainly using functions to obtain results and output, with the ability to use certain functions within others to create new functions that act as compositions of other functions.
+At a basic level, functional programming does exactly what the name says; it operates mainly using functions to obtain results and output, with the ability to use certain functions within others to create new composite functions.
 
-Object-oriented programming, on the other hand, focuses on storing information in 'objects', with attributes as defined by their 'class'. Information in a class structure is then accessed in the format 'class.object'. In addition to objects, 'methods', or functions, can be assigned to and defined by a class.
+Object-oriented programming, on the other hand, focuses on storing information in 'objects', with attributes as defined by their 'class'. Information in a class structure is then accessed in the format 'class.object'. In addition to objects, 'methods', or functions, can be defined within a class.
 
-These two differing methods of programming, like everything, have a series of positives and negatives. A positive shared by both R and Python is that they are open-source, unlike languages such as SAS or MATLAB, meaning anyone can gain access with no paywalls, and anyone can contribute to development of new packages and libraries, creating communities among people who develop in these languages and allowing creativity of people from all areas to be used in development. Both of these are also fairly good for creating visualisations in a reproducable and replicable way.
+These two differing methods of programming, like everything, have a series of positives and negatives. A positive shared by both R and Python is that they are open-source, unlike languages such as SAS or MATLAB, meaning anyone can gain access with no paywalls, and anyone can contribute to development of new packages and libraries, creating communities among people who develop in these languages and allowing creativity of people from all areas to be used in development. Both of these are also fairly good for creating visualisations in a reproducable and replicable way due to their programmatic nature.
 
-Some differences between the two languages are outlined by @rvpy. One main difference is R's main purpose of data exploration and statistical analysis, as compared to Python use in more general programming, but with applications in data wrangling. Both therefore can be used for data cleaning, analysis and visualisation, but R is more suited than Python to running in depth statistical testing and analysis, whereas Python is more suited than R to applications such as large-scale machine learning.
+Some differences between the two languages are outlined by @rvpy. One main difference is R's main purpose of data exploration and statistical analysis, as compared to Python use in more general programming, but with applications in data wrangling. Both therefore can be used for data cleaning, analysis and visualisation, but R is more suited than Python to running in depth statistical testing and analysis, whereas Python is more suited than R to applications such as large-scale machine learning. 
+
+These differences are reflected in the visualisation capabilities of each language; with a focus in data exploration, R comes with the pre-installed plotting library \textit{graphics}, whereas the more general programming-based Python must use external libraries. Additionally to the default library, R can also install \textit{'ggplot2'}, a library dedicated to producing elegant visuals with ease.
 
 Python is regarded as a fairly easy to learn language and is known as one of the most popular languages worldwide, especially among programmers and developers. R appears to be noted as a generally slightly more difficult to learn language, but is a popular choice among statisticians and data scientists, particularly in R&D.
 
 \subsection{The Grammar of Graphics}
-As discussed by Hadley Wickham in the 2010 paper \textit{A Layered Grammar of Graphics} [@layered-grammar], the 'grammar of graphics' works to describe the underlying components of a visualisation, breaking every plot into a series of graphic components of different levels, with the first layer consisting of the data and a basic aesthetic mapping with subsequent layers being made up of components such as scales, coordinate systems, positioning and geometric objects.
+First introduced by Leland Wilkinson in his 1999 book "The Grammar of Graphics" [@wilkinson2009], the 'grammar of graphics' is explained by Hadley Wickham in the 2010 paper \textit{A Layered Grammar of Graphics} [@layered-grammar] as a method to describe the underlying components of a visualisation. 
 
-Each component, or layer, of a layered graphic can be considered as independent in this framework, with each being able to be modified without altering any other component.
+It works on breaking every plot into a layers of graphic components, building visualisations in a systematic way from the ground up. The first layer consists of the data and a basic aesthetic mapping, with subsequent layers being made up of components such as scales, coordinate systems, positioning and geometric objects. Each component, or layer, of a layered graphic can be considered as independent in this framework, with each being able to be modified without altering any other component.
 
-The transition from using a software using a stock library of graphics with tweak-able elements to a grammatical programming system such as \textit{ggplot} or \textit{matplotlib} is described by the author as akin to transitioning to learning \latex after using MS Word. his reasoning is that it encompasses the initial frustration and feeling of lack of control over 'low-level aspects', but the eventual freedom of being more deep content focused, leading in the case of plots to creating 'richer graphics much more easily'. 
+This concept allows effective visualisations to be built in an efficient way, ensuring all important aspects of a visualisation are considered and accounted for, as opposed to randomly assigning aesthetics to a figure on a 'trial and error' basis. It allows for the creation of figures that are bespoke to each problem, with every small element of a plot being fully under control of the designer.
+
+The transition to learning a grammatical programming system such as \textit{ggplot} or \textit{matplotlib} from using a software using a stock library of graphics with tweak-able elements is described by the author as akin to transitioning to learning \latex after using MS Word. His reasoning is that it encompasses the initial frustration and feeling of lack of control over 'low-level aspects', but the eventual freedom of being more deep content focused, leading in the case of plots to creating 'richer graphics much more easily'. 
 
 \subsection{Visualising with \textit{ggplot2}}
- The \textit{ggplot2} package is built to operate in a way that strongly follows the concept of the grammar of graphics [@ggplot2], perhaps expected given that the author of \textit{A Layered Grammar of Graphics} is also the creator of this package. This can be seen from the structure of commands for creating plots in this package; the first step in creating a plot in this package is to specify a data frame and specify an aesthetic mapping using the `aes()` argument. 
+As mentioned prior \textit{ggplot2} is an R package dedicated to providing an easy way to produce elegant but complex visualisations, with applications in simple to complex data analysis and statistics along with areas such as machine learning. 
+
+This package is built to operate in a way that strongly follows the the grammar of graphics [@ggplot2], perhaps expected given that the author of \textit{A Layered Grammar of Graphics} is Harvey Wickham, referenced prior as the creator of this package. This can be clearly seen in the structure of commands for creating plots in this package; the first step in creating a plot in this package is to specify a data frame and specify an aesthetic mapping using the `aes()` argument. 
  
-After these have been specified, the user ends the line with a `+`, which dictates the addition of the next line, which will comprise of one of the higher level layers to the base layer aesthetic mapping. It can take some time to learn this format, but becomes intuitive once the user has understood the concept of the grammar of graphics. 
+After these have been specified, the user ends the line with a `+`, which dictates the addition of the next line, which will comprise of one of the higher level layers to the base layer aesthetic mapping. It can take some time to learn this format, but becomes intuitive once the user has an understanding of the concept of the grammar of graphics, even if they have not explicitly learned it or heard of this term, and rather have picked it up through practice.
+
+\textit{ggplot2} has the capacity to create complex visuals while staying informative and retaining aesthetic appeal, and in the right hands can be an incredibly powerful tool for visualisation of data. 
 
 \subsection{Visualising with \textit{matplotlib}}
-\textit{Matplotlib} also follows the grammar of graphics [@]
+\textit{Matplotlib} is a Python plotting library that allows the user to create MATLAB-like visuals while being free and open-source.
+
+There exist two Application programming interfaces (APIs) for the creation of plots in \textit{matplotlib}; the object oriented interface of base \textit{matplotlib} and the more functional \textit{pyplot}. Explained by @matplotblog, both interfaces seem to provide effective ways to create elegant and informative visuals, with the main differences being that \textit{pyplot} structures the building of visuals in a very similar way to MATLAB in terms of syntax and methodology.
+
+Both APIs follow the grammar of graphics, with the initial step in visualisation being the creation of a blank plot to which various graphic features can be added sequentially. 
+
+This method of plotting, like R, provides a very good way to produce visuals, however unlike R does not specialise in visualisation and relies on imports and collaborations with other languages, such as MATLAB and JavaScript. The combination of Python with these other languages, however, provides very effective methods of producing compelling visuals, and again can be a very powerful tool.
+
+
 
 
 
