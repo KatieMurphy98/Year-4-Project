@@ -3,7 +3,7 @@
 This chapter will discuss the results of interviews discussing the opinions of programming specialists in relation to the codes. As previously discussed, two languages were used to create the plots; R and Python. Initially, the JavaScript D3 library was also considered, but discounted due to time constraints. 
 
 \subection{Background on semi-structured interviews}
-A semi-structured interview, as briefly discussed before, 
+A semi-structured interview is a form of qualitative data collection involving verbally asking a series of respondents a set of questions open-ended questions, opening a discussion around the given topic. The term 'semi-structured' 
 
 
 
