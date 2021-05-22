@@ -54,16 +54,16 @@ These questions are set with the purpose of gaining the respondents' subjective 
 
 The interviewees were initially contacted in a group email sent out by the project supervisor, after which individual, 1-to-1 Zoom meetings were arranged. In each individual meeting arrangement, the respondent was sent screenshots of some of the visualisation code, consisting of two folders, one for the R code and one for the Python, and were asked to have a brief look over these prior to the interview. The purpose of this was to build respondent familiarity with the codes and give them time to formulate any initial comments or opinions. 
 
-The folders consisted of the functions used to create each of the sets of bar plots and the line plots. It was decided to omit comments or docstrings to allow for a purely subjective judgment on the appearance of code itself as opposed to its functionality. The screenshots can be seen in appendix [?]
+The folders consisted of the functions used to create each of the sets of bar plots and the line plots. It was decided to omit comments or docstrings to allow for a purely subjective judgment on the appearance of code itself as opposed to its functionality. The lack of documentation also allows the screenshots to be as readable as possible, since adding the function documentation would take up a significant amount of screen and thus reduce the quality of the screenshots, as mentioned by the project supervisor, Dr. Vincent Knight, in the inital 'test' interview; "maybe, they don't call the strings in R, but a leading overall bit of documentation at the start would be nice. But I understand as well that that could take up quite a fair bit of the screen".
+
+The screenshots can be seen in appendix [?].
 
 In order put the codes into a standard format, opinionated code formatters were applied to each, with \textit{black} [@black] being applied to the Python code and \textit{styler} [@styler] being to the R. Screenshots showing the implementation of these are seen in appendix [?].
 
 \subsection{Analysis}
 The format of the interviews were recorded zoom meetings, for which consent was given by each respondent prior to starting the recordings. After the interviews were completed and recordings obtained, the online transcription software \textit{Trint} was used to transcribe the interviews for analysis. These transcriptions can be found in appendix [?].
 
-
-
-
+From the first question, it was found that no respondent was unbiased, with four holding a bias towards Python and the other two towards R, although some respondents indicated a degree of familiarity in both; "I am familiar with both languages, but I am very biased towards Python because it's the language I use most.", "I mainly use python, but very recently I've started using R for a project I'm working on.", "I use Python mostly, but I'm fairly new at R.". 
 
 
 

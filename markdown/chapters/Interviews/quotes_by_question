@@ -1,0 +1,84 @@
+
+## Q1 ##
+R biased: Andreas, Owen
+Py biased: Geraint, Henry, Nikoleta, Vince
+
+ Andreas
+ - "I- I prefer a much, much more familiar with R than Python."
+ 
+ Geraint
+ - "Yeah, I use Python mostly, but I'm fairly new at R"
+ - "I probably understand the Python a lot more."
+ 
+ Henry
+  - "I would say I am a, I mainly use R, um sorry, I mainly use python, but very recently I've started using R for a project I'm working on."
+
+ - "So yeah. Yeah, I'd like to think- I'd consider- I'd like to think I'm unbiased, I'm not I am a python biased person."
+
+Nikoleta
+ - "Yes, I am familiar with both languages, but I am very biased towards Python because it's the language I use mostly and I'm way more comfortable in Python than in R"
+
+Owen
+ - "Yes! I'm an R person. I wrote a book on R, so..."
+ 
+ Vince
+ - "So I'm a lot more familiar with Python than I am with R or a lot more fluent in Python than I am with R so that's already one bit of bias in whatever I might suggest."
+
+
+## Q2 ##
+Andreas
+- " I found it very, very busy. You know, I know- I know you're using the code to change some different parameters. But for me, when I do plots, visualisation and all these things, I, I do the you know, I rarely deal with them different parameters, I'm just doing a simple plot as possible that gives out the message as clear as possible."
+
+Geraint
+- "It's obviously a big difference in how R and python like implemented, right? I've only just got to starting to know about ggplot and I quite like the way ggplot does things. It's quite nice to do things on."
+
+- "I'm obviously seeing the python a lot easier to read because I'm more used to it."
+
+Henry
+- "Um, well with the with the matplotlib stuff and using just the straight plt dot whatever, rather than creating a figure and an axis and adding stuff to the axis directly. That's one thing that I notice, I understand like there's reason for doing that because it's meant to be more readable."
+
+Nikoleta
+- "pretty much if you are more fluent in one language, you can always translate it very easily to the other one. Um, so there were commands I didn't necessarily know what they meant in R, but then I could look to the right to the Python code."
+
+- "I guess that means they're quite similar, they use
+similar syntax for several things."
+
+- "So, for example, some of the pre-recorded functions such
+as, you know, changing the scale and things like that. This is not exactly the same, but it's
+very similar."
+
+Owen
+- "One impression,
+strong impression I had with the code was to do with the size of the functions, and it's something that many people have noted, not- not just me, but small functions are much easier to digest. So so some of your code was written in, know, little sort of 10 line bites or chunks which are sort of then stuck together. And that, of course, is is much easier to to read than a great big, long things."
+
+- "It seems to me that your R code, those seemed to come in longer bits than the Python code."
+
+- "if I had to be honest, I say I probably found the Python code easier to read than the R code, in terms of what it was trying to do, but neither of them were particularly difficult."
+
+Vince
+- "looking at the Python one is I like that you've put your plotting code within- um in a functional way so within functions."
+
+- "that that all looks like standard matplotlib to me."
+
+- "Of course now taking a look at the R. And I suppose in a way, I have the the same comment that I like, that it's it's functional"
+
+- "maybe, they don't call the strings in R, but a leading overall bit of documentation at the start would be nice. But I understand as well that that could take up quite a fair bit of the screen"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
