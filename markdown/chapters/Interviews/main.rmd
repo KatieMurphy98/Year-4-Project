@@ -2,8 +2,85 @@
 
 This chapter will discuss the results of interviews discussing the opinions of programming specialists in relation to the codes. As previously discussed, two languages were used to create the plots; R and Python. Initially, the JavaScript D3 library was also considered, but discounted due to time constraints. 
 
-\subection{Background on semi-structured interviews}
-A semi-structured interview is a form of qualitative data collection involving verbally asking a series of respondents a set of questions open-ended questions, opening a discussion around the given topic. The term 'semi-structured' 
+\section{About semi-structured interviews}
+
+\subsection{Background on semi-structured interviews}
+A semi-structured interview is a form of qualitative data collection involving verbally asking a series of respondents a set of open-ended questions, opening a discussion around the given topic. 
+
+The term 'semi-structured' refers to the way in which the interviewer for this kind of interview will prepare a set of questions, but not rigidly stick to them as they may do a structured interview or survey. As explained by @longhurst, this allows the discussion to be opened up in a conversational format, allowing the interviewees to \textit{"explore issues they feel are important"}. 
+
+This discussion of "issues" may refer more to interviews assessing, for example, an important social issue or opinions of a workplace. The opening up of the discussion in terms of a more technical-based interview can allow avenues to be traveled down that the interviewer may not otherwise have considered, leading to a wider scope of investigation in addition to the deeper focus on the questions in hand. 
+
+In this way, a semi-structured interview allows the interviewer to have some control over the direction of the interview and the topics of discussion while at the same time being guided by the interviewee's responses, allowing the researcher to gain all the information necessary about the given topic in addition to extra thoughts from the respondent. 
+
+As with the survey, there are positives and negatives to using this form of data collection.
+
+A large positive of using a semi-structured interview is outlined above; the ability to gain in depth information regarding the topic at hand in addition to widening the scope of the investigation. This face-to-face communication, however, sacrifices the anonymity provided by written surveys. The negative aspects of a lack of anonymity have been explored in a previous chapter, but this is outweighed by the beneficial qualitative information gathered using this method.
+
+An additional difference between this format and a survey is the analysis of results. The quantitative survey, as previously seen, provides empirical quantitative information and so can be analysed numerically using a variety of statistical methods. A survey on the other hand is much harder to quantify empirically and analysis instead focuses on textual analysis of the interviews, much akin to a literature review. As stated by @leech, "Unstructured interviews are best used as a source of insight, not for hypothesis testing".
+
+Prior to administering an interview, the format of the interview and questions must be carefully thought out, the same as with a survey. For example, it could be very easy to unintentionally ask leading questions and guide the discussion in a biased direction.
+
+Additionally, questions must be phrased in a way such that they are targeted towards the wanted information whilst also allowing for open discussion.
+
+When administering the interview, as described by @leech, it is important to keep the interviewee at ease and build a good rapport, and the interviewer should ensure that the respondent can see that they are listening to, interested in and understand what they are saying.
+
+It is stated by @Leech that \textit{"The interviewer should seem professional and generally knowledgeable, but less knowledgeable than the respondent on the particular topic of the interview"}, and this is to make sure the interviewees feel comfortable and 'unthreatened', while also having a mutual respect for the interviewer. 
+
+\subsection{Purpose of a semi-structured interview for this study}
+A semi-structured interview format was selected for analysis of the programming of visualisation as the programming specialists being interviewed are known to have more experience in programming than the researcher. Thus, the interview participants may have additional viewpoints and knowledge of connected topics within the subject area that have not been considered in the given questions. 
+
+This topic is also much more subjective and lends itself much more to long-form open-ended questions than the survey topic.
+
+\section{The Interview}
+\subsection{Implementation}
+Prior to the interview, questions were formulated in discussion with the project supervisor, who also partook as an interview participant. This will be mentioned when discussing this individual's responses.
+
+The questions were formulated as below, with wording intending on being the same or at least very similar for every respondent;
+
+\begin{itemize}
+   \item Do you have any particular bias towards either language; R or Python?
+   \item Do you have any initial comments on the codes? For example in terms of readability, or similarities and differences between the two.
+   \item Do you feel that either code could be changed in any way?
+   \item Based on these codes and your own knowledge of programming, how well suited you think each language is to
+visualisation?
+\item for a beginner with equal experience in both languages, which library do you feel would be easier to learn, ggplot2 or matplotlib?
+\item Which package or library do you feel gives the most publication ready output?
+\item How much freedom do you feel each language or package allows for customisation of plots?
+\item Do you have other comments that you've thought of during this interview?
+\end{itemize}
+
+These questions are set with the purpose of gaining the respondents' subjective opinions on these topics as well as insights from their own programming expertise. The first question regarding language bias is asked to compare whether any opinions when comparing languages are influenced by the preferred language. 
+
+The interviewees were initially contacted in a group email sent out by the project supervisor, after which individual, 1-to-1 Zoom meetings were arranged. In each individual meeting arrangement, the respondent was sent screenshots of some of the visualisation code, consisting of two folders, one for the R code and one for the Python, and were asked to have a brief look over these prior to the interview. The purpose of this was to build respondent familiarity with the codes and give them time to formulate any initial comments or opinions. 
+
+The folders consisted of the functions used to create each of the sets of bar plots and the line plots. It was decided to omit comments or docstrings to allow for a purely subjective judgment on the appearance of code itself as opposed to its functionality. The screenshots can be seen in appendix [?]
+
+In order put the codes into a standard format, opinionated code formatters were applied to each, with \textit{black} [@black] being applied to the Python code and \textit{styler} [@styler] being to the R. Screenshots showing the implementation of these are seen in appendix [?].
+
+\subsection{Analysis}
+The format of the interviews were recorded zoom meetings, for which consent was given by each respondent prior to starting the recordings. After the interviews were completed and recordings obtained, the online transcription software \textit{Trint} was used to transcribe the interviews for analysis. These transcriptions can be found in appendix [?].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
