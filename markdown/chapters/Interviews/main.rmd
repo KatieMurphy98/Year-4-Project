@@ -34,7 +34,7 @@ This topic is also much more subjective and lends itself much more to long-form 
 
 \section{The Interview}
 \subsection{Implementation}
-Prior to the interview, questions were formulated in discussion with the project supervisor, who also partook as a respondent to certain questions in a 'test' interview, for which the transcript also contains discussion around the creation of the interview.
+Prior to the interview, questions were formulated in discussion with the project supervisor, Dr. Vincent Knight, who also partook as a respondent to certain questions in a 'test' interview, for which the transcript also contains discussion around the creation of the interview. In addition, Dr. Knight was shown a liver version of the plotting codes via screen sharing as opposed to screenshots prior to interview.
 
 The questions were formulated as below, with wording intending on being the same or at least very similar for every respondent;
 
