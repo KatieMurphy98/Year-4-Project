@@ -66,11 +66,17 @@ In order to put the codes into a standard format, opinionated code formatters we
 \subsection{Analysis}
 The format of the interviews were recorded zoom meetings, for which consent was given by each respondent prior to starting the recordings. After the interviews were completed and recordings obtained, the online transcription software \textit{Trint} was used to transcribe the interviews for analysis. These transcriptions can be found in appendix [?]. The implementation of the survey was more towards the structured end of 'semi-structured' due to nerves of the interviewer and too strong a focus on the set questions, and if performed again more focus would be placed on exploration and asking for further expansions from respondents.
 
+The interviews will be analysed using a thematic analysis, as described in @
+
 The first question regarding language bias is asked to compare whether any opinions when comparing languages or packages and libraries are influenced by the preferred language. It was found that no respondent was unbiased, with four holding a bias towards Python and the other two towards R, although some respondents indicated a degree of familiarity in both; "I am familiar with both languages, but I am very biased towards Python because it's the language I use most.", "I mainly use python, but very recently I've started using R for a project I'm working on.", "I use Python mostly, but I'm fairly new at R.".
 
 One respondent showed a particularly strong R bias, stating "I'm an R person. I wrote a book on R, so...", and went on to discuss Hadley Wickham's book on the Tidyverse and graphics, which was then discussed in this report. In addition, this respondent went on to discuss how ggplot is \textit{"ggplot has essentially its own programming language."}. However, it is the fault of the interviewer here to not ask for an expansion on this. The respondent also mentions Julia as a programming language, stated as being designed for numerical work and \textit{"much faster than both R and Python, but still not too hard to use."}. In future research, Julia could potentially be discussed in a similar way to R and Python have been in this paper. 
 
-When asked about initial comments on the code,
+When asked about initial comments on the code, some general points that came up were the fact that the codes are
+
+
+
+
 
 
 
