@@ -68,13 +68,11 @@ devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8",
 
 \section*{Acknowlegements}
 
-I would like to thank my supervisor, Dr. Vince Knight, for his invaluable support and encouragement throughout the last year. It has been a difficult year for many reasons, and Vince has always been very understanding and supportive, and has helped me greatly in managing to get this dissertation to this point. I could not have managed without his continued support and guidance.
+I would like to thank my supervisor, Dr. Vincent Knight, for his invaluable support and encouragement throughout the last year. It has been a difficult year for many reasons, and Vince has always been highly understanding and supportive, and has helped me greatly in managing to get this dissertation to this point. I could not have managed without his continued input, support and guidance throughout.
 
-I also deeply appreciate his patience in teaching me and assisting in my own learning of Git and VS Code, and for always being willing to answer my many questions.
+I am also grateful for his patience in both teaching me and supporting in my own learning with regard to Git, VS Code and all the other background skills, and for always being willing to answer my many questions and help to fix any problems.
 
-I would additionally like to thank Vince's children and pets for their lively contributions to meetings.
-
-Finally, I would like to thank everyone who participated in the study, in both the survey and the interviews. Thank you to the interviewees for their time and very informative contributions to the study; Vince Knight, Geraint Palmer, Nikoleta E. Glynatsi, Andreas Artemiou, Henry Wilde and Owen Jones.
+Finally, I would like to thank everyone who participated in the study, in both the survey and the interviews. Thank you to the interviewees for their time and very informative contributions to the study; Dr. Vincent Knight, Dr. Geraint Palmer, Dr.Nikoleta E. Glynatsi, Dr. Andreas Artemiou, Henry Wilde and Professor Owen Jones.
 
 \vspace{5cm}
 
