@@ -5541,3 +5541,8 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/nikoletta}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/owen}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/vince}
+
+\section{Appendix 6 - Summary of Interview Responses}
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/vince}
+
+
