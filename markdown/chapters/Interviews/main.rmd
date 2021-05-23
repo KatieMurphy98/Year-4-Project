@@ -2,6 +2,12 @@
 
 This chapter will discuss the results of interviews discussing the opinions of programming specialists in relation to the codes. As previously discussed, two languages were used to create the plots; R and Python. Initially, the JavaScript D3 library was also considered, but discounted due to time constraints. 
 
+This part of the study will comprise analysis of a series of 20 minute interviews with 6 programming specialists, with the intention of learning their opinions regarding general opinions on the languages discussed, the plotting libraries used in these languages, and on the specific code used to create the visuals for the survey. The participants are additionally asked for their opinions on the control and logarithmically scaled bar plots from section 1 of the survey, asking them to compare between languages how 'publication ready' each output seems
+
+The six interviewees, Dr. Vincent Knight, Dr. Geraint Palmer, Dr. Andreas Artemiou, Dr. Nikoleta E. Glynatsi, Henry Wilde and Professor Owen Jones, are currently, or have been, researchers and academics with the Cardiff University School of Mathematics.
+
+Note that Dr. Knight is the supervisor for this project and so has a significant familiarity with the project background and design of the study, and so his comments will be considered more as additional points of interest as opposed to being included in a thorough, unbiased analysis. 'Unbiased' here refers to being unbiased towards the project as a whole.
+
 \section{About semi-structured interviews}
 
 \subsection{Background on semi-structured interviews}
@@ -33,7 +39,7 @@ A semi-structured interview format was selected for analysis of the programming 
 This topic is also much more subjective and lends itself much more to long-form open-ended questions than the survey topic.
 
 \section{Interview Design and Implementation}
-Prior to the interview, questions were formulated in discussion with the project supervisor, Dr. Vincent Knight, who also partook as a respondent to certain questions in a 'test' interview, for which the transcript also contains discussion around the creation of the interview. In addition, Dr. Knight was shown a liver version of the plotting codes via screen sharing as opposed to screenshots prior to interview.
+Prior to the interview, questions were formulated in discussion with the project supervisor, Dr. Vincent Knight, who also partook as a respondent to certain questions in a 'test' interview, for which the transcript also contains discussion around the creation of the interview. In addition, Dr. Knight was shown a live version of the plotting codes via screen sharing as opposed to screenshots prior to interview.
 
 The questions were formulated as below, with wording intending on being the same or at least very similar for every respondent;
 
@@ -52,7 +58,8 @@ visualisation?
 These questions are set with the purpose of gaining the respondents' subjective opinions on these topics as well as insights from their own programming expertise.
 
 As discussed, the questions were worded with the intention of not being leading, with the tone of voice also a factor in trying to keep the discussion neutral. In addition, respondents were reminded throughout, as with the survey, that the interview was not a technical test, and rather a conversation regarding their subjective opinions, following comments from Dr. Knight in the test interview stating that \textit{"any conversation with an
-academic, they can sometimes feel like they're tested. So it's always trying to say like, yeah, this is subjective; I'm just interested in your thoughts."}. This can allow for more open answers, as there is less emphasis on stating a 'correct' answer and the respondent may feel more at ease to say whatever comes into their head.
+academic, they can sometimes feel like they're tested. So it's always trying to say like, yeah, this is subjective; I'm just interested in your thoughts."}. 
+his can allow for more open answers, as there is less emphasis on stating a 'correct' answer and the respondent may feel more at ease to say whatever comes into their head.
 
 The interviewees were initially contacted in a group email sent out by the project supervisor, after which individual, 1-to-1 Zoom meetings were arranged. In each individual meeting arrangement, the respondent was sent screenshots of some of the visualisation code, consisting of two folders, one for the R code and one for the Python, and were asked to have a brief look over these prior to the interview. The purpose of this was to build respondent familiarity with the codes and give them time to formulate any initial comments or opinions. 
 
@@ -65,17 +72,16 @@ In order to put the codes into a standard format, opinionated code formatters we
 \section{Analysis}
 The format of the interviews were recorded zoom meetings, for which consent was given by each respondent prior to starting the recordings. After the interviews were completed and recordings obtained, the online transcription software \textit{Trint} was used to transcribe the interviews for analysis.
 
-These transcriptions can be found in appendix [?]. Also found in this appendix is a summary of responses relating to each question.
+These transcriptions can be found in appendix 5, and a question-by-question summary of responses can be found in appendix 6.
 
 The implementation of the survey ended up more towards the structured end of 'semi-structured' due to nerves of the interviewer and too strong a focus on the set questions, and if performed again more focus would be placed on exploration and asking for further expansions from respondents.
 
 \section{Main Findings}
 
-
+\subsection{Language Biases}
 The first question regarding language bias is asked to gauge whether any opinions when comparing languages or packages and libraries are influenced by the preferred language. It was found that no respondent was unbiased, with four holding a bias towards Python and the other two towards R, although respondents tended to indicate some degree of familiarity in both.
 
-
-with Dr. Palmer, Dr. Glynatsi, Dr. Knight and Henry  showing a Python bias, but highlighting some R familiarity; "I am familiar with both languages, but I am very biased towards Python because it's the language I use most.", "I mainly use Python, but very recently I've started using R for a project I'm working on.", "I use Python mostly, but I'm fairly new at R.", "So I'm a lot more familiar with Python than I am with R or a lot more fluent in Python than I am with R".
+with Dr. Palmer, Dr. Glynatsi, Dr. Knight and Wilde showing a Python bias, but highlighting some R familiarity; "I am familiar with both languages, but I am very biased towards Python because it's the language I use most.", "I mainly use Python, but very recently I've started using R for a project I'm working on.", "I use Python mostly, but I'm fairly new at R.", "So I'm a lot more familiar with Python than I am with R or a lot more fluent in Python than I am with R".
 
 One respondent showed a particularly strong R bias, stating "I'm an R person. I wrote a book on R, so".  
 
