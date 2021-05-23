@@ -5532,9 +5532,28 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 ```
 
 
+\section{Appendix 5 - R Screenshots}
+![R Code for y-scaling Bar Plots \label{r_scale}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots1.jpg)
 
-###
-\section{Appendix 5 - Interview Transcripts}
+![R Code for aspect ratio Bar Plots \label{r_aspect}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots2.jpg)
+
+![R Code for Stacked and Grouped Bar Plots \label{r_stacked}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots3.jpg)
+
+![R Code for Line Plots \label{r_line}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_lineplots.jpg)
+
+\section{Appendix 6 - Python Screenshots}
+
+![Python Code for y-scaling Bar Plots \label{py_scale}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots1.jpg)
+
+![Python Code for aspect ratio Bar Plots \label{py_aspect}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots2.jpg)
+
+![Python Code for Stacked and Grouped Bar Plots (Part 1) \label{py_stacked_1}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots3.1.jpg)
+
+![Python Code for Stacked and Grouped Bar Plots (Part 2) \label{py_stacked_2}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots3.2.jpg)
+
+![Python Code for Line Plots \label{py_line}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_lineplots.jpg)
+
+\section{Appendix 7 - Interview Transcripts}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/andreas}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/geraint}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/henry}
@@ -5542,7 +5561,7 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/owen}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/vince}
 
-\section{Appendix 6 - Summary of Interview Responses}
+\section{Appendix 8 - Summary of Interview Responses}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/quotes_by_question}
 
 
