@@ -139,8 +139,7 @@ Additionally, Dr. Glynatsi notes the differences in the packages in terms of see
 Correlating with this, Dr. Palmer makes the argument that, for ggplot, \textit{"when you're not used to it, it feels a little unintuitive"}, however also brings up the fact that \textit{"you realise that you can do like some really cool things with like one variable or something and it's really neat"}. An example he uses is the functionality of the `aes()` argument; \textit{"you can just tell it what your axes are, and then soon as you've told it what the axes 
 are just throw our data at it"}, which is indeed a very nice feature of this library. 
 
-When discussing a beginner learning visualisation, Wilde mentions having learned \textit{ggplot2} in the two weeks prior to the interview, and states, disagreeing with other interviewees, that he \textit{"would say that's easier"} since \textit{"it is very clear"} and \textit{"you just have lots of pieces that can all work together"}. With regard to matplotlib, he says that \textit{"you have to have an understanding of 
- what you're actually trying to do, like from a programmatic, programmatical point of view"}, such as understanding dimensions of arrays, whereas this is not as much of a concern with ggplot.
+When discussing a beginner learning visualisation, Wilde mentions having learned \textit{ggplot2} in the two weeks prior to the interview, and states, disagreeing with other interviewees, that he \textit{"would say that's easier"} since \textit{"it is very clear"} and \textit{"you just have lots of pieces that can all work together"}. With regard to matplotlib, he says that \textit{"you have to have an understanding of what you're actually trying to do, like from a programmatic, programmatical point of view"}, such as understanding dimensions of arrays, whereas this is not as much of a concern with ggplot.
  
 When discussing the suitability of each language to visualisation, Dr. Artemiou makes the comment that \textit{"using the ggplot package at least, you know, if you use something that is specifically designed for visualisation, so it should be suited for visualisation"}, which is a very good point; a library specifically designed to be good at visualisation should be well suited to do this task. The question regarding this was perhaps poorly worded in this respect, however some interesting insights were still gained. 
 
@@ -150,7 +149,7 @@ Wilde also notes, however, that \textit{"It's kind of difficult to do complicate
 matplotlib"}, contrasting this with ggplot, whereby \textit{"You can have very, very complicated data in whatever form, and you can plot it in a relatively complex way very, very quickly"}. This ability to deal with complex data in this manner is, again, a definite advantage of ggplot, and is helped by the specialty that R holds in complex analysis of big data.
 
 Prof. Jones articulates that visualisation is \textit{"a strength of R absolutely and the ggplot in 
-particular"}, and that, considering matplotlib as a MATLAB import, \textit{"Matlab certainly has good graphics as well"}. 
+particular"}, and that, considering matplotlib as a MATLAB import, \textit{"Matlab certainly has good graphics as well"}.
 
 \section{Freedom of Customisation}
 Another factor to consider when looking at programming tools is the amount of freedom that the user has for customisation, in terms of creating bespoke plots for their needs. 
@@ -158,6 +157,9 @@ Another factor to consider when looking at programming tools is the amount of fr
 In general, both are regarded among interviewees as allowing a large amount of freedom, with neither being hailed as particularly better than the other, with any arising comparisons discussing more the ease of customisation as opposed to the overall ability of the library. 
 
 Prof. Jones states that, for a less experienced user, he believes matplotlib provides more freedom as does Dr. Palmer, with the reasoning that, with matplotlib, \textit{"you know how to access the ticks or whatever"}, but with ggplot \textit{"you've got to have this new object on and then you've got to go look something up"}, mirrored perhaps by Dr. Artemiou's statement of \textit{"the most, let's say, challenging thing is probably, knowing how to do it"} and Dr. Glynatsi's of \textit{"given that you know, you have some knowledge, I think it's very easy for both languages"}.
+
+Dr. Glynatsi, as well as discussing how \textit{"it's
+very easy for both languages"} brings up the point that people she knows that are \textit{"are not very good at software development"} actually tend to \textit{"use R a lot and they're very happy with plotting"}, and then perhaps people less familiar with software development and, for want of a better phrase, 'pure' programming, R is a good tool to use. This does contrast, however, with the past discussion of ggplot being more object oriented. She also states that with R \textit{"You have more power over rewriting some of the functionality"}, which could perhaps lend to easier customisation and bespoke tailoring of visualisations.
 
 Overall, it appears opinions on the amount of freedom in customisation of plot depends heavily on the users own programming knowledge and skills as opposed to any particular features of the packages.
 
@@ -187,18 +189,29 @@ Dr. Palmer's own views oppose this, where he states; \textit{"I like functions f
 \subsection{Opinions on the visualisations themselves}
 After answering questions related to the codes, participants were shown first the two versions of the control-scaled bar plots, followed by the two logarithmically scaled plots and asked which they felt was more 'publication ready' out of the one created with ggplot2 and the one made with matplotlib. This was asked as an important feature of a plotting tool is whether it will output visualisations that may be input to reports or papers with minimal external editing or modification. Of course, these plots are only very basic, and more customisation could be done to the plots within the tools themselves, but this can still give an indication on which output style is preferred by this set of respondents.
 
-Starting with the control plot, there were a variety of responses
+Starting with the control plot, there were a variety of responses with three interviewees (Dr. Artemiou, Dr. Palmer and Dr. Knight) selecting R as the plot they believe to be most publication ready, two (Wilde and Dr. Glynatsi) selecting the Python, with the remaining interviewee (Prof. Jones) staying neutral.
 
+Dr. Artemiou explains his standpoint as \textit{"I like the the the fact that you don't box it, essentially"}, referring to the Python plot. This is a feature that doesn't directly relate to the specific language used and more relates to general plotting, although the boxed plot is the default in matplotlib, and thus for a basic plot this user may prefer the ggplot2 output.
 
+Dr. Knight also mentions the lack of the box around the ggplot plot as making it \textit{"slightly nicer"} and that \textit{"out of the box ggplot is kind of slightly more publication ready"}, but does not feel that there's a big difference. 
 
+Dr. Palmer simple states that his opinion is simply that he likes the ggplot2 plot but doesn't \textit{" know what publications would like more"}. 
 
+Conversely, Dr. Glynatsi argues that while \textit{" a lot of people would argue that the plot on the left looks more beautiful"}, she personally does not like the ggplot default of floating bars; \textit{"I would probably use the plot on the right [Python] just because the bar plots are not elevated"}. However, she does then conclude that, if the bars were not floating, she would choose the ggplot plot as \textit{"it looks more appealing"}.
 
+Wilde's opinions behind his selection of the Python plot relates to clarity of labels; \textit{"I would argue that that's a little bit clearer on the right, which is the one made in, um, matplotlib"}, which, similarly to the comments on the boxing around the Python plot, is more of a general aesthetic plotting feature. 
 
+Overall it could be inferred from this that a good plot would be un-boxed with larger labels than are used in the ggplot plot. Perhaps also the floating bars should be investigated further, as Dr. Glynatsi's comments have brought to attention how this can potentially be misleading. 
 
+Leading on to a discussion regarding the logarithmically scaled plots, Dr. Glynatsi now selected ggplot as producing the most publication ready plot, in her opinion, again referencing the 'floating' bars. It is noted that here, the bottom of the bar represents the value of 1 and thus the floating bar makes sense. However, \tetxit{"if you put those two plots next to 
+each other, it would have been so confusing"}, 'those two' referring to the two plots created in ggplot. It is also noted that \textit{"the plot to the right at least needed some sort of explanation, that it is the logarithmic"}. Considering this comment in addition to the survey responses perhaps signifies that using a logarithmic scale with standard form may require a short explanation within the plot or as a title to explain what the scale means.
 
+Interestingly, despite the standard form notation proving to be less ideal than the normal numerical notation in the survey analysis, three of the interviewees here appeared to prefer the standard form of the Python visualisation over the usual numerical notation of the R, with the exception Dr. Knight, who was not asked about this in the 'test' interview, Dr. Glynatsi, whose response is as explained above, and Dr. Artemiou, who states that \textit{"I'm still going to start with this one here, because it doesn't it doesn't look like the the logarithm helps"}.
 
+Of the respondents that motioned towards preferring the Python plot, a common theme of responses was that the standard form makes it clear that a logarithmic scale is being used, with Prof. Jones stating only this point as his reasoning; \textit{"the matplotlib on the right. Yes, so that certainly makes it clearer that it's using a log scale"}. 
 
+In a similar manner, this was also Dr. Palmer's main point; \textit{"I rather the one where it's got 10 to the 0, 10 to the 1. I think that's a lot clearer about what's going on there."}, also mentioning how, unless it was made clear that the R plot was using a log scale, it's not immediately obvious that this is the case, and as Dr. Palmer states \textit{"just feels  really random"} if it is not known that this is the scaling being used.
 
+In addition to a similar comment of \textit{"I think it's clearer that this is in the log scale because the the the Y ticks are shown as what they should be"}, Wilde notes that he feels it is important for the scale to start at zero, despite the logarithm never being equal to 0; \text{"I think not having the full scale is misleading"}. 
 
-
-
+This preference of the standard form scaling among these three interviewees adds to the idea that different formats may be required for different audiences; as academics in mathematics this cohort are very familiar with logarithms and standard form, and are thus comfortable with interpreting it and even find it a better representation of the values that the non-standard form numbers, whereas the survey respondents, who are assumed to have a great deal less experience dealing with this number format, struggled with interpreting the scale. This further pushes the importance of considering the audience alongside the visualisation designer's own concept of a 'good' format.
