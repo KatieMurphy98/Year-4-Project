@@ -152,9 +152,14 @@ matplotlib"}, contrasting this with ggplot, whereby \textit{"You can have very, 
 Prof. Jones articulates that visualisation is \textit{"a strength of R absolutely and the ggplot in 
 particular"}, and that, considering matplotlib as a MATLAB import, \textit{"Matlab certainly has good graphics as well"}. 
 
-\section{Customisation of Plots}
+\section{Freedom of Customisation}
+Another factor to consider when looking at programming tools is the amount of freedom that the user has for customisation, in terms of creating bespoke plots for their needs. 
 
+In general, both are regarded among interviewees as allowing a large amount of freedom, with neither being hailed as particularly better than the other, with any arising comparisons discussing more the ease of customisation as opposed to the overall ability of the library. 
 
+Prof. Jones states that, for a less experienced user, he believes matplotlib provides more freedom as does Dr. Palmer, with the reasoning that, with matplotlib, \textit{"you know how to access the ticks or whatever"}, but with ggplot \textit{"you've got to have this new object on and then you've got to go look something up"}, mirrored perhaps by Dr. Artemiou's statement of \textit{"the most, let's say, challenging thing is probably, knowing how to do it"} and Dr. Glynatsi's of \textit{"given that you know, you have some knowledge, I think it's very easy for both languages"}.
+
+Overall, it appears opinions on the amount of freedom in customisation of plot depends heavily on the users own programming knowledge and skills as opposed to any particular features of the packages.
 
 \subsection{Opinions on whether the specific visualisation code could be changed}
 This section will focus on the interviewees' opinions on the screenshots of code used to make the specific visualisations for the survey. The purpose of asking this was both to get feedback on the code and to understand how different people with different programming backgrounds would code visuals such as these.
@@ -172,11 +177,17 @@ Dr. Palmer makes the comment that the code \textit{"defined local variables as t
 Dr. Glynatsi also brings up an issue of overwriting, stating \textit{"you are overwriting the plot each time, so that's an error, in my opinion"}. This is expanded on as \textit{"the plots are writing themselves. So you're not returning each plot"}, referring to the fact that each function creates multiple plots, and saves them individually within the function rather than returning a single output. Perhaps it would have been preferable to create codes such that the output is a single plot, with the plot type defined as an argument. 
 
 An additional note from Dr. Glynatsi states that \textit{"it's very obvious what is the colour, it's very obvious that you're changing the y labels and the x labels and things like that"}, which the priorly discussed layered grammatical format of both languages lends to, since each layer adds a new one of these attributes. 
-A perhaps opposing comment from Wilde is that  
+A perhaps opposing comment from Wilde is that, for example, rather than the separate calls to create the x and y labels, \textit{"you can just do one labs call, and just have all of them together"}
+
+There were a couple of comments on the use of functions, with Dr. Palmer asking \textit{"Did you write those with Vince or did you write them yourself?"}, stating the reasoning behind this being that \textit{"Vince really likes putting them in functions, so it's just interesting that [the interviewer] used functions"}. Indeed, Dr. Knight confirms this, saying \textit{"I like that you've put your plotting code within- um in a
+functional way so within functions"}.
+
+Dr. Palmer's own views oppose this, where he states; \textit{"I like functions for most things, plotting is one of the ones that I just don't see why we do it functions"}. These two strongly opposing views show that the use of functions can be a very subjective matter, and it is up to the programmer whether they feel functions are appropriate to use.
 
 \subsection{Opinions on the visualisations themselves}
+After answering questions related to the codes, participants were shown first the two versions of the control-scaled bar plots, followed by the two logarithmically scaled plots and asked which they felt was more 'publication ready' out of the one created with ggplot2 and the one made with matplotlib. This was asked as an important feature of a plotting tool is whether it will output visualisations that may be input to reports or papers with minimal external editing or modification. Of course, these plots are only very basic, and more customisation could be done to the plots within the tools themselves, but this can still give an indication on which output style is preferred by this set of respondents.
 
-
+Starting with the control plot, there were a variety of responses
 
 
 
