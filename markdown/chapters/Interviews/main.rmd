@@ -152,15 +152,29 @@ matplotlib"}, contrasting this with ggplot, whereby \textit{"You can have very, 
 Prof. Jones articulates that visualisation is \textit{"a strength of R absolutely and the ggplot in 
 particular"}, and that, considering matplotlib as a MATLAB import, \textit{"Matlab certainly has good graphics as well"}. 
 
-\subsection{Opinions on the specific visualisation code}
+\section{Customisation of Plots}
 
 
+
+\subsection{Opinions on whether the specific visualisation code could be changed}
+This section will focus on the interviewees' opinions on the screenshots of code used to make the specific visualisations for the survey. The purpose of asking this was both to get feedback on the code and to understand how different people with different programming backgrounds would code visuals such as these.
+
+First note that there were many comments on lack of documentation and variable explanations, however when these came up it was explained to interviewees that this was intentional, and the purpose behind this.
+
+Dr. Artemiou mentioned that the code \textit{"busy"} and perhaps slightly to complex, stating that \textit{"Sometimes you can achieve whatever you want with a much simpler code"}, and so this is perhaps an area of improvement to focus on, on part of the author. He does however then go on to say that \textit{"that is no wrong or right, I'm happy either way"}. The reasoning behind the perhaps over-complicated code could either be the author's programming, or the language, or both. Dr. Artemiou did not specify the language however, just mentioned this as an overarching comment, so it is more likely due to the author struggling with efficiency. Overall however, although stating that \textit{"Yes, it can be changed"}, this interviewee appeared to be overall fairly indifferent.
+
+Similarly, Prof. Jones appeared to not have too much of an opinion on changing the code at all, simply stating that \textit{"this is a sort of code I would expect to be sitting behind the scenes with some other sort of interface for me to use"}. This is an interesting comment, and could potentially be down to the fact that the codes for producing the plots are written as functions, which would lend it to providing an interface into which the user may input arguments. Indeed, on further consideration, this code could quite easily potentially be put into an interactive shiny app, whereby the user can enter a number and get a plot showing a number of obstacles for the ninja warrior data. A further comment from Prof. Jones states that, when the code is of this format, \textit{"In which case, as long as it works, I don't really care too much, I suppose"}.
+
+Interestingly, it was the two R programmers that appeared more indifferent towards the codes, with the Python-predominant programmers having more of an opinion. Whether this is a result of experience in using each of these languages or just a general personal preference, however, is unclear.
+
+Dr. Palmer makes the comment that the code \textit{"defined local variables as the same thing as a global variable"}, and gives the variable named `viridis` as an example; the global variable was overwritten in the function by a local variable. This did not impact the functionality of the code, however will be considered when writing programs in future.
+
+Dr. Glynatsi also brings up an issue of overwriting, stating \textit{"you are overwriting the plot each time, so that's an error, in my opinion"}. This is expanded on as \textit{"the plots are writing themselves. So you're not returning each plot"}, referring to the fact that each function creates multiple plots, and saves them individually within the function rather than returning a single output. Perhaps it would have been preferable to create codes such that the output is a single plot, with the plot type defined as an argument. 
+
+An additional note from Dr. Glynatsi states that \textit{"it's very obvious what is the colour, it's very obvious that you're changing the y labels and the x labels and things like that"}, which the priorly discussed layered grammatical format of both languages lends to, since each layer adds a new one of these attributes. 
+A perhaps opposing comment from Wilde is that  
 
 \subsection{Opinions on the visualisations themselves}
-
-
-
-
 
 
 
