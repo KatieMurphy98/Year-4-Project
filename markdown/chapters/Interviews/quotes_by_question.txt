@@ -416,10 +416,20 @@ Owen (R)
 - "Oh. Yes, I suppose one- Something that- an advantage that Matlab has
    with its graphics that Python and R don't have is interactive             graphics. Yes, so matlab, you can you can you can actively tweak it       and see the changes in front of you as opposed to you know going back     and rewriting your code. And that that certainly has some advantages      that can speed up production of graphs. But it's- It's not a deal         breaker, I suppose, but. Yeah, I suppose that's the advantage of a        commercial package over a free package."
 
+-------------------------------------------------------------------------
+Q8: Other useful comments
+-------------------------------------------------------------------------
 
+Geraint (Py)
+------------
+- "Did you write those with Vince or did you write them yourself?"
 
+- "Vince loves a function, whereas I like functions for most things, plotting is one of the ones that I just don't see why we do it functions whereas Vince really likes putting them in functions, so it's just interesting that you used functions."
 
-
+Vince (Py)
+----------
+- "I like that you've put your plotting code within- um in a
+functional way so within functions."
 
 
 
