@@ -122,6 +122,8 @@ R packages used for univariate analysis include;
 
 \tableofcontents
 
+\chapter{Introduction}
+
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/lit-review/main.rmd'}
 ```
 
