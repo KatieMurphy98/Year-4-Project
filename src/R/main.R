@@ -1,7 +1,6 @@
 ##### Load libraries #####
 library(ggplot2)
 library(dplyr)
-library(DAAG) # datasets
 library(viridis) # colourmaps
 library(pubr)
 library(cowplot)

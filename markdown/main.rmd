@@ -35,6 +35,7 @@ devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8",
         \vspace{1.5cm}
 
         \textbf{Katie Murphy - 1632254}
+        \textbf{Supervisor: Dr. Vincent Knight}
         \vspace{1.5cm}
 
         \includegraphics[width=0.5\textwidth]{universitylogo.eps}
@@ -42,7 +43,7 @@ devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8",
         \vfill
 
 
-        MMORS Final Year Dissertation\\
+        MMORS Final Year Dissertation for the Academic Year 2020-2021\\
 
         \vspace{0.5cm}
         Cardiff School of Mathematics
@@ -74,9 +75,43 @@ I am also grateful for his patience in both teaching me and supporting in my own
 
 Finally, I would like to thank everyone who participated in the study, in both the survey and the interviews. Thank you to the interviewees for their time and very informative contributions to the study; Dr. Vincent Knight, Dr. Geraint Palmer, Dr.Nikoleta E. Glynatsi, Dr. Andreas Artemiou, Henry Wilde and Professor Owen Jones.
 
-\vspace{5cm}
+\section*{Computing Work}
+This report was written and compiled using R Markdown [@Allaire2020-sr] with pdflatex and version control in Git [@git].
 
-This report was written and compiled using R Markdown [@Allaire2020-sr] with pdflatex and version control using Git and GitHub [@git].
+The R visualisations for the survey were created using R version 4.0.2 [@R] using `ggplot2` version 3.3.3 [@ggplot]. The Python visualisations were made using Python version 3.7.4 [@py] with `pyplot` from `matplotlib` version 3.3.3 [@matplot]. Additional packages and libraries used for visualisation include;
+
+For R;
+\begin{itemize}
+   \item `dplyr` [@dplyr]
+   \item `viridis` [@viridis]
+   \item `cowplot` [@cowplot]
+   \item `gridExtra` [@gridExtra]
+   \item `kableExtra` [@kableExtra]
+\end{itemize}
+
+For Python;
+\begin{itemize}
+   \item `numpy` [@numpy]
+   \item `pandas` [@pandas, @pandas2]
+   \item `openpyxl` [@openpyxl]
+   \item `math` [@math]
+   \item `os` [@os]
+\end{itemize}
+
+R packages used for univariate analysis include;
+
+\begin{itemize}
+   \item `readxl` [@readxl]
+   \item `dplyr` [@dplyr]
+   \item `rstatix` [@rstatix]
+   \item `BSDA` [@BSDA]
+   \item `gridExtra` [@gridExtra]
+   \item `knitr` [@knitr1, @knitr2, @knitr3]
+   \item `kableExtra` [@kableExtra]
+   \item `lawstat` [@lawstat]
+   \item `cowplot` [@cowplot]
+   \item `stringi` [@stringi]
+\end{itemize}
 
 
 \centering
