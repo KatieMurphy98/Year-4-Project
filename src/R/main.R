@@ -1,7 +1,6 @@
 ##### Load libraries #####
 library(ggplot2)
 library(dplyr)
-library(DAAG) # datasets
 library(viridis) # colourmaps
 library(pubr)
 library(cowplot)
@@ -22,6 +21,12 @@ NinjaWarrior <- as.data.frame(read_excel(tf))
 names(NinjaWarrior) <- c("season", "location", "stage", "name", "order")
 
 obstacles <- function(ObstacleNumbers) {
+  # Argument ObstacleNumbers specifies which obstacle index to subset for.
+  
+  # The function orders the data in decending order of how many times each obstacle
+  # was used and then subsets for the required indices.
+  
+  # Outputs a table giving the name of each selected obstacle and the number of times it was used.
   obst <- data.frame()
   j <- 1
 
@@ -40,6 +45,11 @@ obstacles <- function(ObstacleNumbers) {
 
 
 stack_data <- function(ObstacleNumbers) {
+  # Argument ObstacleNumbers specifies which obstacle index to subset for after 
+  # arranging in descending order.
+  
+  # Creates data set that can be used to created stacked bar plot.
+
   obst <- obstacles(ObstacleNumbers)
 
   ## List obstacles the number of times they are used##
@@ -72,56 +82,17 @@ stack_data <- function(ObstacleNumbers) {
   return(stage.count)
 }
 
-### WRITE CSV FILES ###
-FinalsRegionalCity <- stack_data(2:5) %>% filter(stage == "Finals (Regional/City)")
-FinalsRegionalCity <- as.data.frame(table(FinalsRegionalCity["obstacle"]))
-names(FinalsRegionalCity) <- c("name", "ntimes")
-FinalsRegionalCity <- FinalsRegionalCity[order(-FinalsRegionalCity$ntimes), ]
-write.csv(FinalsRegionalCity, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/FinalsRegionalCity.csv")
 
-NationalFinalsStage2 <- stack_data(2:5) %>% filter(stage == "National Finals - Stage 2")
-NationalFinalsStage2 <- as.data.frame(table(NationalFinalsStage2["obstacle"]))
-names(NationalFinalsStage2) <- c("name", "ntimes")
-NationalFinalsStage2 <- NationalFinalsStage2[order(-NationalFinalsStage2$ntimes), ]
-write.csv(NationalFinalsStage2, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/NationalFinalsStage2.csv")
-
-SemiFinals <- stack_data(2:5) %>% filter(stage == "Semi-Finals")
-SemiFinals <- as.data.frame(table(SemiFinals["obstacle"]))
-names(SemiFinals) <- c("name", "ntimes")
-SemiFinals <- SemiFinals[order(-SemiFinals$ntimes), ]
-write.csv(SemiFinals, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/SemiFinals.csv")
-
-Qualifying <- stack_data(2:5) %>% filter(stage == "Qualifying")
-Qualifying <- as.data.frame(table(Qualifying["obstacle"]))
-names(Qualifying) <- c("name", "ntimes")
-Qualifying <- Qualifying[order(-Qualifying$ntimes), ]
-write.csv(Qualifying, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/Qualifying.csv")
-
-QualifyingRegionalCity <- stack_data(2:5) %>% filter(stage == "Qualifying (Regional/City)")
-QualifyingRegionalCity <- as.data.frame(table(QualifyingRegionalCity["obstacle"]))
-names(QualifyingRegionalCity) <- c("name", "ntimes")
-QualifyingRegionalCity <- QualifyingRegionalCity[order(-QualifyingRegionalCity$ntimes), ]
-write.csv(QualifyingRegionalCity, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/QualifyingRegionalCity.csv")
-
-NationalFinalsStage1 <- stack_data(2:5) %>% filter(stage == "National Finals - Stage 1")
-NationalFinalsStage1 <- as.data.frame(table(NationalFinalsStage1["obstacle"]))
-names(NationalFinalsStage1) <- c("name", "ntimes")
-NationalFinalsStage1 <- NationalFinalsStage1[order(-NationalFinalsStage1$ntimes), ]
-write.csv(NationalFinalsStage1, "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/NationalFinalsStage1.csv")
-
-
-write.csv(obstacles(2:5), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/times_used4.csv")
-write.csv(obstacles(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/times_used6.csv")
-
-write.csv(stack_data(2:8), "C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/Data/Ninja Warrior/stack_data.csv")
-###
-
-#####
+### The two lines below are to order the bar plots in the required order as opposed to alphabetically ###
 letters <- c("A", "B", "C", "D", "E", "F", "G")
 obst_list <- c("Salmon Ladder", "Quintuple Steps", "Floating Steps", "Log Grip", "Jump Hang", "Quad Steps", "Jumping Spider")
 
 
 barplots_yscaling <- function(n.obst) {
+  
+  # n.obst specifies the indices of obstacles to be plotted
+  # Function returns and saves bar plots with different axis scalings
+  
   obst <- obstacles(n.obst)
   obst$name <- letters[1:length(n.obst)]
 
@@ -191,6 +162,10 @@ barplots_yscaling <- function(n.obst) {
 barplots_yscaling(2:5)
 
 barplots_axisratio <- function(n.obst) {
+  
+  # n.obst specifies the indices of obstacles to be plotted
+  # Function returns and saves bar plots with different aspect ratios
+  
   obst <- obstacles(n.obst)
   obst$name <- letters[1:length(n.obst)]
 
@@ -229,18 +204,6 @@ barplots_axisratio <- function(n.obst) {
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), text = element_text(size = 14)) +
     theme(aspect.ratio = 0.5 / 1)
 
-
-  # dots
-  dot <- ggplot(data = obst) +
-    geom_point(aes(x = name, y = ntimes), col = "#69b3a2") +
-    scale_x_discrete(labels = obst_list[1:length(n.obst)]) +
-    scale_y_continuous(limits = c(0, 41), breaks = seq(0, 40, 10), labels = seq(0, 40, 10)) +
-    xlab("Obstacle") +
-    ylab("Times Used") +
-    labs(fill = "Stage") +
-    theme_classic() +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), text = element_text(size = 14))
-
   top <- plot_grid(narrow, dflt,
     labels = c("A", "B"),
     ncol = 2, nrow = 1
@@ -265,6 +228,10 @@ barplots_axisratio <- function(n.obst) {
 barplots_axisratio(2:5)
 
 barplots_stacked <- function(n.obst) {
+  
+  # n.obst specifies the indices of obstacles to be plotted
+  # Function returns and saves stacked bar plots with different colourings
+  
   stage.count <- stack_data(n.obst)
 
   # vir
@@ -363,7 +330,11 @@ barplots_stacked <- function(n.obst) {
 }
 barplots_stacked(2:5)
 
-barplots_sidebyside <- function(n.obst) {
+barplots_grouped <- function(n.obst) {
+  
+  # n.obst specifies the indices of obstacles to be plotted
+  # Function returns and saves stacked bar plots with different colourings
+  
   stage.count <- stack_data(n.obst)
 
   # vir
@@ -403,8 +374,8 @@ barplots_sidebyside <- function(n.obst) {
     theme_classic() +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), text = element_text(size = 14))
 
-  # fil
-  fil <- ggplot(data = stage.count) +
+  # def
+  def <- ggplot(data = stage.count) +
     geom_bar(aes(x = ltrs, fill = stages), position = "dodge") +
     scale_y_continuous() +
     scale_x_discrete(labels = obst_list[1:length(n.obst)]) +
@@ -420,21 +391,26 @@ barplots_sidebyside <- function(n.obst) {
   print(grey)
   ggsave("Plots/R/Ninja_Data/colours/grey_d.jpeg")
 
-  print(fil)
+  print(def)
   ggsave("Plots/R/Ninja_Data/colours/default_d.jpeg")
 }
-barplots_sidebyside(2:5)
+barplots_grouped(2:5)
 
 
 ##### Time-series #####
 
 
 sales_line_plots <- function(npoints) {
-  dat <- c(BJsales)
+  # npoints specifies number of points in each time series
+  # Function returns and saves line plots with different axis scaling
+  
+  dat <- c(BJsales) # read in and concatenate data to a vector
 
   months_list <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-  months <- as.factor(1:npoints)
+  months <- as.factor(1:npoints) # Select number of months for time series
 
+  # Selecting start point for time series and creating a data set for this and the 'npoints'-1
+  # subsequent points (ie. for npoints = 12, select start point and the 11 following points)
   set.seed(seeds[1])
   start <- sample(138, 1)
   vals <- dat[start:(start + npoints - 1)]
@@ -575,19 +551,9 @@ sales_line_plots <- function(npoints) {
   return(sales2)
 }
 
+
+### TESTING SEEDS ###
 # seeds <- sample(1000, 4)
 seeds <- c(62, 905, 511, 579)
 sales_line_plots(npoints = 12)
 seeds
-
-
-# 62, 905, 511, 579 - Set 1
-# 958, 36, 224, 483 - Set 2
-# 511 579
-
-
-# Consider - percentages, cumulative etc
-
-# setwd("C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/src/R")
-# style_dir(scope = "tokens")
-#

@@ -22,7 +22,7 @@ Py biased: Geraint, Henry, Nikoleta, Vince
     but very recently I've started using R for a project I'm working on."
 
  - "So yeah. Yeah, I'd like to think- I'd consider- I'd like to think 
-   I'm unbiased, I'm not I am a python biased person."
+    I'm unbiased, I'm not I am a python biased person."
 
 Nikoleta (Py)
 -------------
@@ -36,7 +36,7 @@ Owen (R)
  
  Vince (Py)
  -----------
- - "So I'm a lot more familiar with Python than I am with R or a lot         more fluent in Python than I am with R so that's already one bit of      bias in whatever I might suggest."
+ - "So I'm a lot more familiar with Python than I am with R or a lot          more fluent in Python than I am with R so that's already one bit of       bias in whatever I might suggest."
  
 
 ------------------------------------------------------------------------
@@ -178,7 +178,7 @@ Nikoleta (Py)
 
 Owen (R)
 --------
-- "Well, I suppose unless I knew what was being used for, I wouldn't I       wouldn't be inclined to to try, I suppose. I suppose the other general    impression I got is this is a sort of code I would expect to be       sitting behind the scenes with some other sort of interface for me to     use. In which case, as long as it works, I don't really care too much,    I suppose."
+- "Well, I suppose unless I knew what was being used for, I wouldn't I       wouldn't be inclined to to try, I suppose. I suppose the other general    impression I got is this is a sort of code I would expect to be          sitting behind the scenes with some other sort of interface for me to     use. In which case, as long as it works, I don't really care too much,    I suppose."
 
 Vince (Py)
 ----------
@@ -203,7 +203,7 @@ Geraint (Py)
 
 -"I think they are, they are both really well suited, especially with the   ggplot library. I think the ggplot library does things really nice.       It's when you're not used to it, it feels a little unintuitive, but       then you realise that you can do like some really cool things with like   one variable or something and it's really neat. I really like it. Like    the I don't know what stands for the aes thing where you can just tell    it what your axes are, and then soon as you've told it what the axes      are just throw our data at it, and it's like oh, that's nice"
 
--"I think matplotlib is- with, with Python you tend to like have one       library, that does something really good, and matplotlib does it       really, really good. And there are like two ways of doing things in       matplotlib, like the object oriented way and then the just plot dot       way. And I think the plot dot way, I find it a bit like un-pythonic,      it's very different to how you write the rest of Python. Then the       object orientated way, is making plots exactly like you write the rest    of Python, which makes it really natural"
+-"I think matplotlib is- with, with Python you tend to like have one        library, that does something really good, and matplotlib does it          really, really good. And there are like two ways of doing things in       matplotlib, like the object oriented way and then the just plot dot       way. And I think the plot dot way, I find it a bit like un-pythonic,      it's very different to how you write the rest of Python. Then the         object orientated way, is making plots exactly like you write the rest    of Python, which makes it really natural"
 
 - "And with R- it's funny, like with R as well it's the opposite, like       ggplot is very object oriented. whereas the rest of R is not."
 
@@ -220,38 +220,38 @@ Henry (Py)
 Nikoleta (Py)
 -------------
 - "Um, so the problem with R is that the type of plotting that I've
-   personally used in R was more pre-recorded things, pre-recorded          things, sorry. So, for example, I used the stat package and it would      put the arrows and things like that just with a function. But that        made me feel back then that in order to manipulate the plot further,      it was a hassle for me because it was a recorded thing and then I had     to go on top and force things."
+   personally used in R was more pre-recorded things, pre-recorded           things, sorry. So, for example, I used the stat package and it would      put the arrows and things like that just with a function. But that        made me feel back then that in order to manipulate the plot further,      it was a hassle for me because it was a recorded thing and then I had     to go on top and force things."
 
 - "Where with matplotlib when I plot, I do everything from scratch"
 
 - "So how I gather when it comes to plotting both of the languages
-   are quite powerful. And I know, for example, for plotting graphs R is     fantastic where I haven't found something equivalent as good in          Python. Plotting wise, both of the fantastic people will argue that       one is better, but it has to do with bias, in my opinion. I would say     matplotlib is fantastic, but I don't know R ggplot, so. Yes."
+   are quite powerful. And I know, for example, for plotting graphs R is     fantastic where I haven't found something equivalent as good in           Python. Plotting wise, both of the fantastic people will argue that       one is better, but it has to do with bias, in my opinion. I would say     matplotlib is fantastic, but I don't know R ggplot, so. Yes."
 
 Owen (R)
 --------
-- "Oh, I think it's a strength of R absolutely and the ggplot in          particular, so I would say that's extremely well suited to          visualisation. Well, ggplot is and again, talking about Python, I         think, again, you have to specify what pack- or your library you're       using for graphics."
+- "Oh, I think it's a strength of R absolutely and the ggplot in             particular, so I would say that's extremely well suited to             visualisation. Well, ggplot is and again, talking about Python, I         think, again, you have to specify what pack- or your library you're       using for graphics."
 
-- "Yeah, so so that's a sort of a python import of a matlab. Graphics.       Language, isn't it, Google graphics and so. Yeah, I mean, Matlab         certainly has good graphics as well. I don't have enough experience, I    suppose, with Python graphics, to have a really informed opinion."
+- "Yeah, so so that's a sort of a python import of a matlab. Graphics.       Language, isn't it, Google graphics and so. Yeah, I mean, Matlab          certainly has good graphics as well. I don't have enough experience, I    suppose, with Python graphics, to have a really informed opinion."
 
 - "I think like most people, once you once you've learnt how to do
    graphics you are happy with, you tend to stick to the system you've       learnt because learning a new system takes so long."
 
-- "I mentioned Julia as a language, so I've learnt that fairly recently.     And doing graphics in Julia, well, they've, they've imported          matplotlib, but it's also fairly easy to use R to do plots for Julia      output. And so that's what I do. And so instead of learning a new         system."
+- "I mentioned Julia as a language, so I've learnt that fairly recently.     And doing graphics in Julia, well, they've, they've imported             matplotlib, but it's also fairly easy to use R to do plots for Julia      output. And so that's what I do. And so instead of learning a new         system."
 
 Vince (Py)
 ----------
 - "Yeah, that's an interesting question. I mean. So. Just from the fact-     essentially the reputation that ggplot holds, that's the immediate        thing that stands out to me"
 
-- "I'm like, you do visualisation with ggplot, you must really, you know,    you must really know what you're doing. Because ggplot is kind of like    the gold standard of of of visualisation. So it certainly seems          appropriate, you know, that that that weird issue with the truncation.    I would or I would wonder if that does mean maybe there's something       else."
+- "I'm like, you do visualisation with ggplot, you must really, you know,    you must really know what you're doing. Because ggplot is kind of like    the gold standard of of of visualisation. So it certainly seems           appropriate, you know, that that that weird issue with the truncation.    I would or I would wonder if that does mean maybe there's something       else."
 
 - "Because truncating some data is not, you know, that stands out to me.     I'm like, oh, I don't know if there's a better way of doing it, but       that would be a thing that I'd be like. I wonder if there's a better      way of doing that."
 
-- "And then kind of in a boring way, in a boring way on the Python side,    yeah, that looks perfectly appropriate. That looks like good
+- "And then kind of in a boring way, in a boring way on the Python side,     yeah, that looks perfectly appropriate. That looks like good
    old boring matplotlib, you know, but boring in a good way, you know       what I mean?"
 
 - "One thing, you know, and this might almost be kind of like a slight       bit of imposter syndrome because my matplotlib is so much better than     my my ggplot plot, you know, matplotlib's the first time I go, I pick     up to draw anything anything. Like there's a bit of me that's like,       because it's ggplot it's probably better, you know, but but I don't       know. I don't know. But that's all that's really just the reputation      of ggplot. So you know, in Python.
 
-   A lot of library, a lot of other visualisations, libraries come up and    they kind of promised to be the ggplot of Python. Whereas in reality,     matplotlib is perfectly fine. So those are my thoughts between the two    of them. Sorry if that was a bit vague again."
+   A lot of libraries, a lot of other visualisations, libraries come up    and they kind of promised to be the ggplot of Python. Whereas in       reality, matplotlib is perfectly fine. So those are my thoughts       between the two of them. Sorry if that was a bit vague again."
 
 
 
@@ -274,7 +274,7 @@ Henry (Py)
 - "Um, so as somebody who's picked up ggplot2, in the past, like two
    weeks, I would say that's easier because it is very clear like, you       have your geoms, you have your stats and you just mush them together      and it all- you just have lots of pieces that can all work together."
 
-- "Whereas with um, with matplotlib you have to have an understanding of     what you're actually trying to do, like from a programmatic,             programmatical point of view, like you have to think about this is the    dimensions of my array and stuff like that whereas in ggplot you          don't. So I'd say ggplot is easier to pick up."
+- "Whereas with um, with matplotlib you have to have an understanding of     what you're actually trying to do, like from a programmatic,              programmatical point of view, like you have to think about this is the    dimensions of my array and stuff like that whereas in ggplot you          don't. So I'd say ggplot is easier to pick up."
 
 Nikoleta (Py)
 -------------
@@ -291,13 +291,13 @@ Owen (R)
    you're not trying to do anything too different from this sort of          standard set of plots that it caters to. Which is fairly rich, I          think, and then it's got, I think, a nice, logical system for for
    doing things."
 
-- "As soon as you want to do something a bit out of the ordinary, then      life becomes much more difficult and my suspicion, not one that I've      really tested, is that making ggplot do something a bit different is      going to be harder than making matplotlib do something a bit             different." 
+- "As soon as you want to do something a bit out of the ordinary, then       life becomes much more difficult and my suspicion, not one that I've      really tested, is that making ggplot do something a bit different is      going to be harder than making matplotlib do something a bit              different." 
 
-- "So for a beginner, that shouldn't be an issue. And I suppose I mean,      another thing for a beginner, something that's very important, is         getting a feel for what good plots look like and what's possible as       well. And I think ggplot makes that quite easy. Well, relatively         easy."
+- "So for a beginner, that shouldn't be an issue. And I suppose I mean,      another thing for a beginner, something that's very important, is         getting a feel for what good plots look like and what's possible as       well. And I think ggplot makes that quite easy. Well, relatively          easy."
 
 Vince (Py)
 ----------
-- "So it's hard for me to answer that question from the code you're         showing me. 
+- "So it's hard for me to answer that question from the code you're          showing me. 
 
    OK, well, let me try to answer that question from the code you showed     me. But I think what I'm trying to say is I'm not sure I'm answering      the code from the code, from the question and the code you're showing     me. 
 
@@ -305,7 +305,7 @@ Vince (Py)
 
    Whereas the code on the left, the Python code, seems to be: create a      bar plot, create an x label, create a y label and possibly modify it,     modify the text. So I think I think the matplotlib plot code you're       using is probably the more straightforward one for a beginner to pick     up if they just need to draw something like that."
 
-- "But you are using there, you are using there the pyplot interface to      matplotlib, which is kind of-there's actually, there's two ways of        plotting in matplotlib, using matplotlib directly or using pyplot and     pyplot is actually just meant to be matplotlib's interface to make it     like Matlab's plotter. So it is meant to be relatively             straightforward. 
+- "But you are using there, you are using there the pyplot interface to      matplotlib, which is kind of-there's actually, there's two ways of        plotting in matplotlib, using matplotlib directly or using pyplot and     pyplot is actually just meant to be matplotlib's interface to make it     like Matlab's plotter. So it is meant to be relatively                straightforward. 
 
    So I think in a way whereas to plot with ggplot you essentially have      to learn the grammar of graphics, right? That's kind of what ggplot is    all based on, is the grammar of graphics. 
 
@@ -346,7 +346,7 @@ Control response - R
 
 Log response - Py
 
-- "I rather the one where it's got 10 to the 0, 10 to the 1. I think         that's a lot clearer about what's going on there. I suppose with the      other one, well no it is, it is the actual values, it just feels          really random until you- unless you knew it was a long scale, you just    you've got to really look to see."
+- "I rather the one where it's got 10 to the 0, 10 to the 1. I think         that's a lot clearer about what's going on there. I suppose with the      other one, well no it is, it is the actual values, it just feels          really random until you- unless you knew it was a log scale, you just    you've got to really look to see."
 
 Henry (Py)
 ----------
@@ -375,10 +375,12 @@ Control response - Py
 Log response - R
 - "OK, then the plot to the left. I think the plot to the right at least     needed some sort of explanation, that is the logarithmic of, so yeah.     So if these the standard that it returns I think you know for purpose     of corrections, I think the left one on these in this case."
 
+- "But the plots are still floating. And now they start from one right    before they start from zero, and if you put those two plots next to    each other, it would have been so confusing." 
+
 Owen (R)
 --------
 Control response - no preference
-- "I have no preference. I feel like I'm at the optometrist, so I think    these are both equally good."
+- "I have no preference. I feel like I'm at the optometrist, so I think      these are both equally good."
 
 Log response - Py
 - "Oh, interesting, okay, well, the matplotlib on the right. Yes, so that    certainly makes it clearer that it's using a log scale, which I think     is a good thing. That would be my preference out of those two."
@@ -424,12 +426,12 @@ Geraint (Py)
 ------------
 - "Did you write those with Vince or did you write them yourself?"
 
-- "Vince loves a function, whereas I like functions for most things, plotting is one of the ones that I just don't see why we do it functions whereas Vince really likes putting them in functions, so it's just interesting that you used functions."
+- "Vince loves a function, whereas I like functions for most things,    plotting is one of the ones that I just don't see why we do it    functions whereas Vince really likes putting them in functions, so    it's just interesting that you used functions."
 
 Vince (Py)
 ----------
 - "I like that you've put your plotting code within- um in a
-functional way so within functions."
+   functional way so within functions."
 
 
 

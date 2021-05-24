@@ -65,14 +65,14 @@ With regard to the interest factor, the survey was designed with engaging respon
 
 Although the content of the surveys for this study is not likely to be controversial or highly personal, anonymity is still important as the participants could otherwise potentially feel pressure to give a 'correct' answer, given the mathematical nature of the questions. As mentioned prior, anonymity here means that this pressure is potentially reduced and thus the relevant measurement bias may be mitigated. Additionally to the more technical visualisation questions, respondents were asked a series of demographic questions such as age, degree subject (if applicable),  and whether they are colourblind or have any disorders that my affect visual processing. Additionally, three Likert scaled questions relating to well they would rate their spatial, observational and numerical skills. The @YANG2021 paper, which explores the truncation effect of barplots, looks at graph literacy and its relation to perception, and hypothesises that those undertaking quantitative subjects at PhD level would be less impacted by the truncation effect as compared to humanities PhD students. It was found that the truncation effect did impact both groups, but those in quantitative fields had their perception marginally less affected. Thus the degree subject question was included to explore if this has an effect here. In relation to the visual processing and colorblindness questions, these are again included to test whether they have any significant impact on perception, as it may be important to consider these factors when creating visualisations to ensure they are accessible to all, and the study will examine the potential impact of such disorders.
  
-The set will consist of two groups of surveys, which will be identical up to the visualisation package used. Particularly, one group will contain visualisations made with R's ggplot2, the next with matplotlib from Python. These surveys will be distributed to the general public by sharing links on social media platforms such as Facebook. The reasoning behind creating two separate surveys in different languages is to ascertain whether the language used influences the interpretation. Within the groups there are 6 surveys, with each altering the order of visualisations shown in part 1 to assess the perception of each plot type without reference or comparison to another, and the same with part 2. in Part 3, each of the 6 used one of 3 colour palettes as the main colour, and another as a comparitor to test which the preferred colour palette is and which respondents find easier to read and interpret. Note however that, while both languages were intended to be as close to default as possible, the ggplot visualisations were made such that the theme `theme_classic` was applied, as this is mirrors the Python format in terms of the absence of grid lines.
+The set will consist of two groups of surveys, which will be identical up to the visualisation package used. Particularly, one group will contain visualisations made with R's ggplot2, the next with matplotlib from Python. These surveys will be distributed to the general public by sharing links on social media platforms such as Facebook. The reasoning behind creating two separate surveys in different languages is to ascertain whether the language used influences the interpretation. Within the groups there are 6 surveys, with each altering the order of visualisations shown in part 1 to assess the perception of each plot type without reference or comparison to another, and the same with part 2. in Part 3, each of the 6 used one of 3 colour palettes as the main colour, and another as a comparitor to test which the preferred colour palette is and which respondents find easier to read and interpret. Note however that, while both languages were intended to be as close to default as possible, the ggplot visualisations were made such that the theme `theme_classic` was applied, as this is mirrors the Python format in terms of the absence of grid lines. Thus any comparisons made are to be considered as be comparing standard matplotlib and ggplot with the classic theme.
 
 \section{Creating the Visualisations}
 
-See appendix for the code and figures of the visualisations. The R visualisations were created using R version 4.0.2 [@R] using ggplot2 version 3.3.3 [@ggplot]. The Python visualisations were made using Python version 3.7.4 [@py] with pyplot from matplotlib version 3.3.3 [@matplot]. 
+See appendix 1 for a pdf of the survey, containing the finished visuals, and appendices 2 and 3 for code.
 
 \subsection{The Data}
-The visualisations for the survey were created with inspiration from the papers discussed above. The bar plots were created using a data set regarding the history of obstacles used over 10 seasons of \textit{'American Ninja Warrior'} [@ANW]. Each row of the data represents a single instance of an obstacle being used, and each instance has variables as specified in the below table.
+The visualisations for the survey were created with inspiration from the papers discussed above. The bar plots were created using a data set regarding the history of obstacles used over 10 seasons of \textit{'American Ninja Warrior'} [see @ANW]. Each row of the data represents a single instance of an obstacle being used, and each instance has variables as specified in table 2.1.
 
 \begin{center}
 ```{r}
@@ -88,7 +88,7 @@ mat[,2] <- expl
 
 colnames(mat) <- c("Variable Name", "Explanation")
 
-kable(mat)
+kable(mat, caption="Table with explanation of variables")
 ```
 \end{center}
 
@@ -162,7 +162,7 @@ order[6,] <- c("Truncated", "Log", "Control")
 
 rownames(order) <- version
 
-kable(order, col.names = question)
+kable(order, col.names = question, caption="Order of plots in part 1")
 ```
 \end{center}
 
@@ -196,7 +196,7 @@ order[6,] <- c("Wide", "Narrow", "Default")
 
 rownames(order) <- version
 
-kable(order, col.names = question)
+kable(order, col.names = question, caption="Order of plots in part 2")
 ```
 \end{center}
 Questions regarding comparisons between the plots were then administered as follows, while showing respondents all of the three plots on a single page.
@@ -261,7 +261,7 @@ mat[,3] <- comp
 
 colnames(mat) <- c("Version", "Main colours", "Comparitor")
 
-kable(mat)
+kable(mat, caption="Colour palette pairings used in each question")
 ```
 \end{center}
 
@@ -288,7 +288,7 @@ order[6,] <- c("Zeroed", "Truncated", "Separated")
 
 rownames(order) <- version
 
-kable(order, col.names = question)
+kable(order, col.names = question, caption="Order of plots in part 3")
 ```
 \end{center}
 
