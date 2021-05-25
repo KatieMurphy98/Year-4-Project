@@ -32,11 +32,13 @@ devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8",
         \vspace{0.5cm}
         \textit{An investigation into the theory behind data visualisation}
 
-        \vspace{1.5cm}
+        \vspace{1cm}
 
-        \textbf{Katie Murphy - 1632254}
+        \textbf{Name: Katie Murphy}\\
+        \textbf{Student Number: 1632254}\\
         \textbf{Supervisor: Dr. Vincent Knight}
-        \vspace{1.5cm}
+        
+        \vspace{1cm}
 
         \includegraphics[width=0.5\textwidth]{universitylogo.eps}
 
@@ -50,7 +52,7 @@ devtools::source_gist("c83e078bf8c81b035e32c3fc0cf04ee8",
 
         \vspace{1.5cm}
         
-        \textbf{Abtract}\\
+        \textbf{Abstract}\\
         
         \textit{A study into the theory behind data visualisation, looking into different ways in which data can be
         interpreted visually to portray key information accurately in an elegant and concise manner using the
@@ -81,37 +83,15 @@ This report was written and compiled using R Markdown [@Allaire2020-sr] with pdf
 The R visualisations for the survey were created using R version 4.0.2 [@R] using `ggplot2` version 3.3.3 [@ggplot]. The Python visualisations were made using Python version 3.7.4 [@py] with `pyplot` from `matplotlib` version 3.3.3 [@matplot]. Additional packages and libraries used for visualisation include;
 
 For R;
-\begin{itemize}
-   \item `dplyr` [@dplyr]
-   \item `viridis` [@viridis]
-   \item `cowplot` [@cowplot]
-   \item `gridExtra` [@gridExtra]
-   \item `kableExtra` [@kableExtra]
-\end{itemize}
+`dplyr` [@dplyr], `viridis` [@viridis], `cowplot` [@cowplot], `gridExtra` [@gridExtra] and `kableExtra` [@kableExtra].
 
 For Python;
-\begin{itemize}
-   \item `numpy` [@numpy]
-   \item `pandas` [@pandas, @pandas2]
-   \item `openpyxl` [@openpyxl]
-   \item `math` [@math]
-   \item `os` [@os]
-\end{itemize}
+`numpy` [@numpy], `pandas` [@pandas, @pandas2], `openpyxl` [@openpyxl], `math` [@math] and `os` [@os].
+
 
 R packages used for univariate analysis include;
 
-\begin{itemize}
-   \item `readxl` [@readxl]
-   \item `dplyr` [@dplyr]
-   \item `rstatix` [@rstatix]
-   \item `BSDA` [@BSDA]
-   \item `gridExtra` [@gridExtra]
-   \item `knitr` [@knitr1, @knitr2, @knitr3]
-   \item `kableExtra` [@kableExtra]
-   \item `lawstat` [@lawstat]
-   \item `cowplot` [@cowplot]
-   \item `stringi` [@stringi]
-\end{itemize}
+`readxl` [@readxl], `dplyr` [@dplyr], `rstatix` [@rstatix], `BSDA` [@BSDA], `gridExtra` [@gridExtra], `knitr` [@knitr1], `kableExtra` [@kableExtra], `lawstat` [@lawstat], `cowplot` [@cowplot] and `stringi` [@stringi].
 
 
 \centering
@@ -123,6 +103,14 @@ R packages used for univariate analysis include;
 \tableofcontents
 
 \chapter{Introduction}
+
+Data visualisation is a rapidly expanding area of study and a crucial element of data science. There are many purposes of data visualisation and it is a useful tool for all stages of data exploration, analysis and presentation. This study will explore the theory behind data visualisation, including discussion on what is currently regarded as good practice and how poorly designed visuals can mislead the observer. 
+
+The study will mainly center on bar plots, with a brief venture into time series line plots, as these are heavily studied when investigating data visualisation since they are simple, widely used and recognisable to most observers. On this topic, a survey was administered with the purpose of analysing how altering various aesthetic features of the plots may impact an how an individual interprets information from the plot. This will be analysed in depth using univariate statistical analysis in R. This survey takes inspiration from similar studies, which are discussed.
+
+Additionally, to explore the programming side of data visualisation, a cohort of R and Python programming specialists will be interviewed to obtain their subjective opinions on these two languages in general additionally to their application in visualisation. Quotes from this interview will be summarised and explored using a thematic analysis.
+
+The report begins with a literature review exploring general visualisation principles, good practices, studies into visualisation as well as different tools for creating visualisations and a discussion on the programming languages R and Python along with their application to visualisation.
 
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/lit-review/main.rmd'}
 ```
@@ -136,14 +124,25 @@ R packages used for univariate analysis include;
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/interviews/main.rmd'}
 ```
 
-\chapter{Conclusion}
+\chapter{Conclusions}
 
-\chapter{Future Work}
+\section{Main Conclusions}
+This report has provided a brief exploration into the world of data visualisation, discussing a selection of tools and available for visualisation of data, with an in-depth investigation into the use of the R and Python packages, ggplot2 and matplotlib. 
+
+The survey showed how aesthetic features can impact perception of the data, and how altering y-axis scales in particular can have significant effects and highlighting how presentation and notation must be tailored to the target audience.
+
+The interviews provided a good in-depth discussion into the programming the lies behind the scenes of visualisation and provided further knowledge on programming for visualisation alongside interesting insights into personal opinions on both the programming languages in general and their applications to visualisation. 
+
+This report merely scratches the surface, however, and the applications of data visualisation in the real world are extensive and still ever expanding. Even just considering only static, two-dimensional visualisation, there are unlimited options for production of complex, beautiful, ingenuitive and imaginative visualisations that have not been discussed here. These can comprise of combinations of basic plots to create more information-dense figures, applications in high dimensional data, such as clustering or R's ability to create complex yet elegant Sankey diagrams. 
+
+Beyond this even, there have been developments of applications in interactive three-dimensional visualisation, which being combined with with ventures into VR allows the user to, quite literally, be immersed in the data to physically walk through and pull it apart.
+
+\section{Potential for Future Work}
 Future work on this topic would include running focus groups with survey respondents to obtain more in depth information regarding the survey questions, for example asking open ended questions to understand the reasoning behind responses and to open a discussion about the topic in general. This is in addition to the prior mentioned topics for further research. If not for time constraints, JavaScript D3 would also have been implemented and investigated, and so this could perhaps be involved in a future study and compared to R and Python. An investigation into the combined D3/Python approach could also be studied.
 
 Other potential interesting future research projects could include an exploration into the history of data visualisation, discussing very early visualisations such as that used by John Snow to investigate clusters of cases in the Broad Street cholera outbreak of 1854, eventually leading him to determine a particular water pump as the source of the outbreak, and the polar diagram created by Florence Nightingale, also in the 1850s, to explore causes of mortality in soldiers. Both of these figures, along with discussion, are presented in @grammar. It would be interesting to investigate these early visuals and discuss how they compare to, and have influenced, visualisation in the modern day.
 
-#```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/appendix.rmd'}
-#```
+```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/appendix.rmd'}
+```
 
 \chapter{References}

@@ -69,10 +69,10 @@ The set will consist of two groups of surveys, which will be identical up to the
 
 \section{Creating the Visualisations}
 
-See appendix 1 for a pdf of the survey, containing the finished visuals, and appendices 2 and 3 for code.
+See appendix 1 for a pdf of the survey, containing the finished visuals, and appendices 2 and 3 for the R and Python code, respectively.
 
 \subsection{The Data}
-The visualisations for the survey were created with inspiration from the papers discussed above. The bar plots were created using a data set regarding the history of obstacles used over 10 seasons of \textit{'American Ninja Warrior'} [see @ANW]. Each row of the data represents a single instance of an obstacle being used, and each instance has variables as specified in table 2.1.
+The visualisations for the survey were created with inspiration from the papers discussed above. The bar plots were created using a data set regarding the history of obstacles used over 10 seasons of \textit{'American Ninja Warrior'} [see @ANW]. Each row of the data represents a single instance of an obstacle being used, and each instance has variables as specified in table 3.1.
 
 \begin{center}
 ```{r}
@@ -144,7 +144,7 @@ Here, the two questions with the difference rating scale are used to assess whet
 
 Question 4 here was perhaps too wordy and/or confusing, and asks effectively the same question as the two previous. If this survey were to be applied again, this would be omitted as it adds unnecessary respondent fatigue. This is especially the case since the responses to this question mean it has been omitted from analysis, and so added to respondent fatigue without any additional information gain.
 
-The table below shows all the permutations of the three plot types, and which questionnaire version they appear in.
+Table 3.2 shows all the permutations of the three plot types, and which questionnaire version they appear in.
 
 \begin{center}
 ```{r}
@@ -179,7 +179,7 @@ The questions regarding each of the three bar plots were as follows:
 
 In hindsight, the value judgment question should perhaps have used the same phrasing as part 1. Removing the word 'approximately' from the value judgment question could have an adverse affect on responses by comparison to part one in the way of perhaps making respondents feel they have to give a more 'accurate' and less subjective response than part 1. 
 
-Similar to part 1, the below table gives all permutations of the three plot types.
+Similar to part 1, table 3.3 gives all permutations of the three plot types.
 \begin{center}
 ```{r}
 version <- c("V1", "V2", "V3", "V4", "V5", "V6")
@@ -245,7 +245,7 @@ For the colours comparison:
   \item Do you feel that one of the colour schemes makes it easier to read and interpret the data than the other? If so, please select which one. (Multiple choice with options "No", "Yes, A is easier", "Yes, B is easier")
 \end{itemize}
 
-For this part, survey versions 1, 2 and 4 showed the stacked bars first, followed by the grouped, and versions 3, 5 and 6 displayed the grouped first. It is shown in the below table which colour schemes were used in each survey.
+For this part, survey versions 1, 2 and 4 showed the stacked bars first, followed by the grouped, and versions 3, 5 and 6 displayed the grouped first. It is shown table 3.4 which colour schemes were used in each survey.
 
 \begin{center}
 ```{r}

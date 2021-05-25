@@ -1,10 +1,6 @@
 \chapter{Appendices}
 
-\section{Appendix 1 - Dataviz Toolchain}
-
-![The Dataviz Toolchain \label{toolchain}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/toolchain.jpg)
-
-\section{Appendix 2 - The Survey}
+\section{Appendix 1 - The Survey}
 The following shows a pdf paper format of the first versions of the surveys, for R and Python.
 
 \subsection{R}
@@ -13,7 +9,7 @@ The following shows a pdf paper format of the first versions of the surveys, for
 \subsection{Python}
 \includepdf[pages=-,nup=1,pagecommand={}]{py_survey_v1.pdf}
 
-\section{Appendix 3 - R Code for Visualisations}
+\section{Appendix 2 - R Code for Visualisations}
 
 ```{r eval=F, echo=T}
 ##### Load libraries #####
@@ -579,7 +575,7 @@ seeds
 
 ```
 
-\section{Appendix 4 - Python Code for Visualisations}
+\section{Appendix 3 - Python Code for Visualisations}
 ```{python eval=F, echo=T, python.reticulate = FALSE}
 # python -m pip install -U pip
 # pip install matplotlib
@@ -1177,9 +1173,7 @@ plt.show()
 
 ```
 
-
-###
-\section{Appendix 5 - Univariate Analysis Tables}
+\section{Appendix 4 - Univariate Analysis Tables}
 ```{r include = FALSE}
 rm(list=ls())
 library(readxl)
@@ -5535,36 +5529,65 @@ colnames(df) <- c("Variable(s)", "Alternative", "Null Value", "P-Value")
 kable(df, caption="MWW results for data considered non-normal but symmetric, and also comparisons of asymmetric data for which the two samples are of different sizes") %>%
   kable_styling("bordered", position="center", latex_options = "hold_position")
 ```
-###
 
-\section{Appendix 6 - Univariate Analysis Figures}
+```{r}
+control_1 <- ctrl_y_scale$con_1
+control_1[which(control_1 == "41/42")] <- # take midpoint of two values
+control_1 <- na.exclude(as.numeric(control_1))
 
-\section{Appendix 7 - 'black' and 'styler' Screenshots}
-![Black to format Python \label{black}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/black.PNG)
-![Styler to format R \label{styler}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/styler.jpg)
+truncated_1 <- as.numeric(trnc_y_scale$trn_1)
 
-\section{Appendix 8 - R Screenshots}
-![R Code for y-scaling Bar Plots \label{r_scale}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots1.jpg)
-![R Code for aspect ratio Bar Plots \label{r_aspect}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots2.jpg)
+logarithmic_1 <- log_y_scale$log_1
+logarithmic_1[which(logarithmic_1 == "Don't know")] <- NA
+logarithmic_1[which(logarithmic_1 == "Next to none.")] <- NA
+logarithmic_1[which(logarithmic_1 == "10^15")] <- NA
+logarithmic_1[which(logarithmic_1 == "10^9")] <- NA
+logarithmic_1 <- as.numeric(na.exclude(logarithmic_1))
+logarithmic_1 <- logarithmic_1[which(logarithmic_1 >= 14.25)]
+logarithmic_1 <- logarithmic_1[which(logarithmic_1 <= 60.75)]
+
+y_scale_1_all <- cbind(control_1, truncated_1, logarithmic_1)
+```
+
+
+\section{Appendix 5 - 'black' and 'styler' Screenshots}
+![Black to format Python \label{black}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/Black.PNG)
+
+![Styler to format R \label{styler}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/stylr.jpg)
+
+\section{Appendix 6 - R Screenshots}
+![R Code for y-scaling Bar Plots \label{r_scale}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots1.jpg){height=28cm}
+\newpage
+
+![R Code for aspect ratio Bar Plots \label{r_aspect}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots2.jpg){height=28cm}
+
+\newpage
+
 ![R Code for Stacked and Grouped Bar Plots \label{r_stacked}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots3.jpg)
 ![R Code for Line Plots \label{r_line}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_lineplots.jpg)
+\newpage
 
-\section{Appendix 9 - Python Screenshots}
+\section{Appendix 7 - Python Screenshots}
 ![Python Code for y-scaling Bar Plots \label{py_scale}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots1.jpg)
 ![Python Code for aspect ratio Bar Plots \label{py_aspect}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots2.jpg)
-![Python Code for Stacked and Grouped Bar Plots (Part 1) \label{py_stacked_1}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots3.1.jpg)
-![Python Code for Stacked and Grouped Bar Plots (Part 2) \label{py_stacked_2}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots3.2.jpg)
+![Python Code for Stacked and Grouped Bar Plots (Part 1) \label{py_stacked_1}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots3.1.jpg){height=28cm}
+\newpage
+
+![Python Code for Stacked and Grouped Bar Plots (Part 2) \label{py_stacked_2}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots3.2.jpg){height=28cm}
+\newpage
 ![Python Code for Line Plots \label{py_line}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_lineplots.jpg)
 
-\section{Appendix 10 - Interview Transcripts}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/andreas}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/geraint}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/henry}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/nikoletta}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/owen}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/vince}
+\section{Appendix 8 - Interview Transcripts}
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/andreas}
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/geraint}
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/henry}
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/nikoletta}
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/owen}
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/Transcriptions/vince}
 
-\section{Appendix 11 - Summary of Interview Responses}
-\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/quotes_by_question}
+\newpage
+
+\section{Appendix 9 - Summary of Interview Responses}
+\includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/pre-writeup-analysis}
 
 
