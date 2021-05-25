@@ -99,13 +99,13 @@ A tool of an interactive nature allows the user to closely follow the aforementi
 
 Whether to choose an interactive tool or not depends heavily on the goal of the visualisation, and the medium with which it is being presented. For example, static, programmatic visuals, would be ideal for a scientific research paper, but a pharmaceutical representative presenting study data to healthcare professionals may benefit from the abilities of an interactive tool. 
 
-The JavaScript library d3.js [@d3] is an example of a tool that, while lacking in its ability to clean and manipulate data, can take advantage of both programmatic methods and interactivity.This is explained by @javapy, where the author also discusses how the programmatic nature of Python can be utilised in conjunction with the ability of JavaScript to create dynamic, browser-based visuals. In the book, it is explained how the early stages of data cleaning, manipulation and exploration can be done in Python, with the transformation into interactive visual information being undertaken by D3, as per figure \ref{toolchain}, presented in the book. This process is referred to as the 'dataviz toolchain'.
+The JavaScript library d3.js [@d3] is an example of a tool that, while lacking in its ability to clean and manipulate data, can take advantage of both programmatic methods and interactivity.This is explained by @javapy, where the author also discusses how the programmatic nature of Python can be utilised in conjunction with the ability of JavaScript to create dynamic, browser-based visuals. In the book, it is explained how the early stages of data cleaning, manipulation and exploration can be done in Python, with the transformation into interactive visual information being undertaken by D3, as per figure \ref{toolchain} in appendix 1, presented in the book. This process is referred to as the 'dataviz toolchain'.
 
 D3 may also be used alone to create visuals, however employing Python in the early stages allows for easier data handling and manipulation. Prior to employing D3, interactive Python interfaces such as \textit{IPython} can be used to explore the data with packages such as \textit{Seaborn} or \textit{Matplotlib}, allowing for cleaning and refinement of data for visualisation in D3.
 
 D3 itself makes use of Cascading Style Sheets (CSS) and Scalar Vector Graphics (SVG) to make high quality visuals. The use of SVG is particularly beneficial as these graphics are able to be re-scaled to any dimension without becoming blurry or distorted, meaning they do not suffer from a loss of quality when being scaled. This is a strength of D3 for visualisation, in addition to the interactive and dynamic visuals.
 
-![The Dataviz Toolchain \label{toolchain}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/toolchain.jpg)
+
 
 When it comes to static visuals, as investigated in this study, two commonly used tools as the \textit{ggplot2} package in R and the \textit{matplotlib} library in Python, which are investigated here. 
 
@@ -131,7 +131,7 @@ It works on breaking every plot into a layers of graphic components, building vi
 
 This concept allows effective visualisations to be built in an efficient way, ensuring all important aspects of a visualisation are considered and accounted for, as opposed to randomly assigning aesthetics to a figure on a 'trial and error' basis. It allows for the creation of figures that are bespoke to each problem, with every small element of a plot being fully under control of the designer.
 
-The transition to learning a grammatical programming system such as \textit{ggplot} or \textit{matplotlib} from using a software using a stock library of graphics with tweak-able elements is described by the author as akin to transitioning to learning \latex after using MS Word. His reasoning is that it encompasses the initial frustration and feeling of lack of control over 'low-level aspects', but the eventual freedom of being more deep content focused, leading in the case of plots to creating 'richer graphics much more easily'. 
+The transition to learning a grammatical programming system such as \textit{ggplot} or \textit{matplotlib} from using a software using a stock library of graphics with tweak-able elements is described by the author as akin to transitioning to learning LaTeX after using MS Word. His reasoning is that it encompasses the initial frustration and feeling of lack of control over 'low-level aspects', but the eventual freedom of being more deep content focused, leading in the case of plots to creating 'richer graphics much more easily'. 
 
 \subsection{Visualising with \textit{ggplot2}}
 As mentioned prior \textit{ggplot2} is an R package dedicated to providing an easy way to produce elegant but complex visualisations, with applications in simple to complex data analysis and statistics along with areas such as machine learning. 

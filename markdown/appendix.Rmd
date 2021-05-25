@@ -1,5 +1,10 @@
 \chapter{Appendices}
-\section{Appendix 1 - The Survey}
+
+\section{Appendix 1 - Dataviz Toolchain}
+
+![The Dataviz Toolchain \label{toolchain}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/toolchain.jpg)
+
+\section{Appendix 2 - The Survey}
 The following shows a pdf paper format of the first versions of the surveys, for R and Python.
 
 \subsection{R}
@@ -8,7 +13,7 @@ The following shows a pdf paper format of the first versions of the surveys, for
 \subsection{Python}
 \includepdf[pages=-,nup=1,pagecommand={}]{py_survey_v1.pdf}
 
-\section{Apendix 2 - R Code for Visualisations}
+\section{Appendix 3 - R Code for Visualisations}
 
 ```{r eval=F, echo=T}
 ##### Load libraries #####
@@ -574,7 +579,7 @@ seeds
 
 ```
 
-\section{Apendix 3 - Python Code for Visualisations}
+\section{Appendix 4 - Python Code for Visualisations}
 ```{python eval=F, echo=T, python.reticulate = FALSE}
 # python -m pip install -U pip
 # pip install matplotlib
@@ -1174,7 +1179,7 @@ plt.show()
 
 
 ###
-\section{Appendix 4 - Univariate Analysis}
+\section{Appendix 5 - Univariate Analysis Tables}
 ```{r include = FALSE}
 rm(list=ls())
 library(readxl)
@@ -2077,9 +2082,9 @@ dist_check <- function(test=c("shap", "sym"), data, dataname){
 
 \clearpage
 
-\section{Ninja Warrior - Part 1}
+\subsection{Ninja Warrior - Part 1}
 
-\subsection{"Approximately many times would you say the `Salmon Ladder’ was used?"}
+\subsubsection{"Approximately many times would you say the `Salmon Ladder’ was used?"}
 
 ```{r echo=F}
 control_1 <- ctrl_y_scale$con_1
@@ -2502,7 +2507,7 @@ kable(df, caption="MWW test results for data considered non-normal but symmetric
 
 \clearpage
 
-\subsection{Approximately how much more than `Log Grip' would you say `Salmon Ladder' was was used?}
+\subsubsection{Approximately how much more than `Log Grip' would you say `Salmon Ladder' was was used?}
 
 
 ```{r echo=F}
@@ -2728,7 +2733,7 @@ kable(df, caption="MWW test results for data considered non-normal but symmetric
 
 \clearpage
 
-\subsection{'Approximately how much more than `Quintuple Steps' would you say `Salmon Ladder' was used?'}
+\subsubsection{'Approximately how much more than `Quintuple Steps' would you say `Salmon Ladder' was used?'}
 
 
 ```{r echo=F}
@@ -2954,9 +2959,9 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 
 \clearpage
 
-\section{Ninja Warrior - Part 2}
+\subsection{Ninja Warrior - Part 2}
 
-\subsection{"How large would you say the difference between `Jumping spider' and `Salmon Ladder' is?"}
+\subsubsection{"How large would you say the difference between `Jumping spider' and `Salmon Ladder' is?"}
 
 ```{r echo=F}
 default_1 <- def_ratio$def_1
@@ -3153,7 +3158,7 @@ kable(df, caption="MWW test results for data considered non-normal but symmetric
 
 \clearpage
 
-\subsection{How large would you say the difference between `Log Grip' and `Floating Steps' is?}
+\subsubsection{How large would you say the difference between `Log Grip' and `Floating Steps' is?}
 
 
 ```{r echo=F}
@@ -3352,7 +3357,7 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 
 \clearpage
 
-\subsection{How many times would you say `Floating Steps' were used?}
+\subsubsection{How many times would you say `Floating Steps' were used?}
 
 ```{r echo=F}
 default_3 <- def_ratio$def_3
@@ -3645,9 +3650,9 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 
 \clearpage
 
-\section{Ninja Warrior - Part 3}
+\subsection{Ninja Warrior - Part 3}
 
-\subsection{How many times would you say `Floating Steps' were used in the Finals (Regional/City) round?}
+\subsubsection{How many times would you say `Floating Steps' were used in the Finals (Regional/City) round?}
 
 
 ```{r echo=F}
@@ -3850,7 +3855,7 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 
 \clearpage
 
-\subsection{How many times would you say 'Log Grip' was used in the Finals (Regional/City) round}
+\subsubsection{How many times would you say 'Log Grip' was used in the Finals (Regional/City) round}
 
 ```{r echo=F}
 vir_stacked_2 <- vir_stacked$vir_sta_2
@@ -4047,7 +4052,7 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 
 \clearpage
 
-\subsection{Please select the statement you feel applies to the bar chart above.}
+\subsubsection{Please select the statement you feel applies to the bar chart above.}
 
 
 ```{r echo=F}
@@ -4110,7 +4115,7 @@ kable(tab, caption = "Table showing responses over the Python subgroup")%>%
 
 \clearpage
 
-\subsection{Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?}
+\subsubsection{Which obstacle do you think was used MORE in Finals (Regional/City) rounds, 'Log Grip' or 'Floating Steps'?}
 
 ```{r echo=F}
 vir_stacked_4 <- vir_stacked$vir_sta_4
@@ -4172,7 +4177,7 @@ kable(tab, caption = "Table showing responses over the Python subgroup")%>%
 ```
 
 \clearpage
-\subsection{Which bar chart do you feel is easiest to read and interpret?}
+\subsubsection{Which bar chart do you feel is easiest to read and interpret?}
 ```{r echo=F}
 a_1 <- set_a$sta_grp
 b_1 <- set_b$sta_grp
@@ -4289,7 +4294,7 @@ kable(tab, caption = "Table showing responses over the Python subgroup, separate
 
 \clearpage
 
-\subsection{Which colour scheme do you find most aesthetically pleasing?}
+\subsubsection{Which colour scheme do you find most aesthetically pleasing?}
 
 
 ```{r echo=F}
@@ -4321,7 +4326,7 @@ kable(tab, caption = "Table showing responses over the Python subgroup")%>%
 
 \clearpage
 
-\subsection{Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.}
+\subsubsection{Do you feel that one of the colour schemes makes it easier to read and interpret? If so, please select which one.}
 
 ```{r echo=F, fig.cap="Table showing which colour palettes respondents found easiest to read and interpret"}
 a_2 <- set_a$a_cols_2
@@ -4410,7 +4415,7 @@ kable(tab, caption = "Table showing responses over the Python subgroup, separate
 
 \clearpage
 
-\section{Sales - Part 1}
+\subsection{Sales - Part 1}
 
 
 ```{r echo=F}
@@ -4744,7 +4749,7 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 ```
 \clearpage
 
-\subsection{How much would you say sales of each company increased between January and December? [Company B]}
+\subsubsection{How much would you say sales of each company increased between January and December? [Company B]}
 
 
 
@@ -5056,7 +5061,7 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 
 \clearpage
 
-\subsection{How large would you say the drop in sales between April and July of Company A  is?}
+\subsubsection{How large would you say the drop in sales between April and July of Company A  is?}
 
 
 
@@ -5381,9 +5386,9 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 ```
 \clearpage
 
-\section{Sales - Part 2}
+\subsection{Sales - Part 2}
 
-\subsection{Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?}
+\subsubsection{Based on the above graph, how large would you say the difference is between the number of sales Company C makes and the number of sales Company D makes?}
 
 
 ```{r echo=F}
@@ -5532,24 +5537,26 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 ```
 ###
 
-\section{Appendix 5 - 'black' and 'styler' Screenshots}
+\section{Appendix 6 - Univariate Analysis Figures}
+
+\section{Appendix 7 - 'black' and 'styler' Screenshots}
 ![Black to format Python \label{black}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/black.PNG)
 ![Styler to format R \label{styler}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/styler.jpg)
 
-\section{Appendix 6 - R Screenshots}
+\section{Appendix 8 - R Screenshots}
 ![R Code for y-scaling Bar Plots \label{r_scale}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots1.jpg)
 ![R Code for aspect ratio Bar Plots \label{r_aspect}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots2.jpg)
 ![R Code for Stacked and Grouped Bar Plots \label{r_stacked}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_barplots3.jpg)
 ![R Code for Line Plots \label{r_line}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/r_code_screenshots/r_lineplots.jpg)
 
-\section{Appendix 7 - Python Screenshots}
+\section{Appendix 9 - Python Screenshots}
 ![Python Code for y-scaling Bar Plots \label{py_scale}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots1.jpg)
 ![Python Code for aspect ratio Bar Plots \label{py_aspect}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots2.jpg)
 ![Python Code for Stacked and Grouped Bar Plots (Part 1) \label{py_stacked_1}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots3.1.jpg)
 ![Python Code for Stacked and Grouped Bar Plots (Part 2) \label{py_stacked_2}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_barplots3.2.jpg)
 ![Python Code for Line Plots \label{py_line}](C:/Users/Katie/OneDrive/Uni_Work_Year4/project/Year-4-Project/markdown/chapters/Interviews/py_code_screenshots/py_lineplots.jpg)
 
-\section{Appendix 8 - Interview Transcripts}
+\section{Appendix 10 - Interview Transcripts}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/andreas}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/geraint}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/henry}
@@ -5557,7 +5564,7 @@ kable(df, caption="MWW results for data considered non-normal but symmetric, and
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/owen}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/chapters/interviews/Transcriptions/vince}
 
-\section{Appendix 9 - Summary of Interview Responses}
+\section{Appendix 11 - Summary of Interview Responses}
 \includepdf[pages=-,nup=1,pagecommand={}]{C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/Interviews/quotes_by_question}
 
 

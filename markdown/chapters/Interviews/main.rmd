@@ -1,9 +1,5 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
-chapter{Code-Based Interviews}
+
+\chapter{Code-Based Interviews}
 
 This chapter will discuss the results of interviews discussing the opinions of programming specialists in relation to the codes. As previously discussed, two languages were used to create the plots; R and Python. Initially, the JavaScript D3 library was also considered, but discounted due to time constraints. 
 
@@ -36,7 +32,7 @@ Additionally, questions must be phrased in a way such that they are targeted tow
 
 When administering the interview, as described by @leech, it is important to keep the interviewee at ease and build a good rapport, and the interviewer should ensure that the respondent can see that they are listening to, interested in and understand what they are saying.
 
-It is stated by @Leech that \textit{"The interviewer should seem professional and generally knowledgeable, but less knowledgeable than the respondent on the particular topic of the interview"}, and this is to make sure the interviewees feel comfortable and 'unthreatened', while also having a mutual respect for the interviewer. 
+It is stated by @leech that \textit{"The interviewer should seem professional and generally knowledgeable, but less knowledgeable than the respondent on the particular topic of the interview"}, and this is to make sure the interviewees feel comfortable and 'unthreatened', while also having a mutual respect for the interviewer. 
 
 \subsection{Purpose of a semi-structured interview for this study}
 A semi-structured interview format was selected for analysis of the programming of visualisation as the programming specialists being interviewed are known to have more experience in programming than the researcher. Thus, the interview participants may have additional viewpoints and knowledge of connected topics within the subject area that have not been considered in the given questions. 
@@ -203,7 +199,7 @@ Wilde's opinions behind his selection of the Python plot relates to clarity of l
 
 Overall it could be inferred from this that a good plot would be un-boxed with larger labels than are used in the ggplot plot. Perhaps also the floating bars should be investigated further, as Dr. Glynatsi's comments have brought to attention how this can potentially be misleading. 
 
-Leading on to a discussion regarding the logarithmically scaled plots, Dr. Glynatsi now selected ggplot as producing the most publication ready plot, in her opinion, again referencing the 'floating' bars. It is noted that here, the bottom of the bar represents the value of 1 and thus the floating bar makes sense. However, \tetxit{"if you put those two plots next to 
+Leading on to a discussion regarding the logarithmically scaled plots, Dr. Glynatsi now selected ggplot as producing the most publication ready plot, in her opinion, again referencing the 'floating' bars. It is noted that here, the bottom of the bar represents the value of 1 and thus the floating bar makes sense. However, \textit{"if you put those two plots next to 
 each other, it would have been so confusing"}, 'those two' referring to the two plots created in ggplot. It is also noted that \textit{"the plot to the right at least needed some sort of explanation, that it is the logarithmic"}. Considering this comment in addition to the survey responses perhaps signifies that using a logarithmic scale with standard form may require a short explanation within the plot or as a title to explain what the scale means.
 
 Interestingly, despite the standard form notation proving to be less ideal than the normal numerical notation in the survey analysis, three of the interviewees here appeared to prefer the standard form of the Python visualisation over the usual numerical notation of the R, with the exception Dr. Knight, who was not asked about this in the 'test' interview, Dr. Glynatsi, whose response is as explained above, and Dr. Artemiou, who states that \textit{"I'm still going to start with this one here, because it doesn't it doesn't look like the the logarithm helps"}.

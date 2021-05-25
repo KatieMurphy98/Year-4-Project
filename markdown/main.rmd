@@ -124,8 +124,6 @@ R packages used for univariate analysis include;
 
 \chapter{Introduction}
 
-\chapter{Introduction}
-
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/lit-review/main.rmd'}
 ```
 
@@ -135,7 +133,8 @@ R packages used for univariate analysis include;
 ```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/univariate-analysis/main.rmd'}
 ```
 
-\chapter{Conclusion}
+```{r child = 'C:/Users/Katie/OneDrive/Uni_Work_Year4/Project/Year-4-Project/markdown/chapters/interviews/main.rmd'}
+```
 
 \chapter{Conclusion}
 
